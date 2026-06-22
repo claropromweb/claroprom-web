@@ -4,6 +4,7 @@ export const dev =
 export const ROUTES = {
 	studio: 'admin',
 	blog: 'blog',
+	products: 'products',
 	// @example services: 'services',
 	// @example caseStudies: 'case-studies',
 } as const

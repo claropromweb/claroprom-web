@@ -15,7 +15,7 @@ export default function ({
 			{link && (
 				<div>
 					<SanityLink
-						className="text-foreground/50 [[href]]:hover:underline"
+						className="text-sm font-semibold tracking-[0.08em] text-current uppercase opacity-70 [[href]]:hover:underline"
 						link={link as SanityLinkType}
 					/>
 				</div>
@@ -25,7 +25,7 @@ export default function ({
 				{links?.map((item) => (
 					<li key={item._key}>
 						<SanityLink
-							className="inline-block py-[.3ch] text-current hover:underline"
+							className="inline-block py-[.3ch] text-current opacity-80 transition-opacity hover:opacity-100 hover:underline"
 							link={item as SanityLinkType}
 						/>
 					</li>

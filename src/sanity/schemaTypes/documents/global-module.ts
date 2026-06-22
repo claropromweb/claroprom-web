@@ -41,14 +41,14 @@ export default defineType({
 		}),
 		defineField({
 			...modules({
-				of: [{ type: 'blog-post-content' }],
+				of: [{ type: 'blog-post-content' }, { type: 'product-content' }],
 			}),
 			name: 'before',
 			description: 'Added before all page modules',
 		}),
 		defineField({
 			...modules({
-				of: [{ type: 'blog-post-content' }],
+				of: [{ type: 'blog-post-content' }, { type: 'product-content' }],
 			}),
 			name: 'after',
 			description: 'Added after all page modules',

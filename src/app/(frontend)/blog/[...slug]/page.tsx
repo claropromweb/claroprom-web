@@ -2,18 +2,21 @@ import type { Metadata } from 'next'
 import { groq } from 'next-sanity'
 import { notFound } from 'next/navigation'
 import { ROUTES } from '@/lib/env'
+import { DEFAULT_LANG, languages, type Lang } from '@/lib/i18n'
+import resolveUrl from '@/lib/resolve-url'
 import { client } from '@/sanity/lib/client'
 import { urlFor } from '@/sanity/lib/image'
 import { sanityFetchLive } from '@/sanity/lib/live'
 import {
 	GLOBAL_MODULE_EXCLUDE_QUERY,
 	MODULES_QUERY,
+	TRANSLATIONS_QUERY,
 } from '@/sanity/lib/queries'
 import type { BLOG_POST_QUERY_RESULT } from '@/sanity/types'
 import ModulesResolver from '@/ui/modules'
 
 type Props = {
-	params: Promise<{ slug: string }>
+	params: Promise<{ slug: string[] }>
 }
 
 export default async function ({ params }: Props) {
@@ -25,51 +28,99 @@ export default async function ({ params }: Props) {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-	const { slug } = await params
-	const post = await getPost(slug)
+	const { slug: rawSlug } = await params
+	const post = await getPost(rawSlug)
 	const { title, description, image, noIndex } = post?.metadata ?? {}
+
+	const canonical = post ? resolveUrl(post as any) : undefined
+
+	const alternates: Record<string, string> = {}
+	const translations = (post as any)?.translations as
+		| Array<{ value?: { language?: string; _type?: string; metadata?: any } }>
+		| undefined
+	translations?.forEach((entry) => {
+		const v = entry?.value
+		if (!v?.language) return
+		alternates[v.language] = resolveUrl(v as any)
+	})
+	if ((post as any)?.language)
+		alternates[(post as any).language as string] = canonical ?? '/'
 
 	return {
 		title,
-		description: description,
+		description,
 		openGraph: {
-			title: title,
-			description: description,
-			url: `${process.env.NEXT_PUBLIC_BASE_URL}/${ROUTES.blog}/${slug}`,
+			title,
+			description,
+			url: canonical
+				? `${process.env.NEXT_PUBLIC_BASE_URL ?? ''}${canonical}`
+				: undefined,
 			images: [
 				image
 					? urlFor(image).width(1200).url()
-					: `${process.env.NEXT_PUBLIC_BASE_URL}/api/og?slug=${ROUTES.blog}/${slug}`,
+					: `${process.env.NEXT_PUBLIC_BASE_URL}/api/og?slug=${ROUTES.blog}/${post?.metadata?.slug?.current ?? ''}`,
 			],
 		},
 		robots: {
 			index: noIndex ? false : undefined,
 		},
 		alternates: {
+			canonical,
+			languages: Object.keys(alternates).length ? alternates : undefined,
 			types: {
 				'application/rss+xml': `/${ROUTES.blog}/rss.xml`,
-				'text/markdown': `/${ROUTES.blog}/${slug}.md`,
+				'text/markdown': `/${ROUTES.blog}/${post?.metadata?.slug?.current ?? ''}.md`,
 			},
 		},
 	}
 }
 
 export async function generateStaticParams() {
-	return await client.fetch<{ slug: string }[]>(
+	const posts = await client.fetch<
+		{ slug: string; language?: string | null }[]
+	>(
 		groq`*[_type == 'blog.post' && defined(metadata.slug.current)]{
-			'slug': '/' + metadata.slug.current
+			'slug': metadata.slug.current,
+			language
 		}`,
 	)
-}
 
-async function getPost(slug: string) {
-	return await sanityFetchLive<BLOG_POST_QUERY_RESULT>({
-		query: BLOG_POST_QUERY,
-		params: { slug, blogDir: `${ROUTES.blog}/` },
+	return posts.map(({ slug, language }) => {
+		const parts = slug.split('/')
+		if (language && language !== DEFAULT_LANG) {
+			return { slug: [language, ...parts] }
+		}
+		return { slug: parts }
 	})
 }
 
-const BLOG_POST_QUERY = groq`*[_type == 'blog.post' && metadata.slug.current == $slug][0]{
+async function getPost(slugInput: string[]) {
+	const { slug, lang } = processSlug(slugInput)
+
+	return await sanityFetchLive<BLOG_POST_QUERY_RESULT>({
+		query: BLOG_POST_QUERY,
+		params: {
+			slug,
+			blogDir: `${ROUTES.blog}/`,
+			lang: lang ?? DEFAULT_LANG,
+			defaultLang: DEFAULT_LANG,
+		},
+	})
+}
+
+function processSlug(slug: string[]): { slug: string; lang?: Lang } {
+	const lang = languages.includes(slug[0] as Lang)
+		? (slug[0] as Lang)
+		: undefined
+
+	const path = lang ? slug.slice(1).join('/') : slug.join('/')
+	return { slug: path, lang }
+}
+
+const BLOG_POST_QUERY = groq`*[_type == 'blog.post'
+	&& metadata.slug.current == $slug
+	&& coalesce(language, $defaultLang) == $lang
+][0]{
 	...,
 	content[]{
 		...,
@@ -86,7 +137,9 @@ const BLOG_POST_QUERY = groq`*[_type == 'blog.post' && metadata.slug.current == 
 	},
 	categories[]->{
 		title,
-		slug
+		title_en,
+		slug,
+		slug_en
 	},
 	author->{
 		name,
@@ -104,5 +157,6 @@ const BLOG_POST_QUERY = groq`*[_type == 'blog.post' && metadata.slug.current == 
 		+ *[_type == 'global-module' && path == $blogDir].after[]{ ${MODULES_QUERY} }
 		// global modules (after)
 		+ *[_type == 'global-module' && path == '*' && ${GLOBAL_MODULE_EXCLUDE_QUERY}].after[]{ ${MODULES_QUERY} }
-	)
+	),
+	${TRANSLATIONS_QUERY}
 }`

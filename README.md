@@ -154,6 +154,6 @@ Adjust frontend styles to your liking, edit or add new schema and modules, etc.
   - Tier list
   - Sticky navigation
 
-## Not included
+## Internationalization (i18n)
 
-- Internationalization (i18n) and multi-lingual support
+The site ships with Croatian (`hr`, default) and English (`en`) locales. See `CLAUDE.md` → _Internationalization_ for the full URL strategy, schema model, and switcher wiring.

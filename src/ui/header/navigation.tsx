@@ -6,14 +6,25 @@ import Dropdown from './dropdown'
 import Megamenu from './megamenu'
 
 const topLevelClassName = cn(
-	'grid md:place-content-center md:text-center md:text-balance leading-tight py-[.5ch] md:py-ch',
+	'grid uppercase md:place-content-center md:text-center md:text-balance leading-tight py-[.5ch] md:py-ch',
 )
 
-export default async function () {
-	const site = await getSite()
+export default async function ({
+	lang,
+	className,
+}: {
+	lang?: string
+	className?: string
+}) {
+	const site = await getSite(lang)
 
 	return (
-		<nav className="max-md:header-not-open:hidden max-md:anim-fade-to-b gap-x-lh flex items-stretch [grid-area:navigation] max-md:my-4 max-md:flex-col">
+		<nav
+			className={cn(
+				'gap-x-lh flex items-stretch max-md:flex-col max-md:items-center max-md:gap-y-4',
+				className,
+			)}
+		>
 			{site?.header?.items?.map((item) => {
 				switch (item._type) {
 					case 'link':

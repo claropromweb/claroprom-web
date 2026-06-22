@@ -33,6 +33,20 @@ export default defineModule({
 			group: 'content',
 		}),
 		defineField({
+			name: 'layout',
+			title: 'Layout',
+			type: 'string',
+			group: 'options',
+			options: {
+				list: [
+					{ title: 'Image left, text right', value: 'image-left' },
+					{ title: 'Text left, image right', value: 'image-right' },
+				],
+				layout: 'radio',
+			},
+			initialValue: 'image-left',
+		}),
+		defineField({
 			name: 'image',
 			type: 'image',
 			options: {
@@ -57,14 +71,8 @@ export default defineModule({
 					fieldset: 'options',
 				}),
 				defineField({
-					name: 'onRight',
-					description: 'Desktop',
-					type: 'boolean',
-					fieldset: 'options',
-				}),
-				defineField({
 					name: 'afterContent',
-					description: 'Mobile',
+					description: 'Show image below text on mobile',
 					type: 'boolean',
 					fieldset: 'options',
 				}),

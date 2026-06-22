@@ -1,21 +1,37 @@
-import { PortableText } from 'next-sanity'
-import type { Form, FormModule } from '@/sanity/types'
+import { PortableText, stegaClean } from 'next-sanity'
+import { Suspense } from 'react'
+import getLangServer from '@/lib/get-lang-server'
+import type { FormModule } from '@/sanity/types'
 import Eyebrow from '@/ui/eyebrow'
+import Loading from '@/ui/loading'
 import { Module } from '..'
-import Resolver from './resolver'
+import ContactForm from './contact-form'
 
-export default function ({ eyebrow, intro, form, ...props }: FormModule) {
+type FormModuleProps = Omit<FormModule, 'form'> & {
+	form?: { _id?: string; identifier?: string; endpoint?: string } | null
+}
+
+export default async function FormModuleComponent({
+	eyebrow,
+	intro = [],
+	form,
+	...props
+}: FormModuleProps) {
+	const lang = await getLangServer()
+
 	return (
-		<Module {...props}>
-			<div className="section grid items-start gap-8 md:grid-cols-2">
-				{intro && (
-					<header className="prose md:sticky-below-header [--offset:1rem]">
+		<Module className="section" {...props}>
+			<div className="mx-auto w-full space-y-8">
+				{(eyebrow || (intro && intro.length > 0)) && (
+					<header className="prose">
 						<Eyebrow value={eyebrow} />
-						<PortableText value={intro} />
+						<PortableText value={intro ?? []} />
 					</header>
 				)}
 
-				<Resolver form={form as unknown as Form} />
+				<Suspense fallback={<Loading />}>
+					<ContactForm lang={lang} formId={stegaClean(form?.identifier)} />
+				</Suspense>
 			</div>
 		</Module>
 	)

@@ -98,6 +98,23 @@ export default defineModule({
 			fieldset: 'alignment',
 			group: 'options',
 		}),
+		defineField({
+			name: 'maxHeight',
+			title: 'Maximum height',
+			description:
+				'CSS height value (e.g. 800px, 40vh). Leave empty for default.',
+			type: 'string',
+			group: 'options',
+		}),
+		defineField({
+			name: 'backgroundOverlay',
+			title: 'Background overlay',
+			description:
+				'Adds a red overlay at 70% opacity over the background image.',
+			type: 'boolean',
+			initialValue: false,
+			group: 'options',
+		}),
 	],
 	preview: {
 		select: {

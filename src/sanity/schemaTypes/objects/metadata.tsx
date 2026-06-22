@@ -27,7 +27,28 @@ export default defineType({
 			type: 'slug',
 			description: 'URL path or permalink',
 			options: {
-				source: (doc: any) => doc.title || doc.metadata.title,
+				source: (doc: any) => doc.title || doc.metadata?.title,
+				isUnique: async (slug, context) => {
+					const { document, getClient } = context
+					const client = getClient({ apiVersion: '2024-01-01' })
+					const language = (document as any)?.language ?? null
+					const type = (document as any)?._type
+					const id = document?._id.replace(/^drafts\./, '')
+
+					const params = { slug, type, language, id }
+					const langCondition = language
+						? `&& language == $language`
+						: `&& (!defined(language))`
+
+					const query = `!defined(*[
+						_type == $type
+						&& !(_id in [$id, "drafts." + $id])
+						&& metadata.slug.current == $slug
+						${langCondition}
+					][0]._id)`
+
+					return await client.fetch(query, params)
+				},
 			},
 			validation: (Rule) => Rule.required(),
 		}),

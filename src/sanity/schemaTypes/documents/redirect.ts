@@ -29,14 +29,15 @@ export default defineType({
 			title: 'source',
 			_type: 'destination.internal._type',
 			internal: 'destination.internal.metadata.slug.current',
+			language: 'destination.internal.language',
 			params: 'destination.params',
 			external: 'destination.external',
 		},
-		prepare: ({ title, _type, internal, params, external }) => ({
+		prepare: ({ title, _type, internal, language, params, external }) => ({
 			title,
 			subtitle:
 				(external || internal) &&
-				`to ${external || resolveSlug({ _type, internal, params })}`,
+				`to ${external || resolveSlug({ _type, internal, language, params })}`,
 		}),
 	},
 })

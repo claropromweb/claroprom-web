@@ -1,5 +1,6 @@
 import { defineArrayMember, defineField, defineType } from 'sanity'
 import { EditIcon, ImageIcon } from '@sanity/icons'
+import { DEFAULT_LANG } from '@/lib/i18n'
 
 export default defineType({
 	name: 'blog.post',
@@ -8,6 +9,13 @@ export default defineType({
 	icon: EditIcon,
 	groups: [{ name: 'content', default: true }, { name: 'metadata' }],
 	fields: [
+		defineField({
+			name: 'language',
+			type: 'string',
+			readOnly: true,
+			hidden: ({ document }) => !!(document as { language?: string })?.language,
+			initialValue: DEFAULT_LANG,
+		}),
 		defineField({
 			name: 'title',
 			type: 'string',

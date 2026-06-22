@@ -1,6 +1,7 @@
 import { defineField, defineType } from 'sanity'
 import { EditIcon, ErrorScreenIcon, HomeIcon, SearchIcon } from '@sanity/icons'
 import { VscEyeClosed } from 'react-icons/vsc'
+import { DEFAULT_LANG, supportedLanguages } from '@/lib/i18n'
 import modules from '../fragments/modules'
 
 export default defineType({
@@ -9,6 +10,15 @@ export default defineType({
 	type: 'document',
 	groups: [{ name: 'content', default: true }, { name: 'metadata' }],
 	fields: [
+		defineField({
+			name: 'language',
+			type: 'string',
+			readOnly: true,
+			// Reveal the field on legacy docs created before i18n was enabled, so
+			// editors can see (and the migration script can fill) the missing value.
+			hidden: ({ document }) => !!(document as { language?: string })?.language,
+			initialValue: DEFAULT_LANG,
+		}),
 		defineField({
 			name: 'title',
 			type: 'string',
@@ -30,16 +40,22 @@ export default defineType({
 			title: 'title',
 			slug: 'metadata.slug.current',
 			noIndex: 'metadata.noIndex',
+			language: 'language',
 		},
-		prepare: ({ title, slug, noIndex }) => ({
-			title,
-			subtitle: `/${slug === 'index' ? '' : slug}`,
-			media:
-				(slug === 'index' && HomeIcon) ||
-				(slug === '404' && ErrorScreenIcon) ||
-				(slug === 'search' && SearchIcon) ||
-				(slug === 'blog' && EditIcon) ||
-				(noIndex && VscEyeClosed),
-		}),
+		prepare: ({ title, slug, noIndex, language }) => {
+			const langTag = language
+				? `${supportedLanguages.find((l) => l.id === language)?.title ?? language.toUpperCase()} · `
+				: ''
+			return {
+				title,
+				subtitle: `${langTag}/${slug === 'index' ? '' : slug}`,
+				media:
+					(slug === 'index' && HomeIcon) ||
+					(slug === '404' && ErrorScreenIcon) ||
+					(slug === 'search' && SearchIcon) ||
+					(slug === 'blog' && EditIcon) ||
+					(noIndex && VscEyeClosed),
+			}
+		},
 	},
 })

@@ -1,6 +1,8 @@
 import { escapeHTML, toHTML } from '@portabletext/to-html'
 import { groq } from 'next-sanity'
 import { ROUTES } from '@/lib/env'
+import { DEFAULT_LANG } from '@/lib/i18n'
+import resolveUrl from '@/lib/resolve-url'
 import { getBlockText } from '@/lib/utils'
 import { urlFor } from '@/sanity/lib/image'
 import { sanityFetchLive } from '@/sanity/lib/live'
@@ -13,14 +15,17 @@ export async function GET() {
 		query: BLOG_RSS_QUERY,
 		params: {
 			blogDir: ROUTES.blog,
+			defaultLang: DEFAULT_LANG,
 		},
 	})
+
+	const lang = DEFAULT_LANG === 'hr' ? 'hr-HR' : 'en-US'
 
 	const rssXML = `<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel>
 		<title>${blog?.metadata?.title}</title>
 		<description>${blog?.metadata?.description}</description>
 		<link>${BASE_URL}/${ROUTES.blog}</link>
-		<language>en-US</language>
+		<language>${lang}</language>
 		<lastBuildDate>${new Date().toISOString()}</lastBuildDate>
 		${posts.map((post) => Item({ post })).join('')}</channel></rss>`
 
@@ -32,7 +37,12 @@ export async function GET() {
 }
 
 function Item({ post }: { post: BLOG_RSS_QUERY_RESULT['posts'][number] }) {
-	const url = `${BASE_URL}/${ROUTES.blog}/${post.metadata?.slug?.current}`
+	const path = resolveUrl({
+		_type: 'blog.post',
+		language: (post as any).language,
+		metadata: { slug: post.metadata?.slug },
+	})
+	const url = `${BASE_URL}${path}`
 
 	return `<item>
 		<title><![CDATA[${escapeHTML(post.title!)}]]></title>
@@ -76,14 +86,16 @@ function Item({ post }: { post: BLOG_RSS_QUERY_RESULT['posts'][number] }) {
 }
 
 const BLOG_RSS_QUERY = groq`{
-	'blog': *[_type == 'page' && metadata.slug.current == $blogDir][0]{
+	'blog': *[_type == 'page' && metadata.slug.current == $blogDir
+		&& (!defined(language) || language == $defaultLang)][0]{
 		metadata
 	},
 	'posts': *[_type == 'blog.post' && metadata.noIndex != true]|order(publishDate desc){
 		title,
 		content,
 		publishDate,
-		categories[]->{ title },
+		language,
+		categories[]->{ title, title_en },
 		author->{ name },
 		metadata
 	}

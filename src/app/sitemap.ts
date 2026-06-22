@@ -1,6 +1,7 @@
 import type { MetadataRoute } from 'next'
 import { groq } from 'next-sanity'
 import { ROUTES } from '@/lib/env'
+import { DEFAULT_LANG } from '@/lib/i18n'
 import { sanityFetchLive } from '@/sanity/lib/live'
 
 export const dynamic = 'force-dynamic'
@@ -9,6 +10,7 @@ export default async function (): Promise<MetadataRoute.Sitemap> {
 	const data = await sanityFetchLive<{
 		pages: MetadataRoute.Sitemap
 		posts: MetadataRoute.Sitemap
+		products: MetadataRoute.Sitemap
 	}>({
 		query: groq`{
 			'pages': *[
@@ -18,8 +20,10 @@ export default async function (): Promise<MetadataRoute.Sitemap> {
 				&& metadata.noIndex != true
 			]|order(metadata.slug.current != 'index', metadata.slug.current){
 				'url': $baseUrl + select(
-					metadata.slug.current == 'index' => '',
-					'/' + metadata.slug.current
+					metadata.slug.current == 'index' && (!defined(language) || language == $defaultLang) => '',
+					metadata.slug.current == 'index' && defined(language) && language != $defaultLang => '/' + language,
+					(!defined(language) || language == $defaultLang) => '/' + metadata.slug.current,
+					'/' + language + '/' + metadata.slug.current
 				),
 				'lastModified': _updatedAt,
 				'priority': select(
@@ -32,7 +36,22 @@ export default async function (): Promise<MetadataRoute.Sitemap> {
 				&& defined(metadata.slug.current)
 				&& metadata.noIndex != true
 			]|order(publishDate desc){
-				'url': $baseUrl + '/' + $blogDir + '/' + metadata.slug.current,
+				'url': $baseUrl + '/' + $blogDir + '/' + select(
+					(!defined(language) || language == $defaultLang) => metadata.slug.current,
+					language + '/' + metadata.slug.current
+				),
+				'lastModified': _updatedAt,
+				'priority': 0.4
+			},
+			'products': *[
+				_type == 'product'
+				&& defined(metadata.slug.current)
+				&& metadata.noIndex != true
+			]|order(title){
+				'url': $baseUrl + '/' + $productsDir + '/' + select(
+					(!defined(language) || language == $defaultLang) => metadata.slug.current,
+					language + '/' + metadata.slug.current
+				),
 				'lastModified': _updatedAt,
 				'priority': 0.4
 			}
@@ -40,6 +59,8 @@ export default async function (): Promise<MetadataRoute.Sitemap> {
 		params: {
 			baseUrl: process.env.NEXT_PUBLIC_BASE_URL,
 			blogDir: ROUTES.blog,
+			productsDir: ROUTES.products,
+			defaultLang: DEFAULT_LANG,
 		},
 	})
 

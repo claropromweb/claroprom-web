@@ -41,11 +41,29 @@ export type Icon = {
 	_type: 'image'
 }
 
+export type CategoryImage = {
+	asset?: SanityImageAssetReference
+	media?: unknown // Unable to locate the referenced type "category.image.media" in schema
+	hotspot?: SanityImageHotspot
+	crop?: SanityImageCrop
+	alt?: string
+	_type: 'image'
+}
+
 export type Mobile = {
 	asset?: SanityImageAssetReference
 	media?: unknown // Unable to locate the referenced type "mobile.media" in schema
 	hotspot?: SanityImageHotspot
 	crop?: SanityImageCrop
+	_type: 'image'
+}
+
+export type ColumnImage = {
+	asset?: SanityImageAssetReference
+	media?: unknown // Unable to locate the referenced type "column.image.media" in schema
+	hotspot?: SanityImageHotspot
+	crop?: SanityImageCrop
+	alt?: string
 	_type: 'image'
 }
 
@@ -149,6 +167,19 @@ export type StatList = {
 			_key: string
 		}>
 		_type: 'stat'
+		_key: string
+	}>
+}
+
+export type SplitColumns = {
+	_type: 'split-columns'
+	attributes?: ModuleAttributes
+	columns?: Array<{
+		image?: ColumnImage
+		title?: string
+		description?: string
+		link?: Link
+		_type: 'column'
 		_key: string
 	}>
 }
@@ -283,6 +314,38 @@ export type Prose = {
 	sidebar?: Sidebar
 }
 
+export type ProductList = {
+	_type: 'product-list'
+	attributes?: ModuleAttributes
+	intro?: Array<{
+		children?: Array<{
+			marks?: Array<string>
+			text?: string
+			_type: 'span'
+			_key: string
+		}>
+		style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote'
+		listItem?: 'bullet' | 'number'
+		markDefs?: Array<{
+			href?: string
+			_type: 'link'
+			_key: string
+		}>
+		level?: number
+		_type: 'block'
+		_key: string
+	}>
+	productsPerPage?: number
+}
+
+export type ProductContent = {
+	_type: 'product-content'
+	attributes?: ModuleAttributes
+	quoteLink?: Link
+	showRelated?: boolean
+	relatedLimit?: number
+}
+
 export type PersonReference = {
 	_ref: string
 	_type: 'reference'
@@ -398,6 +461,7 @@ export type HeroSplit = {
 			_key: string
 		} & Cta
 	>
+	layout?: 'image-left' | 'image-right'
 	image?: {
 		asset?: SanityImageAssetReference
 		media?: unknown
@@ -405,7 +469,6 @@ export type HeroSplit = {
 		crop?: SanityImageCrop
 		alt?: string
 		loading?: 'lazy' | 'eager'
-		onRight?: boolean
 		afterContent?: boolean
 		_type: 'image'
 	}
@@ -464,6 +527,8 @@ export type HeroCover = {
 	}
 	verticalAlign?: 'top' | 'center' | 'bottom'
 	textAlign?: 'left' | 'center' | 'right'
+	maxHeight?: string
+	backgroundOverlay?: boolean
 }
 
 export type FormReference = {
@@ -498,12 +563,49 @@ export type FormModule = {
 	form?: FormReference
 }
 
+export type FeatureSplit = {
+	_type: 'feature-split'
+	attributes?: ModuleAttributes
+	pretitle?: string
+	title?: string
+	items?: Array<{
+		header?: string
+		text?: string
+		_type: 'item'
+		_key: string
+	}>
+	image?: {
+		asset?: SanityImageAssetReference
+		media?: unknown
+		hotspot?: SanityImageHotspot
+		crop?: SanityImageCrop
+		alt?: string
+		loading?: 'lazy' | 'eager'
+		_type: 'image'
+	}
+}
+
 export type CustomHtml = {
 	_type: 'custom-html'
 	attributes?: ModuleAttributes
 	html?: Code
 	css?: Code
 	className?: string
+}
+
+export type CategoryGrid = {
+	_type: 'category-grid'
+	attributes?: ModuleAttributes
+	pretitle?: string
+	heading?: string
+	categories?: Array<{
+		title?: string
+		description?: string
+		image?: CategoryImage
+		link?: Link
+		_type: 'category'
+		_key: string
+	}>
 }
 
 export type CardList = {
@@ -645,6 +747,49 @@ export type Breadcrumbs = {
 		{
 			_key: string
 		} & Link
+	>
+}
+
+export type Banner = {
+	_type: 'banner'
+	attributes?: ModuleAttributes
+	pretitle?: string
+	title?: string
+	intro?: Array<
+		| {
+				children?: Array<{
+					marks?: Array<string>
+					text?: string
+					_type: 'span'
+					_key: string
+				}>
+				style?:
+					| 'normal'
+					| 'h1'
+					| 'h2'
+					| 'h3'
+					| 'h4'
+					| 'h5'
+					| 'h6'
+					| 'blockquote'
+				listItem?: 'bullet' | 'number'
+				markDefs?: Array<{
+					href?: string
+					_type: 'link'
+					_key: string
+				}>
+				level?: number
+				_type: 'block'
+				_key: string
+		  }
+		| ({
+				_key: string
+		  } & CustomHtml)
+	>
+	ctas?: Array<
+		{
+			_key: string
+		} & Cta
 	>
 }
 
@@ -832,11 +977,25 @@ export type PageReference = {
 	[internalGroqTypeReferenceTo]?: 'page'
 }
 
+export type BlogPostReference = {
+	_ref: string
+	_type: 'reference'
+	_weak?: boolean
+	[internalGroqTypeReferenceTo]?: 'blog.post'
+}
+
+export type ProductReference = {
+	_ref: string
+	_type: 'reference'
+	_weak?: boolean
+	[internalGroqTypeReferenceTo]?: 'product'
+}
+
 export type Link = {
 	_type: 'link'
 	label?: string
 	type?: 'internal' | 'external'
-	internal?: PageReference
+	internal?: PageReference | BlogPostReference | ProductReference
 	external?: string
 	params?: string
 }
@@ -940,6 +1099,8 @@ export type BlogCategory = {
 	_rev: string
 	title?: string
 	slug?: Slug
+	title_en?: string
+	slug_en?: Slug
 }
 
 export type Slug = {
@@ -956,108 +1117,6 @@ export type Redirect = {
 	_rev: string
 	source?: string
 	destination?: Link
-}
-
-export type BlogCategoryReference = {
-	_ref: string
-	_type: 'reference'
-	_weak?: boolean
-	[internalGroqTypeReferenceTo]?: 'blog.category'
-}
-
-export type BlogPost = {
-	_id: string
-	_type: 'blog.post'
-	_createdAt: string
-	_updatedAt: string
-	_rev: string
-	title?: string
-	content?: Array<
-		| {
-				children?: Array<{
-					marks?: Array<string>
-					text?: string
-					_type: 'span'
-					_key: string
-				}>
-				style?:
-					| 'normal'
-					| 'h1'
-					| 'h2'
-					| 'h3'
-					| 'h4'
-					| 'h5'
-					| 'h6'
-					| 'blockquote'
-				listItem?: 'bullet' | 'number'
-				markDefs?: Array<{
-					href?: string
-					_type: 'link'
-					_key: string
-				}>
-				level?: number
-				_type: 'block'
-				_key: string
-		  }
-		| {
-				asset?: SanityImageAssetReference
-				media?: unknown
-				hotspot?: SanityImageHotspot
-				crop?: SanityImageCrop
-				alt?: string
-				figcaption?: Array<{
-					children?: Array<{
-						marks?: Array<string>
-						text?: string
-						_type: 'span'
-						_key: string
-					}>
-					style?: 'normal'
-					listItem?: 'bullet' | 'number'
-					markDefs?: Array<{
-						href?: string
-						_type: 'link'
-						_key: string
-					}>
-					level?: number
-					_type: 'block'
-					_key: string
-				}>
-				_type: 'image'
-				_key: string
-		  }
-		| ({
-				_key: string
-		  } & Code)
-		| ({
-				_key: string
-		  } & CustomHtml)
-	>
-	publishDate?: string
-	categories?: Array<
-		{
-			_key: string
-		} & BlogCategoryReference
-	>
-	author?: PersonReference
-	metadata?: Metadata
-}
-
-export type Person = {
-	_id: string
-	_type: 'person'
-	_createdAt: string
-	_updatedAt: string
-	_rev: string
-	name?: string
-	title?: string
-	image?: {
-		asset?: SanityImageAssetReference
-		media?: unknown
-		hotspot?: SanityImageHotspot
-		crop?: SanityImageCrop
-		_type: 'image'
-	}
 }
 
 export type GlobalModule = {
@@ -1080,6 +1139,9 @@ export type GlobalModule = {
 		  } & BlogPostList)
 		| ({
 				_key: string
+		  } & Banner)
+		| ({
+				_key: string
 		  } & Breadcrumbs)
 		| ({
 				_key: string
@@ -1089,7 +1151,13 @@ export type GlobalModule = {
 		  } & CardList)
 		| ({
 				_key: string
+		  } & CategoryGrid)
+		| ({
+				_key: string
 		  } & CustomHtml)
+		| ({
+				_key: string
+		  } & FeatureSplit)
 		| ({
 				_key: string
 		  } & FormModule)
@@ -1107,6 +1175,9 @@ export type GlobalModule = {
 		  } & PersonList)
 		| ({
 				_key: string
+		  } & ProductList)
+		| ({
+				_key: string
 		  } & Prose)
 		| ({
 				_key: string
@@ -1116,6 +1187,9 @@ export type GlobalModule = {
 		  } & SearchModule)
 		| ({
 				_key: string
+		  } & SplitColumns)
+		| ({
+				_key: string
 		  } & StatList)
 		| ({
 				_key: string
@@ -1123,6 +1197,9 @@ export type GlobalModule = {
 		| ({
 				_key: string
 		  } & BlogPostContent)
+		| ({
+				_key: string
+		  } & ProductContent)
 	>
 	after?: Array<
 		| ({
@@ -1136,6 +1213,9 @@ export type GlobalModule = {
 		  } & BlogPostList)
 		| ({
 				_key: string
+		  } & Banner)
+		| ({
+				_key: string
 		  } & Breadcrumbs)
 		| ({
 				_key: string
@@ -1145,7 +1225,13 @@ export type GlobalModule = {
 		  } & CardList)
 		| ({
 				_key: string
+		  } & CategoryGrid)
+		| ({
+				_key: string
 		  } & CustomHtml)
+		| ({
+				_key: string
+		  } & FeatureSplit)
 		| ({
 				_key: string
 		  } & FormModule)
@@ -1163,6 +1249,9 @@ export type GlobalModule = {
 		  } & PersonList)
 		| ({
 				_key: string
+		  } & ProductList)
+		| ({
+				_key: string
 		  } & Prose)
 		| ({
 				_key: string
@@ -1172,6 +1261,9 @@ export type GlobalModule = {
 		  } & SearchModule)
 		| ({
 				_key: string
+		  } & SplitColumns)
+		| ({
+				_key: string
 		  } & StatList)
 		| ({
 				_key: string
@@ -1179,6 +1271,9 @@ export type GlobalModule = {
 		| ({
 				_key: string
 		  } & BlogPostContent)
+		| ({
+				_key: string
+		  } & ProductContent)
 	>
 }
 
@@ -1190,77 +1285,6 @@ export type Form = {
 	_rev: string
 	identifier?: string
 	endpoint?: string
-}
-
-export type Page = {
-	_id: string
-	_type: 'page'
-	_createdAt: string
-	_updatedAt: string
-	_rev: string
-	title?: string
-	modules?: Array<
-		| ({
-				_key: string
-		  } & AccordionList)
-		| ({
-				_key: string
-		  } & BlogIndex)
-		| ({
-				_key: string
-		  } & BlogPostList)
-		| ({
-				_key: string
-		  } & Breadcrumbs)
-		| ({
-				_key: string
-		  } & Callout)
-		| ({
-				_key: string
-		  } & CardList)
-		| ({
-				_key: string
-		  } & CustomHtml)
-		| ({
-				_key: string
-		  } & FormModule)
-		| ({
-				_key: string
-		  } & HeroCover)
-		| ({
-				_key: string
-		  } & HeroSplit)
-		| ({
-				_key: string
-		  } & LogoList)
-		| ({
-				_key: string
-		  } & PersonList)
-		| ({
-				_key: string
-		  } & Prose)
-		| ({
-				_key: string
-		  } & QuoteList)
-		| ({
-				_key: string
-		  } & SearchModule)
-		| ({
-				_key: string
-		  } & StatList)
-		| ({
-				_key: string
-		  } & StepList)
-	>
-	metadata?: Metadata
-}
-
-export type Code = {
-	_type: 'code'
-	language?: string
-	filename?: string
-	code?: string
-	highlightedLines?: Array<number>
 }
 
 export type NavigationReference = {
@@ -1277,6 +1301,7 @@ export type Site = {
 	_updatedAt: string
 	_rev: string
 	title?: string
+	title_en?: string
 	logo?: {
 		title?: string
 		image?: {
@@ -1311,6 +1336,16 @@ export type Site = {
 		crop?: SanityImageCrop
 		_type: 'image'
 	}
+	footerImages?: Array<{
+		asset?: SanityImageAssetReference
+		media?: unknown
+		hotspot?: SanityImageHotspot
+		crop?: SanityImageCrop
+		alt?: string
+		href?: string
+		_type: 'image'
+		_key: string
+	}>
 	header?: NavigationReference
 	ctas?: Array<
 		{
@@ -1318,8 +1353,72 @@ export type Site = {
 		} & Cta
 	>
 	footer?: NavigationReference
+	footerSecondary?: NavigationReference
 	social?: NavigationReference
+	header_en?: NavigationReference
+	ctas_en?: Array<
+		{
+			_key: string
+		} & Cta
+	>
+	footer_en?: NavigationReference
+	footerSecondary_en?: NavigationReference
+	social_en?: NavigationReference
+	footerContent?: Array<{
+		children?: Array<{
+			marks?: Array<string>
+			text?: string
+			_type: 'span'
+			_key: string
+		}>
+		style?: 'normal'
+		listItem?: never
+		markDefs?: Array<{
+			href?: string
+			_type: 'link'
+			_key: string
+		}>
+		level?: number
+		_type: 'block'
+		_key: string
+	}>
 	copyright?: Array<{
+		children?: Array<{
+			marks?: Array<string>
+			text?: string
+			_type: 'span'
+			_key: string
+		}>
+		style?: 'normal'
+		listItem?: never
+		markDefs?: Array<{
+			href?: string
+			_type: 'link'
+			_key: string
+		}>
+		level?: number
+		_type: 'block'
+		_key: string
+	}>
+	footerContent_en?: Array<{
+		children?: Array<{
+			marks?: Array<string>
+			text?: string
+			_type: 'span'
+			_key: string
+		}>
+		style?: 'normal'
+		listItem?: never
+		markDefs?: Array<{
+			href?: string
+			_type: 'link'
+			_key: string
+		}>
+		level?: number
+		_type: 'block'
+		_key: string
+	}>
+	copyright_en?: Array<{
 		children?: Array<{
 			marks?: Array<string>
 			text?: string
@@ -1346,6 +1445,7 @@ export type Navigation = {
 	_updatedAt: string
 	_rev: string
 	title?: string
+	language?: 'hr' | 'en'
 	blurb?: Array<{
 		children?: Array<{
 			marks?: Array<string>
@@ -1523,6 +1623,298 @@ export type MediaTag = {
 	name?: Slug
 }
 
+export type Code = {
+	_type: 'code'
+	language?: string
+	filename?: string
+	code?: string
+	highlightedLines?: Array<number>
+}
+
+export type TranslationMetadata = {
+	_id: string
+	_type: 'translation.metadata'
+	_createdAt: string
+	_updatedAt: string
+	_rev: string
+	translations?: InternationalizedArrayReference
+	schemaTypes?: Array<string>
+}
+
+export type InternationalizedArrayReference = Array<
+	{
+		_key: string
+	} & InternationalizedArrayReferenceValue
+>
+
+export type InternationalizedArrayReferenceValue = {
+	_type: 'internationalizedArrayReferenceValue'
+	value?: PageReference | BlogPostReference | ProductReference
+	language?: string
+}
+
+export type ProductCategoryReference = {
+	_ref: string
+	_type: 'reference'
+	_weak?: boolean
+	[internalGroqTypeReferenceTo]?: 'product.category'
+}
+
+export type SanityFileAssetReference = {
+	_ref: string
+	_type: 'reference'
+	_weak?: boolean
+	[internalGroqTypeReferenceTo]?: 'sanity.fileAsset'
+}
+
+export type Product = {
+	_id: string
+	_type: 'product'
+	_createdAt: string
+	_updatedAt: string
+	_rev: string
+	language?: string
+	title?: string
+	category?: ProductCategoryReference
+	image?: {
+		asset?: SanityImageAssetReference
+		media?: unknown
+		hotspot?: SanityImageHotspot
+		crop?: SanityImageCrop
+		alt?: string
+		_type: 'image'
+	}
+	description?: Array<{
+		children?: Array<{
+			marks?: Array<string>
+			text?: string
+			_type: 'span'
+			_key: string
+		}>
+		style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote'
+		listItem?: 'bullet' | 'number'
+		markDefs?: Array<{
+			href?: string
+			_type: 'link'
+			_key: string
+		}>
+		level?: number
+		_type: 'block'
+		_key: string
+	}>
+	table?: Array<{
+		code?: string
+		format?: string
+		_type: 'row'
+		_key: string
+	}>
+	technicalDataSheet?: {
+		asset?: SanityFileAssetReference
+		media?: unknown
+		_type: 'file'
+	}
+	safetyDataSheet?: {
+		asset?: SanityFileAssetReference
+		media?: unknown
+		_type: 'file'
+	}
+	metadata?: Metadata
+}
+
+export type ProductCategory = {
+	_id: string
+	_type: 'product.category'
+	_createdAt: string
+	_updatedAt: string
+	_rev: string
+	title?: string
+	slug?: Slug
+	title_en?: string
+	slug_en?: Slug
+}
+
+export type BlogCategoryReference = {
+	_ref: string
+	_type: 'reference'
+	_weak?: boolean
+	[internalGroqTypeReferenceTo]?: 'blog.category'
+}
+
+export type BlogPost = {
+	_id: string
+	_type: 'blog.post'
+	_createdAt: string
+	_updatedAt: string
+	_rev: string
+	language?: string
+	title?: string
+	content?: Array<
+		| {
+				children?: Array<{
+					marks?: Array<string>
+					text?: string
+					_type: 'span'
+					_key: string
+				}>
+				style?:
+					| 'normal'
+					| 'h1'
+					| 'h2'
+					| 'h3'
+					| 'h4'
+					| 'h5'
+					| 'h6'
+					| 'blockquote'
+				listItem?: 'bullet' | 'number'
+				markDefs?: Array<{
+					href?: string
+					_type: 'link'
+					_key: string
+				}>
+				level?: number
+				_type: 'block'
+				_key: string
+		  }
+		| {
+				asset?: SanityImageAssetReference
+				media?: unknown
+				hotspot?: SanityImageHotspot
+				crop?: SanityImageCrop
+				alt?: string
+				figcaption?: Array<{
+					children?: Array<{
+						marks?: Array<string>
+						text?: string
+						_type: 'span'
+						_key: string
+					}>
+					style?: 'normal'
+					listItem?: 'bullet' | 'number'
+					markDefs?: Array<{
+						href?: string
+						_type: 'link'
+						_key: string
+					}>
+					level?: number
+					_type: 'block'
+					_key: string
+				}>
+				_type: 'image'
+				_key: string
+		  }
+		| ({
+				_key: string
+		  } & Code)
+		| ({
+				_key: string
+		  } & CustomHtml)
+	>
+	publishDate?: string
+	categories?: Array<
+		{
+			_key: string
+		} & BlogCategoryReference
+	>
+	author?: PersonReference
+	metadata?: Metadata
+}
+
+export type Person = {
+	_id: string
+	_type: 'person'
+	_createdAt: string
+	_updatedAt: string
+	_rev: string
+	name?: string
+	title?: string
+	image?: {
+		asset?: SanityImageAssetReference
+		media?: unknown
+		hotspot?: SanityImageHotspot
+		crop?: SanityImageCrop
+		_type: 'image'
+	}
+}
+
+export type Page = {
+	_id: string
+	_type: 'page'
+	_createdAt: string
+	_updatedAt: string
+	_rev: string
+	language?: string
+	title?: string
+	modules?: Array<
+		| ({
+				_key: string
+		  } & AccordionList)
+		| ({
+				_key: string
+		  } & BlogIndex)
+		| ({
+				_key: string
+		  } & BlogPostList)
+		| ({
+				_key: string
+		  } & Banner)
+		| ({
+				_key: string
+		  } & Breadcrumbs)
+		| ({
+				_key: string
+		  } & Callout)
+		| ({
+				_key: string
+		  } & CardList)
+		| ({
+				_key: string
+		  } & CategoryGrid)
+		| ({
+				_key: string
+		  } & CustomHtml)
+		| ({
+				_key: string
+		  } & FeatureSplit)
+		| ({
+				_key: string
+		  } & FormModule)
+		| ({
+				_key: string
+		  } & HeroCover)
+		| ({
+				_key: string
+		  } & HeroSplit)
+		| ({
+				_key: string
+		  } & LogoList)
+		| ({
+				_key: string
+		  } & PersonList)
+		| ({
+				_key: string
+		  } & ProductList)
+		| ({
+				_key: string
+		  } & Prose)
+		| ({
+				_key: string
+		  } & QuoteList)
+		| ({
+				_key: string
+		  } & SearchModule)
+		| ({
+				_key: string
+		  } & SplitColumns)
+		| ({
+				_key: string
+		  } & StatList)
+		| ({
+				_key: string
+		  } & StepList)
+	>
+	metadata?: Metadata
+}
+
 export type SanityImagePaletteSwatch = {
 	_type: 'sanity.imagePaletteSwatch'
 	background?: string
@@ -1624,13 +2016,18 @@ export type AllSanitySchemaTypes =
 	| SanityImageAssetReference
 	| CardImage
 	| Icon
+	| CategoryImage
 	| Mobile
+	| ColumnImage
 	| StepList
 	| StatList
+	| SplitColumns
 	| SearchModule
 	| QuoteReference
 	| QuoteList
 	| Prose
+	| ProductList
+	| ProductContent
 	| PersonReference
 	| PersonList
 	| LogoReference
@@ -1639,10 +2036,13 @@ export type AllSanitySchemaTypes =
 	| HeroCover
 	| FormReference
 	| FormModule
+	| FeatureSplit
 	| CustomHtml
+	| CategoryGrid
 	| CardList
 	| Callout
 	| Breadcrumbs
+	| Banner
 	| BlogPostList
 	| BlogPostContent
 	| BlogIndex
@@ -1653,6 +2053,8 @@ export type AllSanitySchemaTypes =
 	| Megamenu
 	| LinkList
 	| PageReference
+	| BlogPostReference
+	| ProductReference
 	| Link
 	| Cta
 	| Quote
@@ -1662,13 +2064,8 @@ export type AllSanitySchemaTypes =
 	| BlogCategory
 	| Slug
 	| Redirect
-	| BlogCategoryReference
-	| BlogPost
-	| Person
 	| GlobalModule
 	| Form
-	| Page
-	| Code
 	| NavigationReference
 	| Site
 	| Navigation
@@ -1686,6 +2083,18 @@ export type AllSanitySchemaTypes =
 	| SanityAssistInstruction
 	| SanityAssistSchemaTypeField
 	| MediaTag
+	| Code
+	| TranslationMetadata
+	| InternationalizedArrayReference
+	| InternationalizedArrayReferenceValue
+	| ProductCategoryReference
+	| SanityFileAssetReference
+	| Product
+	| ProductCategory
+	| BlogCategoryReference
+	| BlogPost
+	| Person
+	| Page
 	| SanityImagePaletteSwatch
 	| SanityImagePalette
 	| SanityImageDimensions
@@ -1697,13 +2106,14 @@ export type AllSanitySchemaTypes =
 
 // Source: src/app/(frontend)/[[...slug]]/page.tsx
 // Variable: PAGE_QUERY
-// Query: *[_type == 'page' && metadata.slug.current == $slug][0]{		...,		'modules': (			// global moddules (before)			*[_type == 'global-module' && path == '*' && 	select(		defined(excludePaths) => count(excludePaths[string::startsWith($slug, @)]) == 0,		true	)].before[]{ 	...,	ctas[]{		...,		link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }	},	sidebar{ 	...,	modules[]{		...,		_type == 'callout' => {			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	} },	_type == 'form-module' => {		form->	},	_type == 'breadcrumbs' => {		crumbs[]{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }	},	_type == 'card-list' => {		cards[]{			...,			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	},	_type == 'logo-list' => {		logos[]->	},	_type == 'person-list' => {		people[]->	},	_type == 'prose' => {		content[]{			...,			_type == 'image' => {				...,				asset->{					...,					metadata				}			}		},		'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{			style,			'text': pt::text(@)		}	},	_type == 'quote-list' => {		quotes[]->	}, }			// path modules (before)			+ *[_type == 'global-module' && path != '*' && 	string::startsWith($slug, path)	&& 	select(		defined(excludePaths) => count(excludePaths[string::startsWith($slug, @)]) == 0,		true	)].before[]{ 	...,	ctas[]{		...,		link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }	},	sidebar{ 	...,	modules[]{		...,		_type == 'callout' => {			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	} },	_type == 'form-module' => {		form->	},	_type == 'breadcrumbs' => {		crumbs[]{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }	},	_type == 'card-list' => {		cards[]{			...,			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	},	_type == 'logo-list' => {		logos[]->	},	_type == 'person-list' => {		people[]->	},	_type == 'prose' => {		content[]{			...,			_type == 'image' => {				...,				asset->{					...,					metadata				}			}		},		'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{			style,			'text': pt::text(@)		}	},	_type == 'quote-list' => {		quotes[]->	}, }			// page modules			+ modules[]{ 	...,	ctas[]{		...,		link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }	},	sidebar{ 	...,	modules[]{		...,		_type == 'callout' => {			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	} },	_type == 'form-module' => {		form->	},	_type == 'breadcrumbs' => {		crumbs[]{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }	},	_type == 'card-list' => {		cards[]{			...,			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	},	_type == 'logo-list' => {		logos[]->	},	_type == 'person-list' => {		people[]->	},	_type == 'prose' => {		content[]{			...,			_type == 'image' => {				...,				asset->{					...,					metadata				}			}		},		'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{			style,			'text': pt::text(@)		}	},	_type == 'quote-list' => {		quotes[]->	}, }			// path modules (after)			+ *[_type == 'global-module' && path != '*' && 	string::startsWith($slug, path)	&& 	select(		defined(excludePaths) => count(excludePaths[string::startsWith($slug, @)]) == 0,		true	)].after[]{ 	...,	ctas[]{		...,		link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }	},	sidebar{ 	...,	modules[]{		...,		_type == 'callout' => {			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	} },	_type == 'form-module' => {		form->	},	_type == 'breadcrumbs' => {		crumbs[]{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }	},	_type == 'card-list' => {		cards[]{			...,			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	},	_type == 'logo-list' => {		logos[]->	},	_type == 'person-list' => {		people[]->	},	_type == 'prose' => {		content[]{			...,			_type == 'image' => {				...,				asset->{					...,					metadata				}			}		},		'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{			style,			'text': pt::text(@)		}	},	_type == 'quote-list' => {		quotes[]->	}, }			// global moddules (after)			+ *[_type == 'global-module' && path == '*' && 	select(		defined(excludePaths) => count(excludePaths[string::startsWith($slug, @)]) == 0,		true	)].after[]{ 	...,	ctas[]{		...,		link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }	},	sidebar{ 	...,	modules[]{		...,		_type == 'callout' => {			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	} },	_type == 'form-module' => {		form->	},	_type == 'breadcrumbs' => {		crumbs[]{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }	},	_type == 'card-list' => {		cards[]{			...,			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	},	_type == 'logo-list' => {		logos[]->	},	_type == 'person-list' => {		people[]->	},	_type == 'prose' => {		content[]{			...,			_type == 'image' => {				...,				asset->{					...,					metadata				}			}		},		'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{			style,			'text': pt::text(@)		}	},	_type == 'quote-list' => {		quotes[]->	}, }		)	}
+// Query: *[_type == 'page'		&& metadata.slug.current == $slug		&& coalesce(language, $defaultLang) == $lang	][0]{		...,		'modules': (			// global modules (before)			*[_type == 'global-module' && path == '*' && 	select(		defined(excludePaths) => count(excludePaths[string::startsWith($slug, @)]) == 0,		true	)].before[]{ 	...,	ctas[]{		...,		link{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }	},	sidebar{ 	...,	modules[]{		...,		_type == 'callout' => {			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }			}		}	} },	_type == 'form-module' => {		form->	},	_type == 'breadcrumbs' => {		crumbs[]{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }	},	_type == 'product-content' => {		quoteLink{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }	},	_type == 'card-list' => {		cards[]{			...,			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }			}		}	},	_type == 'category-grid' => {		categories[]{			...,			link{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }		}	},	_type == 'split-columns' => {		columns[]{			...,			link{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }		}	},	_type == 'logo-list' => {		logos[]->	},	_type == 'person-list' => {		people[]->	},	_type == 'prose' => {		content[]{			...,			_type == 'image' => {				...,				asset->{					...,					metadata				}			}		},		'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{			style,			'text': pt::text(@)		}	},	_type == 'quote-list' => {		quotes[]->	}, }			// path modules (before)			+ *[_type == 'global-module' && path != '*' && 	string::startsWith($slug, path)	&& 	select(		defined(excludePaths) => count(excludePaths[string::startsWith($slug, @)]) == 0,		true	)].before[]{ 	...,	ctas[]{		...,		link{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }	},	sidebar{ 	...,	modules[]{		...,		_type == 'callout' => {			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }			}		}	} },	_type == 'form-module' => {		form->	},	_type == 'breadcrumbs' => {		crumbs[]{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }	},	_type == 'product-content' => {		quoteLink{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }	},	_type == 'card-list' => {		cards[]{			...,			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }			}		}	},	_type == 'category-grid' => {		categories[]{			...,			link{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }		}	},	_type == 'split-columns' => {		columns[]{			...,			link{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }		}	},	_type == 'logo-list' => {		logos[]->	},	_type == 'person-list' => {		people[]->	},	_type == 'prose' => {		content[]{			...,			_type == 'image' => {				...,				asset->{					...,					metadata				}			}		},		'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{			style,			'text': pt::text(@)		}	},	_type == 'quote-list' => {		quotes[]->	}, }			// page modules			+ modules[]{ 	...,	ctas[]{		...,		link{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }	},	sidebar{ 	...,	modules[]{		...,		_type == 'callout' => {			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }			}		}	} },	_type == 'form-module' => {		form->	},	_type == 'breadcrumbs' => {		crumbs[]{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }	},	_type == 'product-content' => {		quoteLink{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }	},	_type == 'card-list' => {		cards[]{			...,			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }			}		}	},	_type == 'category-grid' => {		categories[]{			...,			link{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }		}	},	_type == 'split-columns' => {		columns[]{			...,			link{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }		}	},	_type == 'logo-list' => {		logos[]->	},	_type == 'person-list' => {		people[]->	},	_type == 'prose' => {		content[]{			...,			_type == 'image' => {				...,				asset->{					...,					metadata				}			}		},		'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{			style,			'text': pt::text(@)		}	},	_type == 'quote-list' => {		quotes[]->	}, }			// path modules (after)			+ *[_type == 'global-module' && path != '*' && 	string::startsWith($slug, path)	&& 	select(		defined(excludePaths) => count(excludePaths[string::startsWith($slug, @)]) == 0,		true	)].after[]{ 	...,	ctas[]{		...,		link{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }	},	sidebar{ 	...,	modules[]{		...,		_type == 'callout' => {			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }			}		}	} },	_type == 'form-module' => {		form->	},	_type == 'breadcrumbs' => {		crumbs[]{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }	},	_type == 'product-content' => {		quoteLink{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }	},	_type == 'card-list' => {		cards[]{			...,			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }			}		}	},	_type == 'category-grid' => {		categories[]{			...,			link{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }		}	},	_type == 'split-columns' => {		columns[]{			...,			link{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }		}	},	_type == 'logo-list' => {		logos[]->	},	_type == 'person-list' => {		people[]->	},	_type == 'prose' => {		content[]{			...,			_type == 'image' => {				...,				asset->{					...,					metadata				}			}		},		'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{			style,			'text': pt::text(@)		}	},	_type == 'quote-list' => {		quotes[]->	}, }			// global modules (after)			+ *[_type == 'global-module' && path == '*' && 	select(		defined(excludePaths) => count(excludePaths[string::startsWith($slug, @)]) == 0,		true	)].after[]{ 	...,	ctas[]{		...,		link{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }	},	sidebar{ 	...,	modules[]{		...,		_type == 'callout' => {			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }			}		}	} },	_type == 'form-module' => {		form->	},	_type == 'breadcrumbs' => {		crumbs[]{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }	},	_type == 'product-content' => {		quoteLink{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }	},	_type == 'card-list' => {		cards[]{			...,			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }			}		}	},	_type == 'category-grid' => {		categories[]{			...,			link{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }		}	},	_type == 'split-columns' => {		columns[]{			...,			link{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }		}	},	_type == 'logo-list' => {		logos[]->	},	_type == 'person-list' => {		people[]->	},	_type == 'prose' => {		content[]{			...,			_type == 'image' => {				...,				asset->{					...,					metadata				}			}		},		'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{			style,			'text': pt::text(@)		}	},	_type == 'quote-list' => {		quotes[]->	}, }		),			'translations': *[_type == 'translation.metadata' && references(^._id)].translations[]{		'value': value->{			_id,			_type,			language,			'slug': metadata.slug.current		}	}	}
 export type PAGE_QUERY_RESULT = {
 	_id: string
 	_type: 'page'
 	_createdAt: string
 	_updatedAt: string
 	_rev: string
+	language?: string
 	title?: string
 	modules: Array<
 		| {
@@ -1744,7 +2154,7 @@ export type PAGE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?: BlogPostReference | PageReference | ProductReference
 								external?: string
 								params?: string
 						  }
@@ -1752,11 +2162,29 @@ export type PAGE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -1798,6 +2226,90 @@ export type PAGE_QUERY_RESULT = {
 				exclusive?: boolean
 				enableSchema?: boolean
 				layout?: 'horizontal' | 'vertical'
+				sidebar: null
+		  }
+		| {
+				_key: string
+				_type: 'banner'
+				attributes?: ModuleAttributes
+				pretitle?: string
+				title?: string
+				intro?: Array<
+					| ({
+							_key: string
+					  } & CustomHtml)
+					| {
+							children?: Array<{
+								marks?: Array<string>
+								text?: string
+								_type: 'span'
+								_key: string
+							}>
+							style?:
+								| 'blockquote'
+								| 'h1'
+								| 'h2'
+								| 'h3'
+								| 'h4'
+								| 'h5'
+								| 'h6'
+								| 'normal'
+							listItem?: 'bullet' | 'number'
+							markDefs?: Array<{
+								href?: string
+								_type: 'link'
+								_key: string
+							}>
+							level?: number
+							_type: 'block'
+							_key: string
+					  }
+				>
+				ctas: Array<{
+					_key: string
+					_type: 'cta'
+					link:
+						| {
+								_type: 'link'
+								label?: string
+								type?: 'external' | 'internal'
+								internal?: BlogPostReference | PageReference | ProductReference
+								external?: string
+								params?: string
+						  }
+						| {
+								_type: 'link'
+								label?: string
+								type?: 'external' | 'internal'
+								internal:
+									| {
+											_type: 'blog.post'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| null
+								external?: string
+								params?: string
+						  }
+						| null
+					theme?: 'action-outline' | 'action' | 'ghost' | 'link'
+				}> | null
 				sidebar: null
 		  }
 		| {
@@ -1895,7 +2407,10 @@ export type PAGE_QUERY_RESULT = {
 												_type: 'link'
 												label?: string
 												type?: 'external' | 'internal'
-												internal?: PageReference
+												internal?:
+													| BlogPostReference
+													| PageReference
+													| ProductReference
 												external?: string
 												params?: string
 										  }
@@ -1903,11 +2418,29 @@ export type PAGE_QUERY_RESULT = {
 												_type: 'link'
 												label?: string
 												type?: 'external' | 'internal'
-												internal: {
-													_type: 'page'
-													title: string | null
-													slug: string | '/' | null
-												} | null
+												internal:
+													| {
+															_type: 'blog.post'
+															_id: string
+															title: string | null
+															language: string | null
+															slug: string | '/' | null
+													  }
+													| {
+															_type: 'page'
+															_id: string
+															title: string | null
+															language: string | null
+															slug: string | '/' | null
+													  }
+													| {
+															_type: 'product'
+															_id: string
+															title: string | null
+															language: string | null
+															slug: string | '/' | null
+													  }
+													| null
 												external?: string
 												params?: string
 										  }
@@ -1970,7 +2503,7 @@ export type PAGE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?: BlogPostReference | PageReference | ProductReference
 								external?: string
 								params?: string
 						  }
@@ -1978,11 +2511,29 @@ export type PAGE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -2003,7 +2554,7 @@ export type PAGE_QUERY_RESULT = {
 							_type: 'link'
 							label?: string
 							type?: 'external' | 'internal'
-							internal?: PageReference
+							internal?: BlogPostReference | PageReference | ProductReference
 							external?: string
 							params?: string
 					  }
@@ -2012,11 +2563,29 @@ export type PAGE_QUERY_RESULT = {
 							_type: 'link'
 							label?: string
 							type?: 'external' | 'internal'
-							internal: {
-								_type: 'page'
-								title: string | null
-								slug: string | '/' | null
-							} | null
+							internal:
+								| {
+										_type: 'blog.post'
+										_id: string
+										title: string | null
+										language: string | null
+										slug: string | '/' | null
+								  }
+								| {
+										_type: 'page'
+										_id: string
+										title: string | null
+										language: string | null
+										slug: string | '/' | null
+								  }
+								| {
+										_type: 'product'
+										_id: string
+										title: string | null
+										language: string | null
+										slug: string | '/' | null
+								  }
+								| null
 							external?: string
 							params?: string
 					  }
@@ -2077,7 +2646,7 @@ export type PAGE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?: BlogPostReference | PageReference | ProductReference
 								external?: string
 								params?: string
 						  }
@@ -2085,11 +2654,29 @@ export type PAGE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -2178,7 +2765,10 @@ export type PAGE_QUERY_RESULT = {
 									_type: 'link'
 									label?: string
 									type?: 'external' | 'internal'
-									internal?: PageReference
+									internal?:
+										| BlogPostReference
+										| PageReference
+										| ProductReference
 									external?: string
 									params?: string
 							  }
@@ -2186,11 +2776,29 @@ export type PAGE_QUERY_RESULT = {
 									_type: 'link'
 									label?: string
 									type?: 'external' | 'internal'
-									internal: {
-										_type: 'page'
-										title: string | null
-										slug: string | '/' | null
-									} | null
+									internal:
+										| {
+												_type: 'blog.post'
+												_id: string
+												title: string | null
+												language: string | null
+												slug: string | '/' | null
+										  }
+										| {
+												_type: 'page'
+												_id: string
+												title: string | null
+												language: string | null
+												slug: string | '/' | null
+										  }
+										| {
+												_type: 'product'
+												_id: string
+												title: string | null
+												language: string | null
+												slug: string | '/' | null
+										  }
+										| null
 									external?: string
 									params?: string
 							  }
@@ -2208,7 +2816,7 @@ export type PAGE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?: BlogPostReference | PageReference | ProductReference
 								external?: string
 								params?: string
 						  }
@@ -2216,11 +2824,29 @@ export type PAGE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -2233,11 +2859,91 @@ export type PAGE_QUERY_RESULT = {
 		  }
 		| {
 				_key: string
+				_type: 'category-grid'
+				attributes?: ModuleAttributes
+				pretitle?: string
+				heading?: string
+				categories: Array<{
+					title?: string
+					description?: string
+					image?: CategoryImage
+					link:
+						| {
+								_type: 'link'
+								label?: string
+								type?: 'external' | 'internal'
+								internal?: BlogPostReference | PageReference | ProductReference
+								external?: string
+								params?: string
+						  }
+						| {
+								_type: 'link'
+								label?: string
+								type?: 'external' | 'internal'
+								internal:
+									| {
+											_type: 'blog.post'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| null
+								external?: string
+								params?: string
+						  }
+						| null
+					_type: 'category'
+					_key: string
+				}> | null
+				ctas: null
+				sidebar: null
+		  }
+		| {
+				_key: string
 				_type: 'custom-html'
 				attributes?: ModuleAttributes
 				html?: Code
 				css?: Code
 				className?: string
+				ctas: null
+				sidebar: null
+		  }
+		| {
+				_key: string
+				_type: 'feature-split'
+				attributes?: ModuleAttributes
+				pretitle?: string
+				title?: string
+				items?: Array<{
+					header?: string
+					text?: string
+					_type: 'item'
+					_key: string
+				}>
+				image?: {
+					asset?: SanityImageAssetReference
+					media?: unknown
+					hotspot?: SanityImageHotspot
+					crop?: SanityImageCrop
+					alt?: string
+					loading?: 'eager' | 'lazy'
+					_type: 'image'
+				}
 				ctas: null
 				sidebar: null
 		  }
@@ -2328,7 +3034,7 @@ export type PAGE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?: BlogPostReference | PageReference | ProductReference
 								external?: string
 								params?: string
 						  }
@@ -2336,11 +3042,29 @@ export type PAGE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -2360,6 +3084,8 @@ export type PAGE_QUERY_RESULT = {
 				}
 				verticalAlign?: 'bottom' | 'center' | 'top'
 				textAlign?: 'center' | 'left' | 'right'
+				maxHeight?: string
+				backgroundOverlay?: boolean
 				sidebar: null
 		  }
 		| {
@@ -2406,7 +3132,7 @@ export type PAGE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?: BlogPostReference | PageReference | ProductReference
 								external?: string
 								params?: string
 						  }
@@ -2414,17 +3140,36 @@ export type PAGE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
 						| null
 					theme?: 'action-outline' | 'action' | 'ghost' | 'link'
 				}> | null
+				layout?: 'image-left' | 'image-right'
 				image?: {
 					asset?: SanityImageAssetReference
 					media?: unknown
@@ -2432,7 +3177,6 @@ export type PAGE_QUERY_RESULT = {
 					crop?: SanityImageCrop
 					alt?: string
 					loading?: 'eager' | 'lazy'
-					onRight?: boolean
 					afterContent?: boolean
 					_type: 'image'
 				}
@@ -2553,6 +3297,89 @@ export type PAGE_QUERY_RESULT = {
 					}
 				}> | null
 				columns?: number
+				ctas: null
+				sidebar: null
+		  }
+		| {
+				_key: string
+				_type: 'product-content'
+				attributes?: ModuleAttributes
+				quoteLink:
+					| {
+							_type: 'link'
+							label?: string
+							type?: 'external' | 'internal'
+							internal?: BlogPostReference | PageReference | ProductReference
+							external?: string
+							params?: string
+					  }
+					| {
+							_type: 'link'
+							label?: string
+							type?: 'external' | 'internal'
+							internal:
+								| {
+										_type: 'blog.post'
+										_id: string
+										title: string | null
+										language: string | null
+										slug: string | '/' | null
+								  }
+								| {
+										_type: 'page'
+										_id: string
+										title: string | null
+										language: string | null
+										slug: string | '/' | null
+								  }
+								| {
+										_type: 'product'
+										_id: string
+										title: string | null
+										language: string | null
+										slug: string | '/' | null
+								  }
+								| null
+							external?: string
+							params?: string
+					  }
+					| null
+				showRelated?: boolean
+				relatedLimit?: number
+				ctas: null
+				sidebar: null
+		  }
+		| {
+				_key: string
+				_type: 'product-list'
+				attributes?: ModuleAttributes
+				intro?: Array<{
+					children?: Array<{
+						marks?: Array<string>
+						text?: string
+						_type: 'span'
+						_key: string
+					}>
+					style?:
+						| 'blockquote'
+						| 'h1'
+						| 'h2'
+						| 'h3'
+						| 'h4'
+						| 'h5'
+						| 'h6'
+						| 'normal'
+					listItem?: 'bullet' | 'number'
+					markDefs?: Array<{
+						href?: string
+						_type: 'link'
+						_key: string
+					}>
+					level?: number
+					_type: 'block'
+					_key: string
+				}>
+				productsPerPage?: number
 				ctas: null
 				sidebar: null
 		  }
@@ -2709,7 +3536,10 @@ export type PAGE_QUERY_RESULT = {
 												_type: 'link'
 												label?: string
 												type?: 'external' | 'internal'
-												internal?: PageReference
+												internal?:
+													| BlogPostReference
+													| PageReference
+													| ProductReference
 												external?: string
 												params?: string
 										  }
@@ -2717,11 +3547,29 @@ export type PAGE_QUERY_RESULT = {
 												_type: 'link'
 												label?: string
 												type?: 'external' | 'internal'
-												internal: {
-													_type: 'page'
-													title: string | null
-													slug: string | '/' | null
-												} | null
+												internal:
+													| {
+															_type: 'blog.post'
+															_id: string
+															title: string | null
+															language: string | null
+															slug: string | '/' | null
+													  }
+													| {
+															_type: 'page'
+															_id: string
+															title: string | null
+															language: string | null
+															slug: string | '/' | null
+													  }
+													| {
+															_type: 'product'
+															_id: string
+															title: string | null
+															language: string | null
+															slug: string | '/' | null
+													  }
+													| null
 												external?: string
 												params?: string
 										  }
@@ -2876,6 +3724,60 @@ export type PAGE_QUERY_RESULT = {
 		  }
 		| {
 				_key: string
+				_type: 'split-columns'
+				attributes?: ModuleAttributes
+				columns: Array<{
+					image?: ColumnImage
+					title?: string
+					description?: string
+					link:
+						| {
+								_type: 'link'
+								label?: string
+								type?: 'external' | 'internal'
+								internal?: BlogPostReference | PageReference | ProductReference
+								external?: string
+								params?: string
+						  }
+						| {
+								_type: 'link'
+								label?: string
+								type?: 'external' | 'internal'
+								internal:
+									| {
+											_type: 'blog.post'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| null
+								external?: string
+								params?: string
+						  }
+						| null
+					_type: 'column'
+					_key: string
+				}> | null
+				ctas: null
+				sidebar: null
+		  }
+		| {
+				_key: string
 				_type: 'stat-list'
 				attributes?: ModuleAttributes
 				eyebrow?: string
@@ -2978,7 +3880,7 @@ export type PAGE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?: BlogPostReference | PageReference | ProductReference
 								external?: string
 								params?: string
 						  }
@@ -2986,11 +3888,29 @@ export type PAGE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -3038,6 +3958,28 @@ export type PAGE_QUERY_RESULT = {
 		| null
 	> | null
 	metadata?: Metadata
+	translations: Array<{
+		value:
+			| {
+					_id: string
+					_type: 'blog.post'
+					language: string | null
+					slug: string | null
+			  }
+			| {
+					_id: string
+					_type: 'page'
+					language: string | null
+					slug: string | null
+			  }
+			| {
+					_id: string
+					_type: 'product'
+					language: string | null
+					slug: string | null
+			  }
+			| null
+	} | null>
 } | null
 
 // Source: src/app/(frontend)/api/md/[...slug]/route.ts
@@ -3065,15 +4007,16 @@ export type OG_QUERY_RESULT =
 	  }
 	| null
 
-// Source: src/app/(frontend)/blog/[slug]/page.tsx
+// Source: src/app/(frontend)/blog/[...slug]/page.tsx
 // Variable: BLOG_POST_QUERY
-// Query: *[_type == 'blog.post' && metadata.slug.current == $slug][0]{	...,	content[]{		...,		_type == 'image' => {			...,			asset->		}	},	'contentPlainText': pt::text(content),	'readTime': length(string::split(pt::text(content), ' ')) / 200,	'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{		style,		'text': pt::text(@)	},	categories[]->{		title,		slug	},	author->{		name,		image{			...,			asset->		}	},	'modules': (		// global modules (before)		*[_type == 'global-module' && path == '*' && 	select(		defined(excludePaths) => count(excludePaths[string::startsWith($slug, @)]) == 0,		true	)].before[]{ 	...,	ctas[]{		...,		link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }	},	sidebar{ 	...,	modules[]{		...,		_type == 'callout' => {			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	} },	_type == 'form-module' => {		form->	},	_type == 'breadcrumbs' => {		crumbs[]{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }	},	_type == 'card-list' => {		cards[]{			...,			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	},	_type == 'logo-list' => {		logos[]->	},	_type == 'person-list' => {		people[]->	},	_type == 'prose' => {		content[]{			...,			_type == 'image' => {				...,				asset->{					...,					metadata				}			}		},		'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{			style,			'text': pt::text(@)		}	},	_type == 'quote-list' => {		quotes[]->	}, }		// path modules (before)		+ *[_type == 'global-module' && path == $blogDir].before[]{ 	...,	ctas[]{		...,		link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }	},	sidebar{ 	...,	modules[]{		...,		_type == 'callout' => {			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	} },	_type == 'form-module' => {		form->	},	_type == 'breadcrumbs' => {		crumbs[]{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }	},	_type == 'card-list' => {		cards[]{			...,			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	},	_type == 'logo-list' => {		logos[]->	},	_type == 'person-list' => {		people[]->	},	_type == 'prose' => {		content[]{			...,			_type == 'image' => {				...,				asset->{					...,					metadata				}			}		},		'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{			style,			'text': pt::text(@)		}	},	_type == 'quote-list' => {		quotes[]->	}, }		// path modules (after)		+ *[_type == 'global-module' && path == $blogDir].after[]{ 	...,	ctas[]{		...,		link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }	},	sidebar{ 	...,	modules[]{		...,		_type == 'callout' => {			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	} },	_type == 'form-module' => {		form->	},	_type == 'breadcrumbs' => {		crumbs[]{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }	},	_type == 'card-list' => {		cards[]{			...,			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	},	_type == 'logo-list' => {		logos[]->	},	_type == 'person-list' => {		people[]->	},	_type == 'prose' => {		content[]{			...,			_type == 'image' => {				...,				asset->{					...,					metadata				}			}		},		'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{			style,			'text': pt::text(@)		}	},	_type == 'quote-list' => {		quotes[]->	}, }		// global modules (after)		+ *[_type == 'global-module' && path == '*' && 	select(		defined(excludePaths) => count(excludePaths[string::startsWith($slug, @)]) == 0,		true	)].after[]{ 	...,	ctas[]{		...,		link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }	},	sidebar{ 	...,	modules[]{		...,		_type == 'callout' => {			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	} },	_type == 'form-module' => {		form->	},	_type == 'breadcrumbs' => {		crumbs[]{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }	},	_type == 'card-list' => {		cards[]{			...,			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	},	_type == 'logo-list' => {		logos[]->	},	_type == 'person-list' => {		people[]->	},	_type == 'prose' => {		content[]{			...,			_type == 'image' => {				...,				asset->{					...,					metadata				}			}		},		'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{			style,			'text': pt::text(@)		}	},	_type == 'quote-list' => {		quotes[]->	}, }	)}
+// Query: *[_type == 'blog.post'	&& metadata.slug.current == $slug	&& coalesce(language, $defaultLang) == $lang][0]{	...,	content[]{		...,		_type == 'image' => {			...,			asset->		}	},	'contentPlainText': pt::text(content),	'readTime': length(string::split(pt::text(content), ' ')) / 200,	'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{		style,		'text': pt::text(@)	},	categories[]->{		title,		title_en,		slug,		slug_en	},	author->{		name,		image{			...,			asset->		}	},	'modules': (		// global modules (before)		*[_type == 'global-module' && path == '*' && 	select(		defined(excludePaths) => count(excludePaths[string::startsWith($slug, @)]) == 0,		true	)].before[]{ 	...,	ctas[]{		...,		link{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }	},	sidebar{ 	...,	modules[]{		...,		_type == 'callout' => {			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }			}		}	} },	_type == 'form-module' => {		form->	},	_type == 'breadcrumbs' => {		crumbs[]{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }	},	_type == 'product-content' => {		quoteLink{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }	},	_type == 'card-list' => {		cards[]{			...,			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }			}		}	},	_type == 'category-grid' => {		categories[]{			...,			link{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }		}	},	_type == 'split-columns' => {		columns[]{			...,			link{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }		}	},	_type == 'logo-list' => {		logos[]->	},	_type == 'person-list' => {		people[]->	},	_type == 'prose' => {		content[]{			...,			_type == 'image' => {				...,				asset->{					...,					metadata				}			}		},		'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{			style,			'text': pt::text(@)		}	},	_type == 'quote-list' => {		quotes[]->	}, }		// path modules (before)		+ *[_type == 'global-module' && path == $blogDir].before[]{ 	...,	ctas[]{		...,		link{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }	},	sidebar{ 	...,	modules[]{		...,		_type == 'callout' => {			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }			}		}	} },	_type == 'form-module' => {		form->	},	_type == 'breadcrumbs' => {		crumbs[]{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }	},	_type == 'product-content' => {		quoteLink{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }	},	_type == 'card-list' => {		cards[]{			...,			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }			}		}	},	_type == 'category-grid' => {		categories[]{			...,			link{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }		}	},	_type == 'split-columns' => {		columns[]{			...,			link{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }		}	},	_type == 'logo-list' => {		logos[]->	},	_type == 'person-list' => {		people[]->	},	_type == 'prose' => {		content[]{			...,			_type == 'image' => {				...,				asset->{					...,					metadata				}			}		},		'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{			style,			'text': pt::text(@)		}	},	_type == 'quote-list' => {		quotes[]->	}, }		// path modules (after)		+ *[_type == 'global-module' && path == $blogDir].after[]{ 	...,	ctas[]{		...,		link{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }	},	sidebar{ 	...,	modules[]{		...,		_type == 'callout' => {			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }			}		}	} },	_type == 'form-module' => {		form->	},	_type == 'breadcrumbs' => {		crumbs[]{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }	},	_type == 'product-content' => {		quoteLink{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }	},	_type == 'card-list' => {		cards[]{			...,			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }			}		}	},	_type == 'category-grid' => {		categories[]{			...,			link{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }		}	},	_type == 'split-columns' => {		columns[]{			...,			link{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }		}	},	_type == 'logo-list' => {		logos[]->	},	_type == 'person-list' => {		people[]->	},	_type == 'prose' => {		content[]{			...,			_type == 'image' => {				...,				asset->{					...,					metadata				}			}		},		'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{			style,			'text': pt::text(@)		}	},	_type == 'quote-list' => {		quotes[]->	}, }		// global modules (after)		+ *[_type == 'global-module' && path == '*' && 	select(		defined(excludePaths) => count(excludePaths[string::startsWith($slug, @)]) == 0,		true	)].after[]{ 	...,	ctas[]{		...,		link{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }	},	sidebar{ 	...,	modules[]{		...,		_type == 'callout' => {			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }			}		}	} },	_type == 'form-module' => {		form->	},	_type == 'breadcrumbs' => {		crumbs[]{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }	},	_type == 'product-content' => {		quoteLink{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }	},	_type == 'card-list' => {		cards[]{			...,			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }			}		}	},	_type == 'category-grid' => {		categories[]{			...,			link{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }		}	},	_type == 'split-columns' => {		columns[]{			...,			link{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }		}	},	_type == 'logo-list' => {		logos[]->	},	_type == 'person-list' => {		people[]->	},	_type == 'prose' => {		content[]{			...,			_type == 'image' => {				...,				asset->{					...,					metadata				}			}		},		'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{			style,			'text': pt::text(@)		}	},	_type == 'quote-list' => {		quotes[]->	}, }	),		'translations': *[_type == 'translation.metadata' && references(^._id)].translations[]{		'value': value->{			_id,			_type,			language,			'slug': metadata.slug.current		}	}}
 export type BLOG_POST_QUERY_RESULT = {
 	_id: string
 	_type: 'blog.post'
 	_createdAt: string
 	_updatedAt: string
 	_rev: string
+	language?: string
 	title?: string
 	content: Array<
 		| {
@@ -3170,7 +4113,9 @@ export type BLOG_POST_QUERY_RESULT = {
 	publishDate?: string
 	categories: Array<{
 		title: string | null
+		title_en: string | null
 		slug: Slug | null
+		slug_en: Slug | null
 	}> | null
 	author: {
 		name: string | null
@@ -3258,7 +4203,7 @@ export type BLOG_POST_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?: BlogPostReference | PageReference | ProductReference
 								external?: string
 								params?: string
 						  }
@@ -3266,11 +4211,29 @@ export type BLOG_POST_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -3312,6 +4275,90 @@ export type BLOG_POST_QUERY_RESULT = {
 				exclusive?: boolean
 				enableSchema?: boolean
 				layout?: 'horizontal' | 'vertical'
+				sidebar: null
+		  }
+		| {
+				_key: string
+				_type: 'banner'
+				attributes?: ModuleAttributes
+				pretitle?: string
+				title?: string
+				intro?: Array<
+					| ({
+							_key: string
+					  } & CustomHtml)
+					| {
+							children?: Array<{
+								marks?: Array<string>
+								text?: string
+								_type: 'span'
+								_key: string
+							}>
+							style?:
+								| 'blockquote'
+								| 'h1'
+								| 'h2'
+								| 'h3'
+								| 'h4'
+								| 'h5'
+								| 'h6'
+								| 'normal'
+							listItem?: 'bullet' | 'number'
+							markDefs?: Array<{
+								href?: string
+								_type: 'link'
+								_key: string
+							}>
+							level?: number
+							_type: 'block'
+							_key: string
+					  }
+				>
+				ctas: Array<{
+					_key: string
+					_type: 'cta'
+					link:
+						| {
+								_type: 'link'
+								label?: string
+								type?: 'external' | 'internal'
+								internal?: BlogPostReference | PageReference | ProductReference
+								external?: string
+								params?: string
+						  }
+						| {
+								_type: 'link'
+								label?: string
+								type?: 'external' | 'internal'
+								internal:
+									| {
+											_type: 'blog.post'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| null
+								external?: string
+								params?: string
+						  }
+						| null
+					theme?: 'action-outline' | 'action' | 'ghost' | 'link'
+				}> | null
 				sidebar: null
 		  }
 		| {
@@ -3409,7 +4456,10 @@ export type BLOG_POST_QUERY_RESULT = {
 												_type: 'link'
 												label?: string
 												type?: 'external' | 'internal'
-												internal?: PageReference
+												internal?:
+													| BlogPostReference
+													| PageReference
+													| ProductReference
 												external?: string
 												params?: string
 										  }
@@ -3417,11 +4467,29 @@ export type BLOG_POST_QUERY_RESULT = {
 												_type: 'link'
 												label?: string
 												type?: 'external' | 'internal'
-												internal: {
-													_type: 'page'
-													title: string | null
-													slug: string | '/' | null
-												} | null
+												internal:
+													| {
+															_type: 'blog.post'
+															_id: string
+															title: string | null
+															language: string | null
+															slug: string | '/' | null
+													  }
+													| {
+															_type: 'page'
+															_id: string
+															title: string | null
+															language: string | null
+															slug: string | '/' | null
+													  }
+													| {
+															_type: 'product'
+															_id: string
+															title: string | null
+															language: string | null
+															slug: string | '/' | null
+													  }
+													| null
 												external?: string
 												params?: string
 										  }
@@ -3484,7 +4552,7 @@ export type BLOG_POST_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?: BlogPostReference | PageReference | ProductReference
 								external?: string
 								params?: string
 						  }
@@ -3492,11 +4560,29 @@ export type BLOG_POST_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -3517,7 +4603,7 @@ export type BLOG_POST_QUERY_RESULT = {
 							_type: 'link'
 							label?: string
 							type?: 'external' | 'internal'
-							internal?: PageReference
+							internal?: BlogPostReference | PageReference | ProductReference
 							external?: string
 							params?: string
 					  }
@@ -3526,11 +4612,29 @@ export type BLOG_POST_QUERY_RESULT = {
 							_type: 'link'
 							label?: string
 							type?: 'external' | 'internal'
-							internal: {
-								_type: 'page'
-								title: string | null
-								slug: string | '/' | null
-							} | null
+							internal:
+								| {
+										_type: 'blog.post'
+										_id: string
+										title: string | null
+										language: string | null
+										slug: string | '/' | null
+								  }
+								| {
+										_type: 'page'
+										_id: string
+										title: string | null
+										language: string | null
+										slug: string | '/' | null
+								  }
+								| {
+										_type: 'product'
+										_id: string
+										title: string | null
+										language: string | null
+										slug: string | '/' | null
+								  }
+								| null
 							external?: string
 							params?: string
 					  }
@@ -3591,7 +4695,7 @@ export type BLOG_POST_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?: BlogPostReference | PageReference | ProductReference
 								external?: string
 								params?: string
 						  }
@@ -3599,11 +4703,29 @@ export type BLOG_POST_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -3692,7 +4814,10 @@ export type BLOG_POST_QUERY_RESULT = {
 									_type: 'link'
 									label?: string
 									type?: 'external' | 'internal'
-									internal?: PageReference
+									internal?:
+										| BlogPostReference
+										| PageReference
+										| ProductReference
 									external?: string
 									params?: string
 							  }
@@ -3700,11 +4825,29 @@ export type BLOG_POST_QUERY_RESULT = {
 									_type: 'link'
 									label?: string
 									type?: 'external' | 'internal'
-									internal: {
-										_type: 'page'
-										title: string | null
-										slug: string | '/' | null
-									} | null
+									internal:
+										| {
+												_type: 'blog.post'
+												_id: string
+												title: string | null
+												language: string | null
+												slug: string | '/' | null
+										  }
+										| {
+												_type: 'page'
+												_id: string
+												title: string | null
+												language: string | null
+												slug: string | '/' | null
+										  }
+										| {
+												_type: 'product'
+												_id: string
+												title: string | null
+												language: string | null
+												slug: string | '/' | null
+										  }
+										| null
 									external?: string
 									params?: string
 							  }
@@ -3722,7 +4865,7 @@ export type BLOG_POST_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?: BlogPostReference | PageReference | ProductReference
 								external?: string
 								params?: string
 						  }
@@ -3730,11 +4873,29 @@ export type BLOG_POST_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -3747,11 +4908,91 @@ export type BLOG_POST_QUERY_RESULT = {
 		  }
 		| {
 				_key: string
+				_type: 'category-grid'
+				attributes?: ModuleAttributes
+				pretitle?: string
+				heading?: string
+				categories: Array<{
+					title?: string
+					description?: string
+					image?: CategoryImage
+					link:
+						| {
+								_type: 'link'
+								label?: string
+								type?: 'external' | 'internal'
+								internal?: BlogPostReference | PageReference | ProductReference
+								external?: string
+								params?: string
+						  }
+						| {
+								_type: 'link'
+								label?: string
+								type?: 'external' | 'internal'
+								internal:
+									| {
+											_type: 'blog.post'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| null
+								external?: string
+								params?: string
+						  }
+						| null
+					_type: 'category'
+					_key: string
+				}> | null
+				ctas: null
+				sidebar: null
+		  }
+		| {
+				_key: string
 				_type: 'custom-html'
 				attributes?: ModuleAttributes
 				html?: Code
 				css?: Code
 				className?: string
+				ctas: null
+				sidebar: null
+		  }
+		| {
+				_key: string
+				_type: 'feature-split'
+				attributes?: ModuleAttributes
+				pretitle?: string
+				title?: string
+				items?: Array<{
+					header?: string
+					text?: string
+					_type: 'item'
+					_key: string
+				}>
+				image?: {
+					asset?: SanityImageAssetReference
+					media?: unknown
+					hotspot?: SanityImageHotspot
+					crop?: SanityImageCrop
+					alt?: string
+					loading?: 'eager' | 'lazy'
+					_type: 'image'
+				}
 				ctas: null
 				sidebar: null
 		  }
@@ -3842,7 +5083,7 @@ export type BLOG_POST_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?: BlogPostReference | PageReference | ProductReference
 								external?: string
 								params?: string
 						  }
@@ -3850,11 +5091,29 @@ export type BLOG_POST_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -3874,6 +5133,8 @@ export type BLOG_POST_QUERY_RESULT = {
 				}
 				verticalAlign?: 'bottom' | 'center' | 'top'
 				textAlign?: 'center' | 'left' | 'right'
+				maxHeight?: string
+				backgroundOverlay?: boolean
 				sidebar: null
 		  }
 		| {
@@ -3920,7 +5181,7 @@ export type BLOG_POST_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?: BlogPostReference | PageReference | ProductReference
 								external?: string
 								params?: string
 						  }
@@ -3928,17 +5189,36 @@ export type BLOG_POST_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
 						| null
 					theme?: 'action-outline' | 'action' | 'ghost' | 'link'
 				}> | null
+				layout?: 'image-left' | 'image-right'
 				image?: {
 					asset?: SanityImageAssetReference
 					media?: unknown
@@ -3946,7 +5226,6 @@ export type BLOG_POST_QUERY_RESULT = {
 					crop?: SanityImageCrop
 					alt?: string
 					loading?: 'eager' | 'lazy'
-					onRight?: boolean
 					afterContent?: boolean
 					_type: 'image'
 				}
@@ -4067,6 +5346,89 @@ export type BLOG_POST_QUERY_RESULT = {
 					}
 				}> | null
 				columns?: number
+				ctas: null
+				sidebar: null
+		  }
+		| {
+				_key: string
+				_type: 'product-content'
+				attributes?: ModuleAttributes
+				quoteLink:
+					| {
+							_type: 'link'
+							label?: string
+							type?: 'external' | 'internal'
+							internal?: BlogPostReference | PageReference | ProductReference
+							external?: string
+							params?: string
+					  }
+					| {
+							_type: 'link'
+							label?: string
+							type?: 'external' | 'internal'
+							internal:
+								| {
+										_type: 'blog.post'
+										_id: string
+										title: string | null
+										language: string | null
+										slug: string | '/' | null
+								  }
+								| {
+										_type: 'page'
+										_id: string
+										title: string | null
+										language: string | null
+										slug: string | '/' | null
+								  }
+								| {
+										_type: 'product'
+										_id: string
+										title: string | null
+										language: string | null
+										slug: string | '/' | null
+								  }
+								| null
+							external?: string
+							params?: string
+					  }
+					| null
+				showRelated?: boolean
+				relatedLimit?: number
+				ctas: null
+				sidebar: null
+		  }
+		| {
+				_key: string
+				_type: 'product-list'
+				attributes?: ModuleAttributes
+				intro?: Array<{
+					children?: Array<{
+						marks?: Array<string>
+						text?: string
+						_type: 'span'
+						_key: string
+					}>
+					style?:
+						| 'blockquote'
+						| 'h1'
+						| 'h2'
+						| 'h3'
+						| 'h4'
+						| 'h5'
+						| 'h6'
+						| 'normal'
+					listItem?: 'bullet' | 'number'
+					markDefs?: Array<{
+						href?: string
+						_type: 'link'
+						_key: string
+					}>
+					level?: number
+					_type: 'block'
+					_key: string
+				}>
+				productsPerPage?: number
 				ctas: null
 				sidebar: null
 		  }
@@ -4223,7 +5585,10 @@ export type BLOG_POST_QUERY_RESULT = {
 												_type: 'link'
 												label?: string
 												type?: 'external' | 'internal'
-												internal?: PageReference
+												internal?:
+													| BlogPostReference
+													| PageReference
+													| ProductReference
 												external?: string
 												params?: string
 										  }
@@ -4231,11 +5596,29 @@ export type BLOG_POST_QUERY_RESULT = {
 												_type: 'link'
 												label?: string
 												type?: 'external' | 'internal'
-												internal: {
-													_type: 'page'
-													title: string | null
-													slug: string | '/' | null
-												} | null
+												internal:
+													| {
+															_type: 'blog.post'
+															_id: string
+															title: string | null
+															language: string | null
+															slug: string | '/' | null
+													  }
+													| {
+															_type: 'page'
+															_id: string
+															title: string | null
+															language: string | null
+															slug: string | '/' | null
+													  }
+													| {
+															_type: 'product'
+															_id: string
+															title: string | null
+															language: string | null
+															slug: string | '/' | null
+													  }
+													| null
 												external?: string
 												params?: string
 										  }
@@ -4390,6 +5773,60 @@ export type BLOG_POST_QUERY_RESULT = {
 		  }
 		| {
 				_key: string
+				_type: 'split-columns'
+				attributes?: ModuleAttributes
+				columns: Array<{
+					image?: ColumnImage
+					title?: string
+					description?: string
+					link:
+						| {
+								_type: 'link'
+								label?: string
+								type?: 'external' | 'internal'
+								internal?: BlogPostReference | PageReference | ProductReference
+								external?: string
+								params?: string
+						  }
+						| {
+								_type: 'link'
+								label?: string
+								type?: 'external' | 'internal'
+								internal:
+									| {
+											_type: 'blog.post'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| null
+								external?: string
+								params?: string
+						  }
+						| null
+					_type: 'column'
+					_key: string
+				}> | null
+				ctas: null
+				sidebar: null
+		  }
+		| {
+				_key: string
 				_type: 'stat-list'
 				attributes?: ModuleAttributes
 				eyebrow?: string
@@ -4492,7 +5929,7 @@ export type BLOG_POST_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?: BlogPostReference | PageReference | ProductReference
 								external?: string
 								params?: string
 						  }
@@ -4500,11 +5937,29 @@ export type BLOG_POST_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -4551,11 +6006,33 @@ export type BLOG_POST_QUERY_RESULT = {
 		  }
 		| null
 	>
+	translations: Array<{
+		value:
+			| {
+					_id: string
+					_type: 'blog.post'
+					language: string | null
+					slug: string | null
+			  }
+			| {
+					_id: string
+					_type: 'page'
+					language: string | null
+					slug: string | null
+			  }
+			| {
+					_id: string
+					_type: 'product'
+					language: string | null
+					slug: string | null
+			  }
+			| null
+	} | null>
 } | null
 
 // Source: src/app/(frontend)/blog/rss.xml/route.ts
 // Variable: BLOG_RSS_QUERY
-// Query: {	'blog': *[_type == 'page' && metadata.slug.current == $blogDir][0]{		metadata	},	'posts': *[_type == 'blog.post' && metadata.noIndex != true]|order(publishDate desc){		title,		content,		publishDate,		categories[]->{ title },		author->{ name },		metadata	}}
+// Query: {	'blog': *[_type == 'page' && metadata.slug.current == $blogDir		&& (!defined(language) || language == $defaultLang)][0]{		metadata	},	'posts': *[_type == 'blog.post' && metadata.noIndex != true]|order(publishDate desc){		title,		content,		publishDate,		language,		categories[]->{ title, title_en },		author->{ name },		metadata	}}
 export type BLOG_RSS_QUERY_RESULT = {
 	blog: {
 		metadata: Metadata | null
@@ -4624,8 +6101,10 @@ export type BLOG_RSS_QUERY_RESULT = {
 			  }
 		> | null
 		publishDate: string | null
+		language: string | null
 		categories: Array<{
 			title: string | null
+			title_en: string | null
 		}> | null
 		author: {
 			name: string | null
@@ -4636,13 +6115,14 @@ export type BLOG_RSS_QUERY_RESULT = {
 
 // Source: src/app/(frontend)/not-found.tsx
 // Variable: NOT_FOUND_QUERY
-// Query: *[_type == 'page' && metadata.slug.current == '404'][0]{		...,		modules[]{ 	...,	ctas[]{		...,		link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }	},	sidebar{ 	...,	modules[]{		...,		_type == 'callout' => {			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	} },	_type == 'form-module' => {		form->	},	_type == 'breadcrumbs' => {		crumbs[]{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }	},	_type == 'card-list' => {		cards[]{			...,			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	},	_type == 'logo-list' => {		logos[]->	},	_type == 'person-list' => {		people[]->	},	_type == 'prose' => {		content[]{			...,			_type == 'image' => {				...,				asset->{					...,					metadata				}			}		},		'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{			style,			'text': pt::text(@)		}	},	_type == 'quote-list' => {		quotes[]->	}, }	}
+// Query: *[_type == 'page' && metadata.slug.current == '404'		&& coalesce(language, $defaultLang) == $lang][0]{		...,		modules[]{ 	...,	ctas[]{		...,		link{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }	},	sidebar{ 	...,	modules[]{		...,		_type == 'callout' => {			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }			}		}	} },	_type == 'form-module' => {		form->	},	_type == 'breadcrumbs' => {		crumbs[]{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }	},	_type == 'product-content' => {		quoteLink{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }	},	_type == 'card-list' => {		cards[]{			...,			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }			}		}	},	_type == 'category-grid' => {		categories[]{			...,			link{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }		}	},	_type == 'split-columns' => {		columns[]{			...,			link{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }		}	},	_type == 'logo-list' => {		logos[]->	},	_type == 'person-list' => {		people[]->	},	_type == 'prose' => {		content[]{			...,			_type == 'image' => {				...,				asset->{					...,					metadata				}			}		},		'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{			style,			'text': pt::text(@)		}	},	_type == 'quote-list' => {		quotes[]->	}, }	}
 export type NOT_FOUND_QUERY_RESULT = {
 	_id: string
 	_type: 'page'
 	_createdAt: string
 	_updatedAt: string
 	_rev: string
+	language?: string
 	title?: string
 	modules: Array<
 		| {
@@ -4683,7 +6163,7 @@ export type NOT_FOUND_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?: BlogPostReference | PageReference | ProductReference
 								external?: string
 								params?: string
 						  }
@@ -4691,11 +6171,29 @@ export type NOT_FOUND_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -4737,6 +6235,90 @@ export type NOT_FOUND_QUERY_RESULT = {
 				exclusive?: boolean
 				enableSchema?: boolean
 				layout?: 'horizontal' | 'vertical'
+				sidebar: null
+		  }
+		| {
+				_key: string
+				_type: 'banner'
+				attributes?: ModuleAttributes
+				pretitle?: string
+				title?: string
+				intro?: Array<
+					| ({
+							_key: string
+					  } & CustomHtml)
+					| {
+							children?: Array<{
+								marks?: Array<string>
+								text?: string
+								_type: 'span'
+								_key: string
+							}>
+							style?:
+								| 'blockquote'
+								| 'h1'
+								| 'h2'
+								| 'h3'
+								| 'h4'
+								| 'h5'
+								| 'h6'
+								| 'normal'
+							listItem?: 'bullet' | 'number'
+							markDefs?: Array<{
+								href?: string
+								_type: 'link'
+								_key: string
+							}>
+							level?: number
+							_type: 'block'
+							_key: string
+					  }
+				>
+				ctas: Array<{
+					_key: string
+					_type: 'cta'
+					link:
+						| {
+								_type: 'link'
+								label?: string
+								type?: 'external' | 'internal'
+								internal?: BlogPostReference | PageReference | ProductReference
+								external?: string
+								params?: string
+						  }
+						| {
+								_type: 'link'
+								label?: string
+								type?: 'external' | 'internal'
+								internal:
+									| {
+											_type: 'blog.post'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| null
+								external?: string
+								params?: string
+						  }
+						| null
+					theme?: 'action-outline' | 'action' | 'ghost' | 'link'
+				}> | null
 				sidebar: null
 		  }
 		| {
@@ -4811,7 +6393,7 @@ export type NOT_FOUND_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?: BlogPostReference | PageReference | ProductReference
 								external?: string
 								params?: string
 						  }
@@ -4819,11 +6401,29 @@ export type NOT_FOUND_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -4844,7 +6444,7 @@ export type NOT_FOUND_QUERY_RESULT = {
 							_type: 'link'
 							label?: string
 							type?: 'external' | 'internal'
-							internal?: PageReference
+							internal?: BlogPostReference | PageReference | ProductReference
 							external?: string
 							params?: string
 					  }
@@ -4853,11 +6453,29 @@ export type NOT_FOUND_QUERY_RESULT = {
 							_type: 'link'
 							label?: string
 							type?: 'external' | 'internal'
-							internal: {
-								_type: 'page'
-								title: string | null
-								slug: string | '/' | null
-							} | null
+							internal:
+								| {
+										_type: 'blog.post'
+										_id: string
+										title: string | null
+										language: string | null
+										slug: string | '/' | null
+								  }
+								| {
+										_type: 'page'
+										_id: string
+										title: string | null
+										language: string | null
+										slug: string | '/' | null
+								  }
+								| {
+										_type: 'product'
+										_id: string
+										title: string | null
+										language: string | null
+										slug: string | '/' | null
+								  }
+								| null
 							external?: string
 							params?: string
 					  }
@@ -4918,7 +6536,7 @@ export type NOT_FOUND_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?: BlogPostReference | PageReference | ProductReference
 								external?: string
 								params?: string
 						  }
@@ -4926,11 +6544,29 @@ export type NOT_FOUND_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -5019,7 +6655,10 @@ export type NOT_FOUND_QUERY_RESULT = {
 									_type: 'link'
 									label?: string
 									type?: 'external' | 'internal'
-									internal?: PageReference
+									internal?:
+										| BlogPostReference
+										| PageReference
+										| ProductReference
 									external?: string
 									params?: string
 							  }
@@ -5027,11 +6666,29 @@ export type NOT_FOUND_QUERY_RESULT = {
 									_type: 'link'
 									label?: string
 									type?: 'external' | 'internal'
-									internal: {
-										_type: 'page'
-										title: string | null
-										slug: string | '/' | null
-									} | null
+									internal:
+										| {
+												_type: 'blog.post'
+												_id: string
+												title: string | null
+												language: string | null
+												slug: string | '/' | null
+										  }
+										| {
+												_type: 'page'
+												_id: string
+												title: string | null
+												language: string | null
+												slug: string | '/' | null
+										  }
+										| {
+												_type: 'product'
+												_id: string
+												title: string | null
+												language: string | null
+												slug: string | '/' | null
+										  }
+										| null
 									external?: string
 									params?: string
 							  }
@@ -5049,7 +6706,7 @@ export type NOT_FOUND_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?: BlogPostReference | PageReference | ProductReference
 								external?: string
 								params?: string
 						  }
@@ -5057,11 +6714,29 @@ export type NOT_FOUND_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -5074,11 +6749,91 @@ export type NOT_FOUND_QUERY_RESULT = {
 		  }
 		| {
 				_key: string
+				_type: 'category-grid'
+				attributes?: ModuleAttributes
+				pretitle?: string
+				heading?: string
+				categories: Array<{
+					title?: string
+					description?: string
+					image?: CategoryImage
+					link:
+						| {
+								_type: 'link'
+								label?: string
+								type?: 'external' | 'internal'
+								internal?: BlogPostReference | PageReference | ProductReference
+								external?: string
+								params?: string
+						  }
+						| {
+								_type: 'link'
+								label?: string
+								type?: 'external' | 'internal'
+								internal:
+									| {
+											_type: 'blog.post'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| null
+								external?: string
+								params?: string
+						  }
+						| null
+					_type: 'category'
+					_key: string
+				}> | null
+				ctas: null
+				sidebar: null
+		  }
+		| {
+				_key: string
 				_type: 'custom-html'
 				attributes?: ModuleAttributes
 				html?: Code
 				css?: Code
 				className?: string
+				ctas: null
+				sidebar: null
+		  }
+		| {
+				_key: string
+				_type: 'feature-split'
+				attributes?: ModuleAttributes
+				pretitle?: string
+				title?: string
+				items?: Array<{
+					header?: string
+					text?: string
+					_type: 'item'
+					_key: string
+				}>
+				image?: {
+					asset?: SanityImageAssetReference
+					media?: unknown
+					hotspot?: SanityImageHotspot
+					crop?: SanityImageCrop
+					alt?: string
+					loading?: 'eager' | 'lazy'
+					_type: 'image'
+				}
 				ctas: null
 				sidebar: null
 		  }
@@ -5169,7 +6924,7 @@ export type NOT_FOUND_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?: BlogPostReference | PageReference | ProductReference
 								external?: string
 								params?: string
 						  }
@@ -5177,11 +6932,29 @@ export type NOT_FOUND_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -5201,6 +6974,8 @@ export type NOT_FOUND_QUERY_RESULT = {
 				}
 				verticalAlign?: 'bottom' | 'center' | 'top'
 				textAlign?: 'center' | 'left' | 'right'
+				maxHeight?: string
+				backgroundOverlay?: boolean
 				sidebar: null
 		  }
 		| {
@@ -5247,7 +7022,7 @@ export type NOT_FOUND_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?: BlogPostReference | PageReference | ProductReference
 								external?: string
 								params?: string
 						  }
@@ -5255,17 +7030,36 @@ export type NOT_FOUND_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
 						| null
 					theme?: 'action-outline' | 'action' | 'ghost' | 'link'
 				}> | null
+				layout?: 'image-left' | 'image-right'
 				image?: {
 					asset?: SanityImageAssetReference
 					media?: unknown
@@ -5273,7 +7067,6 @@ export type NOT_FOUND_QUERY_RESULT = {
 					crop?: SanityImageCrop
 					alt?: string
 					loading?: 'eager' | 'lazy'
-					onRight?: boolean
 					afterContent?: boolean
 					_type: 'image'
 				}
@@ -5394,6 +7187,40 @@ export type NOT_FOUND_QUERY_RESULT = {
 					}
 				}> | null
 				columns?: number
+				ctas: null
+				sidebar: null
+		  }
+		| {
+				_key: string
+				_type: 'product-list'
+				attributes?: ModuleAttributes
+				intro?: Array<{
+					children?: Array<{
+						marks?: Array<string>
+						text?: string
+						_type: 'span'
+						_key: string
+					}>
+					style?:
+						| 'blockquote'
+						| 'h1'
+						| 'h2'
+						| 'h3'
+						| 'h4'
+						| 'h5'
+						| 'h6'
+						| 'normal'
+					listItem?: 'bullet' | 'number'
+					markDefs?: Array<{
+						href?: string
+						_type: 'link'
+						_key: string
+					}>
+					level?: number
+					_type: 'block'
+					_key: string
+				}>
+				productsPerPage?: number
 				ctas: null
 				sidebar: null
 		  }
@@ -5550,7 +7377,10 @@ export type NOT_FOUND_QUERY_RESULT = {
 												_type: 'link'
 												label?: string
 												type?: 'external' | 'internal'
-												internal?: PageReference
+												internal?:
+													| BlogPostReference
+													| PageReference
+													| ProductReference
 												external?: string
 												params?: string
 										  }
@@ -5558,11 +7388,29 @@ export type NOT_FOUND_QUERY_RESULT = {
 												_type: 'link'
 												label?: string
 												type?: 'external' | 'internal'
-												internal: {
-													_type: 'page'
-													title: string | null
-													slug: string | '/' | null
-												} | null
+												internal:
+													| {
+															_type: 'blog.post'
+															_id: string
+															title: string | null
+															language: string | null
+															slug: string | '/' | null
+													  }
+													| {
+															_type: 'page'
+															_id: string
+															title: string | null
+															language: string | null
+															slug: string | '/' | null
+													  }
+													| {
+															_type: 'product'
+															_id: string
+															title: string | null
+															language: string | null
+															slug: string | '/' | null
+													  }
+													| null
 												external?: string
 												params?: string
 										  }
@@ -5717,6 +7565,60 @@ export type NOT_FOUND_QUERY_RESULT = {
 		  }
 		| {
 				_key: string
+				_type: 'split-columns'
+				attributes?: ModuleAttributes
+				columns: Array<{
+					image?: ColumnImage
+					title?: string
+					description?: string
+					link:
+						| {
+								_type: 'link'
+								label?: string
+								type?: 'external' | 'internal'
+								internal?: BlogPostReference | PageReference | ProductReference
+								external?: string
+								params?: string
+						  }
+						| {
+								_type: 'link'
+								label?: string
+								type?: 'external' | 'internal'
+								internal:
+									| {
+											_type: 'blog.post'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| null
+								external?: string
+								params?: string
+						  }
+						| null
+					_type: 'column'
+					_key: string
+				}> | null
+				ctas: null
+				sidebar: null
+		  }
+		| {
+				_key: string
 				_type: 'stat-list'
 				attributes?: ModuleAttributes
 				eyebrow?: string
@@ -5819,7 +7721,7 @@ export type NOT_FOUND_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?: BlogPostReference | PageReference | ProductReference
 								external?: string
 								params?: string
 						  }
@@ -5827,11 +7729,29 @@ export type NOT_FOUND_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -5880,6 +7800,1958 @@ export type NOT_FOUND_QUERY_RESULT = {
 	metadata?: Metadata
 } | null
 
+// Source: src/app/(frontend)/products/[...slug]/page.tsx
+// Variable: PRODUCT_QUERY
+// Query: *[_type == 'product'	&& metadata.slug.current == $slug	&& coalesce(language, $defaultLang) == $lang][0]{	...,	image{		...,		asset->	},	category->{		_id,		title,		title_en,		slug,		slug_en	},	technicalDataSheet{		asset->{			url,			originalFilename,			size		}	},	safetyDataSheet{		asset->{			url,			originalFilename,			size		}	},	'modules': (		// global modules (before)		*[_type == 'global-module' && path == '*' && 	select(		defined(excludePaths) => count(excludePaths[string::startsWith($slug, @)]) == 0,		true	)].before[]{ 	...,	ctas[]{		...,		link{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }	},	sidebar{ 	...,	modules[]{		...,		_type == 'callout' => {			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }			}		}	} },	_type == 'form-module' => {		form->	},	_type == 'breadcrumbs' => {		crumbs[]{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }	},	_type == 'product-content' => {		quoteLink{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }	},	_type == 'card-list' => {		cards[]{			...,			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }			}		}	},	_type == 'category-grid' => {		categories[]{			...,			link{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }		}	},	_type == 'split-columns' => {		columns[]{			...,			link{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }		}	},	_type == 'logo-list' => {		logos[]->	},	_type == 'person-list' => {		people[]->	},	_type == 'prose' => {		content[]{			...,			_type == 'image' => {				...,				asset->{					...,					metadata				}			}		},		'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{			style,			'text': pt::text(@)		}	},	_type == 'quote-list' => {		quotes[]->	}, }		// path modules (before)		+ *[_type == 'global-module' && path in [$productsDir, $productsBase]].before[]{ 	...,	ctas[]{		...,		link{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }	},	sidebar{ 	...,	modules[]{		...,		_type == 'callout' => {			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }			}		}	} },	_type == 'form-module' => {		form->	},	_type == 'breadcrumbs' => {		crumbs[]{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }	},	_type == 'product-content' => {		quoteLink{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }	},	_type == 'card-list' => {		cards[]{			...,			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }			}		}	},	_type == 'category-grid' => {		categories[]{			...,			link{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }		}	},	_type == 'split-columns' => {		columns[]{			...,			link{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }		}	},	_type == 'logo-list' => {		logos[]->	},	_type == 'person-list' => {		people[]->	},	_type == 'prose' => {		content[]{			...,			_type == 'image' => {				...,				asset->{					...,					metadata				}			}		},		'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{			style,			'text': pt::text(@)		}	},	_type == 'quote-list' => {		quotes[]->	}, }		// path modules (after)		+ *[_type == 'global-module' && path in [$productsDir, $productsBase]].after[]{ 	...,	ctas[]{		...,		link{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }	},	sidebar{ 	...,	modules[]{		...,		_type == 'callout' => {			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }			}		}	} },	_type == 'form-module' => {		form->	},	_type == 'breadcrumbs' => {		crumbs[]{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }	},	_type == 'product-content' => {		quoteLink{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }	},	_type == 'card-list' => {		cards[]{			...,			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }			}		}	},	_type == 'category-grid' => {		categories[]{			...,			link{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }		}	},	_type == 'split-columns' => {		columns[]{			...,			link{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }		}	},	_type == 'logo-list' => {		logos[]->	},	_type == 'person-list' => {		people[]->	},	_type == 'prose' => {		content[]{			...,			_type == 'image' => {				...,				asset->{					...,					metadata				}			}		},		'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{			style,			'text': pt::text(@)		}	},	_type == 'quote-list' => {		quotes[]->	}, }		// global modules (after)		+ *[_type == 'global-module' && path == '*' && 	select(		defined(excludePaths) => count(excludePaths[string::startsWith($slug, @)]) == 0,		true	)].after[]{ 	...,	ctas[]{		...,		link{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }	},	sidebar{ 	...,	modules[]{		...,		_type == 'callout' => {			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }			}		}	} },	_type == 'form-module' => {		form->	},	_type == 'breadcrumbs' => {		crumbs[]{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }	},	_type == 'product-content' => {		quoteLink{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }	},	_type == 'card-list' => {		cards[]{			...,			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }			}		}	},	_type == 'category-grid' => {		categories[]{			...,			link{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }		}	},	_type == 'split-columns' => {		columns[]{			...,			link{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }		}	},	_type == 'logo-list' => {		logos[]->	},	_type == 'person-list' => {		people[]->	},	_type == 'prose' => {		content[]{			...,			_type == 'image' => {				...,				asset->{					...,					metadata				}			}		},		'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{			style,			'text': pt::text(@)		}	},	_type == 'quote-list' => {		quotes[]->	}, }	),		'translations': *[_type == 'translation.metadata' && references(^._id)].translations[]{		'value': value->{			_id,			_type,			language,			'slug': metadata.slug.current		}	}}
+export type PRODUCT_QUERY_RESULT = {
+	_id: string
+	_type: 'product'
+	_createdAt: string
+	_updatedAt: string
+	_rev: string
+	language?: string
+	title?: string
+	category: {
+		_id: string
+		title: string | null
+		title_en: string | null
+		slug: Slug | null
+		slug_en: Slug | null
+	} | null
+	image: {
+		asset: {
+			_id: string
+			_type: 'sanity.imageAsset'
+			_createdAt: string
+			_updatedAt: string
+			_rev: string
+			originalFilename?: string
+			label?: string
+			title?: string
+			description?: string
+			altText?: string
+			sha1hash?: string
+			extension?: string
+			mimeType?: string
+			size?: number
+			assetId?: string
+			uploadId?: string
+			path?: string
+			url?: string
+			metadata?: SanityImageMetadata
+			source?: SanityAssetSourceData
+		} | null
+		media?: unknown
+		hotspot?: SanityImageHotspot
+		crop?: SanityImageCrop
+		alt?: string
+		_type: 'image'
+	} | null
+	description?: Array<{
+		children?: Array<{
+			marks?: Array<string>
+			text?: string
+			_type: 'span'
+			_key: string
+		}>
+		style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
+		listItem?: 'bullet' | 'number'
+		markDefs?: Array<{
+			href?: string
+			_type: 'link'
+			_key: string
+		}>
+		level?: number
+		_type: 'block'
+		_key: string
+	}>
+	table?: Array<{
+		code?: string
+		format?: string
+		_type: 'row'
+		_key: string
+	}>
+	technicalDataSheet: {
+		asset: {
+			url: string | null
+			originalFilename: string | null
+			size: number | null
+		} | null
+	} | null
+	safetyDataSheet: {
+		asset: {
+			url: string | null
+			originalFilename: string | null
+			size: number | null
+		} | null
+	} | null
+	metadata?: Metadata
+	modules: Array<
+		| {
+				_key: string
+				_type: 'accordion-list'
+				attributes?: ModuleAttributes
+				intro?: Array<{
+					children?: Array<{
+						marks?: Array<string>
+						text?: string
+						_type: 'span'
+						_key: string
+					}>
+					style?:
+						| 'blockquote'
+						| 'h1'
+						| 'h2'
+						| 'h3'
+						| 'h4'
+						| 'h5'
+						| 'h6'
+						| 'normal'
+					listItem?: 'bullet' | 'number'
+					markDefs?: Array<{
+						href?: string
+						_type: 'link'
+						_key: string
+					}>
+					level?: number
+					_type: 'block'
+					_key: string
+				}>
+				ctas: Array<{
+					_key: string
+					_type: 'cta'
+					link:
+						| {
+								_type: 'link'
+								label?: string
+								type?: 'external' | 'internal'
+								internal?: BlogPostReference | PageReference | ProductReference
+								external?: string
+								params?: string
+						  }
+						| {
+								_type: 'link'
+								label?: string
+								type?: 'external' | 'internal'
+								internal:
+									| {
+											_type: 'blog.post'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| null
+								external?: string
+								params?: string
+						  }
+						| null
+					theme?: 'action-outline' | 'action' | 'ghost' | 'link'
+				}> | null
+				accordions?: Array<{
+					summary?: string
+					content?: Array<{
+						children?: Array<{
+							marks?: Array<string>
+							text?: string
+							_type: 'span'
+							_key: string
+						}>
+						style?:
+							| 'blockquote'
+							| 'h1'
+							| 'h2'
+							| 'h3'
+							| 'h4'
+							| 'h5'
+							| 'h6'
+							| 'normal'
+						listItem?: 'bullet' | 'number'
+						markDefs?: Array<{
+							href?: string
+							_type: 'link'
+							_key: string
+						}>
+						level?: number
+						_type: 'block'
+						_key: string
+					}>
+					open?: boolean
+					_type: 'accordion'
+					_key: string
+				}>
+				exclusive?: boolean
+				enableSchema?: boolean
+				layout?: 'horizontal' | 'vertical'
+				sidebar: null
+		  }
+		| {
+				_key: string
+				_type: 'banner'
+				attributes?: ModuleAttributes
+				pretitle?: string
+				title?: string
+				intro?: Array<
+					| ({
+							_key: string
+					  } & CustomHtml)
+					| {
+							children?: Array<{
+								marks?: Array<string>
+								text?: string
+								_type: 'span'
+								_key: string
+							}>
+							style?:
+								| 'blockquote'
+								| 'h1'
+								| 'h2'
+								| 'h3'
+								| 'h4'
+								| 'h5'
+								| 'h6'
+								| 'normal'
+							listItem?: 'bullet' | 'number'
+							markDefs?: Array<{
+								href?: string
+								_type: 'link'
+								_key: string
+							}>
+							level?: number
+							_type: 'block'
+							_key: string
+					  }
+				>
+				ctas: Array<{
+					_key: string
+					_type: 'cta'
+					link:
+						| {
+								_type: 'link'
+								label?: string
+								type?: 'external' | 'internal'
+								internal?: BlogPostReference | PageReference | ProductReference
+								external?: string
+								params?: string
+						  }
+						| {
+								_type: 'link'
+								label?: string
+								type?: 'external' | 'internal'
+								internal:
+									| {
+											_type: 'blog.post'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| null
+								external?: string
+								params?: string
+						  }
+						| null
+					theme?: 'action-outline' | 'action' | 'ghost' | 'link'
+				}> | null
+				sidebar: null
+		  }
+		| {
+				_key: string
+				_type: 'blog-index'
+				attributes?: ModuleAttributes
+				intro?: Array<{
+					children?: Array<{
+						marks?: Array<string>
+						text?: string
+						_type: 'span'
+						_key: string
+					}>
+					style?:
+						| 'blockquote'
+						| 'h1'
+						| 'h2'
+						| 'h3'
+						| 'h4'
+						| 'h5'
+						| 'h6'
+						| 'normal'
+					listItem?: 'bullet' | 'number'
+					markDefs?: Array<{
+						href?: string
+						_type: 'link'
+						_key: string
+					}>
+					level?: number
+					_type: 'block'
+					_key: string
+				}>
+				postsPerPage?: number
+				ctas: null
+				sidebar: null
+		  }
+		| {
+				_key: string
+				_type: 'blog-post-content'
+				attributes?: ModuleAttributes
+				sidebar: {
+					_type: 'sidebar'
+					position?: 'left' | 'right'
+					modules: Array<
+						| {
+								_key: string
+								_type: 'callout'
+								attributes?: ModuleAttributes
+								eyebrow?: string
+								intro?: Array<
+									| ({
+											_key: string
+									  } & CustomHtml)
+									| {
+											children?: Array<{
+												marks?: Array<string>
+												text?: string
+												_type: 'span'
+												_key: string
+											}>
+											style?:
+												| 'blockquote'
+												| 'h1'
+												| 'h2'
+												| 'h3'
+												| 'h4'
+												| 'h5'
+												| 'h6'
+												| 'normal'
+											listItem?: 'bullet' | 'number'
+											markDefs?: Array<{
+												href?: string
+												_type: 'link'
+												_key: string
+											}>
+											level?: number
+											_type: 'block'
+											_key: string
+									  }
+									| {
+											asset?: SanityImageAssetReference
+											media?: unknown
+											hotspot?: SanityImageHotspot
+											crop?: SanityImageCrop
+											alt?: string
+											_type: 'image'
+											_key: string
+									  }
+								>
+								ctas: Array<{
+									_key: string
+									_type: 'cta'
+									link:
+										| {
+												_type: 'link'
+												label?: string
+												type?: 'external' | 'internal'
+												internal?:
+													| BlogPostReference
+													| PageReference
+													| ProductReference
+												external?: string
+												params?: string
+										  }
+										| {
+												_type: 'link'
+												label?: string
+												type?: 'external' | 'internal'
+												internal:
+													| {
+															_type: 'blog.post'
+															_id: string
+															title: string | null
+															language: string | null
+															slug: string | '/' | null
+													  }
+													| {
+															_type: 'page'
+															_id: string
+															title: string | null
+															language: string | null
+															slug: string | '/' | null
+													  }
+													| {
+															_type: 'product'
+															_id: string
+															title: string | null
+															language: string | null
+															slug: string | '/' | null
+													  }
+													| null
+												external?: string
+												params?: string
+										  }
+										| null
+									theme?: 'action-outline' | 'action' | 'ghost' | 'link'
+								}> | null
+						  }
+						| {
+								_key: string
+								_type: 'custom-html'
+								attributes?: ModuleAttributes
+								html?: Code
+								css?: Code
+								className?: string
+						  }
+						| {
+								summary?: string
+								_type: 'tableOfContents'
+								_key: string
+						  }
+					> | null
+				} | null
+				ctas: null
+		  }
+		| {
+				_key: string
+				_type: 'blog-post-list'
+				attributes?: ModuleAttributes
+				intro?: Array<{
+					children?: Array<{
+						marks?: Array<string>
+						text?: string
+						_type: 'span'
+						_key: string
+					}>
+					style?:
+						| 'blockquote'
+						| 'h1'
+						| 'h2'
+						| 'h3'
+						| 'h4'
+						| 'h5'
+						| 'h6'
+						| 'normal'
+					listItem?: 'bullet' | 'number'
+					markDefs?: Array<{
+						href?: string
+						_type: 'link'
+						_key: string
+					}>
+					level?: number
+					_type: 'block'
+					_key: string
+				}>
+				ctas: Array<{
+					_key: string
+					_type: 'cta'
+					link:
+						| {
+								_type: 'link'
+								label?: string
+								type?: 'external' | 'internal'
+								internal?: BlogPostReference | PageReference | ProductReference
+								external?: string
+								params?: string
+						  }
+						| {
+								_type: 'link'
+								label?: string
+								type?: 'external' | 'internal'
+								internal:
+									| {
+											_type: 'blog.post'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| null
+								external?: string
+								params?: string
+						  }
+						| null
+					theme?: 'action-outline' | 'action' | 'ghost' | 'link'
+				}> | null
+				limit?: number
+				sidebar: null
+		  }
+		| {
+				_key: string
+				_type: 'breadcrumbs'
+				attributes?: ModuleAttributes
+				structuredDataOnly?: boolean
+				crumbs: Array<
+					| {
+							_key: string
+							_type: 'link'
+							label?: string
+							type?: 'external' | 'internal'
+							internal?: BlogPostReference | PageReference | ProductReference
+							external?: string
+							params?: string
+					  }
+					| {
+							_key: string
+							_type: 'link'
+							label?: string
+							type?: 'external' | 'internal'
+							internal:
+								| {
+										_type: 'blog.post'
+										_id: string
+										title: string | null
+										language: string | null
+										slug: string | '/' | null
+								  }
+								| {
+										_type: 'page'
+										_id: string
+										title: string | null
+										language: string | null
+										slug: string | '/' | null
+								  }
+								| {
+										_type: 'product'
+										_id: string
+										title: string | null
+										language: string | null
+										slug: string | '/' | null
+								  }
+								| null
+							external?: string
+							params?: string
+					  }
+				> | null
+				ctas: null
+				sidebar: null
+		  }
+		| {
+				_key: string
+				_type: 'callout'
+				attributes?: ModuleAttributes
+				eyebrow?: string
+				intro?: Array<
+					| ({
+							_key: string
+					  } & CustomHtml)
+					| {
+							children?: Array<{
+								marks?: Array<string>
+								text?: string
+								_type: 'span'
+								_key: string
+							}>
+							style?:
+								| 'blockquote'
+								| 'h1'
+								| 'h2'
+								| 'h3'
+								| 'h4'
+								| 'h5'
+								| 'h6'
+								| 'normal'
+							listItem?: 'bullet' | 'number'
+							markDefs?: Array<{
+								href?: string
+								_type: 'link'
+								_key: string
+							}>
+							level?: number
+							_type: 'block'
+							_key: string
+					  }
+					| {
+							asset?: SanityImageAssetReference
+							media?: unknown
+							hotspot?: SanityImageHotspot
+							crop?: SanityImageCrop
+							alt?: string
+							_type: 'image'
+							_key: string
+					  }
+				>
+				ctas: Array<{
+					_key: string
+					_type: 'cta'
+					link:
+						| {
+								_type: 'link'
+								label?: string
+								type?: 'external' | 'internal'
+								internal?: BlogPostReference | PageReference | ProductReference
+								external?: string
+								params?: string
+						  }
+						| {
+								_type: 'link'
+								label?: string
+								type?: 'external' | 'internal'
+								internal:
+									| {
+											_type: 'blog.post'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| null
+								external?: string
+								params?: string
+						  }
+						| null
+					theme?: 'action-outline' | 'action' | 'ghost' | 'link'
+				}> | null
+				sidebar: null
+		  }
+		| {
+				_key: string
+				_type: 'card-list'
+				attributes?: ModuleAttributes
+				eyebrow?: string
+				intro?: Array<{
+					children?: Array<{
+						marks?: Array<string>
+						text?: string
+						_type: 'span'
+						_key: string
+					}>
+					style?:
+						| 'blockquote'
+						| 'h1'
+						| 'h2'
+						| 'h3'
+						| 'h4'
+						| 'h5'
+						| 'h6'
+						| 'normal'
+					listItem?: 'bullet' | 'number'
+					markDefs?: Array<{
+						href?: string
+						_type: 'link'
+						_key: string
+					}>
+					level?: number
+					_type: 'block'
+					_key: string
+				}>
+				cards: Array<{
+					image?: CardImage
+					icon?: Icon
+					eyebrow?: string
+					content?: Array<
+						| {
+								children?: Array<{
+									marks?: Array<string>
+									text?: string
+									_type: 'span'
+									_key: string
+								}>
+								style?:
+									| 'blockquote'
+									| 'h1'
+									| 'h2'
+									| 'h3'
+									| 'h4'
+									| 'h5'
+									| 'h6'
+									| 'normal'
+								listItem?: 'bullet' | 'number'
+								markDefs?: Array<{
+									href?: string
+									_type: 'link'
+									_key: string
+								}>
+								level?: number
+								_type: 'block'
+								_key: string
+						  }
+						| {
+								asset?: SanityImageAssetReference
+								media?: unknown
+								hotspot?: SanityImageHotspot
+								crop?: SanityImageCrop
+								alt?: string
+								_type: 'image'
+								_key: string
+						  }
+					>
+					ctas: Array<{
+						_key: string
+						_type: 'cta'
+						link:
+							| {
+									_type: 'link'
+									label?: string
+									type?: 'external' | 'internal'
+									internal?:
+										| BlogPostReference
+										| PageReference
+										| ProductReference
+									external?: string
+									params?: string
+							  }
+							| {
+									_type: 'link'
+									label?: string
+									type?: 'external' | 'internal'
+									internal:
+										| {
+												_type: 'blog.post'
+												_id: string
+												title: string | null
+												language: string | null
+												slug: string | '/' | null
+										  }
+										| {
+												_type: 'page'
+												_id: string
+												title: string | null
+												language: string | null
+												slug: string | '/' | null
+										  }
+										| {
+												_type: 'product'
+												_id: string
+												title: string | null
+												language: string | null
+												slug: string | '/' | null
+										  }
+										| null
+									external?: string
+									params?: string
+							  }
+							| null
+						theme?: 'action-outline' | 'action' | 'ghost' | 'link'
+					}> | null
+					_type: 'card'
+					_key: string
+				}> | null
+				ctas: Array<{
+					_key: string
+					_type: 'cta'
+					link:
+						| {
+								_type: 'link'
+								label?: string
+								type?: 'external' | 'internal'
+								internal?: BlogPostReference | PageReference | ProductReference
+								external?: string
+								params?: string
+						  }
+						| {
+								_type: 'link'
+								label?: string
+								type?: 'external' | 'internal'
+								internal:
+									| {
+											_type: 'blog.post'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| null
+								external?: string
+								params?: string
+						  }
+						| null
+					theme?: 'action-outline' | 'action' | 'ghost' | 'link'
+				}> | null
+				layout?: 'carousel' | 'grid'
+				columns?: number
+				sidebar: null
+		  }
+		| {
+				_key: string
+				_type: 'category-grid'
+				attributes?: ModuleAttributes
+				pretitle?: string
+				heading?: string
+				categories: Array<{
+					title?: string
+					description?: string
+					image?: CategoryImage
+					link:
+						| {
+								_type: 'link'
+								label?: string
+								type?: 'external' | 'internal'
+								internal?: BlogPostReference | PageReference | ProductReference
+								external?: string
+								params?: string
+						  }
+						| {
+								_type: 'link'
+								label?: string
+								type?: 'external' | 'internal'
+								internal:
+									| {
+											_type: 'blog.post'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| null
+								external?: string
+								params?: string
+						  }
+						| null
+					_type: 'category'
+					_key: string
+				}> | null
+				ctas: null
+				sidebar: null
+		  }
+		| {
+				_key: string
+				_type: 'custom-html'
+				attributes?: ModuleAttributes
+				html?: Code
+				css?: Code
+				className?: string
+				ctas: null
+				sidebar: null
+		  }
+		| {
+				_key: string
+				_type: 'feature-split'
+				attributes?: ModuleAttributes
+				pretitle?: string
+				title?: string
+				items?: Array<{
+					header?: string
+					text?: string
+					_type: 'item'
+					_key: string
+				}>
+				image?: {
+					asset?: SanityImageAssetReference
+					media?: unknown
+					hotspot?: SanityImageHotspot
+					crop?: SanityImageCrop
+					alt?: string
+					loading?: 'eager' | 'lazy'
+					_type: 'image'
+				}
+				ctas: null
+				sidebar: null
+		  }
+		| {
+				_key: string
+				_type: 'form-module'
+				attributes?: ModuleAttributes
+				eyebrow?: string
+				intro?: Array<{
+					children?: Array<{
+						marks?: Array<string>
+						text?: string
+						_type: 'span'
+						_key: string
+					}>
+					style?:
+						| 'blockquote'
+						| 'h1'
+						| 'h2'
+						| 'h3'
+						| 'h4'
+						| 'h5'
+						| 'h6'
+						| 'normal'
+					listItem?: 'bullet' | 'number'
+					markDefs?: Array<{
+						href?: string
+						_type: 'link'
+						_key: string
+					}>
+					level?: number
+					_type: 'block'
+					_key: string
+				}>
+				form: {
+					_id: string
+					_type: 'form'
+					_createdAt: string
+					_updatedAt: string
+					_rev: string
+					identifier?: string
+					endpoint?: string
+				} | null
+				ctas: null
+				sidebar: null
+		  }
+		| {
+				_key: string
+				_type: 'hero.cover'
+				attributes?: ModuleAttributes
+				eyebrow?: string
+				content?: Array<
+					| ({
+							_key: string
+					  } & CustomHtml)
+					| {
+							children?: Array<{
+								marks?: Array<string>
+								text?: string
+								_type: 'span'
+								_key: string
+							}>
+							style?:
+								| 'blockquote'
+								| 'h1'
+								| 'h2'
+								| 'h3'
+								| 'h4'
+								| 'h5'
+								| 'h6'
+								| 'normal'
+							listItem?: 'bullet' | 'number'
+							markDefs?: Array<{
+								href?: string
+								_type: 'link'
+								_key: string
+							}>
+							level?: number
+							_type: 'block'
+							_key: string
+					  }
+				>
+				ctas: Array<{
+					_key: string
+					_type: 'cta'
+					link:
+						| {
+								_type: 'link'
+								label?: string
+								type?: 'external' | 'internal'
+								internal?: BlogPostReference | PageReference | ProductReference
+								external?: string
+								params?: string
+						  }
+						| {
+								_type: 'link'
+								label?: string
+								type?: 'external' | 'internal'
+								internal:
+									| {
+											_type: 'blog.post'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| null
+								external?: string
+								params?: string
+						  }
+						| null
+					theme?: 'action-outline' | 'action' | 'ghost' | 'link'
+				}> | null
+				image?: {
+					asset?: SanityImageAssetReference
+					media?: unknown
+					hotspot?: SanityImageHotspot
+					crop?: SanityImageCrop
+					mobile?: Mobile
+					opacity?: number
+					alt?: string
+					loading?: 'eager' | 'lazy'
+					_type: 'image'
+				}
+				verticalAlign?: 'bottom' | 'center' | 'top'
+				textAlign?: 'center' | 'left' | 'right'
+				maxHeight?: string
+				backgroundOverlay?: boolean
+				sidebar: null
+		  }
+		| {
+				_key: string
+				_type: 'hero.split'
+				attributes?: ModuleAttributes
+				eyebrow?: string
+				content?: Array<
+					| ({
+							_key: string
+					  } & CustomHtml)
+					| {
+							children?: Array<{
+								marks?: Array<string>
+								text?: string
+								_type: 'span'
+								_key: string
+							}>
+							style?:
+								| 'blockquote'
+								| 'h1'
+								| 'h2'
+								| 'h3'
+								| 'h4'
+								| 'h5'
+								| 'h6'
+								| 'normal'
+							listItem?: 'bullet' | 'number'
+							markDefs?: Array<{
+								href?: string
+								_type: 'link'
+								_key: string
+							}>
+							level?: number
+							_type: 'block'
+							_key: string
+					  }
+				>
+				ctas: Array<{
+					_key: string
+					_type: 'cta'
+					link:
+						| {
+								_type: 'link'
+								label?: string
+								type?: 'external' | 'internal'
+								internal?: BlogPostReference | PageReference | ProductReference
+								external?: string
+								params?: string
+						  }
+						| {
+								_type: 'link'
+								label?: string
+								type?: 'external' | 'internal'
+								internal:
+									| {
+											_type: 'blog.post'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| null
+								external?: string
+								params?: string
+						  }
+						| null
+					theme?: 'action-outline' | 'action' | 'ghost' | 'link'
+				}> | null
+				layout?: 'image-left' | 'image-right'
+				image?: {
+					asset?: SanityImageAssetReference
+					media?: unknown
+					hotspot?: SanityImageHotspot
+					crop?: SanityImageCrop
+					alt?: string
+					loading?: 'eager' | 'lazy'
+					afterContent?: boolean
+					_type: 'image'
+				}
+				sidebar: null
+		  }
+		| {
+				_key: string
+				_type: 'logo-list'
+				attributes?: ModuleAttributes
+				eyebrow?: string
+				intro?: Array<{
+					children?: Array<{
+						marks?: Array<string>
+						text?: string
+						_type: 'span'
+						_key: string
+					}>
+					style?:
+						| 'blockquote'
+						| 'h1'
+						| 'h2'
+						| 'h3'
+						| 'h4'
+						| 'h5'
+						| 'h6'
+						| 'normal'
+					listItem?: 'bullet' | 'number'
+					markDefs?: Array<{
+						href?: string
+						_type: 'link'
+						_key: string
+					}>
+					level?: number
+					_type: 'block'
+					_key: string
+				}>
+				logos: Array<{
+					_id: string
+					_type: 'logo'
+					_createdAt: string
+					_updatedAt: string
+					_rev: string
+					title?: string
+					image?: {
+						default?: {
+							asset?: SanityImageAssetReference
+							media?: unknown
+							hotspot?: SanityImageHotspot
+							crop?: SanityImageCrop
+							_type: 'image'
+						}
+						light?: {
+							asset?: SanityImageAssetReference
+							media?: unknown
+							hotspot?: SanityImageHotspot
+							crop?: SanityImageCrop
+							_type: 'image'
+						}
+						dark?: {
+							asset?: SanityImageAssetReference
+							media?: unknown
+							hotspot?: SanityImageHotspot
+							crop?: SanityImageCrop
+							_type: 'image'
+						}
+					}
+				}> | null
+				logoType?: 'dark' | 'default' | 'light'
+				autoScroll?: boolean
+				duration?: number
+				ctas: null
+				sidebar: null
+		  }
+		| {
+				_key: string
+				_type: 'person-list'
+				attributes?: ModuleAttributes
+				intro?: Array<{
+					children?: Array<{
+						marks?: Array<string>
+						text?: string
+						_type: 'span'
+						_key: string
+					}>
+					style?:
+						| 'blockquote'
+						| 'h1'
+						| 'h2'
+						| 'h3'
+						| 'h4'
+						| 'h5'
+						| 'h6'
+						| 'normal'
+					listItem?: 'bullet' | 'number'
+					markDefs?: Array<{
+						href?: string
+						_type: 'link'
+						_key: string
+					}>
+					level?: number
+					_type: 'block'
+					_key: string
+				}>
+				people: Array<{
+					_id: string
+					_type: 'person'
+					_createdAt: string
+					_updatedAt: string
+					_rev: string
+					name?: string
+					title?: string
+					image?: {
+						asset?: SanityImageAssetReference
+						media?: unknown
+						hotspot?: SanityImageHotspot
+						crop?: SanityImageCrop
+						_type: 'image'
+					}
+				}> | null
+				columns?: number
+				ctas: null
+				sidebar: null
+		  }
+		| {
+				_key: string
+				_type: 'product-content'
+				attributes?: ModuleAttributes
+				quoteLink:
+					| {
+							_type: 'link'
+							label?: string
+							type?: 'external' | 'internal'
+							internal?: BlogPostReference | PageReference | ProductReference
+							external?: string
+							params?: string
+					  }
+					| {
+							_type: 'link'
+							label?: string
+							type?: 'external' | 'internal'
+							internal:
+								| {
+										_type: 'blog.post'
+										_id: string
+										title: string | null
+										language: string | null
+										slug: string | '/' | null
+								  }
+								| {
+										_type: 'page'
+										_id: string
+										title: string | null
+										language: string | null
+										slug: string | '/' | null
+								  }
+								| {
+										_type: 'product'
+										_id: string
+										title: string | null
+										language: string | null
+										slug: string | '/' | null
+								  }
+								| null
+							external?: string
+							params?: string
+					  }
+					| null
+				showRelated?: boolean
+				relatedLimit?: number
+				ctas: null
+				sidebar: null
+		  }
+		| {
+				_key: string
+				_type: 'product-list'
+				attributes?: ModuleAttributes
+				intro?: Array<{
+					children?: Array<{
+						marks?: Array<string>
+						text?: string
+						_type: 'span'
+						_key: string
+					}>
+					style?:
+						| 'blockquote'
+						| 'h1'
+						| 'h2'
+						| 'h3'
+						| 'h4'
+						| 'h5'
+						| 'h6'
+						| 'normal'
+					listItem?: 'bullet' | 'number'
+					markDefs?: Array<{
+						href?: string
+						_type: 'link'
+						_key: string
+					}>
+					level?: number
+					_type: 'block'
+					_key: string
+				}>
+				productsPerPage?: number
+				ctas: null
+				sidebar: null
+		  }
+		| {
+				_key: string
+				_type: 'prose'
+				attributes?: ModuleAttributes
+				content: Array<
+					| {
+							children?: Array<{
+								marks?: Array<string>
+								text?: string
+								_type: 'span'
+								_key: string
+							}>
+							style?:
+								| 'blockquote'
+								| 'h1'
+								| 'h2'
+								| 'h3'
+								| 'h4'
+								| 'h5'
+								| 'h6'
+								| 'normal'
+							listItem?: 'bullet' | 'number'
+							markDefs?: Array<{
+								href?: string
+								_type: 'link'
+								_key: string
+							}>
+							level?: number
+							_type: 'block'
+							_key: string
+					  }
+					| {
+							_key: string
+							_type: 'code'
+							language?: string
+							filename?: string
+							code?: string
+							highlightedLines?: Array<number>
+					  }
+					| {
+							_key: string
+							_type: 'custom-html'
+							attributes?: ModuleAttributes
+							html?: Code
+							css?: Code
+							className?: string
+					  }
+					| {
+							asset: {
+								_id: string
+								_type: 'sanity.imageAsset'
+								_createdAt: string
+								_updatedAt: string
+								_rev: string
+								originalFilename?: string
+								label?: string
+								title?: string
+								description?: string
+								altText?: string
+								sha1hash?: string
+								extension?: string
+								mimeType?: string
+								size?: number
+								assetId?: string
+								uploadId?: string
+								path?: string
+								url?: string
+								metadata: SanityImageMetadata | null
+								source?: SanityAssetSourceData
+							} | null
+							media?: unknown
+							hotspot?: SanityImageHotspot
+							crop?: SanityImageCrop
+							alt?: string
+							figcaption?: Array<{
+								children?: Array<{
+									marks?: Array<string>
+									text?: string
+									_type: 'span'
+									_key: string
+								}>
+								style?: 'normal'
+								listItem?: 'bullet' | 'number'
+								markDefs?: Array<{
+									href?: string
+									_type: 'link'
+									_key: string
+								}>
+								level?: number
+								_type: 'block'
+								_key: string
+							}>
+							_type: 'image'
+							_key: string
+					  }
+				> | null
+				sidebar: {
+					_type: 'sidebar'
+					position?: 'left' | 'right'
+					modules: Array<
+						| {
+								_key: string
+								_type: 'callout'
+								attributes?: ModuleAttributes
+								eyebrow?: string
+								intro?: Array<
+									| ({
+											_key: string
+									  } & CustomHtml)
+									| {
+											children?: Array<{
+												marks?: Array<string>
+												text?: string
+												_type: 'span'
+												_key: string
+											}>
+											style?:
+												| 'blockquote'
+												| 'h1'
+												| 'h2'
+												| 'h3'
+												| 'h4'
+												| 'h5'
+												| 'h6'
+												| 'normal'
+											listItem?: 'bullet' | 'number'
+											markDefs?: Array<{
+												href?: string
+												_type: 'link'
+												_key: string
+											}>
+											level?: number
+											_type: 'block'
+											_key: string
+									  }
+									| {
+											asset?: SanityImageAssetReference
+											media?: unknown
+											hotspot?: SanityImageHotspot
+											crop?: SanityImageCrop
+											alt?: string
+											_type: 'image'
+											_key: string
+									  }
+								>
+								ctas: Array<{
+									_key: string
+									_type: 'cta'
+									link:
+										| {
+												_type: 'link'
+												label?: string
+												type?: 'external' | 'internal'
+												internal?:
+													| BlogPostReference
+													| PageReference
+													| ProductReference
+												external?: string
+												params?: string
+										  }
+										| {
+												_type: 'link'
+												label?: string
+												type?: 'external' | 'internal'
+												internal:
+													| {
+															_type: 'blog.post'
+															_id: string
+															title: string | null
+															language: string | null
+															slug: string | '/' | null
+													  }
+													| {
+															_type: 'page'
+															_id: string
+															title: string | null
+															language: string | null
+															slug: string | '/' | null
+													  }
+													| {
+															_type: 'product'
+															_id: string
+															title: string | null
+															language: string | null
+															slug: string | '/' | null
+													  }
+													| null
+												external?: string
+												params?: string
+										  }
+										| null
+									theme?: 'action-outline' | 'action' | 'ghost' | 'link'
+								}> | null
+						  }
+						| {
+								_key: string
+								_type: 'custom-html'
+								attributes?: ModuleAttributes
+								html?: Code
+								css?: Code
+								className?: string
+						  }
+						| {
+								summary?: string
+								_type: 'tableOfContents'
+								_key: string
+						  }
+					> | null
+				} | null
+				ctas: null
+				headings: Array<{
+					style:
+						| 'blockquote'
+						| 'h1'
+						| 'h2'
+						| 'h3'
+						| 'h4'
+						| 'h5'
+						| 'h6'
+						| 'normal'
+						| null
+					text: string
+				}> | null
+		  }
+		| {
+				_key: string
+				_type: 'quote-list'
+				attributes?: ModuleAttributes
+				eyebrow?: string
+				intro?: Array<{
+					children?: Array<{
+						marks?: Array<string>
+						text?: string
+						_type: 'span'
+						_key: string
+					}>
+					style?:
+						| 'blockquote'
+						| 'h1'
+						| 'h2'
+						| 'h3'
+						| 'h4'
+						| 'h5'
+						| 'h6'
+						| 'normal'
+					listItem?: 'bullet' | 'number'
+					markDefs?: Array<{
+						href?: string
+						_type: 'link'
+						_key: string
+					}>
+					level?: number
+					_type: 'block'
+					_key: string
+				}>
+				quotes: Array<{
+					_id: string
+					_type: 'quote'
+					_createdAt: string
+					_updatedAt: string
+					_rev: string
+					quote?: Array<{
+						children?: Array<{
+							marks?: Array<string>
+							text?: string
+							_type: 'span'
+							_key: string
+						}>
+						style?:
+							| 'blockquote'
+							| 'h1'
+							| 'h2'
+							| 'h3'
+							| 'h4'
+							| 'h5'
+							| 'h6'
+							| 'normal'
+						listItem?: 'bullet' | 'number'
+						markDefs?: Array<{
+							href?: string
+							_type: 'link'
+							_key: string
+						}>
+						level?: number
+						_type: 'block'
+						_key: string
+					}>
+					author?: {
+						name?: string
+						title?: string
+						image?: {
+							asset?: SanityImageAssetReference
+							media?: unknown
+							hotspot?: SanityImageHotspot
+							crop?: SanityImageCrop
+							_type: 'image'
+						}
+					}
+				}> | null
+				layout?: 'carousel' | 'grid'
+				columns?: number
+				ctas: null
+				sidebar: null
+		  }
+		| {
+				_key: string
+				_type: 'search-module'
+				attributes?: ModuleAttributes
+				eyebrow?: string
+				intro?: Array<{
+					children?: Array<{
+						marks?: Array<string>
+						text?: string
+						_type: 'span'
+						_key: string
+					}>
+					style?:
+						| 'blockquote'
+						| 'h1'
+						| 'h2'
+						| 'h3'
+						| 'h4'
+						| 'h5'
+						| 'h6'
+						| 'normal'
+					listItem?: 'bullet' | 'number'
+					markDefs?: Array<{
+						href?: string
+						_type: 'link'
+						_key: string
+					}>
+					level?: number
+					_type: 'block'
+					_key: string
+				}>
+				scope?: 'all' | 'blog posts' | 'pages'
+				ctas: null
+				sidebar: null
+		  }
+		| {
+				_key: string
+				_type: 'split-columns'
+				attributes?: ModuleAttributes
+				columns: Array<{
+					image?: ColumnImage
+					title?: string
+					description?: string
+					link:
+						| {
+								_type: 'link'
+								label?: string
+								type?: 'external' | 'internal'
+								internal?: BlogPostReference | PageReference | ProductReference
+								external?: string
+								params?: string
+						  }
+						| {
+								_type: 'link'
+								label?: string
+								type?: 'external' | 'internal'
+								internal:
+									| {
+											_type: 'blog.post'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| null
+								external?: string
+								params?: string
+						  }
+						| null
+					_type: 'column'
+					_key: string
+				}> | null
+				ctas: null
+				sidebar: null
+		  }
+		| {
+				_key: string
+				_type: 'stat-list'
+				attributes?: ModuleAttributes
+				eyebrow?: string
+				intro?: Array<{
+					children?: Array<{
+						marks?: Array<string>
+						text?: string
+						_type: 'span'
+						_key: string
+					}>
+					style?:
+						| 'blockquote'
+						| 'h1'
+						| 'h2'
+						| 'h3'
+						| 'h4'
+						| 'h5'
+						| 'h6'
+						| 'normal'
+					listItem?: 'bullet' | 'number'
+					markDefs?: Array<{
+						href?: string
+						_type: 'link'
+						_key: string
+					}>
+					level?: number
+					_type: 'block'
+					_key: string
+				}>
+				stats?: Array<{
+					value?: string
+					suffix?: string
+					content?: Array<{
+						children?: Array<{
+							marks?: Array<string>
+							text?: string
+							_type: 'span'
+							_key: string
+						}>
+						style?:
+							| 'blockquote'
+							| 'h1'
+							| 'h2'
+							| 'h3'
+							| 'h4'
+							| 'h5'
+							| 'h6'
+							| 'normal'
+						listItem?: 'bullet' | 'number'
+						markDefs?: Array<{
+							href?: string
+							_type: 'link'
+							_key: string
+						}>
+						level?: number
+						_type: 'block'
+						_key: string
+					}>
+					_type: 'stat'
+					_key: string
+				}>
+				ctas: null
+				sidebar: null
+		  }
+		| {
+				_key: string
+				_type: 'step-list'
+				attributes?: ModuleAttributes
+				intro?: Array<{
+					children?: Array<{
+						marks?: Array<string>
+						text?: string
+						_type: 'span'
+						_key: string
+					}>
+					style?:
+						| 'blockquote'
+						| 'h1'
+						| 'h2'
+						| 'h3'
+						| 'h4'
+						| 'h5'
+						| 'h6'
+						| 'normal'
+					listItem?: 'bullet' | 'number'
+					markDefs?: Array<{
+						href?: string
+						_type: 'link'
+						_key: string
+					}>
+					level?: number
+					_type: 'block'
+					_key: string
+				}>
+				ctas: Array<{
+					_key: string
+					_type: 'cta'
+					link:
+						| {
+								_type: 'link'
+								label?: string
+								type?: 'external' | 'internal'
+								internal?: BlogPostReference | PageReference | ProductReference
+								external?: string
+								params?: string
+						  }
+						| {
+								_type: 'link'
+								label?: string
+								type?: 'external' | 'internal'
+								internal:
+									| {
+											_type: 'blog.post'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| null
+								external?: string
+								params?: string
+						  }
+						| null
+					theme?: 'action-outline' | 'action' | 'ghost' | 'link'
+				}> | null
+				steps?: Array<{
+					content?: Array<{
+						children?: Array<{
+							marks?: Array<string>
+							text?: string
+							_type: 'span'
+							_key: string
+						}>
+						style?:
+							| 'blockquote'
+							| 'h1'
+							| 'h2'
+							| 'h3'
+							| 'h4'
+							| 'h5'
+							| 'h6'
+							| 'normal'
+						listItem?: 'bullet' | 'number'
+						markDefs?: Array<{
+							href?: string
+							_type: 'link'
+							_key: string
+						}>
+						level?: number
+						_type: 'block'
+						_key: string
+					}>
+					ctas?: Array<
+						{
+							_key: string
+						} & Cta
+					>
+					_type: 'step'
+					_key: string
+				}>
+				enableSchema?: boolean
+				sidebar: null
+		  }
+		| null
+	>
+	translations: Array<{
+		value:
+			| {
+					_id: string
+					_type: 'blog.post'
+					language: string | null
+					slug: string | null
+			  }
+			| {
+					_id: string
+					_type: 'page'
+					language: string | null
+					slug: string | null
+			  }
+			| {
+					_id: string
+					_type: 'product'
+					language: string | null
+					slug: string | null
+			  }
+			| null
+	} | null>
+} | null
+
 // Source: src/app/llms.txt/route.ts
 // Variable: LLMS_PAGES_QUERY
 // Query: *[_type == 'page'		&& defined(metadata.slug.current)		&& metadata.noIndex != true		&& metadata.slug.current != 'index'		&& metadata.slug.current != '404'	] | order(metadata.slug.current asc) {		'title': coalesce(metadata.title, metadata.slug.current),		'slug': metadata.slug.current,		'description': metadata.description,	}
@@ -5900,14 +9772,15 @@ export type LLMS_BLOG_QUERY_RESULT = Array<{
 
 // Source: src/sanity/lib/queries.ts
 // Variable: SITE_QUERY
-// Query: *[_type == 'site'][0]{	...,	header->{ 	...,	items[]{			...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	},		defined(link) => { link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} } },		defined(links[]) => { links[]{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} } },		_type == 'megamenu' => {			defined(link) => { link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} } },			items[]{				...,				_type == 'link' => { 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} },				_type == 'link.list' => {					defined(link) => { link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} } },					links[]{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }				}			}		}	} },	ctas[]{		...,		link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }	},	footer->{ 	...,	items[]{			...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	},		defined(link) => { link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} } },		defined(links[]) => { links[]{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} } },		_type == 'megamenu' => {			defined(link) => { link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} } },			items[]{				...,				_type == 'link' => { 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} },				_type == 'link.list' => {					defined(link) => { link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} } },					links[]{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }				}			}		}	} },	social->{ 	...,	items[]{			...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	},		defined(link) => { link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} } },		defined(links[]) => { links[]{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} } },		_type == 'megamenu' => {			defined(link) => { link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} } },			items[]{				...,				_type == 'link' => { 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} },				_type == 'link.list' => {					defined(link) => { link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} } },					links[]{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }				}			}		}	} },}
+// Query: *[_type == 'site'][0]{	...,	'title': select(		$lang == 'hr' => title,		defined(title_en) => title_en,		title	),	'footerContent': select(		$lang == 'hr' => footerContent,		defined(footerContent_en) => footerContent_en,		footerContent	),	'copyright': select(		$lang == 'hr' => copyright,		defined(copyright_en) => copyright_en,		copyright	),	'header': select(		$lang == 'hr' => header,		defined(header_en) => header_en,		header	)->{ 	...,	items[]{			...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	},		defined(link) => { link{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} } },		defined(links[]) => { links[]{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} } },		_type == 'megamenu' => {			defined(link) => { link{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} } },			items[]{				...,				_type == 'link' => { 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} },				_type == 'link.list' => {					defined(link) => { link{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} } },					links[]{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }				}			}		}	} },	'ctas': select(		$lang == 'hr' => ctas,		defined(ctas_en) => ctas_en,		ctas	)[]{		...,		link{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }	},	'footer': select(		$lang == 'hr' => footer,		defined(footer_en) => footer_en,		footer	)->{ 	...,	items[]{			...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	},		defined(link) => { link{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} } },		defined(links[]) => { links[]{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} } },		_type == 'megamenu' => {			defined(link) => { link{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} } },			items[]{				...,				_type == 'link' => { 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} },				_type == 'link.list' => {					defined(link) => { link{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} } },					links[]{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }				}			}		}	} },	'footerSecondary': select(		$lang == 'hr' => footerSecondary,		defined(footerSecondary_en) => footerSecondary_en,		footerSecondary	)->{ 	...,	items[]{			...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	},		defined(link) => { link{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} } },		defined(links[]) => { links[]{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} } },		_type == 'megamenu' => {			defined(link) => { link{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} } },			items[]{				...,				_type == 'link' => { 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} },				_type == 'link.list' => {					defined(link) => { link{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} } },					links[]{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }				}			}		}	} },	footerImages[]{		...,		asset->{			...,			metadata		}	},	'social': select(		$lang == 'hr' => social,		defined(social_en) => social_en,		social	)->{ 	...,	items[]{			...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	},		defined(link) => { link{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} } },		defined(links[]) => { links[]{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} } },		_type == 'megamenu' => {			defined(link) => { link{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} } },			items[]{				...,				_type == 'link' => { 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} },				_type == 'link.list' => {					defined(link) => { link{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} } },					links[]{ 	...,	type == 'internal' => {		internal->{			_type,			_id,			title,			language,			'slug': select(				metadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',				metadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,				_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,				_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,				_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,				_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,				(!defined(language) || language == 'hr') => '/' + metadata.slug.current,				'/' + language + '/' + metadata.slug.current			)		}	} }				}			}		}	} },}
 export type SITE_QUERY_RESULT = {
 	_id: string
 	_type: 'site'
 	_createdAt: string
 	_updatedAt: string
 	_rev: string
-	title?: string
+	title: string | null
+	title_en?: string
 	logo?: {
 		title?: string
 		image?: {
@@ -5942,6 +9815,37 @@ export type SITE_QUERY_RESULT = {
 		crop?: SanityImageCrop
 		_type: 'image'
 	}
+	footerImages: Array<{
+		asset: {
+			_id: string
+			_type: 'sanity.imageAsset'
+			_createdAt: string
+			_updatedAt: string
+			_rev: string
+			originalFilename?: string
+			label?: string
+			title?: string
+			description?: string
+			altText?: string
+			sha1hash?: string
+			extension?: string
+			mimeType?: string
+			size?: number
+			assetId?: string
+			uploadId?: string
+			path?: string
+			url?: string
+			metadata: SanityImageMetadata | null
+			source?: SanityAssetSourceData
+		} | null
+		media?: unknown
+		hotspot?: SanityImageHotspot
+		crop?: SanityImageCrop
+		alt?: string
+		href?: string
+		_type: 'image'
+		_key: string
+	}> | null
 	header: {
 		_id: string
 		_type: 'navigation'
@@ -5949,6 +9853,7 @@ export type SITE_QUERY_RESULT = {
 		_updatedAt: string
 		_rev: string
 		title?: string
+		language?: 'en' | 'hr'
 		blurb?: Array<{
 			children?: Array<{
 				marks?: Array<string>
@@ -5988,7 +9893,7 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?: BlogPostReference | PageReference | ProductReference
 								external?: string
 								params?: string
 						  }
@@ -5997,11 +9902,29 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -6015,7 +9938,7 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?: BlogPostReference | PageReference | ProductReference
 								external?: string
 								params?: string
 						  }
@@ -6023,11 +9946,29 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -6046,7 +9987,7 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?: BlogPostReference | PageReference | ProductReference
 								external?: string
 								params?: string
 						  }
@@ -6054,11 +9995,29 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -6069,7 +10028,7 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?: BlogPostReference | PageReference | ProductReference
 								external?: string
 								params?: string
 						  }
@@ -6078,11 +10037,29 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -6093,7 +10070,7 @@ export type SITE_QUERY_RESULT = {
 					_type: 'link'
 					label?: string
 					type?: 'external' | 'internal'
-					internal?: PageReference
+					internal?: BlogPostReference | PageReference | ProductReference
 					external?: string
 					params?: string
 			  }
@@ -6102,11 +10079,29 @@ export type SITE_QUERY_RESULT = {
 					_type: 'link'
 					label?: string
 					type?: 'external' | 'internal'
-					internal: {
-						_type: 'page'
-						title: string | null
-						slug: string | '/' | null
-					} | null
+					internal:
+						| {
+								_type: 'blog.post'
+								_id: string
+								title: string | null
+								language: string | null
+								slug: string | '/' | null
+						  }
+						| {
+								_type: 'page'
+								_id: string
+								title: string | null
+								language: string | null
+								slug: string | '/' | null
+						  }
+						| {
+								_type: 'product'
+								_id: string
+								title: string | null
+								language: string | null
+								slug: string | '/' | null
+						  }
+						| null
 					external?: string
 					params?: string
 			  }
@@ -6131,7 +10126,7 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?: BlogPostReference | PageReference | ProductReference
 								external?: string
 								params?: string
 						  }
@@ -6139,11 +10134,29 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -6172,7 +10185,10 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal?: PageReference
+											internal?:
+												| BlogPostReference
+												| PageReference
+												| ProductReference
 											external?: string
 											params?: string
 									  }
@@ -6181,11 +10197,29 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal: {
-												_type: 'page'
-												title: string | null
-												slug: string | '/' | null
-											} | null
+											internal:
+												| {
+														_type: 'blog.post'
+														_id: string
+														title: string | null
+														language: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'page'
+														_id: string
+														title: string | null
+														language: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'product'
+														_id: string
+														title: string | null
+														language: string | null
+														slug: string | '/' | null
+												  }
+												| null
 											external?: string
 											params?: string
 									  }
@@ -6199,7 +10233,10 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal?: PageReference
+											internal?:
+												| BlogPostReference
+												| PageReference
+												| ProductReference
 											external?: string
 											params?: string
 									  }
@@ -6207,11 +10244,29 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal: {
-												_type: 'page'
-												title: string | null
-												slug: string | '/' | null
-											} | null
+											internal:
+												| {
+														_type: 'blog.post'
+														_id: string
+														title: string | null
+														language: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'page'
+														_id: string
+														title: string | null
+														language: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'product'
+														_id: string
+														title: string | null
+														language: string | null
+														slug: string | '/' | null
+												  }
+												| null
 											external?: string
 											params?: string
 									  }
@@ -6222,7 +10277,10 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal?: PageReference
+											internal?:
+												| BlogPostReference
+												| PageReference
+												| ProductReference
 											external?: string
 											params?: string
 									  }
@@ -6231,11 +10289,29 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal: {
-												_type: 'page'
-												title: string | null
-												slug: string | '/' | null
-											} | null
+											internal:
+												| {
+														_type: 'blog.post'
+														_id: string
+														title: string | null
+														language: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'page'
+														_id: string
+														title: string | null
+														language: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'product'
+														_id: string
+														title: string | null
+														language: string | null
+														slug: string | '/' | null
+												  }
+												| null
 											external?: string
 											params?: string
 									  }
@@ -6246,7 +10322,7 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?: BlogPostReference | PageReference | ProductReference
 								external?: string
 								params?: string
 						  }
@@ -6255,11 +10331,29 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -6273,7 +10367,7 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?: BlogPostReference | PageReference | ProductReference
 								external?: string
 								params?: string
 						  }
@@ -6281,11 +10375,29 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -6301,7 +10413,10 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal?: PageReference
+											internal?:
+												| BlogPostReference
+												| PageReference
+												| ProductReference
 											external?: string
 											params?: string
 									  }
@@ -6310,11 +10425,29 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal: {
-												_type: 'page'
-												title: string | null
-												slug: string | '/' | null
-											} | null
+											internal:
+												| {
+														_type: 'blog.post'
+														_id: string
+														title: string | null
+														language: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'page'
+														_id: string
+														title: string | null
+														language: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'product'
+														_id: string
+														title: string | null
+														language: string | null
+														slug: string | '/' | null
+												  }
+												| null
 											external?: string
 											params?: string
 									  }
@@ -6328,7 +10461,10 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal?: PageReference
+											internal?:
+												| BlogPostReference
+												| PageReference
+												| ProductReference
 											external?: string
 											params?: string
 									  }
@@ -6336,11 +10472,29 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal: {
-												_type: 'page'
-												title: string | null
-												slug: string | '/' | null
-											} | null
+											internal:
+												| {
+														_type: 'blog.post'
+														_id: string
+														title: string | null
+														language: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'page'
+														_id: string
+														title: string | null
+														language: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'product'
+														_id: string
+														title: string | null
+														language: string | null
+														slug: string | '/' | null
+												  }
+												| null
 											external?: string
 											params?: string
 									  }
@@ -6351,7 +10505,10 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal?: PageReference
+											internal?:
+												| BlogPostReference
+												| PageReference
+												| ProductReference
 											external?: string
 											params?: string
 									  }
@@ -6360,11 +10517,29 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal: {
-												_type: 'page'
-												title: string | null
-												slug: string | '/' | null
-											} | null
+											internal:
+												| {
+														_type: 'blog.post'
+														_id: string
+														title: string | null
+														language: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'page'
+														_id: string
+														title: string | null
+														language: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'product'
+														_id: string
+														title: string | null
+														language: string | null
+														slug: string | '/' | null
+												  }
+												| null
 											external?: string
 											params?: string
 									  }
@@ -6375,7 +10550,7 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?: BlogPostReference | PageReference | ProductReference
 								external?: string
 								params?: string
 						  }
@@ -6384,11 +10559,29 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -6404,7 +10597,7 @@ export type SITE_QUERY_RESULT = {
 					_type: 'link'
 					label?: string
 					type?: 'external' | 'internal'
-					internal?: PageReference
+					internal?: BlogPostReference | PageReference | ProductReference
 					external?: string
 					params?: string
 			  }
@@ -6412,11 +10605,29 @@ export type SITE_QUERY_RESULT = {
 					_type: 'link'
 					label?: string
 					type?: 'external' | 'internal'
-					internal: {
-						_type: 'page'
-						title: string | null
-						slug: string | '/' | null
-					} | null
+					internal:
+						| {
+								_type: 'blog.post'
+								_id: string
+								title: string | null
+								language: string | null
+								slug: string | '/' | null
+						  }
+						| {
+								_type: 'page'
+								_id: string
+								title: string | null
+								language: string | null
+								slug: string | '/' | null
+						  }
+						| {
+								_type: 'product'
+								_id: string
+								title: string | null
+								language: string | null
+								slug: string | '/' | null
+						  }
+						| null
 					external?: string
 					params?: string
 			  }
@@ -6430,6 +10641,7 @@ export type SITE_QUERY_RESULT = {
 		_updatedAt: string
 		_rev: string
 		title?: string
+		language?: 'en' | 'hr'
 		blurb?: Array<{
 			children?: Array<{
 				marks?: Array<string>
@@ -6469,7 +10681,7 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?: BlogPostReference | PageReference | ProductReference
 								external?: string
 								params?: string
 						  }
@@ -6478,11 +10690,29 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -6496,7 +10726,7 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?: BlogPostReference | PageReference | ProductReference
 								external?: string
 								params?: string
 						  }
@@ -6504,11 +10734,29 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -6527,7 +10775,7 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?: BlogPostReference | PageReference | ProductReference
 								external?: string
 								params?: string
 						  }
@@ -6535,11 +10783,29 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -6550,7 +10816,7 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?: BlogPostReference | PageReference | ProductReference
 								external?: string
 								params?: string
 						  }
@@ -6559,11 +10825,29 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -6574,7 +10858,7 @@ export type SITE_QUERY_RESULT = {
 					_type: 'link'
 					label?: string
 					type?: 'external' | 'internal'
-					internal?: PageReference
+					internal?: BlogPostReference | PageReference | ProductReference
 					external?: string
 					params?: string
 			  }
@@ -6583,11 +10867,29 @@ export type SITE_QUERY_RESULT = {
 					_type: 'link'
 					label?: string
 					type?: 'external' | 'internal'
-					internal: {
-						_type: 'page'
-						title: string | null
-						slug: string | '/' | null
-					} | null
+					internal:
+						| {
+								_type: 'blog.post'
+								_id: string
+								title: string | null
+								language: string | null
+								slug: string | '/' | null
+						  }
+						| {
+								_type: 'page'
+								_id: string
+								title: string | null
+								language: string | null
+								slug: string | '/' | null
+						  }
+						| {
+								_type: 'product'
+								_id: string
+								title: string | null
+								language: string | null
+								slug: string | '/' | null
+						  }
+						| null
 					external?: string
 					params?: string
 			  }
@@ -6612,7 +10914,7 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?: BlogPostReference | PageReference | ProductReference
 								external?: string
 								params?: string
 						  }
@@ -6620,11 +10922,29 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -6653,7 +10973,10 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal?: PageReference
+											internal?:
+												| BlogPostReference
+												| PageReference
+												| ProductReference
 											external?: string
 											params?: string
 									  }
@@ -6662,11 +10985,29 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal: {
-												_type: 'page'
-												title: string | null
-												slug: string | '/' | null
-											} | null
+											internal:
+												| {
+														_type: 'blog.post'
+														_id: string
+														title: string | null
+														language: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'page'
+														_id: string
+														title: string | null
+														language: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'product'
+														_id: string
+														title: string | null
+														language: string | null
+														slug: string | '/' | null
+												  }
+												| null
 											external?: string
 											params?: string
 									  }
@@ -6680,7 +11021,10 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal?: PageReference
+											internal?:
+												| BlogPostReference
+												| PageReference
+												| ProductReference
 											external?: string
 											params?: string
 									  }
@@ -6688,11 +11032,29 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal: {
-												_type: 'page'
-												title: string | null
-												slug: string | '/' | null
-											} | null
+											internal:
+												| {
+														_type: 'blog.post'
+														_id: string
+														title: string | null
+														language: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'page'
+														_id: string
+														title: string | null
+														language: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'product'
+														_id: string
+														title: string | null
+														language: string | null
+														slug: string | '/' | null
+												  }
+												| null
 											external?: string
 											params?: string
 									  }
@@ -6703,7 +11065,10 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal?: PageReference
+											internal?:
+												| BlogPostReference
+												| PageReference
+												| ProductReference
 											external?: string
 											params?: string
 									  }
@@ -6712,11 +11077,29 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal: {
-												_type: 'page'
-												title: string | null
-												slug: string | '/' | null
-											} | null
+											internal:
+												| {
+														_type: 'blog.post'
+														_id: string
+														title: string | null
+														language: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'page'
+														_id: string
+														title: string | null
+														language: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'product'
+														_id: string
+														title: string | null
+														language: string | null
+														slug: string | '/' | null
+												  }
+												| null
 											external?: string
 											params?: string
 									  }
@@ -6727,7 +11110,7 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?: BlogPostReference | PageReference | ProductReference
 								external?: string
 								params?: string
 						  }
@@ -6736,11 +11119,29 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -6754,7 +11155,7 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?: BlogPostReference | PageReference | ProductReference
 								external?: string
 								params?: string
 						  }
@@ -6762,11 +11163,29 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -6782,7 +11201,10 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal?: PageReference
+											internal?:
+												| BlogPostReference
+												| PageReference
+												| ProductReference
 											external?: string
 											params?: string
 									  }
@@ -6791,11 +11213,29 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal: {
-												_type: 'page'
-												title: string | null
-												slug: string | '/' | null
-											} | null
+											internal:
+												| {
+														_type: 'blog.post'
+														_id: string
+														title: string | null
+														language: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'page'
+														_id: string
+														title: string | null
+														language: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'product'
+														_id: string
+														title: string | null
+														language: string | null
+														slug: string | '/' | null
+												  }
+												| null
 											external?: string
 											params?: string
 									  }
@@ -6809,7 +11249,10 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal?: PageReference
+											internal?:
+												| BlogPostReference
+												| PageReference
+												| ProductReference
 											external?: string
 											params?: string
 									  }
@@ -6817,11 +11260,29 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal: {
-												_type: 'page'
-												title: string | null
-												slug: string | '/' | null
-											} | null
+											internal:
+												| {
+														_type: 'blog.post'
+														_id: string
+														title: string | null
+														language: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'page'
+														_id: string
+														title: string | null
+														language: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'product'
+														_id: string
+														title: string | null
+														language: string | null
+														slug: string | '/' | null
+												  }
+												| null
 											external?: string
 											params?: string
 									  }
@@ -6832,7 +11293,10 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal?: PageReference
+											internal?:
+												| BlogPostReference
+												| PageReference
+												| ProductReference
 											external?: string
 											params?: string
 									  }
@@ -6841,11 +11305,29 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal: {
-												_type: 'page'
-												title: string | null
-												slug: string | '/' | null
-											} | null
+											internal:
+												| {
+														_type: 'blog.post'
+														_id: string
+														title: string | null
+														language: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'page'
+														_id: string
+														title: string | null
+														language: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'product'
+														_id: string
+														title: string | null
+														language: string | null
+														slug: string | '/' | null
+												  }
+												| null
 											external?: string
 											params?: string
 									  }
@@ -6856,7 +11338,7 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?: BlogPostReference | PageReference | ProductReference
 								external?: string
 								params?: string
 						  }
@@ -6865,11 +11347,772 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| null
+								external?: string
+								params?: string
+						  }
+					> | null
+			  }
+		> | null
+	} | null
+	footerSecondary: {
+		_id: string
+		_type: 'navigation'
+		_createdAt: string
+		_updatedAt: string
+		_rev: string
+		title?: string
+		language?: 'en' | 'hr'
+		blurb?: Array<{
+			children?: Array<{
+				marks?: Array<string>
+				text?: string
+				_type: 'span'
+				_key: string
+			}>
+			style?: 'normal'
+			listItem?: never
+			markDefs?: Array<{
+				href?: string
+				_type: 'link'
+				_key: string
+			}>
+			level?: number
+			_type: 'block'
+			_key: string
+		}>
+		items: Array<
+			| {
+					_key: string
+					_type: 'link.list'
+					link?: Link
+					links?: Array<
+						{
+							_key: string
+						} & Link
+					>
+			  }
+			| {
+					_key: string
+					_type: 'link.list'
+					link?: Link
+					links: Array<
+						| {
+								_key: string
+								_type: 'link'
+								label?: string
+								type?: 'external' | 'internal'
+								internal?: BlogPostReference | PageReference | ProductReference
+								external?: string
+								params?: string
+						  }
+						| {
+								_key: string
+								_type: 'link'
+								label?: string
+								type?: 'external' | 'internal'
+								internal:
+									| {
+											_type: 'blog.post'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| null
+								external?: string
+								params?: string
+						  }
+					> | null
+			  }
+			| {
+					_key: string
+					_type: 'link.list'
+					link:
+						| {
+								_type: 'link'
+								label?: string
+								type?: 'external' | 'internal'
+								internal?: BlogPostReference | PageReference | ProductReference
+								external?: string
+								params?: string
+						  }
+						| {
+								_type: 'link'
+								label?: string
+								type?: 'external' | 'internal'
+								internal:
+									| {
+											_type: 'blog.post'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| null
+								external?: string
+								params?: string
+						  }
+						| null
+					links?: Array<
+						{
+							_key: string
+						} & Link
+					>
+			  }
+			| {
+					_key: string
+					_type: 'link.list'
+					link:
+						| {
+								_type: 'link'
+								label?: string
+								type?: 'external' | 'internal'
+								internal?: BlogPostReference | PageReference | ProductReference
+								external?: string
+								params?: string
+						  }
+						| {
+								_type: 'link'
+								label?: string
+								type?: 'external' | 'internal'
+								internal:
+									| {
+											_type: 'blog.post'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| null
+								external?: string
+								params?: string
+						  }
+						| null
+					links: Array<
+						| {
+								_key: string
+								_type: 'link'
+								label?: string
+								type?: 'external' | 'internal'
+								internal?: BlogPostReference | PageReference | ProductReference
+								external?: string
+								params?: string
+						  }
+						| {
+								_key: string
+								_type: 'link'
+								label?: string
+								type?: 'external' | 'internal'
+								internal:
+									| {
+											_type: 'blog.post'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| null
+								external?: string
+								params?: string
+						  }
+					> | null
+			  }
+			| {
+					_key: string
+					_type: 'link'
+					label?: string
+					type?: 'external' | 'internal'
+					internal?: BlogPostReference | PageReference | ProductReference
+					external?: string
+					params?: string
+			  }
+			| {
+					_key: string
+					_type: 'link'
+					label?: string
+					type?: 'external' | 'internal'
+					internal:
+						| {
+								_type: 'blog.post'
+								_id: string
+								title: string | null
+								language: string | null
+								slug: string | '/' | null
+						  }
+						| {
+								_type: 'page'
+								_id: string
+								title: string | null
+								language: string | null
+								slug: string | '/' | null
+						  }
+						| {
+								_type: 'product'
+								_id: string
+								title: string | null
+								language: string | null
+								slug: string | '/' | null
+						  }
+						| null
+					external?: string
+					params?: string
+			  }
+			| {
+					_key: string
+					_type: 'megamenu'
+					link?: Link
+					items?: Array<
+						| ({
+								_key: string
+						  } & LinkList)
+						| ({
+								_key: string
+						  } & Link)
+					>
+			  }
+			| {
+					_key: string
+					_type: 'megamenu'
+					link:
+						| {
+								_type: 'link'
+								label?: string
+								type?: 'external' | 'internal'
+								internal?: BlogPostReference | PageReference | ProductReference
+								external?: string
+								params?: string
+						  }
+						| {
+								_type: 'link'
+								label?: string
+								type?: 'external' | 'internal'
+								internal:
+									| {
+											_type: 'blog.post'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| null
+								external?: string
+								params?: string
+						  }
+						| null
+					items?: Array<
+						| ({
+								_key: string
+						  } & LinkList)
+						| ({
+								_key: string
+						  } & Link)
+					>
+			  }
+			| {
+					_key: string
+					_type: 'megamenu'
+					link?: Link
+					items: Array<
+						| {
+								_key: string
+								_type: 'link.list'
+								link?: Link
+								links: Array<
+									| {
+											_key: string
+											_type: 'link'
+											label?: string
+											type?: 'external' | 'internal'
+											internal?:
+												| BlogPostReference
+												| PageReference
+												| ProductReference
+											external?: string
+											params?: string
+									  }
+									| {
+											_key: string
+											_type: 'link'
+											label?: string
+											type?: 'external' | 'internal'
+											internal:
+												| {
+														_type: 'blog.post'
+														_id: string
+														title: string | null
+														language: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'page'
+														_id: string
+														title: string | null
+														language: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'product'
+														_id: string
+														title: string | null
+														language: string | null
+														slug: string | '/' | null
+												  }
+												| null
+											external?: string
+											params?: string
+									  }
+								> | null
+						  }
+						| {
+								_key: string
+								_type: 'link.list'
+								link:
+									| {
+											_type: 'link'
+											label?: string
+											type?: 'external' | 'internal'
+											internal?:
+												| BlogPostReference
+												| PageReference
+												| ProductReference
+											external?: string
+											params?: string
+									  }
+									| {
+											_type: 'link'
+											label?: string
+											type?: 'external' | 'internal'
+											internal:
+												| {
+														_type: 'blog.post'
+														_id: string
+														title: string | null
+														language: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'page'
+														_id: string
+														title: string | null
+														language: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'product'
+														_id: string
+														title: string | null
+														language: string | null
+														slug: string | '/' | null
+												  }
+												| null
+											external?: string
+											params?: string
+									  }
+									| null
+								links: Array<
+									| {
+											_key: string
+											_type: 'link'
+											label?: string
+											type?: 'external' | 'internal'
+											internal?:
+												| BlogPostReference
+												| PageReference
+												| ProductReference
+											external?: string
+											params?: string
+									  }
+									| {
+											_key: string
+											_type: 'link'
+											label?: string
+											type?: 'external' | 'internal'
+											internal:
+												| {
+														_type: 'blog.post'
+														_id: string
+														title: string | null
+														language: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'page'
+														_id: string
+														title: string | null
+														language: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'product'
+														_id: string
+														title: string | null
+														language: string | null
+														slug: string | '/' | null
+												  }
+												| null
+											external?: string
+											params?: string
+									  }
+								> | null
+						  }
+						| {
+								_key: string
+								_type: 'link'
+								label?: string
+								type?: 'external' | 'internal'
+								internal?: BlogPostReference | PageReference | ProductReference
+								external?: string
+								params?: string
+						  }
+						| {
+								_key: string
+								_type: 'link'
+								label?: string
+								type?: 'external' | 'internal'
+								internal:
+									| {
+											_type: 'blog.post'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| null
+								external?: string
+								params?: string
+						  }
+					> | null
+			  }
+			| {
+					_key: string
+					_type: 'megamenu'
+					link:
+						| {
+								_type: 'link'
+								label?: string
+								type?: 'external' | 'internal'
+								internal?: BlogPostReference | PageReference | ProductReference
+								external?: string
+								params?: string
+						  }
+						| {
+								_type: 'link'
+								label?: string
+								type?: 'external' | 'internal'
+								internal:
+									| {
+											_type: 'blog.post'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| null
+								external?: string
+								params?: string
+						  }
+						| null
+					items: Array<
+						| {
+								_key: string
+								_type: 'link.list'
+								link?: Link
+								links: Array<
+									| {
+											_key: string
+											_type: 'link'
+											label?: string
+											type?: 'external' | 'internal'
+											internal?:
+												| BlogPostReference
+												| PageReference
+												| ProductReference
+											external?: string
+											params?: string
+									  }
+									| {
+											_key: string
+											_type: 'link'
+											label?: string
+											type?: 'external' | 'internal'
+											internal:
+												| {
+														_type: 'blog.post'
+														_id: string
+														title: string | null
+														language: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'page'
+														_id: string
+														title: string | null
+														language: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'product'
+														_id: string
+														title: string | null
+														language: string | null
+														slug: string | '/' | null
+												  }
+												| null
+											external?: string
+											params?: string
+									  }
+								> | null
+						  }
+						| {
+								_key: string
+								_type: 'link.list'
+								link:
+									| {
+											_type: 'link'
+											label?: string
+											type?: 'external' | 'internal'
+											internal?:
+												| BlogPostReference
+												| PageReference
+												| ProductReference
+											external?: string
+											params?: string
+									  }
+									| {
+											_type: 'link'
+											label?: string
+											type?: 'external' | 'internal'
+											internal:
+												| {
+														_type: 'blog.post'
+														_id: string
+														title: string | null
+														language: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'page'
+														_id: string
+														title: string | null
+														language: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'product'
+														_id: string
+														title: string | null
+														language: string | null
+														slug: string | '/' | null
+												  }
+												| null
+											external?: string
+											params?: string
+									  }
+									| null
+								links: Array<
+									| {
+											_key: string
+											_type: 'link'
+											label?: string
+											type?: 'external' | 'internal'
+											internal?:
+												| BlogPostReference
+												| PageReference
+												| ProductReference
+											external?: string
+											params?: string
+									  }
+									| {
+											_key: string
+											_type: 'link'
+											label?: string
+											type?: 'external' | 'internal'
+											internal:
+												| {
+														_type: 'blog.post'
+														_id: string
+														title: string | null
+														language: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'page'
+														_id: string
+														title: string | null
+														language: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'product'
+														_id: string
+														title: string | null
+														language: string | null
+														slug: string | '/' | null
+												  }
+												| null
+											external?: string
+											params?: string
+									  }
+								> | null
+						  }
+						| {
+								_key: string
+								_type: 'link'
+								label?: string
+								type?: 'external' | 'internal'
+								internal?: BlogPostReference | PageReference | ProductReference
+								external?: string
+								params?: string
+						  }
+						| {
+								_key: string
+								_type: 'link'
+								label?: string
+								type?: 'external' | 'internal'
+								internal:
+									| {
+											_type: 'blog.post'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -6884,6 +12127,7 @@ export type SITE_QUERY_RESULT = {
 		_updatedAt: string
 		_rev: string
 		title?: string
+		language?: 'en' | 'hr'
 		blurb?: Array<{
 			children?: Array<{
 				marks?: Array<string>
@@ -6923,7 +12167,7 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?: BlogPostReference | PageReference | ProductReference
 								external?: string
 								params?: string
 						  }
@@ -6932,11 +12176,29 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -6950,7 +12212,7 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?: BlogPostReference | PageReference | ProductReference
 								external?: string
 								params?: string
 						  }
@@ -6958,11 +12220,29 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -6981,7 +12261,7 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?: BlogPostReference | PageReference | ProductReference
 								external?: string
 								params?: string
 						  }
@@ -6989,11 +12269,29 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -7004,7 +12302,7 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?: BlogPostReference | PageReference | ProductReference
 								external?: string
 								params?: string
 						  }
@@ -7013,11 +12311,29 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -7028,7 +12344,7 @@ export type SITE_QUERY_RESULT = {
 					_type: 'link'
 					label?: string
 					type?: 'external' | 'internal'
-					internal?: PageReference
+					internal?: BlogPostReference | PageReference | ProductReference
 					external?: string
 					params?: string
 			  }
@@ -7037,11 +12353,29 @@ export type SITE_QUERY_RESULT = {
 					_type: 'link'
 					label?: string
 					type?: 'external' | 'internal'
-					internal: {
-						_type: 'page'
-						title: string | null
-						slug: string | '/' | null
-					} | null
+					internal:
+						| {
+								_type: 'blog.post'
+								_id: string
+								title: string | null
+								language: string | null
+								slug: string | '/' | null
+						  }
+						| {
+								_type: 'page'
+								_id: string
+								title: string | null
+								language: string | null
+								slug: string | '/' | null
+						  }
+						| {
+								_type: 'product'
+								_id: string
+								title: string | null
+								language: string | null
+								slug: string | '/' | null
+						  }
+						| null
 					external?: string
 					params?: string
 			  }
@@ -7066,7 +12400,7 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?: BlogPostReference | PageReference | ProductReference
 								external?: string
 								params?: string
 						  }
@@ -7074,11 +12408,29 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -7107,7 +12459,10 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal?: PageReference
+											internal?:
+												| BlogPostReference
+												| PageReference
+												| ProductReference
 											external?: string
 											params?: string
 									  }
@@ -7116,11 +12471,29 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal: {
-												_type: 'page'
-												title: string | null
-												slug: string | '/' | null
-											} | null
+											internal:
+												| {
+														_type: 'blog.post'
+														_id: string
+														title: string | null
+														language: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'page'
+														_id: string
+														title: string | null
+														language: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'product'
+														_id: string
+														title: string | null
+														language: string | null
+														slug: string | '/' | null
+												  }
+												| null
 											external?: string
 											params?: string
 									  }
@@ -7134,7 +12507,10 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal?: PageReference
+											internal?:
+												| BlogPostReference
+												| PageReference
+												| ProductReference
 											external?: string
 											params?: string
 									  }
@@ -7142,11 +12518,29 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal: {
-												_type: 'page'
-												title: string | null
-												slug: string | '/' | null
-											} | null
+											internal:
+												| {
+														_type: 'blog.post'
+														_id: string
+														title: string | null
+														language: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'page'
+														_id: string
+														title: string | null
+														language: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'product'
+														_id: string
+														title: string | null
+														language: string | null
+														slug: string | '/' | null
+												  }
+												| null
 											external?: string
 											params?: string
 									  }
@@ -7157,7 +12551,10 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal?: PageReference
+											internal?:
+												| BlogPostReference
+												| PageReference
+												| ProductReference
 											external?: string
 											params?: string
 									  }
@@ -7166,11 +12563,29 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal: {
-												_type: 'page'
-												title: string | null
-												slug: string | '/' | null
-											} | null
+											internal:
+												| {
+														_type: 'blog.post'
+														_id: string
+														title: string | null
+														language: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'page'
+														_id: string
+														title: string | null
+														language: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'product'
+														_id: string
+														title: string | null
+														language: string | null
+														slug: string | '/' | null
+												  }
+												| null
 											external?: string
 											params?: string
 									  }
@@ -7181,7 +12596,7 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?: BlogPostReference | PageReference | ProductReference
 								external?: string
 								params?: string
 						  }
@@ -7190,11 +12605,29 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -7208,7 +12641,7 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?: BlogPostReference | PageReference | ProductReference
 								external?: string
 								params?: string
 						  }
@@ -7216,11 +12649,29 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -7236,7 +12687,10 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal?: PageReference
+											internal?:
+												| BlogPostReference
+												| PageReference
+												| ProductReference
 											external?: string
 											params?: string
 									  }
@@ -7245,11 +12699,29 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal: {
-												_type: 'page'
-												title: string | null
-												slug: string | '/' | null
-											} | null
+											internal:
+												| {
+														_type: 'blog.post'
+														_id: string
+														title: string | null
+														language: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'page'
+														_id: string
+														title: string | null
+														language: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'product'
+														_id: string
+														title: string | null
+														language: string | null
+														slug: string | '/' | null
+												  }
+												| null
 											external?: string
 											params?: string
 									  }
@@ -7263,7 +12735,10 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal?: PageReference
+											internal?:
+												| BlogPostReference
+												| PageReference
+												| ProductReference
 											external?: string
 											params?: string
 									  }
@@ -7271,11 +12746,29 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal: {
-												_type: 'page'
-												title: string | null
-												slug: string | '/' | null
-											} | null
+											internal:
+												| {
+														_type: 'blog.post'
+														_id: string
+														title: string | null
+														language: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'page'
+														_id: string
+														title: string | null
+														language: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'product'
+														_id: string
+														title: string | null
+														language: string | null
+														slug: string | '/' | null
+												  }
+												| null
 											external?: string
 											params?: string
 									  }
@@ -7286,7 +12779,10 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal?: PageReference
+											internal?:
+												| BlogPostReference
+												| PageReference
+												| ProductReference
 											external?: string
 											params?: string
 									  }
@@ -7295,11 +12791,29 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal: {
-												_type: 'page'
-												title: string | null
-												slug: string | '/' | null
-											} | null
+											internal:
+												| {
+														_type: 'blog.post'
+														_id: string
+														title: string | null
+														language: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'page'
+														_id: string
+														title: string | null
+														language: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'product'
+														_id: string
+														title: string | null
+														language: string | null
+														slug: string | '/' | null
+												  }
+												| null
 											external?: string
 											params?: string
 									  }
@@ -7310,7 +12824,7 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?: BlogPostReference | PageReference | ProductReference
 								external?: string
 								params?: string
 						  }
@@ -7319,11 +12833,29 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product'
+											_id: string
+											title: string | null
+											language: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -7331,7 +12863,70 @@ export type SITE_QUERY_RESULT = {
 			  }
 		> | null
 	} | null
-	copyright?: Array<{
+	header_en?: NavigationReference
+	ctas_en?: Array<
+		{
+			_key: string
+		} & Cta
+	>
+	footer_en?: NavigationReference
+	footerSecondary_en?: NavigationReference
+	social_en?: NavigationReference
+	footerContent: Array<{
+		children?: Array<{
+			marks?: Array<string>
+			text?: string
+			_type: 'span'
+			_key: string
+		}>
+		style?: 'normal'
+		listItem?: never
+		markDefs?: Array<{
+			href?: string
+			_type: 'link'
+			_key: string
+		}>
+		level?: number
+		_type: 'block'
+		_key: string
+	}> | null
+	copyright: Array<{
+		children?: Array<{
+			marks?: Array<string>
+			text?: string
+			_type: 'span'
+			_key: string
+		}>
+		style?: 'normal'
+		listItem?: never
+		markDefs?: Array<{
+			href?: string
+			_type: 'link'
+			_key: string
+		}>
+		level?: number
+		_type: 'block'
+		_key: string
+	}> | null
+	footerContent_en?: Array<{
+		children?: Array<{
+			marks?: Array<string>
+			text?: string
+			_type: 'span'
+			_key: string
+		}>
+		style?: 'normal'
+		listItem?: never
+		markDefs?: Array<{
+			href?: string
+			_type: 'link'
+			_key: string
+		}>
+		level?: number
+		_type: 'block'
+		_key: string
+	}>
+	copyright_en?: Array<{
 		children?: Array<{
 			marks?: Array<string>
 			text?: string
@@ -7370,6 +12965,7 @@ export type BLOG_INDEX_QUERY_RESULT = Array<{
 	_createdAt: string
 	_updatedAt: string
 	_rev: string
+	language?: string
 	title?: string
 	content?: Array<
 		| ({
@@ -7441,6 +13037,8 @@ export type BLOG_INDEX_QUERY_RESULT = Array<{
 		_rev: string
 		title?: string
 		slug?: Slug
+		title_en?: string
+		slug_en?: Slug
 	}> | null
 	author: {
 		name: string | null
@@ -7520,6 +13118,7 @@ export type BLOG_POST_LIST_QUERY_RESULT = Array<{
 	_createdAt: string
 	_updatedAt: string
 	_rev: string
+	language?: string
 	title?: string
 	content?: Array<
 		| ({
@@ -7667,6 +13266,102 @@ export type CATEGORIES_QUERY_RESULT = Array<{
 	_rev: string
 	title?: string
 	slug?: Slug
+	title_en?: string
+	slug_en?: Slug
+}>
+
+// Source: src/ui/modules/product/product-content.tsx
+// Variable: CONTACT_PAGE_QUERY
+// Query: *[		_type == 'page'		&& coalesce(language, $defaultLang) == $lang		&& metadata.slug.current != 'index'		&& count(modules[_type == 'form-module' && form->identifier == 'contact']) > 0	]|order(		!(metadata.slug.current match 'kontakt*' || metadata.slug.current match 'contact*'),		_updatedAt desc	)[0]{		'url': select(			metadata.slug.current == 'index' && $lang == $defaultLang => '/',			metadata.slug.current == 'index' => '/' + $lang,			$lang == $defaultLang => '/' + metadata.slug.current,			'/' + $lang + '/' + metadata.slug.current		)	}
+export type CONTACT_PAGE_QUERY_RESULT = {
+	url: string | '/' | null | unknown
+} | null
+
+// Source: src/ui/modules/product/product-content.tsx
+// Variable: RELATED_PRODUCTS_QUERY
+// Query: *[		_type == 'product'		&& _id != $id		&& category._ref == $categoryId		&& coalesce(language, $defaultLang) == $lang	]|order(title asc)[0...$limit]{		_id,		title,		image{			...,			asset->		},		'slug': select(			$lang == 'hr' => $productsDir + metadata.slug.current,			$productsDir + $lang + '/' + metadata.slug.current		),	}
+export type RELATED_PRODUCTS_QUERY_RESULT = Array<{
+	_id: string
+	title: string | null
+	image: {
+		asset: {
+			_id: string
+			_type: 'sanity.imageAsset'
+			_createdAt: string
+			_updatedAt: string
+			_rev: string
+			originalFilename?: string
+			label?: string
+			title?: string
+			description?: string
+			altText?: string
+			sha1hash?: string
+			extension?: string
+			mimeType?: string
+			size?: number
+			assetId?: string
+			uploadId?: string
+			path?: string
+			url?: string
+			metadata?: SanityImageMetadata
+			source?: SanityAssetSourceData
+		} | null
+		media?: unknown
+		hotspot?: SanityImageHotspot
+		crop?: SanityImageCrop
+		alt?: string
+		_type: 'image'
+	} | null
+	slug: unknown
+}>
+
+// Source: src/ui/modules/product/product-list/index.tsx
+// Variable: PRODUCT_LIST_QUERY
+// Query: *[_type == 'product' && coalesce(language, $defaultLang) == $lang]|order(title asc){		_id,		title,		image{			...,			asset->		},		'categorySlug': select(			$lang == 'en' => coalesce(category->slug_en.current, category->slug.current),			category->slug.current		),		'categoryTitle': select(			$lang == 'en' => coalesce(category->title_en, category->title),			category->title		),		'slug': select(			$lang == 'hr' => $productsDir + metadata.slug.current,			$productsDir + $lang + '/' + metadata.slug.current		),	}
+export type PRODUCT_LIST_QUERY_RESULT = Array<{
+	_id: string
+	title: string | null
+	image: {
+		asset: {
+			_id: string
+			_type: 'sanity.imageAsset'
+			_createdAt: string
+			_updatedAt: string
+			_rev: string
+			originalFilename?: string
+			label?: string
+			title?: string
+			description?: string
+			altText?: string
+			sha1hash?: string
+			extension?: string
+			mimeType?: string
+			size?: number
+			assetId?: string
+			uploadId?: string
+			path?: string
+			url?: string
+			metadata?: SanityImageMetadata
+			source?: SanityAssetSourceData
+		} | null
+		media?: unknown
+		hotspot?: SanityImageHotspot
+		crop?: SanityImageCrop
+		alt?: string
+		_type: 'image'
+	} | null
+	categorySlug: string | null
+	categoryTitle: string | null
+	slug: unknown
+}>
+
+// Source: src/ui/modules/product/product-list/index.tsx
+// Variable: PRODUCT_CATEGORIES_QUERY
+// Query: *[		_type == 'product.category'		&& count(*[_type == 'product' && references(^._id) && coalesce(language, $defaultLang) == $lang]) > 0	]{		_id,		'title': select(			$lang == 'en' => coalesce(title_en, title),			title		),		'slug': select(			$lang == 'en' => coalesce(slug_en.current, slug.current),			slug.current		),	}|order(title asc)
+export type PRODUCT_CATEGORIES_QUERY_RESULT = Array<{
+	_id: string
+	title: string | null
+	slug: string | null
 }>
 
 // Source: src/ui/modules/search/store.ts
@@ -7685,24 +13380,35 @@ export type SEARCH_QUERY_RESULT = Array<
 			title: string | null
 			slug: string | '/' | null
 	  }
+	| {
+			_id: string
+			_type: 'product'
+			title: string | null
+			slug: string | '/' | null
+	  }
 >
 
 declare module '@sanity/client' {
 	interface SanityQueries {
-		"\n\t*[_type == 'page' && metadata.slug.current == $slug][0]{\n\t\t...,\n\t\t'modules': (\n\t\t\t// global moddules (before)\n\t\t\t*[_type == 'global-module' && path == '*' && \n\tselect(\n\t\tdefined(excludePaths) => count(excludePaths[string::startsWith($slug, @)]) == 0,\n\t\ttrue\n\t)\n].before[]{ \n\t...,\n\tctas[]{\n\t\t...,\n\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\tsidebar{ \n\t...,\n\tmodules[]{\n\t\t...,\n\t\t_type == 'callout' => {\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n },\n\t_type == 'form-module' => {\n\t\tform->\n\t},\n\t_type == 'breadcrumbs' => {\n\t\tcrumbs[]{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\t_type == 'card-list' => {\n\t\tcards[]{\n\t\t\t...,\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t},\n\t_type == 'logo-list' => {\n\t\tlogos[]->\n\t},\n\t_type == 'person-list' => {\n\t\tpeople[]->\n\t},\n\t_type == 'prose' => {\n\t\tcontent[]{\n\t\t\t...,\n\t\t\t_type == 'image' => {\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\t'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{\n\t\t\tstyle,\n\t\t\t'text': pt::text(@)\n\t\t}\n\t},\n\t_type == 'quote-list' => {\n\t\tquotes[]->\n\t},\n }\n\t\t\t// path modules (before)\n\t\t\t+ *[_type == 'global-module' && path != '*' && \n\tstring::startsWith($slug, path)\n\t&& \n\tselect(\n\t\tdefined(excludePaths) => count(excludePaths[string::startsWith($slug, @)]) == 0,\n\t\ttrue\n\t)\n\n].before[]{ \n\t...,\n\tctas[]{\n\t\t...,\n\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\tsidebar{ \n\t...,\n\tmodules[]{\n\t\t...,\n\t\t_type == 'callout' => {\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n },\n\t_type == 'form-module' => {\n\t\tform->\n\t},\n\t_type == 'breadcrumbs' => {\n\t\tcrumbs[]{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\t_type == 'card-list' => {\n\t\tcards[]{\n\t\t\t...,\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t},\n\t_type == 'logo-list' => {\n\t\tlogos[]->\n\t},\n\t_type == 'person-list' => {\n\t\tpeople[]->\n\t},\n\t_type == 'prose' => {\n\t\tcontent[]{\n\t\t\t...,\n\t\t\t_type == 'image' => {\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\t'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{\n\t\t\tstyle,\n\t\t\t'text': pt::text(@)\n\t\t}\n\t},\n\t_type == 'quote-list' => {\n\t\tquotes[]->\n\t},\n }\n\t\t\t// page modules\n\t\t\t+ modules[]{ \n\t...,\n\tctas[]{\n\t\t...,\n\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\tsidebar{ \n\t...,\n\tmodules[]{\n\t\t...,\n\t\t_type == 'callout' => {\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n },\n\t_type == 'form-module' => {\n\t\tform->\n\t},\n\t_type == 'breadcrumbs' => {\n\t\tcrumbs[]{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\t_type == 'card-list' => {\n\t\tcards[]{\n\t\t\t...,\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t},\n\t_type == 'logo-list' => {\n\t\tlogos[]->\n\t},\n\t_type == 'person-list' => {\n\t\tpeople[]->\n\t},\n\t_type == 'prose' => {\n\t\tcontent[]{\n\t\t\t...,\n\t\t\t_type == 'image' => {\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\t'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{\n\t\t\tstyle,\n\t\t\t'text': pt::text(@)\n\t\t}\n\t},\n\t_type == 'quote-list' => {\n\t\tquotes[]->\n\t},\n }\n\t\t\t// path modules (after)\n\t\t\t+ *[_type == 'global-module' && path != '*' && \n\tstring::startsWith($slug, path)\n\t&& \n\tselect(\n\t\tdefined(excludePaths) => count(excludePaths[string::startsWith($slug, @)]) == 0,\n\t\ttrue\n\t)\n\n].after[]{ \n\t...,\n\tctas[]{\n\t\t...,\n\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\tsidebar{ \n\t...,\n\tmodules[]{\n\t\t...,\n\t\t_type == 'callout' => {\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n },\n\t_type == 'form-module' => {\n\t\tform->\n\t},\n\t_type == 'breadcrumbs' => {\n\t\tcrumbs[]{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\t_type == 'card-list' => {\n\t\tcards[]{\n\t\t\t...,\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t},\n\t_type == 'logo-list' => {\n\t\tlogos[]->\n\t},\n\t_type == 'person-list' => {\n\t\tpeople[]->\n\t},\n\t_type == 'prose' => {\n\t\tcontent[]{\n\t\t\t...,\n\t\t\t_type == 'image' => {\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\t'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{\n\t\t\tstyle,\n\t\t\t'text': pt::text(@)\n\t\t}\n\t},\n\t_type == 'quote-list' => {\n\t\tquotes[]->\n\t},\n }\n\t\t\t// global moddules (after)\n\t\t\t+ *[_type == 'global-module' && path == '*' && \n\tselect(\n\t\tdefined(excludePaths) => count(excludePaths[string::startsWith($slug, @)]) == 0,\n\t\ttrue\n\t)\n].after[]{ \n\t...,\n\tctas[]{\n\t\t...,\n\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\tsidebar{ \n\t...,\n\tmodules[]{\n\t\t...,\n\t\t_type == 'callout' => {\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n },\n\t_type == 'form-module' => {\n\t\tform->\n\t},\n\t_type == 'breadcrumbs' => {\n\t\tcrumbs[]{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\t_type == 'card-list' => {\n\t\tcards[]{\n\t\t\t...,\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t},\n\t_type == 'logo-list' => {\n\t\tlogos[]->\n\t},\n\t_type == 'person-list' => {\n\t\tpeople[]->\n\t},\n\t_type == 'prose' => {\n\t\tcontent[]{\n\t\t\t...,\n\t\t\t_type == 'image' => {\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\t'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{\n\t\t\tstyle,\n\t\t\t'text': pt::text(@)\n\t\t}\n\t},\n\t_type == 'quote-list' => {\n\t\tquotes[]->\n\t},\n }\n\t\t)\n\t}\n": PAGE_QUERY_RESULT
+		"\n\t*[_type == 'page'\n\t\t&& metadata.slug.current == $slug\n\t\t&& coalesce(language, $defaultLang) == $lang\n\t][0]{\n\t\t...,\n\t\t'modules': (\n\t\t\t// global modules (before)\n\t\t\t*[_type == 'global-module' && path == '*' && \n\tselect(\n\t\tdefined(excludePaths) => count(excludePaths[string::startsWith($slug, @)]) == 0,\n\t\ttrue\n\t)\n].before[]{ \n\t...,\n\tctas[]{\n\t\t...,\n\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\tsidebar{ \n\t...,\n\tmodules[]{\n\t\t...,\n\t\t_type == 'callout' => {\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n },\n\t_type == 'form-module' => {\n\t\tform->\n\t},\n\t_type == 'breadcrumbs' => {\n\t\tcrumbs[]{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\t_type == 'product-content' => {\n\t\tquoteLink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\t_type == 'card-list' => {\n\t\tcards[]{\n\t\t\t...,\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t},\n\t_type == 'category-grid' => {\n\t\tcategories[]{\n\t\t\t...,\n\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t}\n\t},\n\t_type == 'split-columns' => {\n\t\tcolumns[]{\n\t\t\t...,\n\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t}\n\t},\n\t_type == 'logo-list' => {\n\t\tlogos[]->\n\t},\n\t_type == 'person-list' => {\n\t\tpeople[]->\n\t},\n\t_type == 'prose' => {\n\t\tcontent[]{\n\t\t\t...,\n\t\t\t_type == 'image' => {\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\t'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{\n\t\t\tstyle,\n\t\t\t'text': pt::text(@)\n\t\t}\n\t},\n\t_type == 'quote-list' => {\n\t\tquotes[]->\n\t},\n }\n\t\t\t// path modules (before)\n\t\t\t+ *[_type == 'global-module' && path != '*' && \n\tstring::startsWith($slug, path)\n\t&& \n\tselect(\n\t\tdefined(excludePaths) => count(excludePaths[string::startsWith($slug, @)]) == 0,\n\t\ttrue\n\t)\n\n].before[]{ \n\t...,\n\tctas[]{\n\t\t...,\n\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\tsidebar{ \n\t...,\n\tmodules[]{\n\t\t...,\n\t\t_type == 'callout' => {\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n },\n\t_type == 'form-module' => {\n\t\tform->\n\t},\n\t_type == 'breadcrumbs' => {\n\t\tcrumbs[]{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\t_type == 'product-content' => {\n\t\tquoteLink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\t_type == 'card-list' => {\n\t\tcards[]{\n\t\t\t...,\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t},\n\t_type == 'category-grid' => {\n\t\tcategories[]{\n\t\t\t...,\n\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t}\n\t},\n\t_type == 'split-columns' => {\n\t\tcolumns[]{\n\t\t\t...,\n\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t}\n\t},\n\t_type == 'logo-list' => {\n\t\tlogos[]->\n\t},\n\t_type == 'person-list' => {\n\t\tpeople[]->\n\t},\n\t_type == 'prose' => {\n\t\tcontent[]{\n\t\t\t...,\n\t\t\t_type == 'image' => {\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\t'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{\n\t\t\tstyle,\n\t\t\t'text': pt::text(@)\n\t\t}\n\t},\n\t_type == 'quote-list' => {\n\t\tquotes[]->\n\t},\n }\n\t\t\t// page modules\n\t\t\t+ modules[]{ \n\t...,\n\tctas[]{\n\t\t...,\n\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\tsidebar{ \n\t...,\n\tmodules[]{\n\t\t...,\n\t\t_type == 'callout' => {\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n },\n\t_type == 'form-module' => {\n\t\tform->\n\t},\n\t_type == 'breadcrumbs' => {\n\t\tcrumbs[]{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\t_type == 'product-content' => {\n\t\tquoteLink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\t_type == 'card-list' => {\n\t\tcards[]{\n\t\t\t...,\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t},\n\t_type == 'category-grid' => {\n\t\tcategories[]{\n\t\t\t...,\n\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t}\n\t},\n\t_type == 'split-columns' => {\n\t\tcolumns[]{\n\t\t\t...,\n\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t}\n\t},\n\t_type == 'logo-list' => {\n\t\tlogos[]->\n\t},\n\t_type == 'person-list' => {\n\t\tpeople[]->\n\t},\n\t_type == 'prose' => {\n\t\tcontent[]{\n\t\t\t...,\n\t\t\t_type == 'image' => {\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\t'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{\n\t\t\tstyle,\n\t\t\t'text': pt::text(@)\n\t\t}\n\t},\n\t_type == 'quote-list' => {\n\t\tquotes[]->\n\t},\n }\n\t\t\t// path modules (after)\n\t\t\t+ *[_type == 'global-module' && path != '*' && \n\tstring::startsWith($slug, path)\n\t&& \n\tselect(\n\t\tdefined(excludePaths) => count(excludePaths[string::startsWith($slug, @)]) == 0,\n\t\ttrue\n\t)\n\n].after[]{ \n\t...,\n\tctas[]{\n\t\t...,\n\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\tsidebar{ \n\t...,\n\tmodules[]{\n\t\t...,\n\t\t_type == 'callout' => {\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n },\n\t_type == 'form-module' => {\n\t\tform->\n\t},\n\t_type == 'breadcrumbs' => {\n\t\tcrumbs[]{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\t_type == 'product-content' => {\n\t\tquoteLink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\t_type == 'card-list' => {\n\t\tcards[]{\n\t\t\t...,\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t},\n\t_type == 'category-grid' => {\n\t\tcategories[]{\n\t\t\t...,\n\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t}\n\t},\n\t_type == 'split-columns' => {\n\t\tcolumns[]{\n\t\t\t...,\n\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t}\n\t},\n\t_type == 'logo-list' => {\n\t\tlogos[]->\n\t},\n\t_type == 'person-list' => {\n\t\tpeople[]->\n\t},\n\t_type == 'prose' => {\n\t\tcontent[]{\n\t\t\t...,\n\t\t\t_type == 'image' => {\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\t'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{\n\t\t\tstyle,\n\t\t\t'text': pt::text(@)\n\t\t}\n\t},\n\t_type == 'quote-list' => {\n\t\tquotes[]->\n\t},\n }\n\t\t\t// global modules (after)\n\t\t\t+ *[_type == 'global-module' && path == '*' && \n\tselect(\n\t\tdefined(excludePaths) => count(excludePaths[string::startsWith($slug, @)]) == 0,\n\t\ttrue\n\t)\n].after[]{ \n\t...,\n\tctas[]{\n\t\t...,\n\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\tsidebar{ \n\t...,\n\tmodules[]{\n\t\t...,\n\t\t_type == 'callout' => {\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n },\n\t_type == 'form-module' => {\n\t\tform->\n\t},\n\t_type == 'breadcrumbs' => {\n\t\tcrumbs[]{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\t_type == 'product-content' => {\n\t\tquoteLink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\t_type == 'card-list' => {\n\t\tcards[]{\n\t\t\t...,\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t},\n\t_type == 'category-grid' => {\n\t\tcategories[]{\n\t\t\t...,\n\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t}\n\t},\n\t_type == 'split-columns' => {\n\t\tcolumns[]{\n\t\t\t...,\n\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t}\n\t},\n\t_type == 'logo-list' => {\n\t\tlogos[]->\n\t},\n\t_type == 'person-list' => {\n\t\tpeople[]->\n\t},\n\t_type == 'prose' => {\n\t\tcontent[]{\n\t\t\t...,\n\t\t\t_type == 'image' => {\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\t'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{\n\t\t\tstyle,\n\t\t\t'text': pt::text(@)\n\t\t}\n\t},\n\t_type == 'quote-list' => {\n\t\tquotes[]->\n\t},\n }\n\t\t),\n\t\t\n\t'translations': *[_type == 'translation.metadata' && references(^._id)].translations[]{\n\t\t'value': value->{\n\t\t\t_id,\n\t\t\t_type,\n\t\t\tlanguage,\n\t\t\t'slug': metadata.slug.current\n\t\t}\n\t}\n\n\t}\n": PAGE_QUERY_RESULT
 		"*[_type == 'blog.post'] | order(publishDate desc) {\n\ttitle,\n\t'slug': $blogDir + metadata.slug.current,\n\tpublishDate,\n\t'description': metadata.description,\n}": BLOG_POSTS_MD_QUERY_RESULT
 		"*[_type == $type && metadata.slug.current == $slug][0]{\n\t'title': coalesce(metadata.title, title),\n}": OG_QUERY_RESULT
-		"*[_type == 'blog.post' && metadata.slug.current == $slug][0]{\n\t...,\n\tcontent[]{\n\t\t...,\n\t\t_type == 'image' => {\n\t\t\t...,\n\t\t\tasset->\n\t\t}\n\t},\n\t'contentPlainText': pt::text(content),\n\t'readTime': length(string::split(pt::text(content), ' ')) / 200,\n\t'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{\n\t\tstyle,\n\t\t'text': pt::text(@)\n\t},\n\tcategories[]->{\n\t\ttitle,\n\t\tslug\n\t},\n\tauthor->{\n\t\tname,\n\t\timage{\n\t\t\t...,\n\t\t\tasset->\n\t\t}\n\t},\n\t'modules': (\n\t\t// global modules (before)\n\t\t*[_type == 'global-module' && path == '*' && \n\tselect(\n\t\tdefined(excludePaths) => count(excludePaths[string::startsWith($slug, @)]) == 0,\n\t\ttrue\n\t)\n].before[]{ \n\t...,\n\tctas[]{\n\t\t...,\n\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\tsidebar{ \n\t...,\n\tmodules[]{\n\t\t...,\n\t\t_type == 'callout' => {\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n },\n\t_type == 'form-module' => {\n\t\tform->\n\t},\n\t_type == 'breadcrumbs' => {\n\t\tcrumbs[]{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\t_type == 'card-list' => {\n\t\tcards[]{\n\t\t\t...,\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t},\n\t_type == 'logo-list' => {\n\t\tlogos[]->\n\t},\n\t_type == 'person-list' => {\n\t\tpeople[]->\n\t},\n\t_type == 'prose' => {\n\t\tcontent[]{\n\t\t\t...,\n\t\t\t_type == 'image' => {\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\t'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{\n\t\t\tstyle,\n\t\t\t'text': pt::text(@)\n\t\t}\n\t},\n\t_type == 'quote-list' => {\n\t\tquotes[]->\n\t},\n }\n\t\t// path modules (before)\n\t\t+ *[_type == 'global-module' && path == $blogDir].before[]{ \n\t...,\n\tctas[]{\n\t\t...,\n\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\tsidebar{ \n\t...,\n\tmodules[]{\n\t\t...,\n\t\t_type == 'callout' => {\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n },\n\t_type == 'form-module' => {\n\t\tform->\n\t},\n\t_type == 'breadcrumbs' => {\n\t\tcrumbs[]{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\t_type == 'card-list' => {\n\t\tcards[]{\n\t\t\t...,\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t},\n\t_type == 'logo-list' => {\n\t\tlogos[]->\n\t},\n\t_type == 'person-list' => {\n\t\tpeople[]->\n\t},\n\t_type == 'prose' => {\n\t\tcontent[]{\n\t\t\t...,\n\t\t\t_type == 'image' => {\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\t'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{\n\t\t\tstyle,\n\t\t\t'text': pt::text(@)\n\t\t}\n\t},\n\t_type == 'quote-list' => {\n\t\tquotes[]->\n\t},\n }\n\t\t// path modules (after)\n\t\t+ *[_type == 'global-module' && path == $blogDir].after[]{ \n\t...,\n\tctas[]{\n\t\t...,\n\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\tsidebar{ \n\t...,\n\tmodules[]{\n\t\t...,\n\t\t_type == 'callout' => {\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n },\n\t_type == 'form-module' => {\n\t\tform->\n\t},\n\t_type == 'breadcrumbs' => {\n\t\tcrumbs[]{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\t_type == 'card-list' => {\n\t\tcards[]{\n\t\t\t...,\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t},\n\t_type == 'logo-list' => {\n\t\tlogos[]->\n\t},\n\t_type == 'person-list' => {\n\t\tpeople[]->\n\t},\n\t_type == 'prose' => {\n\t\tcontent[]{\n\t\t\t...,\n\t\t\t_type == 'image' => {\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\t'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{\n\t\t\tstyle,\n\t\t\t'text': pt::text(@)\n\t\t}\n\t},\n\t_type == 'quote-list' => {\n\t\tquotes[]->\n\t},\n }\n\t\t// global modules (after)\n\t\t+ *[_type == 'global-module' && path == '*' && \n\tselect(\n\t\tdefined(excludePaths) => count(excludePaths[string::startsWith($slug, @)]) == 0,\n\t\ttrue\n\t)\n].after[]{ \n\t...,\n\tctas[]{\n\t\t...,\n\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\tsidebar{ \n\t...,\n\tmodules[]{\n\t\t...,\n\t\t_type == 'callout' => {\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n },\n\t_type == 'form-module' => {\n\t\tform->\n\t},\n\t_type == 'breadcrumbs' => {\n\t\tcrumbs[]{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\t_type == 'card-list' => {\n\t\tcards[]{\n\t\t\t...,\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t},\n\t_type == 'logo-list' => {\n\t\tlogos[]->\n\t},\n\t_type == 'person-list' => {\n\t\tpeople[]->\n\t},\n\t_type == 'prose' => {\n\t\tcontent[]{\n\t\t\t...,\n\t\t\t_type == 'image' => {\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\t'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{\n\t\t\tstyle,\n\t\t\t'text': pt::text(@)\n\t\t}\n\t},\n\t_type == 'quote-list' => {\n\t\tquotes[]->\n\t},\n }\n\t)\n}": BLOG_POST_QUERY_RESULT
-		"{\n\t'blog': *[_type == 'page' && metadata.slug.current == $blogDir][0]{\n\t\tmetadata\n\t},\n\t'posts': *[_type == 'blog.post' && metadata.noIndex != true]|order(publishDate desc){\n\t\ttitle,\n\t\tcontent,\n\t\tpublishDate,\n\t\tcategories[]->{ title },\n\t\tauthor->{ name },\n\t\tmetadata\n\t}\n}": BLOG_RSS_QUERY_RESULT
-		"\n\t*[_type == 'page' && metadata.slug.current == '404'][0]{\n\t\t...,\n\t\tmodules[]{ \n\t...,\n\tctas[]{\n\t\t...,\n\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\tsidebar{ \n\t...,\n\tmodules[]{\n\t\t...,\n\t\t_type == 'callout' => {\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n },\n\t_type == 'form-module' => {\n\t\tform->\n\t},\n\t_type == 'breadcrumbs' => {\n\t\tcrumbs[]{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\t_type == 'card-list' => {\n\t\tcards[]{\n\t\t\t...,\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t},\n\t_type == 'logo-list' => {\n\t\tlogos[]->\n\t},\n\t_type == 'person-list' => {\n\t\tpeople[]->\n\t},\n\t_type == 'prose' => {\n\t\tcontent[]{\n\t\t\t...,\n\t\t\t_type == 'image' => {\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\t'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{\n\t\t\tstyle,\n\t\t\t'text': pt::text(@)\n\t\t}\n\t},\n\t_type == 'quote-list' => {\n\t\tquotes[]->\n\t},\n }\n\t}\n": NOT_FOUND_QUERY_RESULT
+		"*[_type == 'blog.post'\n\t&& metadata.slug.current == $slug\n\t&& coalesce(language, $defaultLang) == $lang\n][0]{\n\t...,\n\tcontent[]{\n\t\t...,\n\t\t_type == 'image' => {\n\t\t\t...,\n\t\t\tasset->\n\t\t}\n\t},\n\t'contentPlainText': pt::text(content),\n\t'readTime': length(string::split(pt::text(content), ' ')) / 200,\n\t'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{\n\t\tstyle,\n\t\t'text': pt::text(@)\n\t},\n\tcategories[]->{\n\t\ttitle,\n\t\ttitle_en,\n\t\tslug,\n\t\tslug_en\n\t},\n\tauthor->{\n\t\tname,\n\t\timage{\n\t\t\t...,\n\t\t\tasset->\n\t\t}\n\t},\n\t'modules': (\n\t\t// global modules (before)\n\t\t*[_type == 'global-module' && path == '*' && \n\tselect(\n\t\tdefined(excludePaths) => count(excludePaths[string::startsWith($slug, @)]) == 0,\n\t\ttrue\n\t)\n].before[]{ \n\t...,\n\tctas[]{\n\t\t...,\n\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\tsidebar{ \n\t...,\n\tmodules[]{\n\t\t...,\n\t\t_type == 'callout' => {\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n },\n\t_type == 'form-module' => {\n\t\tform->\n\t},\n\t_type == 'breadcrumbs' => {\n\t\tcrumbs[]{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\t_type == 'product-content' => {\n\t\tquoteLink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\t_type == 'card-list' => {\n\t\tcards[]{\n\t\t\t...,\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t},\n\t_type == 'category-grid' => {\n\t\tcategories[]{\n\t\t\t...,\n\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t}\n\t},\n\t_type == 'split-columns' => {\n\t\tcolumns[]{\n\t\t\t...,\n\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t}\n\t},\n\t_type == 'logo-list' => {\n\t\tlogos[]->\n\t},\n\t_type == 'person-list' => {\n\t\tpeople[]->\n\t},\n\t_type == 'prose' => {\n\t\tcontent[]{\n\t\t\t...,\n\t\t\t_type == 'image' => {\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\t'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{\n\t\t\tstyle,\n\t\t\t'text': pt::text(@)\n\t\t}\n\t},\n\t_type == 'quote-list' => {\n\t\tquotes[]->\n\t},\n }\n\t\t// path modules (before)\n\t\t+ *[_type == 'global-module' && path == $blogDir].before[]{ \n\t...,\n\tctas[]{\n\t\t...,\n\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\tsidebar{ \n\t...,\n\tmodules[]{\n\t\t...,\n\t\t_type == 'callout' => {\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n },\n\t_type == 'form-module' => {\n\t\tform->\n\t},\n\t_type == 'breadcrumbs' => {\n\t\tcrumbs[]{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\t_type == 'product-content' => {\n\t\tquoteLink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\t_type == 'card-list' => {\n\t\tcards[]{\n\t\t\t...,\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t},\n\t_type == 'category-grid' => {\n\t\tcategories[]{\n\t\t\t...,\n\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t}\n\t},\n\t_type == 'split-columns' => {\n\t\tcolumns[]{\n\t\t\t...,\n\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t}\n\t},\n\t_type == 'logo-list' => {\n\t\tlogos[]->\n\t},\n\t_type == 'person-list' => {\n\t\tpeople[]->\n\t},\n\t_type == 'prose' => {\n\t\tcontent[]{\n\t\t\t...,\n\t\t\t_type == 'image' => {\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\t'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{\n\t\t\tstyle,\n\t\t\t'text': pt::text(@)\n\t\t}\n\t},\n\t_type == 'quote-list' => {\n\t\tquotes[]->\n\t},\n }\n\t\t// path modules (after)\n\t\t+ *[_type == 'global-module' && path == $blogDir].after[]{ \n\t...,\n\tctas[]{\n\t\t...,\n\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\tsidebar{ \n\t...,\n\tmodules[]{\n\t\t...,\n\t\t_type == 'callout' => {\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n },\n\t_type == 'form-module' => {\n\t\tform->\n\t},\n\t_type == 'breadcrumbs' => {\n\t\tcrumbs[]{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\t_type == 'product-content' => {\n\t\tquoteLink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\t_type == 'card-list' => {\n\t\tcards[]{\n\t\t\t...,\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t},\n\t_type == 'category-grid' => {\n\t\tcategories[]{\n\t\t\t...,\n\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t}\n\t},\n\t_type == 'split-columns' => {\n\t\tcolumns[]{\n\t\t\t...,\n\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t}\n\t},\n\t_type == 'logo-list' => {\n\t\tlogos[]->\n\t},\n\t_type == 'person-list' => {\n\t\tpeople[]->\n\t},\n\t_type == 'prose' => {\n\t\tcontent[]{\n\t\t\t...,\n\t\t\t_type == 'image' => {\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\t'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{\n\t\t\tstyle,\n\t\t\t'text': pt::text(@)\n\t\t}\n\t},\n\t_type == 'quote-list' => {\n\t\tquotes[]->\n\t},\n }\n\t\t// global modules (after)\n\t\t+ *[_type == 'global-module' && path == '*' && \n\tselect(\n\t\tdefined(excludePaths) => count(excludePaths[string::startsWith($slug, @)]) == 0,\n\t\ttrue\n\t)\n].after[]{ \n\t...,\n\tctas[]{\n\t\t...,\n\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\tsidebar{ \n\t...,\n\tmodules[]{\n\t\t...,\n\t\t_type == 'callout' => {\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n },\n\t_type == 'form-module' => {\n\t\tform->\n\t},\n\t_type == 'breadcrumbs' => {\n\t\tcrumbs[]{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\t_type == 'product-content' => {\n\t\tquoteLink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\t_type == 'card-list' => {\n\t\tcards[]{\n\t\t\t...,\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t},\n\t_type == 'category-grid' => {\n\t\tcategories[]{\n\t\t\t...,\n\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t}\n\t},\n\t_type == 'split-columns' => {\n\t\tcolumns[]{\n\t\t\t...,\n\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t}\n\t},\n\t_type == 'logo-list' => {\n\t\tlogos[]->\n\t},\n\t_type == 'person-list' => {\n\t\tpeople[]->\n\t},\n\t_type == 'prose' => {\n\t\tcontent[]{\n\t\t\t...,\n\t\t\t_type == 'image' => {\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\t'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{\n\t\t\tstyle,\n\t\t\t'text': pt::text(@)\n\t\t}\n\t},\n\t_type == 'quote-list' => {\n\t\tquotes[]->\n\t},\n }\n\t),\n\t\n\t'translations': *[_type == 'translation.metadata' && references(^._id)].translations[]{\n\t\t'value': value->{\n\t\t\t_id,\n\t\t\t_type,\n\t\t\tlanguage,\n\t\t\t'slug': metadata.slug.current\n\t\t}\n\t}\n\n}": BLOG_POST_QUERY_RESULT
+		"{\n\t'blog': *[_type == 'page' && metadata.slug.current == $blogDir\n\t\t&& (!defined(language) || language == $defaultLang)][0]{\n\t\tmetadata\n\t},\n\t'posts': *[_type == 'blog.post' && metadata.noIndex != true]|order(publishDate desc){\n\t\ttitle,\n\t\tcontent,\n\t\tpublishDate,\n\t\tlanguage,\n\t\tcategories[]->{ title, title_en },\n\t\tauthor->{ name },\n\t\tmetadata\n\t}\n}": BLOG_RSS_QUERY_RESULT
+		"\n\t*[_type == 'page' && metadata.slug.current == '404'\n\t\t&& coalesce(language, $defaultLang) == $lang][0]{\n\t\t...,\n\t\tmodules[]{ \n\t...,\n\tctas[]{\n\t\t...,\n\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\tsidebar{ \n\t...,\n\tmodules[]{\n\t\t...,\n\t\t_type == 'callout' => {\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n },\n\t_type == 'form-module' => {\n\t\tform->\n\t},\n\t_type == 'breadcrumbs' => {\n\t\tcrumbs[]{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\t_type == 'product-content' => {\n\t\tquoteLink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\t_type == 'card-list' => {\n\t\tcards[]{\n\t\t\t...,\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t},\n\t_type == 'category-grid' => {\n\t\tcategories[]{\n\t\t\t...,\n\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t}\n\t},\n\t_type == 'split-columns' => {\n\t\tcolumns[]{\n\t\t\t...,\n\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t}\n\t},\n\t_type == 'logo-list' => {\n\t\tlogos[]->\n\t},\n\t_type == 'person-list' => {\n\t\tpeople[]->\n\t},\n\t_type == 'prose' => {\n\t\tcontent[]{\n\t\t\t...,\n\t\t\t_type == 'image' => {\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\t'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{\n\t\t\tstyle,\n\t\t\t'text': pt::text(@)\n\t\t}\n\t},\n\t_type == 'quote-list' => {\n\t\tquotes[]->\n\t},\n }\n\t}\n": NOT_FOUND_QUERY_RESULT
+		"*[_type == 'product'\n\t&& metadata.slug.current == $slug\n\t&& coalesce(language, $defaultLang) == $lang\n][0]{\n\t...,\n\timage{\n\t\t...,\n\t\tasset->\n\t},\n\tcategory->{\n\t\t_id,\n\t\ttitle,\n\t\ttitle_en,\n\t\tslug,\n\t\tslug_en\n\t},\n\ttechnicalDataSheet{\n\t\tasset->{\n\t\t\turl,\n\t\t\toriginalFilename,\n\t\t\tsize\n\t\t}\n\t},\n\tsafetyDataSheet{\n\t\tasset->{\n\t\t\turl,\n\t\t\toriginalFilename,\n\t\t\tsize\n\t\t}\n\t},\n\t'modules': (\n\t\t// global modules (before)\n\t\t*[_type == 'global-module' && path == '*' && \n\tselect(\n\t\tdefined(excludePaths) => count(excludePaths[string::startsWith($slug, @)]) == 0,\n\t\ttrue\n\t)\n].before[]{ \n\t...,\n\tctas[]{\n\t\t...,\n\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\tsidebar{ \n\t...,\n\tmodules[]{\n\t\t...,\n\t\t_type == 'callout' => {\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n },\n\t_type == 'form-module' => {\n\t\tform->\n\t},\n\t_type == 'breadcrumbs' => {\n\t\tcrumbs[]{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\t_type == 'product-content' => {\n\t\tquoteLink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\t_type == 'card-list' => {\n\t\tcards[]{\n\t\t\t...,\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t},\n\t_type == 'category-grid' => {\n\t\tcategories[]{\n\t\t\t...,\n\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t}\n\t},\n\t_type == 'split-columns' => {\n\t\tcolumns[]{\n\t\t\t...,\n\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t}\n\t},\n\t_type == 'logo-list' => {\n\t\tlogos[]->\n\t},\n\t_type == 'person-list' => {\n\t\tpeople[]->\n\t},\n\t_type == 'prose' => {\n\t\tcontent[]{\n\t\t\t...,\n\t\t\t_type == 'image' => {\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\t'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{\n\t\t\tstyle,\n\t\t\t'text': pt::text(@)\n\t\t}\n\t},\n\t_type == 'quote-list' => {\n\t\tquotes[]->\n\t},\n }\n\t\t// path modules (before)\n\t\t+ *[_type == 'global-module' && path in [$productsDir, $productsBase]].before[]{ \n\t...,\n\tctas[]{\n\t\t...,\n\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\tsidebar{ \n\t...,\n\tmodules[]{\n\t\t...,\n\t\t_type == 'callout' => {\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n },\n\t_type == 'form-module' => {\n\t\tform->\n\t},\n\t_type == 'breadcrumbs' => {\n\t\tcrumbs[]{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\t_type == 'product-content' => {\n\t\tquoteLink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\t_type == 'card-list' => {\n\t\tcards[]{\n\t\t\t...,\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t},\n\t_type == 'category-grid' => {\n\t\tcategories[]{\n\t\t\t...,\n\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t}\n\t},\n\t_type == 'split-columns' => {\n\t\tcolumns[]{\n\t\t\t...,\n\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t}\n\t},\n\t_type == 'logo-list' => {\n\t\tlogos[]->\n\t},\n\t_type == 'person-list' => {\n\t\tpeople[]->\n\t},\n\t_type == 'prose' => {\n\t\tcontent[]{\n\t\t\t...,\n\t\t\t_type == 'image' => {\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\t'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{\n\t\t\tstyle,\n\t\t\t'text': pt::text(@)\n\t\t}\n\t},\n\t_type == 'quote-list' => {\n\t\tquotes[]->\n\t},\n }\n\t\t// path modules (after)\n\t\t+ *[_type == 'global-module' && path in [$productsDir, $productsBase]].after[]{ \n\t...,\n\tctas[]{\n\t\t...,\n\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\tsidebar{ \n\t...,\n\tmodules[]{\n\t\t...,\n\t\t_type == 'callout' => {\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n },\n\t_type == 'form-module' => {\n\t\tform->\n\t},\n\t_type == 'breadcrumbs' => {\n\t\tcrumbs[]{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\t_type == 'product-content' => {\n\t\tquoteLink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\t_type == 'card-list' => {\n\t\tcards[]{\n\t\t\t...,\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t},\n\t_type == 'category-grid' => {\n\t\tcategories[]{\n\t\t\t...,\n\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t}\n\t},\n\t_type == 'split-columns' => {\n\t\tcolumns[]{\n\t\t\t...,\n\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t}\n\t},\n\t_type == 'logo-list' => {\n\t\tlogos[]->\n\t},\n\t_type == 'person-list' => {\n\t\tpeople[]->\n\t},\n\t_type == 'prose' => {\n\t\tcontent[]{\n\t\t\t...,\n\t\t\t_type == 'image' => {\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\t'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{\n\t\t\tstyle,\n\t\t\t'text': pt::text(@)\n\t\t}\n\t},\n\t_type == 'quote-list' => {\n\t\tquotes[]->\n\t},\n }\n\t\t// global modules (after)\n\t\t+ *[_type == 'global-module' && path == '*' && \n\tselect(\n\t\tdefined(excludePaths) => count(excludePaths[string::startsWith($slug, @)]) == 0,\n\t\ttrue\n\t)\n].after[]{ \n\t...,\n\tctas[]{\n\t\t...,\n\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\tsidebar{ \n\t...,\n\tmodules[]{\n\t\t...,\n\t\t_type == 'callout' => {\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n },\n\t_type == 'form-module' => {\n\t\tform->\n\t},\n\t_type == 'breadcrumbs' => {\n\t\tcrumbs[]{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\t_type == 'product-content' => {\n\t\tquoteLink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\t_type == 'card-list' => {\n\t\tcards[]{\n\t\t\t...,\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t},\n\t_type == 'category-grid' => {\n\t\tcategories[]{\n\t\t\t...,\n\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t}\n\t},\n\t_type == 'split-columns' => {\n\t\tcolumns[]{\n\t\t\t...,\n\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t}\n\t},\n\t_type == 'logo-list' => {\n\t\tlogos[]->\n\t},\n\t_type == 'person-list' => {\n\t\tpeople[]->\n\t},\n\t_type == 'prose' => {\n\t\tcontent[]{\n\t\t\t...,\n\t\t\t_type == 'image' => {\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\t'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{\n\t\t\tstyle,\n\t\t\t'text': pt::text(@)\n\t\t}\n\t},\n\t_type == 'quote-list' => {\n\t\tquotes[]->\n\t},\n }\n\t),\n\t\n\t'translations': *[_type == 'translation.metadata' && references(^._id)].translations[]{\n\t\t'value': value->{\n\t\t\t_id,\n\t\t\t_type,\n\t\t\tlanguage,\n\t\t\t'slug': metadata.slug.current\n\t\t}\n\t}\n\n}": PRODUCT_QUERY_RESULT
 		"\n\t*[_type == 'page'\n\t\t&& defined(metadata.slug.current)\n\t\t&& metadata.noIndex != true\n\t\t&& metadata.slug.current != 'index'\n\t\t&& metadata.slug.current != '404'\n\t] | order(metadata.slug.current asc) {\n\t\t'title': coalesce(metadata.title, metadata.slug.current),\n\t\t'slug': metadata.slug.current,\n\t\t'description': metadata.description,\n\t}\n": LLMS_PAGES_QUERY_RESULT
 		"\n\t*[_type == 'blog.post'\n\t\t&& defined(metadata.slug.current)\n\t\t&& metadata.noIndex != true\n\t] | order(publishDate desc) {\n\t\t'title': coalesce(title, metadata.title),\n\t\t'slug': $blogDir + '/' + metadata.slug.current,\n\t\t'description': metadata.description,\n\t}\n": LLMS_BLOG_QUERY_RESULT
-		"*[_type == 'site'][0]{\n\t...,\n\theader->{ \n\t...,\n\titems[]{\n\t\t\n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n,\n\t\tdefined(link) => { link{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\tdefined(links[]) => { links[]{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\t_type == 'megamenu' => {\n\t\t\tdefined(link) => { link{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\t\titems[]{\n\t\t\t\t...,\n\t\t\t\t_type == 'link' => { \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n },\n\t\t\t\t_type == 'link.list' => {\n\t\t\t\t\tdefined(link) => { link{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\t\t\t\tlinks[]{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n },\n\tctas[]{\n\t\t...,\n\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\tfooter->{ \n\t...,\n\titems[]{\n\t\t\n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n,\n\t\tdefined(link) => { link{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\tdefined(links[]) => { links[]{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\t_type == 'megamenu' => {\n\t\t\tdefined(link) => { link{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\t\titems[]{\n\t\t\t\t...,\n\t\t\t\t_type == 'link' => { \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n },\n\t\t\t\t_type == 'link.list' => {\n\t\t\t\t\tdefined(link) => { link{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\t\t\t\tlinks[]{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n },\n\tsocial->{ \n\t...,\n\titems[]{\n\t\t\n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n,\n\t\tdefined(link) => { link{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\tdefined(links[]) => { links[]{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\t_type == 'megamenu' => {\n\t\t\tdefined(link) => { link{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\t\titems[]{\n\t\t\t\t...,\n\t\t\t\t_type == 'link' => { \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n },\n\t\t\t\t_type == 'link.list' => {\n\t\t\t\t\tdefined(link) => { link{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\t\t\t\tlinks[]{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n },\n}": SITE_QUERY_RESULT
+		"*[_type == 'site'][0]{\n\t...,\n\t'title': select(\n\t\t$lang == 'hr' => title,\n\t\tdefined(title_en) => title_en,\n\t\ttitle\n\t),\n\t'footerContent': select(\n\t\t$lang == 'hr' => footerContent,\n\t\tdefined(footerContent_en) => footerContent_en,\n\t\tfooterContent\n\t),\n\t'copyright': select(\n\t\t$lang == 'hr' => copyright,\n\t\tdefined(copyright_en) => copyright_en,\n\t\tcopyright\n\t),\n\t'header': select(\n\t\t$lang == 'hr' => header,\n\t\tdefined(header_en) => header_en,\n\t\theader\n\t)->{ \n\t...,\n\titems[]{\n\t\t\n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n,\n\t\tdefined(link) => { link{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\tdefined(links[]) => { links[]{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\t_type == 'megamenu' => {\n\t\t\tdefined(link) => { link{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\t\titems[]{\n\t\t\t\t...,\n\t\t\t\t_type == 'link' => { \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n },\n\t\t\t\t_type == 'link.list' => {\n\t\t\t\t\tdefined(link) => { link{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\t\t\t\tlinks[]{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n },\n\t'ctas': select(\n\t\t$lang == 'hr' => ctas,\n\t\tdefined(ctas_en) => ctas_en,\n\t\tctas\n\t)[]{\n\t\t...,\n\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\t'footer': select(\n\t\t$lang == 'hr' => footer,\n\t\tdefined(footer_en) => footer_en,\n\t\tfooter\n\t)->{ \n\t...,\n\titems[]{\n\t\t\n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n,\n\t\tdefined(link) => { link{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\tdefined(links[]) => { links[]{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\t_type == 'megamenu' => {\n\t\t\tdefined(link) => { link{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\t\titems[]{\n\t\t\t\t...,\n\t\t\t\t_type == 'link' => { \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n },\n\t\t\t\t_type == 'link.list' => {\n\t\t\t\t\tdefined(link) => { link{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\t\t\t\tlinks[]{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n },\n\t'footerSecondary': select(\n\t\t$lang == 'hr' => footerSecondary,\n\t\tdefined(footerSecondary_en) => footerSecondary_en,\n\t\tfooterSecondary\n\t)->{ \n\t...,\n\titems[]{\n\t\t\n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n,\n\t\tdefined(link) => { link{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\tdefined(links[]) => { links[]{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\t_type == 'megamenu' => {\n\t\t\tdefined(link) => { link{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\t\titems[]{\n\t\t\t\t...,\n\t\t\t\t_type == 'link' => { \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n },\n\t\t\t\t_type == 'link.list' => {\n\t\t\t\t\tdefined(link) => { link{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\t\t\t\tlinks[]{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n },\n\tfooterImages[]{\n\t\t...,\n\t\tasset->{\n\t\t\t...,\n\t\t\tmetadata\n\t\t}\n\t},\n\t'social': select(\n\t\t$lang == 'hr' => social,\n\t\tdefined(social_en) => social_en,\n\t\tsocial\n\t)->{ \n\t...,\n\titems[]{\n\t\t\n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n,\n\t\tdefined(link) => { link{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\tdefined(links[]) => { links[]{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\t_type == 'megamenu' => {\n\t\t\tdefined(link) => { link{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\t\titems[]{\n\t\t\t\t...,\n\t\t\t\t_type == 'link' => { \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n },\n\t\t\t\t_type == 'link.list' => {\n\t\t\t\t\tdefined(link) => { link{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\t\t\t\tlinks[]{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\t_id,\n\t\t\ttitle,\n\t\t\tlanguage,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' && (!defined(language) || language == 'hr') => '/',\n\t\t\t\tmetadata.slug.current == 'index' && defined(language) && language != 'hr' => '/' + language,\n\t\t\t\t_type == 'blog.post' && (!defined(language) || language == 'hr') => '/blog/' + metadata.slug.current,\n\t\t\t\t_type == 'blog.post' && defined(language) && language != 'hr' => '/blog/' + language + '/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && (!defined(language) || language == 'hr') => '/products/' + metadata.slug.current,\n\t\t\t\t_type == 'product' && defined(language) && language != 'hr' => '/products/' + language + '/' + metadata.slug.current,\n\t\t\t\t(!defined(language) || language == 'hr') => '/' + metadata.slug.current,\n\t\t\t\t'/' + language + '/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n },\n}": SITE_QUERY_RESULT
 		'\n\tselect(\n\t\tdefined(excludePaths) => count(excludePaths[string::startsWith($slug, @)]) == 0,\n\t\ttrue\n\t)\n': GLOBAL_MODULE_EXCLUDE_QUERY_RESULT
 		'\n\tstring::startsWith($slug, path)\n\t&& \n\tselect(\n\t\tdefined(excludePaths) => count(excludePaths[string::startsWith($slug, @)]) == 0,\n\t\ttrue\n\t)\n\n': GLOBAL_MODULE_PATH_QUERY_RESULT
 		"\n\t*[_type == 'blog.post']|order(publishDate desc){\n\t\t...,\n\t\tcategories[]->,\n\t\tauthor->{\n\t\t\tname,\n\t\t\timage{\n\t\t\t\t...,\n\t\t\t\tasset->\n\t\t\t}\n\t\t},\n\t\tmetadata{\n\t\t\t...,\n\t\t\timage{\n\t\t\t\t...,\n\t\t\t\tasset->\n\t\t\t}\n\t\t},\n\t\t'slug': $blogDir + metadata.slug.current,\n\t}\n": BLOG_INDEX_QUERY_RESULT
 		"\n\t*[_type == 'blog.post']|order(publishDate desc)[0...$limit]{\n\t\t...,\n\t\tcategories[]->{\n\t\t\ttitle,\n\t\t\tslug\n\t\t},\n\t\tauthor->{\n\t\t\tname,\n\t\t\timage{\n\t\t\t\t...,\n\t\t\t\tasset->\n\t\t\t}\n\t\t},\n\t\tmetadata{\n\t\t\t...,\n\t\t\timage{\n\t\t\t\t...,\n\t\t\t\tasset->\n\t\t\t}\n\t\t},\n\t\t'slug': $blogDir + metadata.slug.current,\n\t}\n": BLOG_POST_LIST_QUERY_RESULT
 		"\n\t*[\n\t\t_type == 'blog.category'\n\t\t&& count(*[_type == 'blog.post' && references(^._id)]) > 0\n\t]|order(title)\n": CATEGORIES_QUERY_RESULT
+		"\n\t*[\n\t\t_type == 'page'\n\t\t&& coalesce(language, $defaultLang) == $lang\n\t\t&& metadata.slug.current != 'index'\n\t\t&& count(modules[_type == 'form-module' && form->identifier == 'contact']) > 0\n\t]|order(\n\t\t!(metadata.slug.current match 'kontakt*' || metadata.slug.current match 'contact*'),\n\t\t_updatedAt desc\n\t)[0]{\n\t\t'url': select(\n\t\t\tmetadata.slug.current == 'index' && $lang == $defaultLang => '/',\n\t\t\tmetadata.slug.current == 'index' => '/' + $lang,\n\t\t\t$lang == $defaultLang => '/' + metadata.slug.current,\n\t\t\t'/' + $lang + '/' + metadata.slug.current\n\t\t)\n\t}\n": CONTACT_PAGE_QUERY_RESULT
+		"\n\t*[\n\t\t_type == 'product'\n\t\t&& _id != $id\n\t\t&& category._ref == $categoryId\n\t\t&& coalesce(language, $defaultLang) == $lang\n\t]|order(title asc)[0...$limit]{\n\t\t_id,\n\t\ttitle,\n\t\timage{\n\t\t\t...,\n\t\t\tasset->\n\t\t},\n\t\t'slug': select(\n\t\t\t$lang == 'hr' => $productsDir + metadata.slug.current,\n\t\t\t$productsDir + $lang + '/' + metadata.slug.current\n\t\t),\n\t}\n": RELATED_PRODUCTS_QUERY_RESULT
+		"\n\t*[_type == 'product' && coalesce(language, $defaultLang) == $lang]|order(title asc){\n\t\t_id,\n\t\ttitle,\n\t\timage{\n\t\t\t...,\n\t\t\tasset->\n\t\t},\n\t\t'categorySlug': select(\n\t\t\t$lang == 'en' => coalesce(category->slug_en.current, category->slug.current),\n\t\t\tcategory->slug.current\n\t\t),\n\t\t'categoryTitle': select(\n\t\t\t$lang == 'en' => coalesce(category->title_en, category->title),\n\t\t\tcategory->title\n\t\t),\n\t\t'slug': select(\n\t\t\t$lang == 'hr' => $productsDir + metadata.slug.current,\n\t\t\t$productsDir + $lang + '/' + metadata.slug.current\n\t\t),\n\t}\n": PRODUCT_LIST_QUERY_RESULT
+		"\n\t*[\n\t\t_type == 'product.category'\n\t\t&& count(*[_type == 'product' && references(^._id) && coalesce(language, $defaultLang) == $lang]) > 0\n\t]{\n\t\t_id,\n\t\t'title': select(\n\t\t\t$lang == 'en' => coalesce(title_en, title),\n\t\t\ttitle\n\t\t),\n\t\t'slug': select(\n\t\t\t$lang == 'en' => coalesce(slug_en.current, slug.current),\n\t\t\tslug.current\n\t\t),\n\t}|order(title asc)\n": PRODUCT_CATEGORIES_QUERY_RESULT
 		"*[\n\t_type in $scope\n\t&& defined(metadata.slug.current)\n\t&& metadata.noIndex != true\n\t&& !(metadata.slug.current in ['404'])\n\t&& @ match text::query($queryMatch)\n]{\n\t_id,\n\t_type,\n\ttitle,\n\t'slug': select(\n\t\t_type == 'blog.post' => $blogDir + metadata.slug.current,\n\t\tmetadata.slug.current == 'index' => '/',\n\t\t'/' + metadata.slug.current\n\t)\n}": SEARCH_QUERY_RESULT
 	}
 }

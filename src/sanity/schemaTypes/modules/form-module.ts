@@ -5,7 +5,7 @@ import defineModule from '@/sanity/schemaTypes/fragments/define-module'
 
 export default defineModule({
 	name: 'form-module',
-	title: 'Form module',
+	title: 'Contact form',
 	type: 'object',
 	icon: RxInput,
 	groups: [{ name: 'content', default: true }],

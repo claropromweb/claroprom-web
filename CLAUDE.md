@@ -83,6 +83,25 @@ SANITY_API_READ_TOKEN          # "Viewer" permissions
 
 `ROUTES` in `src/lib/env.ts` controls URL path prefixes (e.g. `blog: 'blog'`).
 
+### Internationalization (i18n)
+
+Supported languages live in `src/lib/i18n.ts` — **Croatian (`hr`) is the default**, English (`en`) is the second locale.
+
+URL strategy:
+
+- **Pages:** Croatian uses clean URLs (`/`, `/o-nama`); English uses a leading prefix (`/en`, `/en/about`).
+- **Blog:** Croatian `/blog/post-slug`, English `/blog/en/post-slug`. A Next.js rewrite in `next.config.ts` accepts `/en/blog/:slug` and forwards it to `/blog/en/:slug` for pretty user-facing URLs.
+
+How it works:
+
+- `@sanity/document-internationalization` creates **separate documents per locale** for `page` and `blog.post` (each carries a `language` field; siblings are linked via `translation.metadata`).
+- `navigation` documents have an explicit `language` field — one nav doc per language.
+- `site` (singleton) and `blog.category` use **parallel `_en` fields** (e.g. `title` / `title_en`).
+- `src/middleware.ts` reads the URL prefix and sets an `x-language` header. `src/lib/get-lang-server.ts` reads it in server components; `src/lib/get-lang.ts` is the client-side equivalent based on `usePathname()`.
+- `src/lib/resolve-url.ts` builds canonical localized URLs (used by `<SanityLink>`, sitemap, OG, RSS).
+- GROQ queries in `src/sanity/lib/queries.ts` filter by `coalesce(language, $defaultLang) == $lang`. `getSite(lang)` coalesces `_en` fields and selects the per-language `navigation` references.
+- `getTranslations()` returns flat URL maps for the `<LanguageSwitcher>` (`src/ui/language-switcher`).
+
 ### Sanity schema layout
 
 ```
