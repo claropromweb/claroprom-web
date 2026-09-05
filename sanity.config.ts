@@ -25,7 +25,7 @@ import { apiVersion, dataset, projectId } from './src/sanity/env'
 import icon from './src/sanity/icon'
 import presentation from './src/sanity/presentation'
 import { schema } from './src/sanity/schemaTypes'
-import structure from './src/sanity/structure'
+import structure from './src/sanity/structure.config'
 
 export default defineConfig({
 	title: 'SanityPress',
