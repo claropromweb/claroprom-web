@@ -8,15 +8,19 @@ import { sanityFetchLive } from '@/sanity/lib/live'
 import type { ProductList } from '@/sanity/types'
 import Loading from '@/ui/loading'
 import { Module, type ModuleProps } from '@/ui/modules'
+import CategoryList from '../category-list'
+import { getProductTranslations } from '../translations'
 import FilterList from './filter-list'
 import PaginatedProducts from './paginated-products'
-import { getProductTranslations } from '../translations'
 
 export default async function ({
 	intro,
+	display,
 	productsPerPage = 12,
 	...props
 }: ProductList & ModuleProps) {
+	if (display === 'categories') return <CategoryList intro={intro} {...props} />
+
 	const lang = await getLangServer()
 	const t = getProductTranslations(lang)
 
@@ -65,7 +69,7 @@ export default async function ({
 }
 
 const PRODUCT_LIST_QUERY = groq`
-	*[_type == 'product' && coalesce(language, $defaultLang) == $lang]|order(title asc){
+	*[_type == 'product' && hidden != true && coalesce(language, $defaultLang) == $lang]|order(title asc){
 		_id,
 		title,
 		image{
@@ -90,7 +94,7 @@ const PRODUCT_LIST_QUERY = groq`
 const PRODUCT_CATEGORIES_QUERY = groq`
 	*[
 		_type == 'product.category'
-		&& count(*[_type == 'product' && references(^._id) && coalesce(language, $defaultLang) == $lang]) > 0
+		&& count(*[_type == 'product' && hidden != true && references(^._id) && coalesce(language, $defaultLang) == $lang]) > 0
 	]{
 		_id,
 		'title': select(

@@ -89,7 +89,7 @@ export async function generateStaticParams() {
 	>(
 		groq`
 			*[
-				_type == 'page'
+				_type == 'page' && catalogArchive != true
 				&& defined(metadata.slug.current)
 				&& !(metadata.slug.current in ['404'])
 			]{
@@ -146,7 +146,7 @@ function processSlug(slug?: string[]): { slug: string; lang?: Lang } {
 }
 
 const PAGE_QUERY = groq`
-	*[_type == 'page'
+	*[_type == 'page' && catalogArchive != true
 		&& metadata.slug.current == $slug
 		&& coalesce(language, $defaultLang) == $lang
 	][0]{

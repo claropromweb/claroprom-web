@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { ROUTES } from '@/lib/env'
 import getLangServer from '@/lib/get-lang-server'
 import { DEFAULT_LANG } from '@/lib/i18n'
+import { categoryUrl } from '@/lib/product-category-url'
 import { cn } from '@/lib/utils'
 import { sanityFetchLive } from '@/sanity/lib/live'
 import type { PRODUCT_QUERY_RESULT, ProductContent } from '@/sanity/types'
@@ -20,7 +21,8 @@ type QuoteLink = {
 
 function quoteBaseHref(link?: QuoteLink | null): string | null {
 	if (!link) return null
-	if (link.type === 'external' && link.external) return stegaClean(link.external)
+	if (link.type === 'external' && link.external)
+		return stegaClean(link.external)
 	if (link.type === 'internal' && link.internal) {
 		const slug =
 			typeof link.internal.slug === 'string'
@@ -59,14 +61,20 @@ export default async function ({
 
 	const category = product.category
 	const categoryTitle =
-		lang === 'en'
-			? (category?.title_en ?? category?.title)
-			: category?.title
+		lang === 'en' ? (category?.title_en ?? category?.title) : category?.title
 	const categorySlug = stegaClean(
 		(lang === 'en'
 			? (category?.slug_en?.current ?? category?.slug?.current)
 			: category?.slug?.current) ?? '',
 	)
+
+	const categoryHref =
+		category?.showInCatalog && category?.slug_en?.current
+			? categoryUrl(stegaClean(category.slug_en.current))
+			: {
+					pathname: `/${ROUTES.products}`,
+					query: categorySlug ? { category: categorySlug } : undefined,
+				}
 
 	const technicalUrl = product.technicalDataSheet?.asset?.url
 	const safetyUrl = product.safetyDataSheet?.asset?.url
@@ -133,10 +141,7 @@ export default async function ({
 							<>
 								<span aria-hidden>›</span>
 								<Link
-									href={{
-										pathname: `/${ROUTES.products}`,
-										query: categorySlug ? { category: categorySlug } : undefined,
-									}}
+									href={categoryHref}
 									className="text-white hover:underline"
 								>
 									{categoryTitle}
@@ -150,20 +155,39 @@ export default async function ({
 			</header>
 
 			<div className="section grid items-start gap-10 py-12 md:grid-cols-2 md:gap-14">
-				<figure className="flex aspect-square w-full items-center justify-center overflow-hidden">
-					{product.image?.asset ? (
-						<Img
-							className="h-full w-full object-contain"
-							image={product.image}
-							width={640}
-							height={640}
-							alt={product.image?.alt ?? product.title ?? ''}
-							loading="eager"
-						/>
-					) : (
-						<div className="bg-foreground/5 h-full w-full" />
+				<div className="space-y-4">
+					<figure className="flex aspect-square w-full items-center justify-center overflow-hidden">
+						{product.image?.asset ? (
+							<Img
+								className="h-full w-full object-contain"
+								image={product.image}
+								width={640}
+								height={640}
+								alt={product.image?.alt ?? product.title ?? ''}
+								loading="eager"
+							/>
+						) : (
+							<div className="bg-foreground/5 h-full w-full" />
+						)}
+					</figure>
+					{!!product.gallery?.length && (
+						<div className="grid grid-cols-2 gap-4">
+							{product.gallery.map(
+								(image) =>
+									image.asset && (
+										<Img
+											key={image._key}
+											image={image}
+											width={400}
+											height={400}
+											alt={image.alt ?? product.title ?? ''}
+											className="aspect-square w-full object-contain"
+										/>
+									),
+							)}
+						</div>
 					)}
-				</figure>
+				</div>
 
 				<div className="space-y-6">
 					{(productTypeLabel || roleLabel) && (
@@ -189,14 +213,18 @@ export default async function ({
 
 					{!!product.intendedPurpose?.length && (
 						<section className="border-stroke border-t pt-5">
-							<h2 className="mb-2 text-lg font-semibold">{t.intendedPurpose}</h2>
+							<h2 className="mb-2 text-lg font-semibold">
+								{t.intendedPurpose}
+							</h2>
 							<div className="prose max-w-none">
 								<PortableText value={product.intendedPurpose} />
 							</div>
 						</section>
 					)}
 
-					{(product.ivdClass || product.storageConditions || product.shelfLife) && (
+					{(product.ivdClass ||
+						product.storageConditions ||
+						product.shelfLife) && (
 						<dl className="border-stroke grid border-y text-sm sm:grid-cols-2">
 							{product.ivdClass && (
 								<div className="border-stroke px-4 py-3 sm:border-r">
@@ -207,7 +235,9 @@ export default async function ({
 							{product.storageConditions && (
 								<div className="px-4 py-3">
 									<dt className="text-foreground/60">{t.storageConditions}</dt>
-									<dd className="mt-1 font-semibold">{product.storageConditions}</dd>
+									<dd className="mt-1 font-semibold">
+										{product.storageConditions}
+									</dd>
 								</div>
 							)}
 							{product.shelfLife && (
@@ -222,13 +252,7 @@ export default async function ({
 					{categoryTitle && (
 						<p className="text-foreground/70 text-sm">
 							{t.category}:{' '}
-							<Link
-								href={{
-									pathname: `/${ROUTES.products}`,
-									query: categorySlug ? { category: categorySlug } : undefined,
-								}}
-								className="link underline"
-							>
+							<Link href={categoryHref} className="link underline">
 								{categoryTitle}
 							</Link>
 						</p>
@@ -280,12 +304,22 @@ export default async function ({
 					{(ifuUrl || declarationUrl || technicalUrl || safetyUrl) && (
 						<div className="flex flex-wrap gap-3">
 							{ifuUrl && (
-								<a href={ifuUrl} target="_blank" rel="noopener noreferrer" className={SHEET_BUTTON}>
+								<a
+									href={ifuUrl}
+									target="_blank"
+									rel="noopener noreferrer"
+									className={SHEET_BUTTON}
+								>
 									{t.instructionsForUse}
 								</a>
 							)}
 							{declarationUrl && (
-								<a href={declarationUrl} target="_blank" rel="noopener noreferrer" className={SHEET_BUTTON}>
+								<a
+									href={declarationUrl}
+									target="_blank"
+									rel="noopener noreferrer"
+									className={SHEET_BUTTON}
+								>
 									{t.declarationOfConformity}
 								</a>
 							)}
@@ -350,7 +384,7 @@ const CONTACT_PAGE_QUERY = groq`
 
 const RELATED_PRODUCTS_QUERY = groq`
 	*[
-		_type == 'product'
+		_type == 'product' && hidden != true
 		&& _id != $id
 		&& category._ref == $categoryId
 		&& coalesce(language, $defaultLang) == $lang

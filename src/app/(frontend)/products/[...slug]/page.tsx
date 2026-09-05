@@ -99,7 +99,7 @@ export async function generateStaticParams() {
 	const products = await client.fetch<
 		{ slug: string; language?: string | null }[]
 	>(
-		groq`*[_type == 'product' && defined(metadata.slug.current)]{
+		groq`*[_type == 'product' && hidden != true && defined(metadata.slug.current)]{
 			'slug': metadata.slug.current,
 			language
 		}`,
@@ -138,7 +138,7 @@ function processSlug(slug: string[]): { slug: string; lang?: Lang } {
 	return { slug: path, lang }
 }
 
-const PRODUCT_QUERY = groq`*[_type == 'product'
+const PRODUCT_QUERY = groq`*[_type == 'product' && hidden != true
 	&& metadata.slug.current == $slug
 	&& coalesce(language, $defaultLang) == $lang
 ][0]{
@@ -147,10 +147,12 @@ const PRODUCT_QUERY = groq`*[_type == 'product'
 		...,
 		asset->
 	},
+	gallery[]{ ..., asset-> },
 	category->{
 		_id,
 		title,
 		title_en,
+		showInCatalog,
 		slug,
 		slug_en
 	},

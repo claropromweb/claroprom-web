@@ -19,6 +19,7 @@ import { vercelWidget } from 'sanity-plugin-dashboard-widget-vercel'
 import { media } from 'sanity-plugin-media'
 import { ROUTES } from './src/lib/env'
 import { supportedLanguages } from './src/lib/i18n'
+import { categoryUrl } from './src/lib/product-category-url'
 import resolveUrl from './src/lib/resolve-url'
 import { apiVersion, dataset, projectId } from './src/sanity/env'
 import icon from './src/sanity/icon'
@@ -55,6 +56,12 @@ export default defineConfig({
 	],
 	document: {
 		productionUrl: async (prev, { document }) => {
+			if (document?._type === 'product.category' && document.showInCatalog) {
+				const slug = (document.slug_en as { current?: string } | undefined)
+					?.current
+				if (slug)
+					return `${process.env.NEXT_PUBLIC_BASE_URL ?? ''}${categoryUrl(slug)}`
+			}
 			if (
 				document?._type &&
 				['page', 'blog.post', 'product'].includes(document._type)

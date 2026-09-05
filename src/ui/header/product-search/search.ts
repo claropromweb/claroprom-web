@@ -15,7 +15,7 @@ export type ProductSearchResult = {
 
 const PRODUCT_SEARCH_QUERY = groq`
 	*[
-		_type == 'product'
+		_type == 'product' && hidden != true
 		&& coalesce(language, $defaultLang) == $lang
 		&& defined(metadata.slug.current)
 		&& title match $queryMatch

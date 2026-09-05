@@ -10,15 +10,17 @@ export default function ({
 	products,
 	productsPerPage,
 	noProductsLabel,
+	filterByQuery = true,
 }: {
 	products: ProductPreviewItem[]
 	productsPerPage?: number
+	filterByQuery?: boolean
 	noProductsLabel: string
 }) {
 	const [category] = useQueryState('category')
 
 	const processedProducts = products?.filter((product) =>
-		!category ? true : product.categorySlug === category,
+		!filterByQuery || !category ? true : product.categorySlug === category,
 	)
 
 	const { paginatedItems, Pagination } = usePagination({
@@ -27,7 +29,9 @@ export default function ({
 	})
 
 	if (!paginatedItems?.length) {
-		return <p className="text-foreground/60 py-8 text-center">{noProductsLabel}</p>
+		return (
+			<p className="text-foreground/60 py-8 text-center">{noProductsLabel}</p>
+		)
 	}
 
 	return (

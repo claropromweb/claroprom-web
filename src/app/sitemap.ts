@@ -11,10 +11,11 @@ export default async function (): Promise<MetadataRoute.Sitemap> {
 		pages: MetadataRoute.Sitemap
 		posts: MetadataRoute.Sitemap
 		products: MetadataRoute.Sitemap
+		categories: MetadataRoute.Sitemap
 	}>({
 		query: groq`{
 			'pages': *[
-				_type == 'page'
+				_type == 'page' && catalogArchive != true
 				&& defined(metadata.slug.current)
 				&& !(metadata.slug.current in ['404'])
 				&& metadata.noIndex != true
@@ -43,8 +44,15 @@ export default async function (): Promise<MetadataRoute.Sitemap> {
 				'lastModified': _updatedAt,
 				'priority': 0.4
 			},
+			'categories': *[
+				_type == 'product.category' && showInCatalog == true && defined(slug_en.current)
+			]{
+				'url': $baseUrl + '/en/proizvodi/' + slug_en.current,
+				'lastModified': _updatedAt,
+				'priority': 0.5
+			},
 			'products': *[
-				_type == 'product'
+				_type == 'product' && hidden != true
 				&& defined(metadata.slug.current)
 				&& metadata.noIndex != true
 			]|order(title){

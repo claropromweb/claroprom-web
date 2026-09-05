@@ -11,6 +11,15 @@ export default defineType({
 	groups: [{ name: 'content', default: true }, { name: 'metadata' }],
 	fields: [
 		defineField({
+			name: 'catalogArchive',
+			title: 'Archived category placeholder',
+			type: 'boolean',
+			readOnly: true,
+			hidden: ({ document }) => document?.catalogArchive !== true,
+			description:
+				'This is a preserved copy of the old page. Edit the live category under Product categories.',
+		}),
+		defineField({
 			name: 'language',
 			type: 'string',
 			readOnly: true,
