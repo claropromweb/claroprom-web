@@ -69,7 +69,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 			languages: Object.keys(alternates).length ? alternates : undefined,
 			types: {
 				'application/rss+xml': `/${ROUTES.blog}/rss.xml`,
-				'text/markdown': `/${ROUTES.blog}/${post?.metadata?.slug?.current ?? ''}.md`,
 			},
 		},
 	}
