@@ -2,7 +2,6 @@ import { cn } from '@/lib/utils'
 import { getSite } from '@/sanity/lib/queries'
 import type { Cta } from '@/sanity/types'
 import CTAList from '@/ui/cta-list'
-import LanguageSwitcher from '@/ui/language-switcher'
 import Logo from '@/ui/logo'
 import MobileToggle from './mobile-toggle'
 import Navigation from './navigation'
@@ -39,7 +38,6 @@ export default async function ({ lang }: { lang?: string }) {
 				>
 					<Navigation lang={lang} />
 					<CTAList ctas={site?.ctas as Cta[]} className="*:max-md:w-full" />
-					<LanguageSwitcher className="shrink-0" />
 				</div>
 
 				<div className="flex items-center gap-4">
@@ -47,7 +45,6 @@ export default async function ({ lang }: { lang?: string }) {
 						ctas={site?.ctas as Cta[]}
 						className="hidden md:flex"
 					/>
-					<LanguageSwitcher className="hidden shrink-0 md:flex" />
 					<MobileToggle />
 				</div>
 			</div>
