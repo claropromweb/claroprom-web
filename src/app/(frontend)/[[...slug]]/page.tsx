@@ -77,7 +77,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 			languages: Object.keys(alternates).length ? alternates : undefined,
 			types: {
 				'application/rss+xml': `/${ROUTES.blog}/rss.xml`,
-				'text/markdown': `/${slug?.length ? slug.join('/') : 'index'}.md`,
 			},
 		},
 		generator: `SanityPress v${pkg.version}`,
