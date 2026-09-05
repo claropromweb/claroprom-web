@@ -6,8 +6,8 @@ import { defineCliConfig } from 'sanity/cli'
 
 export default defineCliConfig({
 	api: {
-		projectId: 'cyu7k2r0',
-		dataset: 'production',
+		projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || 'ddtwki7e',
+		dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
 	},
 	typegen: {
 		enabled: true,

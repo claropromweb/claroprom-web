@@ -1,5 +1,8 @@
-import type { StructureResolverContext } from 'sanity/structure'
-import { StructureBuilder, structureTool } from 'sanity/structure'
+import {
+	StructureBuilder,
+	structureTool,
+	type StructureResolverContext,
+} from 'sanity/structure'
 import { DocumentIcon } from '@sanity/icons'
 import { VscBeaker, VscServerProcess } from 'react-icons/vsc'
 import { DEFAULT_LANG, supportedLanguages } from '@/lib/i18n'
@@ -91,14 +94,15 @@ export default structureTool({
 												.apiVersion(apiVersion)
 												.title(`Products (${lang.title})`)
 												.filter(langFilter('product', lang.id))
+												.initialValueTemplates([
+													S.initialValueTemplateItem(`product-${lang.id}`),
+												])
 												.params({ lang: lang.id }),
 										),
 								),
 							),
 					),
-				S.documentTypeListItem('product.category').title(
-					'Product categories',
-				),
+				S.documentTypeListItem('product.category').title('Product categories'),
 
 				S.divider().title('Navigation'),
 				S.listItem()

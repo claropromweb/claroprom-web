@@ -11,6 +11,21 @@ export default defineModule({
 	groups: [{ name: 'content', default: true }, { name: 'options' }],
 	fields: [
 		defineField({
+			name: 'display',
+			title: 'Display',
+			type: 'string',
+			options: {
+				list: [
+					{ title: 'Products', value: 'products' },
+					{ title: 'Product categories (English)', value: 'categories' },
+				],
+			},
+			initialValue: 'products',
+			group: 'content',
+			description:
+				'Categories are managed under Product categories and remain visible when empty.',
+		}),
+		defineField({
 			name: 'intro',
 			type: 'array',
 			of: [{ type: 'block' }],

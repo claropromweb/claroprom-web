@@ -1,8 +1,8 @@
 import { defineArrayMember, defineField, defineType } from 'sanity'
 import { DocumentIcon, ImageIcon } from '@sanity/icons'
 import { VscBeaker } from 'react-icons/vsc'
-import { count } from '@/lib/utils'
 import { DEFAULT_LANG } from '@/lib/i18n'
+import { count } from '@/lib/utils'
 
 export default defineType({
 	name: 'product',
@@ -16,6 +16,15 @@ export default defineType({
 		{ name: 'metadata' },
 	],
 	fields: [
+		defineField({
+			name: 'hidden',
+			title: 'Hide from website',
+			type: 'boolean',
+			initialValue: false,
+			group: 'content',
+			description:
+				'Publish this change to hide the product from lists, search and its public page. Turn off and publish to show it again.',
+		}),
 		defineField({
 			name: 'language',
 			type: 'string',
@@ -34,6 +43,7 @@ export default defineType({
 			type: 'reference',
 			to: [{ type: 'product.category' }],
 			group: 'content',
+			validation: (Rule) => Rule.required(),
 		}),
 		defineField({
 			name: 'image',
@@ -54,6 +64,25 @@ export default defineType({
 			name: 'description',
 			type: 'array',
 			of: [{ type: 'block' }],
+			group: 'content',
+		}),
+		defineField({
+			name: 'gallery',
+			title: 'Additional photographs',
+			type: 'array',
+			of: [
+				defineArrayMember({
+					type: 'image',
+					options: { hotspot: true, metadata: ['lqip'] },
+					fields: [
+						defineField({
+							name: 'alt',
+							title: 'Alternative text',
+							type: 'string',
+						}),
+					],
+				}),
+			],
 			group: 'content',
 		}),
 		defineField({
@@ -122,7 +151,7 @@ export default defineType({
 		}),
 		defineField({
 			name: 'table',
-			title: 'Codes & formats',
+			title: 'Product codes & available pack sizes',
 			type: 'array',
 			of: [
 				defineArrayMember({
@@ -131,11 +160,13 @@ export default defineType({
 					fields: [
 						defineField({
 							name: 'code',
+							title: 'Product code / SKU',
 							type: 'string',
 							validation: (Rule) => Rule.required(),
 						}),
 						defineField({
 							name: 'format',
+							title: 'Pack size',
 							type: 'string',
 						}),
 					],

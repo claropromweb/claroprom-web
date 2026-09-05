@@ -6,6 +6,7 @@ import {
 import { groq } from 'next-sanity'
 import { ROUTES } from '@/lib/env'
 import { DEFAULT_LANG } from '@/lib/i18n'
+import { categoryUrl } from '@/lib/product-category-url'
 import resolveUrl from '@/lib/resolve-url'
 import {
 	locationResolvers,
@@ -21,6 +22,10 @@ export default presentationTool({
 	},
 	resolve: {
 		mainDocuments: defineDocuments([
+			{
+				route: '/en/proizvodi/:slug',
+				filter: groq`_type == 'product.category' && slug_en.current == $slug && showInCatalog == true`,
+			},
 			// Pages — default language (no prefix)
 			{
 				route: '/',
@@ -149,8 +154,22 @@ export default presentationTool({
 				}),
 			}),
 			'product.category': defineLocations({
-				message: 'Used to group and filter products',
-				tone: 'positive',
+				select: {
+					title: 'title_en',
+					slug: 'slug_en.current',
+					visible: 'showInCatalog',
+				},
+				resolve: (doc) => ({
+					locations:
+						doc?.visible && doc?.slug
+							? [
+									{
+										title: doc.title ?? 'Product category',
+										href: categoryUrl(doc.slug),
+									},
+								]
+							: [],
+				}),
 			}),
 			form: referenceLocations('form'),
 			quote: referenceLocations('quote'),

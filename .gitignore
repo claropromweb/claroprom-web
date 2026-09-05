@@ -46,6 +46,7 @@ next-env.d.ts
 !.claude/commands/
 
 # sanity
+catalog-backup-*.json
 .sanity/
 dist/
 
