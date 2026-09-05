@@ -11,6 +11,7 @@ export default defineType({
 	icon: VscBeaker,
 	groups: [
 		{ name: 'content', default: true },
+		{ name: 'regulatory', title: 'Regulatory & use' },
 		{ name: 'docs', title: 'Documents' },
 		{ name: 'metadata' },
 	],
@@ -56,6 +57,70 @@ export default defineType({
 			group: 'content',
 		}),
 		defineField({
+			name: 'productType',
+			title: 'Product type',
+			type: 'string',
+			options: {
+				layout: 'radio',
+				list: [
+					{ title: 'IVD medical device', value: 'ivd' },
+					{ title: 'Laboratory reagent', value: 'laboratory-reagent' },
+					{ title: 'Laboratory consumable', value: 'consumable' },
+				],
+			},
+			validation: (Rule) => Rule.required(),
+			group: 'regulatory',
+		}),
+		defineField({
+			name: 'manufacturerRole',
+			title: 'Claroprom role',
+			type: 'string',
+			options: {
+				layout: 'radio',
+				list: [
+					{ title: 'Manufacturer', value: 'manufacturer' },
+					{ title: 'Distributor', value: 'distributor' },
+				],
+			},
+			validation: (Rule) => Rule.required(),
+			group: 'regulatory',
+		}),
+		defineField({
+			name: 'intendedPurpose',
+			title: 'Intended purpose',
+			type: 'array',
+			of: [{ type: 'block' }],
+			description: 'Use the wording approved in the product documentation.',
+			group: 'regulatory',
+		}),
+		defineField({
+			name: 'ivdClass',
+			title: 'IVD class',
+			type: 'string',
+			options: {
+				list: [
+					{ title: 'Class A', value: 'A' },
+					{ title: 'Class B', value: 'B' },
+					{ title: 'Class C', value: 'C' },
+					{ title: 'Class D', value: 'D' },
+				],
+			},
+			hidden: ({ parent }) => parent?.productType !== 'ivd',
+			group: 'regulatory',
+		}),
+		defineField({
+			name: 'storageConditions',
+			title: 'Storage conditions',
+			type: 'string',
+			group: 'regulatory',
+		}),
+		defineField({
+			name: 'shelfLife',
+			title: 'Shelf life',
+			type: 'string',
+			group: 'regulatory',
+		}),
+		defineField({
 			name: 'table',
 			title: 'Codes & formats',
 			type: 'array',
@@ -84,6 +149,22 @@ export default defineType({
 				}),
 			],
 			group: 'content',
+		}),
+		defineField({
+			name: 'instructionsForUse',
+			title: 'Instructions for Use – IFU (PDF)',
+			type: 'file',
+			options: { accept: '.pdf' },
+			icon: DocumentIcon,
+			group: 'docs',
+		}),
+		defineField({
+			name: 'declarationOfConformity',
+			title: 'EU Declaration of Conformity (PDF)',
+			type: 'file',
+			options: { accept: '.pdf' },
+			icon: DocumentIcon,
+			group: 'docs',
 		}),
 		defineField({
 			name: 'technicalDataSheet',

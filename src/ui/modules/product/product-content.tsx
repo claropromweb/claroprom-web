@@ -70,6 +70,22 @@ export default async function ({
 
 	const technicalUrl = product.technicalDataSheet?.asset?.url
 	const safetyUrl = product.safetyDataSheet?.asset?.url
+	const ifuUrl = product.instructionsForUse?.asset?.url
+	const declarationUrl = product.declarationOfConformity?.asset?.url
+	const productTypeLabel =
+		product.productType === 'ivd'
+			? t.ivd
+			: product.productType === 'laboratory-reagent'
+				? t.laboratoryReagent
+				: product.productType === 'consumable'
+					? t.consumable
+					: null
+	const roleLabel =
+		product.manufacturerRole === 'manufacturer'
+			? t.manufacturer
+			: product.manufacturerRole === 'distributor'
+				? t.distributor
+				: null
 
 	// Quote target: an explicit `quoteLink` on the module, otherwise auto-discover
 	// the page that hosts the contact form so "Ask for a quote" always works.
@@ -150,10 +166,57 @@ export default async function ({
 				</figure>
 
 				<div className="space-y-6">
+					{(productTypeLabel || roleLabel) && (
+						<div className="flex flex-wrap gap-2">
+							{productTypeLabel && (
+								<span className="rounded-full bg-red-600 px-3 py-1 text-sm font-semibold text-white">
+									{productTypeLabel}
+								</span>
+							)}
+							{roleLabel && (
+								<span className="border-stroke rounded-full border px-3 py-1 text-sm font-medium">
+									{roleLabel}: Claroprom
+								</span>
+							)}
+						</div>
+					)}
+
 					{!!product.description?.length && (
 						<div className="prose max-w-none">
 							<PortableText value={product.description} />
 						</div>
+					)}
+
+					{!!product.intendedPurpose?.length && (
+						<section className="border-stroke border-t pt-5">
+							<h2 className="mb-2 text-lg font-semibold">{t.intendedPurpose}</h2>
+							<div className="prose max-w-none">
+								<PortableText value={product.intendedPurpose} />
+							</div>
+						</section>
+					)}
+
+					{(product.ivdClass || product.storageConditions || product.shelfLife) && (
+						<dl className="border-stroke grid border-y text-sm sm:grid-cols-2">
+							{product.ivdClass && (
+								<div className="border-stroke px-4 py-3 sm:border-r">
+									<dt className="text-foreground/60">{t.ivdClass}</dt>
+									<dd className="mt-1 font-semibold">{product.ivdClass}</dd>
+								</div>
+							)}
+							{product.storageConditions && (
+								<div className="px-4 py-3">
+									<dt className="text-foreground/60">{t.storageConditions}</dt>
+									<dd className="mt-1 font-semibold">{product.storageConditions}</dd>
+								</div>
+							)}
+							{product.shelfLife && (
+								<div className="border-stroke border-t px-4 py-3 sm:col-span-2">
+									<dt className="text-foreground/60">{t.shelfLife}</dt>
+									<dd className="mt-1 font-semibold">{product.shelfLife}</dd>
+								</div>
+							)}
+						</dl>
 					)}
 
 					{categoryTitle && (
@@ -214,8 +277,18 @@ export default async function ({
 						</div>
 					)}
 
-					{(technicalUrl || safetyUrl) && (
+					{(ifuUrl || declarationUrl || technicalUrl || safetyUrl) && (
 						<div className="flex flex-wrap gap-3">
+							{ifuUrl && (
+								<a href={ifuUrl} target="_blank" rel="noopener noreferrer" className={SHEET_BUTTON}>
+									{t.instructionsForUse}
+								</a>
+							)}
+							{declarationUrl && (
+								<a href={declarationUrl} target="_blank" rel="noopener noreferrer" className={SHEET_BUTTON}>
+									{t.declarationOfConformity}
+								</a>
+							)}
 							{technicalUrl && (
 								<a
 									href={technicalUrl}

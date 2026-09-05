@@ -154,6 +154,20 @@ const PRODUCT_QUERY = groq`*[_type == 'product'
 		slug,
 		slug_en
 	},
+	instructionsForUse{
+		asset->{
+			url,
+			originalFilename,
+			size
+		}
+	},
+	declarationOfConformity{
+		asset->{
+			url,
+			originalFilename,
+			size
+		}
+	},
 	technicalDataSheet{
 		asset->{
 			url,
