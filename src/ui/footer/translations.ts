@@ -2,7 +2,7 @@ import type { Lang } from '@/lib/i18n'
 
 export const translations = {
 	hr: {
-		contactHeading: 'Kontakt',
+		contactHeading: 'Get in touch',
 	},
 	en: {
 		contactHeading: 'Get in touch',
