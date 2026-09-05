@@ -4,7 +4,6 @@ import { notFound } from 'next/navigation'
 import { ROUTES } from '@/lib/env'
 import { DEFAULT_LANG, languages, type Lang } from '@/lib/i18n'
 import resolveUrl from '@/lib/resolve-url'
-import { client } from '@/sanity/lib/client'
 import { urlFor } from '@/sanity/lib/image'
 import { sanityFetchLive } from '@/sanity/lib/live'
 import {
@@ -14,6 +13,8 @@ import {
 } from '@/sanity/lib/queries'
 import type { PRODUCT_QUERY_RESULT } from '@/sanity/types'
 import ModulesResolver from '@/ui/modules'
+
+export const dynamic = 'force-dynamic'
 
 type Props = {
 	params: Promise<{ slug: string[] }>
@@ -93,25 +94,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 			languages: Object.keys(alternates).length ? alternates : undefined,
 		},
 	}
-}
-
-export async function generateStaticParams() {
-	const products = await client.fetch<
-		{ slug: string; language?: string | null }[]
-	>(
-		groq`*[_type == 'product' && hidden != true && defined(metadata.slug.current)]{
-			'slug': metadata.slug.current,
-			language
-		}`,
-	)
-
-	return products.map(({ slug, language }) => {
-		const parts = slug.split('/')
-		if (language && language !== DEFAULT_LANG) {
-			return { slug: [language, ...parts] }
-		}
-		return { slug: parts }
-	})
 }
 
 async function getProduct(slugInput: string[]) {
