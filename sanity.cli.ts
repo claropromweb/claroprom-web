@@ -9,6 +9,9 @@ export default defineCliConfig({
 		projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || 'ddtwki7e',
 		dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
 	},
+	deployment: {
+		appId: 'bv817fqkadyd11xdx7pjoaob',
+	},
 	typegen: {
 		enabled: true,
 		path: [
