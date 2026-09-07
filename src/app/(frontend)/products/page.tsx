@@ -1,20 +1,10 @@
-import type { Metadata } from 'next'
-import getLangServer from '@/lib/get-lang-server'
-import ProductList from '@/ui/modules/product/product-list'
+import Page, { generateMetadata as pageMetadata } from '../[[...slug]]/page'
 
-export async function generateMetadata(): Promise<Metadata> {
-	const lang = await getLangServer()
-	return {
-		title: lang === 'en' ? 'Products' : 'Proizvodi',
-	}
-}
-
-export default function ProductsIndexPage() {
-	return (
-		<ProductList
-			_type="product-list"
-			_key="products-index"
-			productsPerPage={12}
-		/>
-	)
+export const dynamic = 'force-dynamic'
+const existingPage = () => ({
+	params: Promise.resolve({ slug: ['proizvodi'] }),
+})
+export const generateMetadata = () => pageMetadata(existingPage())
+export default function ProductsPage() {
+	return Page(existingPage())
 }

@@ -14,7 +14,7 @@ function query(file, name) {
 		.replaceAll('${MODULES_QUERY}', '_type')
 		.replaceAll('${TRANSLATIONS_QUERY}', '')
 }
-const categoryFile = 'src/app/(frontend)/en/proizvodi/[category]/page.tsx'
+const categoryFile = 'src/ui/modules/product/category-page.tsx'
 const categoryQuery = query(categoryFile, 'CATALOG_CATEGORY_QUERY')
 const listQuery = query(
 	'src/ui/modules/product/category-list.tsx',
@@ -122,7 +122,7 @@ for (const [file, name, params] of [
 	)
 }
 const detailQuery = query(
-	'src/app/(frontend)/products/[...slug]/page.tsx',
+	'src/app/(frontend)/products/[slug]/page.tsx',
 	'PRODUCT_QUERY',
 )
 const detailParams = {

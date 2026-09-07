@@ -56,7 +56,7 @@ export default async function ({
 }: { product: PRODUCT_QUERY_RESULT } & ProductContent) {
 	if (!product) return null
 
-	const lang = await getLangServer()
+	const lang = product.language === 'en' ? 'en' : await getLangServer()
 	const t = getProductTranslations(lang)
 
 	const category = product.category

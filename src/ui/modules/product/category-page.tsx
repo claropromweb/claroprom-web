@@ -12,7 +12,7 @@ import PaginatedProducts from '@/ui/modules/product/product-list/paginated-produ
 
 type Props = { params: Promise<{ category: string }> }
 
-async function getCategory(slug: string) {
+export async function getCategory(slug: string) {
 	return sanityFetchLive<CATALOG_CATEGORY_QUERY_RESULT>({
 		query: CATALOG_CATEGORY_QUERY,
 		params: { slug },
@@ -42,7 +42,7 @@ export default async function CategoryPage({ params }: Props) {
 	return (
 		<article className="section space-y-10">
 			<nav aria-label="Breadcrumb">
-				<Link href="/proizvodi" className="underline">
+				<Link href="/products" className="underline">
 					Products
 				</Link>
 				<span aria-hidden="true"> / </span>

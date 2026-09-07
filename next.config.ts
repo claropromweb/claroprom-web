@@ -24,10 +24,6 @@ const nextConfig: NextConfig = {
 				source: `/:lang/${ROUTES.blog}/:slug*`,
 				destination: `/${ROUTES.blog}/:lang/:slug*`,
 			})
-			rewrites.push({
-				source: `/:lang/${ROUTES.products}/:slug*`,
-				destination: `/${ROUTES.products}/:lang/:slug*`,
-			})
 		}
 
 		return rewrites
@@ -48,7 +44,7 @@ const nextConfig: NextConfig = {
 	},
 
 	async redirects() {
-		return await client.fetch(
+		const cmsRedirects = await client.fetch(
 			groq`*[_type == 'redirect']{
 				source,
 				'destination': select(
@@ -80,6 +76,19 @@ const nextConfig: NextConfig = {
 				defaultLang: DEFAULT_LANG,
 			},
 		)
+		return [
+			...[
+				'/proizvodi/:slug*',
+				'/en/proizvodi/:slug*',
+				'/products/en/:slug*',
+				'/en/products/:slug*',
+			].map((source) => ({
+				source,
+				destination: '/products/:slug*',
+				permanent: true,
+			})),
+			...cmsRedirects,
+		]
 	},
 }
 
