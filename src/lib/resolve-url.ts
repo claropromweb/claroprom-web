@@ -1,6 +1,7 @@
 import { stegaClean } from 'next-sanity'
 import { ROUTES } from '@/lib/env'
 import { DEFAULT_LANG } from '@/lib/i18n'
+import { publicProductUrl } from './public-product-url'
 
 type PageLike = {
 	_type?: string
@@ -38,12 +39,21 @@ export default function resolveUrl(
 
 	const slug = page?.metadata?.slug?.current
 	const path = slug === 'index' ? null : slug
+	if (!isPrefixed && (slug === 'proizvodi' || slug?.startsWith('proizvodi/'))) {
+		return [
+			base && process.env.NEXT_PUBLIC_BASE_URL,
+			publicProductUrl('/' + slug),
+			stegaClean(params),
+		]
+			.filter(Boolean)
+			.join('')
+	}
 
 	if (isPrefixed) {
 		return [
 			base && process.env.NEXT_PUBLIC_BASE_URL,
 			segment,
-			nonDefaultLang ? `${nonDefaultLang}/` : null,
+			isProduct ? null : nonDefaultLang ? `${nonDefaultLang}/` : null,
 			path,
 			stegaClean(params),
 		]
@@ -61,5 +71,5 @@ export default function resolveUrl(
 		.filter(Boolean)
 		.join('')
 
-	return url || '/'
+	return publicProductUrl(url || '/')
 }

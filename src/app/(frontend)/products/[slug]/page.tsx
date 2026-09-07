@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { groq } from 'next-sanity'
 import { notFound } from 'next/navigation'
 import { ROUTES } from '@/lib/env'
-import { DEFAULT_LANG, languages, type Lang } from '@/lib/i18n'
+import { DEFAULT_LANG } from '@/lib/i18n'
 import resolveUrl from '@/lib/resolve-url'
 import { urlFor } from '@/sanity/lib/image'
 import { sanityFetchLive } from '@/sanity/lib/live'
@@ -13,15 +13,21 @@ import {
 } from '@/sanity/lib/queries'
 import type { PRODUCT_QUERY_RESULT } from '@/sanity/types'
 import ModulesResolver from '@/ui/modules'
+import CategoryPage, {
+	generateMetadata as categoryMetadata,
+	getCategory,
+} from '@/ui/modules/product/category-page'
 
 export const dynamic = 'force-dynamic'
 
 type Props = {
-	params: Promise<{ slug: string[] }>
+	params: Promise<{ slug: string }>
 }
 
 export default async function ({ params }: Props) {
 	const { slug } = await params
+	if (await getCategory(slug))
+		return CategoryPage({ params: Promise.resolve({ category: slug }) })
 	const product = await getProduct(slug)
 	if (!product) notFound()
 
@@ -52,6 +58,8 @@ export default async function ({ params }: Props) {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
 	const { slug: rawSlug } = await params
+	if (await getCategory(rawSlug))
+		return categoryMetadata({ params: Promise.resolve({ category: rawSlug }) })
 	const product = await getProduct(rawSlug)
 	const { title, description, image, noIndex } = product?.metadata ?? {}
 
@@ -96,28 +104,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 	}
 }
 
-async function getProduct(slugInput: string[]) {
-	const { slug, lang } = processSlug(slugInput)
-
+async function getProduct(slug: string) {
 	return await sanityFetchLive<PRODUCT_QUERY_RESULT>({
 		query: PRODUCT_QUERY,
 		params: {
 			slug,
 			productsDir: `${ROUTES.products}/`,
 			productsBase: ROUTES.products,
-			lang: lang ?? DEFAULT_LANG,
+			lang: 'en',
 			defaultLang: DEFAULT_LANG,
 		},
 	})
-}
-
-function processSlug(slug: string[]): { slug: string; lang?: Lang } {
-	const lang = languages.includes(slug[0] as Lang)
-		? (slug[0] as Lang)
-		: undefined
-
-	const path = lang ? slug.slice(1).join('/') : slug.join('/')
-	return { slug: path, lang }
 }
 
 const PRODUCT_QUERY = groq`*[_type == 'product' && hidden != true

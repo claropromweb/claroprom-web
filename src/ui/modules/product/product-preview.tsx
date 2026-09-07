@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { publicProductUrl } from '@/lib/public-product-url'
 import { cn } from '@/lib/utils'
 import Img from '@/ui/img'
 
@@ -34,7 +35,7 @@ export default function ({
 
 			{product.slug ? (
 				<Link
-					href={product.slug}
+					href={publicProductUrl(product.slug)}
 					className="text-center text-sm leading-snug text-current before:absolute before:inset-0 hover:underline"
 				>
 					{product.title}

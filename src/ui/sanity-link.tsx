@@ -1,5 +1,6 @@
 import { stegaClean } from 'next-sanity'
 import NextLink, { type LinkProps } from 'next/link'
+import { publicProductUrl } from '@/lib/public-product-url'
 import resolveUrl from '@/lib/resolve-url'
 import type { Link, Page } from '@/sanity/types'
 
@@ -47,12 +48,12 @@ export default function ({
 				typeof internal.slug === 'string'
 					? [slugString, stegaClean(params)].filter(Boolean).join('')
 					: slugString
-			return <NextLink href={href} {...linkProps} />
+			return <NextLink href={publicProductUrl(href)} {...linkProps} />
 		}
 	}
 
 	if (type === 'external' && external)
-		return <NextLink href={stegaClean(external)} {...linkProps} />
+		return <NextLink href={publicProductUrl(stegaClean(external))} {...linkProps} />
 
 	return <span {...linkProps} />
 }

@@ -3,14 +3,14 @@
 import { useRouter } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
 import { VscLoading, VscSearch } from 'react-icons/vsc'
-import getLang from '@/lib/get-lang'
+import { publicProductUrl } from '@/lib/public-product-url'
 import { cn } from '@/lib/utils'
 import Img from '@/ui/img'
 import { getProductTranslations } from '@/ui/modules/product/translations'
 import { searchProducts, type ProductSearchResult } from './search'
 
 export default function ProductSearch({ className }: { className?: string }) {
-	const lang = getLang()
+	const lang = 'en'
 	const t = getProductTranslations(lang)
 	const router = useRouter()
 
@@ -59,7 +59,7 @@ export default function ProductSearch({ className }: { className?: string }) {
 
 	function goTo(slug?: string | null) {
 		setOpen(false)
-		if (slug) router.push(slug)
+		if (slug) router.push(publicProductUrl(slug))
 	}
 
 	const showDropdown = open && query.trim().length > 0
