@@ -29,26 +29,29 @@ export default structureTool({
 
 				S.divider().title('Pages'),
 				S.listItem()
-					.id('pages-by-language')
+					.id('pages')
 					.title('Pages')
 					.icon(DocumentIcon)
 					.child(
-						S.list()
-							.title('Pages by language')
-							.items(
-								supportedLanguages.map((lang) =>
-									S.listItem()
-										.title(lang.title)
-										.id(`pages-${lang.id}`)
-										.child(
-											S.documentTypeList('page')
-												.apiVersion(apiVersion)
-												.title(`Pages (${lang.title})`)
-												.filter(langFilter('page', lang.id))
-												.params({ lang: lang.id }),
-										),
-								),
-							),
+						S.documentTypeList('page')
+							.apiVersion(apiVersion)
+							.title('Pages')
+							.filter(
+								'_type == "page" && language == "en" && catalogArchive != true && !(string::startsWith(title, "[Archived]"))',
+							)
+							.initialValueTemplates([S.initialValueTemplateItem('page')]),
+					),
+				S.listItem()
+					.id('archived-pages')
+					.title('Archived Pages')
+					.child(
+						S.documentTypeList('page')
+							.apiVersion(apiVersion)
+							.title('Archived Pages')
+							.filter(
+								'_type == "page" && (language == "hr" || catalogArchive == true || string::startsWith(title, "[Archived]"))',
+							)
+							.initialValueTemplates([]),
 					),
 				pageDirectoriesListItem(S, context),
 
