@@ -92,7 +92,7 @@ export default function ({
 			)}
 
 			{!!categories?.length && (
-				<div className="grid sm:grid-cols-2 lg:grid-cols-4">
+				<div className="grid sm:grid-cols-2 md:grid-cols-3">
 					{categories.map((category) => (
 						<CategoryColumn key={category._key} {...category} />
 					))}
