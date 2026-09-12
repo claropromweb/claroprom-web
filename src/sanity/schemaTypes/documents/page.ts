@@ -1,7 +1,7 @@
 import { defineField, defineType } from 'sanity'
 import { EditIcon, ErrorScreenIcon, HomeIcon, SearchIcon } from '@sanity/icons'
 import { VscEyeClosed } from 'react-icons/vsc'
-import { DEFAULT_LANG, supportedLanguages } from '@/lib/i18n'
+import { supportedLanguages } from '@/lib/i18n'
 import modules from '../fragments/modules'
 
 export default defineType({
@@ -26,7 +26,7 @@ export default defineType({
 			// Reveal the field on legacy docs created before i18n was enabled, so
 			// editors can see (and the migration script can fill) the missing value.
 			hidden: ({ document }) => !!(document as { language?: string })?.language,
-			initialValue: DEFAULT_LANG,
+			initialValue: 'en',
 		}),
 		defineField({
 			name: 'title',

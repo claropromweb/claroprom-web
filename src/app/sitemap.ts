@@ -16,17 +16,12 @@ export default async function (): Promise<MetadataRoute.Sitemap> {
 	}>({
 		query: groq`{
 			'pages': *[
-				_type == 'page' && catalogArchive != true
+				_type == 'page' && catalogArchive != true && language == 'en'
 				&& defined(metadata.slug.current)
 				&& !(metadata.slug.current in ['404'])
 				&& metadata.noIndex != true
 			]|order(metadata.slug.current != 'index', metadata.slug.current){
-				'url': $baseUrl + select(
-					metadata.slug.current == 'index' && (!defined(language) || language == $defaultLang) => '',
-					metadata.slug.current == 'index' && defined(language) && language != $defaultLang => '/' + language,
-					(!defined(language) || language == $defaultLang) => '/' + metadata.slug.current,
-					'/' + language + '/' + metadata.slug.current
-				),
+				'url': $baseUrl + select(metadata.slug.current == 'index' => '', '/' + metadata.slug.current),
 				'lastModified': _updatedAt,
 				'priority': select(
 					metadata.slug.current == 'index' => 1,

@@ -22,7 +22,7 @@ export default async function RootLayout({
 	const lang = await getLangServer()
 
 	return (
-		<html lang={lang} data-scroll-behavior="smooth">
+		<html lang="en" data-scroll-behavior="smooth">
 			<NuqsAdapter>
 				<body className="bg-background text-foreground antialiased">
 					<CookieConsentProviderWrapper>

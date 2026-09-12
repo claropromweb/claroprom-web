@@ -7,11 +7,11 @@ import { map } from 'rxjs'
 import { apiVersion } from '@/sanity/env'
 
 const PAGE_SLUGS_QUERY = groq`
-	*[_type == 'page' && defined(metadata.slug.current)]{ "slug": metadata.slug.current }
+	*[_type == 'page' && language == 'en' && catalogArchive != true && !(string::startsWith(title, '[Archived]')) && defined(metadata.slug.current)]{ "slug": metadata.slug.current }
 `
 
 const PAGE_DIRECTORY_FILTER = groq`
-	_type == 'page' && (
+	_type == 'page' && language == 'en' && catalogArchive != true && !(string::startsWith(title, '[Archived]')) && (
 		metadata.slug.current == $dir ||
 		string::startsWith(metadata.slug.current, $dir + '/')
 	)

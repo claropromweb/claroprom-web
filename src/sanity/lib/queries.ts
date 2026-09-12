@@ -16,6 +16,8 @@ const LINK_QUERY = groq`
 			title,
 			language,
 			'slug': select(
+				_type == 'page' && metadata.slug.current == 'index' => '/',
+				_type == 'page' => '/' + metadata.slug.current,
 				metadata.slug.current == 'index' && (!defined(language) || language == '${DEFAULT_LANG}') => '/',
 				metadata.slug.current == 'index' && defined(language) && language != '${DEFAULT_LANG}' => '/' + language,
 				_type == 'blog.post' && (!defined(language) || language == '${DEFAULT_LANG}') => '/${ROUTES.blog}/' + metadata.slug.current,

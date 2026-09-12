@@ -30,23 +30,23 @@ export default presentationTool({
 			{
 				route: '/',
 				filter: groq`_type == 'page' && metadata.slug.current == 'index'
-					&& (!defined(language) || language == '${DEFAULT_LANG}')`,
+					&& language == 'en' && catalogArchive != true`,
 			},
 			{
 				route: '/:slug',
 				filter: groq`_type == 'page' && metadata.slug.current == $slug
-					&& (!defined(language) || language == '${DEFAULT_LANG}')`,
+					&& language == 'en' && catalogArchive != true`,
 			},
 			// Pages — localized
 			{
 				route: '/:lang',
 				filter: groq`_type == 'page' && metadata.slug.current == 'index'
-					&& language == $lang`,
+					&& language == 'en' && catalogArchive != true`,
 			},
 			{
 				route: '/:lang/:slug',
 				filter: groq`_type == 'page' && metadata.slug.current == $slug
-					&& language == $lang`,
+					&& language == 'en' && catalogArchive != true`,
 			},
 			// Blog — default language
 			{

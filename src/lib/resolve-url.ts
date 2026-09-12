@@ -33,7 +33,10 @@ export default function resolveUrl(
 			? `/${ROUTES.products}/`
 			: '/'
 
-	const effectiveLang = language ?? page?.language ?? undefined
+	const effectiveLang =
+		page?._type === 'page'
+			? DEFAULT_LANG
+			: (language ?? page?.language ?? undefined)
 	const nonDefaultLang =
 		effectiveLang && effectiveLang !== DEFAULT_LANG ? effectiveLang : null
 
