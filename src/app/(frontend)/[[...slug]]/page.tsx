@@ -94,8 +94,8 @@ async function getPage(slugInput?: string[]) {
 const PAGE_QUERY = groq`
 	*[_type == 'page' && catalogArchive != true
 		&& metadata.slug.current == $slug
-		&& (language == 'en' || language == 'hr')
-	] | order(language == 'en' desc)[0]{
+		&& language == 'en'
+	][0]{
 		...,
 		'modules': (
 			// global modules (before)

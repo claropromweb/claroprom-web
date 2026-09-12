@@ -21,7 +21,6 @@ import { ROUTES } from './src/lib/env'
 import { supportedLanguages } from './src/lib/i18n'
 import { categoryUrl } from './src/lib/product-category-url'
 import resolveUrl from './src/lib/resolve-url'
-import { ConsolidateEnglishPages } from './src/sanity/actions/consolidate-english-pages'
 import { apiVersion, dataset, projectId } from './src/sanity/env'
 import icon from './src/sanity/icon'
 import presentation from './src/sanity/presentation'
@@ -56,10 +55,6 @@ export default defineConfig({
 		assist(),
 	],
 	document: {
-		actions: (actions, context) =>
-			context.schemaType === 'page'
-				? [...actions, ConsolidateEnglishPages]
-				: actions,
 		productionUrl: async (prev, { document }) => {
 			if (document?._type === 'product.category' && document.showInCatalog) {
 				const slug = (document.slug_en as { current?: string } | undefined)

@@ -26,7 +26,7 @@ export default presentationTool({
 				route: '/en/proizvodi/:slug',
 				filter: groq`_type == 'product.category' && slug_en.current == $slug && showInCatalog == true`,
 			},
-			// Pages — default language (no prefix)
+			// Pages — English only, existing public paths
 			{
 				route: '/',
 				filter: groq`_type == 'page' && metadata.slug.current == 'index'
@@ -34,17 +34,6 @@ export default presentationTool({
 			},
 			{
 				route: '/:slug',
-				filter: groq`_type == 'page' && metadata.slug.current == $slug
-					&& language == 'en' && catalogArchive != true`,
-			},
-			// Pages — localized
-			{
-				route: '/:lang',
-				filter: groq`_type == 'page' && metadata.slug.current == 'index'
-					&& language == 'en' && catalogArchive != true`,
-			},
-			{
-				route: '/:lang/:slug',
 				filter: groq`_type == 'page' && metadata.slug.current == $slug
 					&& language == 'en' && catalogArchive != true`,
 			},
