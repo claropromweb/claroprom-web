@@ -1,15 +1,13 @@
 import { PortableText } from 'next-sanity'
-import { DEFAULT_LANG } from '@/lib/i18n'
 import { getSite } from '@/sanity/lib/queries'
 import Logo from '@/ui/logo'
 import LegalNavigation from './legal-navigation'
 import Navigation from './navigation'
-import { translations } from './translations'
+import FooterContact from './contact'
+import FloatingWhatsApp from './whatsapp-contact'
 
 export default async function ({ lang }: { lang?: string }) {
 	const site = await getSite(lang)
-	const currentLang = (lang || DEFAULT_LANG) as keyof typeof translations
-	const t = translations[currentLang] ?? translations[DEFAULT_LANG]
 
 	return (
 		<footer>
@@ -25,12 +23,7 @@ export default async function ({ lang }: { lang?: string }) {
 							className="w-max md:col-span-2 md:col-start-5"
 						/>
 
-						<div className="flex w-max max-w-sm flex-col gap-4 md:col-span-3 md:col-start-8">
-							<h3 className="font-semibold">{t.contactHeading}</h3>
-							<div className="text-foreground/80 space-y-2 leading-relaxed [&_a]:text-foreground [&_a]:hover:underline">
-								<PortableText value={site?.footerContent ?? []} />
-							</div>
-						</div>
+						<FooterContact />
 					</div>
 				</div>
 			</div>
@@ -44,6 +37,7 @@ export default async function ({ lang }: { lang?: string }) {
 					<LegalNavigation menu={site?.footerSecondary} />
 				</div>
 			</div>
+			<FloatingWhatsApp />
 		</footer>
 	)
 }
