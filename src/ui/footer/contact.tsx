@@ -3,12 +3,15 @@ import { FaWhatsapp } from 'react-icons/fa6'
 const linkClassName =
 	'rounded-sm text-foreground underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600'
 
-export default function FooterContact() {
+export default function FooterContact({ logo }: { logo: React.ReactNode }) {
 	return (
-		<section aria-labelledby="footer-contact-heading" className="flex w-full max-w-sm flex-col gap-4 md:col-span-5 md:col-start-8">
+		<section aria-labelledby="footer-contact-heading" className="flex w-full max-w-sm flex-col gap-4">
 			<h3 id="footer-contact-heading" className="text-foreground font-semibold">Get in Touch</h3>
 			<div className="text-sm leading-6 text-foreground/80">
-				<p className="font-medium text-foreground">Claro-prom d.o.o.</p>
+				<div className="flex items-center gap-3">
+					{logo}
+					<p className="font-medium text-foreground">Claro-prom d.o.o.</p>
+				</div>
 				<address className="mt-1 not-italic">
 					Horvatovac 37 · 10000 Zagreb · Croatia · European Union
 					<div className="mt-3 flex flex-wrap items-center gap-x-2">
