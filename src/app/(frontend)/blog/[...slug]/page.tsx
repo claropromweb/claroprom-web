@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation'
 import { ROUTES } from '@/lib/env'
 import { DEFAULT_LANG, languages, type Lang } from '@/lib/i18n'
 import resolveUrl from '@/lib/resolve-url'
+import { SITE_URL } from '@/lib/site-url'
 import { client } from '@/sanity/lib/client'
 import { urlFor } from '@/sanity/lib/image'
 import { sanityFetchLive } from '@/sanity/lib/live'
@@ -52,13 +53,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 		openGraph: {
 			title,
 			description,
-			url: canonical
-				? `${process.env.NEXT_PUBLIC_BASE_URL ?? ''}${canonical}`
-				: undefined,
+			url: canonical ? `${SITE_URL ?? ''}${canonical}` : undefined,
 			images: [
 				image
 					? urlFor(image).width(1200).url()
-					: `${process.env.NEXT_PUBLIC_BASE_URL}/api/og?slug=${ROUTES.blog}/${post?.metadata?.slug?.current ?? ''}`,
+					: `${SITE_URL}/api/og?slug=${ROUTES.blog}/${post?.metadata?.slug?.current ?? ''}`,
 			],
 		},
 		robots: {

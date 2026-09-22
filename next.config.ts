@@ -3,6 +3,8 @@ import type { NextConfig } from 'next'
 import { groq } from 'next-sanity'
 import { ROUTES } from './src/lib/env'
 import { DEFAULT_LANG, supportedLanguages } from './src/lib/i18n'
+import { publicProductUrl } from './src/lib/public-product-url'
+import { CLAROPLAST_SLUG, SITE_URL } from './src/lib/site-url'
 import { client } from './src/sanity/lib/client'
 
 const nextConfig: NextConfig = {
@@ -77,6 +79,39 @@ const nextConfig: NextConfig = {
 			},
 		)
 		return [
+			...['labexclean.com', 'www.labexclean.com', 'www.claroprom.com'].flatMap(
+				(host) => [
+					...[
+						'/products/claroplast',
+						'/proizvodi/claroplast',
+						'/en/proizvodi/claroplast',
+						'/products/en/claroplast',
+						'/en/products/claroplast',
+					].map((source) => ({
+						source,
+						has: [{ type: 'host' as const, value: host }],
+						destination: `${SITE_URL}/products/${CLAROPLAST_SLUG}`,
+						statusCode: 301,
+					})),
+					{
+						source: '/:path((?!admin(?:/|$)|api(?:/|$)|_next(?:/|$)).*)',
+						has: [{ type: 'host' as const, value: host }],
+						destination: `${SITE_URL}/:path`,
+						statusCode: 301,
+					},
+				],
+			),
+			...[
+				'/products/claroplast',
+				'/proizvodi/claroplast',
+				'/en/proizvodi/claroplast',
+				'/products/en/claroplast',
+				'/en/products/claroplast',
+			].map((source) => ({
+				source,
+				destination: `/products/${CLAROPLAST_SLUG}`,
+				statusCode: 301,
+			})),
 			...[
 				'/proizvodi/:slug*',
 				'/en/proizvodi/:slug*',
@@ -87,7 +122,16 @@ const nextConfig: NextConfig = {
 				destination: '/products/:slug*',
 				permanent: true,
 			})),
-			...cmsRedirects,
+			...cmsRedirects.map(
+				(redirect: {
+					source: string
+					destination: string
+					permanent: boolean
+				}) => ({
+					...redirect,
+					destination: publicProductUrl(redirect.destination),
+				}),
+			),
 		]
 	},
 }
