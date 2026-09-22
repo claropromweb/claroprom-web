@@ -20,7 +20,7 @@ export default async function ({ lang }: { lang?: string }) {
 				</div>
 			</div>
 			)}
-			className="bg-background/80 has-[.accordion:open]:bg-background max-md:header-open:bg-background max-md:header-open:text-foreground max-md:header-open:shadow-xl max-md:header-open:backdrop-blur-none sticky top-0 z-50 backdrop-blur transition-colors">
+			className="bg-background/80 has-[.accordion:open]:bg-background max-md:header-open:bg-background max-md:header-open:text-foreground max-md:header-open:shadow-xl max-md:header-open:backdrop-blur-none relative z-50 backdrop-blur transition-colors">
 			<div className="w-full px-6 md:px-12 lg:px-16 relative flex items-center justify-between gap-4 py-4">
 				<Logo
 					lang={lang}
