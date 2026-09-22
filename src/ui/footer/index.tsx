@@ -13,17 +13,15 @@ export default async function ({ lang }: { lang?: string }) {
 		<footer>
 			<div className="bg-white text-foreground">
 				<div className="w-full px-6 py-10 md:px-12 md:py-12 lg:px-16">
-					<div className="grid grid-cols-1 items-start gap-10 md:grid-cols-12 md:gap-y-0">
-						<div className="w-max md:col-span-3">
-							<Logo lang={lang} className="[&_img]:h-16 [&_img]:w-auto" />
-						</div>
-
+					<div className="mx-auto grid w-full max-w-4xl grid-cols-1 items-start gap-8 md:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] md:gap-16">
 						<Navigation
 							menu={site?.footer}
-							className="w-max md:col-span-2 md:col-start-5"
+							className="w-max"
 						/>
 
-						<FooterContact />
+						<FooterContact
+							logo={<Logo lang={lang} className="shrink-0 leading-none [&_img]:h-10 [&_img]:w-auto" />}
+						/>
 					</div>
 				</div>
 			</div>
