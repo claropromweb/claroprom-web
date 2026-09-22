@@ -27,6 +27,7 @@ export default function FooterContact() {
 					<p>Mail: <a href="mailto:claroprom@gmail.com" className={linkClassName}>claroprom@gmail.com</a></p>
 				</address>
 				<p className="mt-2">VAT ID: <span className="text-foreground">HR50624653521</span></p>
+				<p>EUDAMED SRN: <span className="text-foreground">HR-MF-000055271</span></p>
 				<div className="mt-4 space-y-1 border-t border-stroke pt-4">
 					<p>European manufacturer of IVD and laboratory products</p>
 					<p>ISO 13485 certified</p>
