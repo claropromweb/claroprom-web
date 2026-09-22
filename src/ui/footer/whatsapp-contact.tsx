@@ -53,6 +53,8 @@ export default function FloatingWhatsApp() {
 		mutations.observe(document.body, { childList: true, subtree: true })
 		findBanner()
 		window.addEventListener('resize', schedule)
+		document.addEventListener('animationend', schedule, true)
+		document.addEventListener('transitionend', schedule, true)
 		window.visualViewport?.addEventListener('resize', schedule)
 		window.visualViewport?.addEventListener('scroll', schedule)
 
@@ -61,6 +63,8 @@ export default function FloatingWhatsApp() {
 			resize.disconnect()
 			mutations.disconnect()
 			window.removeEventListener('resize', schedule)
+			document.removeEventListener('animationend', schedule, true)
+			document.removeEventListener('transitionend', schedule, true)
 			window.visualViewport?.removeEventListener('resize', schedule)
 			window.visualViewport?.removeEventListener('scroll', schedule)
 		}
