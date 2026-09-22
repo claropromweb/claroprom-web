@@ -19,32 +19,46 @@ function IsoCertification({
 	const hasImage = Boolean(isoQrImage?.asset?._ref)
 	if (!url && !hasImage) return null
 
+	const qrImage = hasImage ? (
+		<Img
+			image={isoQrImage}
+			alt="QR code for the Claro-prom ISO 13485 certificate"
+			width={144}
+			height={144}
+			unoptimized
+			className="h-36 w-36 shrink-0 bg-white object-contain p-2"
+		/>
+	) : null
+
 	return (
 		<div className="flex flex-wrap items-center gap-4 pt-2">
 			<div className="min-w-0 flex-1 basis-52 space-y-2 text-sm leading-relaxed md:text-base">
-				<p className="font-semibold">ISO 13485 Quality Management System</p>
 				{url && (
 					<a
 						href={url}
 						target="_blank"
 						rel="noopener noreferrer"
-						className="text-red-600 underline underline-offset-4"
+						className="action-outline rounded-md px-4 py-2 text-sm font-medium"
 					>
-						Claro-prom ISO 13485 Certificate
+						View ISO 13485 Certificate
 						<span className="sr-only"> (opens in a new tab)</span>
 					</a>
 				)}
 			</div>
-			{hasImage && (
-				<Img
-					image={isoQrImage}
-					alt="QR code for the Claro-prom ISO 13485 certificate"
-					width={144}
-					height={144}
-					unoptimized
-					className="h-36 w-36 shrink-0 bg-white object-contain p-2"
-				/>
-			)}
+			{qrImage &&
+				(url ? (
+					<a
+						href={url}
+						target="_blank"
+						rel="noopener noreferrer"
+						aria-label="View ISO 13485 Certificate (opens in a new tab)"
+						className="shrink-0"
+					>
+						{qrImage}
+					</a>
+				) : (
+					qrImage
+				))}
 		</div>
 	)
 }
