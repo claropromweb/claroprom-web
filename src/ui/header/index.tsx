@@ -26,7 +26,7 @@ export default async function ({ lang }: { lang?: string }) {
 					lang={lang}
 					className="inline-flex shrink-0 items-center gap-2 has-[img]:-my-2 has-[img]:h-[2lh] md:gap-0.5 min-[56.25rem]:gap-2"
 				>
-					<span className="whitespace-nowrap bg-red-600 px-1.5 py-1 text-xs font-semibold leading-none tracking-wide text-white md:px-0.5 md:text-[9px] md:tracking-normal min-[56.25rem]:px-1.5 min-[56.25rem]:text-xs min-[56.25rem]:tracking-wide">
+					<span className="whitespace-nowrap text-xs font-semibold leading-none tracking-wide text-red-600 md:text-[9px] md:tracking-normal min-[56.25rem]:text-xs min-[56.25rem]:tracking-wide">
 						CLARO-PROM
 					</span>
 				</Logo>

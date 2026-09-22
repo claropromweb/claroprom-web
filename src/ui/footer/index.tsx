@@ -20,7 +20,7 @@ export default async function ({ lang }: { lang?: string }) {
 						/>
 
 						<FooterContact
-							logo={<Logo lang={lang} className="shrink-0 leading-none [&_img]:h-8 [&_img]:w-auto" />}
+							logo={<Logo lang={lang} className="shrink-0 -translate-y-1.5 leading-none [&_img]:h-8 [&_img]:w-auto" />}
 						/>
 					</div>
 				</div>
