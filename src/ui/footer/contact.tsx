@@ -9,8 +9,8 @@ export default function FooterContact({ logo }: { logo: React.ReactNode }) {
 			<h3 id="footer-contact-heading" className="text-foreground font-semibold">Get in Touch</h3>
 			<div className="text-sm leading-6 text-foreground/80">
 				<div className="flex items-center gap-3">
-					{logo}
 					<p className="font-medium text-foreground">Claro-prom d.o.o.</p>
+					{logo}
 				</div>
 				<address className="mt-1 not-italic">
 					Horvatovac 37 · 10000 Zagreb · Croatia · European Union
