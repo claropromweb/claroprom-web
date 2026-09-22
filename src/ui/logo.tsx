@@ -8,10 +8,12 @@ export default async function ({
 	variant: style = 'default',
 	className,
 	lang,
+	children,
 }: {
 	variant?: 'default' | 'light' | 'dark'
 	className?: string
 	lang?: string
+	children?: React.ReactNode
 }) {
 	const site = await getSite(lang)
 	const logo = site?.logo?.image?.[style]
@@ -32,6 +34,7 @@ export default async function ({
 			) : (
 				site?.title
 			)}
+			{children}
 		</Link>
 	)
 }
