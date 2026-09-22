@@ -25,10 +25,17 @@ export async function getCategory(slug: string) {
 	})
 }
 
-function pageNumber(value: string | string[] | undefined, count: number) {
+function pageNumber(
+	value: string | string[] | undefined,
+	count: number,
+	perPage: number,
+) {
 	const requested =
 		typeof value === 'string' && /^\d+$/.test(value) ? Number(value) : 1
-	return Math.min(Math.max(1, requested), Math.max(1, Math.ceil(count / 12)))
+	return Math.min(
+		Math.max(1, requested),
+		Math.max(1, Math.ceil(count / perPage)),
+	)
 }
 function pageUrl(path: string, page: number) {
 	return page > 1 ? `${path}?page=${page}` : path
@@ -41,7 +48,12 @@ export async function generateMetadata({
 	const category = await getCategory((await params).category)
 	if (!category) notFound()
 	const slug = stegaClean(category.slug!)
-	const page = pageNumber((await searchParams)?.page, category.products.length)
+	const perPage = slug === 'ivd-reagents' ? 24 : 12
+	const page = pageNumber(
+		(await searchParams)?.page,
+		category.products.length,
+		perPage,
+	)
 	const seo = categorySeo[slug] ?? {
 		title: category.title,
 		description: category.description,
@@ -75,9 +87,14 @@ export default async function CategoryPage({ params, searchParams }: Props) {
 		? 'Claroplast – Histology Paraffin Wax'
 		: category.title
 	const path = categoryUrl(slug)
-	const page = pageNumber((await searchParams)?.page, category.products.length)
-	const totalPages = Math.max(1, Math.ceil(category.products.length / 12))
-	const products = category.products.slice((page - 1) * 12, page * 12)
+	const perPage = slug === 'ivd-reagents' ? 24 : 12
+	const page = pageNumber(
+		(await searchParams)?.page,
+		category.products.length,
+		perPage,
+	)
+	const totalPages = Math.max(1, Math.ceil(category.products.length / perPage))
+	const products = category.products.slice((page - 1) * perPage, page * perPage)
 	const description = isClaroplast
 		? category.description?.replace(
 				'Claroplast is a universal histology-grade paraffin for routine tissue infiltration and embedding. Manufactured by Claro-prom in Croatia, European Union, it is formulated',
@@ -185,7 +202,7 @@ export default async function CategoryPage({ params, searchParams }: Props) {
 			<Suspense fallback={<p>Loading products...</p>}>
 				<PaginatedProducts
 					products={products}
-					productsPerPage={12}
+					productsPerPage={perPage}
 					filterByQuery={false}
 					serverPagination={pagination}
 					noProductsLabel="No products available yet."
