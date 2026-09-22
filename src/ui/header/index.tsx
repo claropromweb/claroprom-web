@@ -24,9 +24,9 @@ export default async function ({ lang }: { lang?: string }) {
 			<div className="w-full px-6 md:px-12 lg:px-16 relative flex items-center justify-between gap-4 py-4">
 				<Logo
 					lang={lang}
-					className="inline-flex shrink-0 items-center gap-2 has-[img]:-my-2 has-[img]:h-[2lh] md:gap-1 lg:gap-2"
+					className="inline-flex shrink-0 items-center gap-2 has-[img]:-my-2 has-[img]:h-[2lh] md:gap-0.5 min-[900px]:gap-2"
 				>
-					<span className="whitespace-nowrap bg-red-600 px-1.5 py-1 text-xs font-semibold leading-none tracking-wide text-white md:px-1 md:text-[10px] md:tracking-normal lg:px-1.5 lg:text-xs lg:tracking-wide">
+					<span className="whitespace-nowrap bg-red-600 px-1.5 py-1 text-xs font-semibold leading-none tracking-wide text-white md:px-0.5 md:text-[9px] md:tracking-normal min-[900px]:px-1.5 min-[900px]:text-xs min-[900px]:tracking-wide">
 						CLARO-PROM
 					</span>
 				</Logo>
