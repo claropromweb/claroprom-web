@@ -55,15 +55,25 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 		pageSeo[page?.metadata?.slug?.current ?? ''] ?? page?.metadata ?? {}
 
 	const canonical = page ? resolveUrl(page as any, { base: true }) : undefined
+	const isHomepage = page?.metadata?.slug?.current === 'index'
+	const socialTitle = isHomepage ? 'Claro-prom | European IVD & Histology Manufacturer' : title
+	const socialDescription = isHomepage ? 'Histology, IVD and laboratory products manufactured in Croatia, EU.' : description
+	const homepageImage = {
+		url: `${SITE_URL}/api/og?homepage=1`,
+		width: 1200,
+		height: 630,
+		alt: 'Claro-prom — European IVD & Histology Manufacturer',
+	}
 
 	return {
 		title,
 		description,
 		openGraph: {
-			title,
-			description,
+			title: socialTitle,
+			description: socialDescription,
+			...(isHomepage ? { siteName: 'Claro-prom', type: 'website' as const } : {}),
 			url: canonical ? canonical : undefined,
-			images: [
+			images: isHomepage ? [homepageImage] : [
 				image
 					? urlFor(image).width(1200).url()
 					: site?.ogimage
@@ -71,7 +81,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 						: `${SITE_URL}/api/og?slug=${slug?.join('/') ?? ''}`,
 			],
 		},
-		twitter: { card: 'summary_large_image', title, description },
+		twitter: {
+			card: 'summary_large_image',
+			title: socialTitle,
+			description: socialDescription,
+			...(isHomepage ? { images: [homepageImage] } : {}),
+		},
 		robots: {
 			index: noIndex ? false : undefined,
 		},
