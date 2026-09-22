@@ -19,7 +19,7 @@ export default function FooterContact() {
 							rel="noopener noreferrer"
 							aria-label="Contact Claro-prom on WhatsApp (opens in a new tab)"
 							title="WhatsApp"
-							className="inline-flex size-11 shrink-0 items-center justify-center rounded-full text-foreground hover:bg-neutral-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
+							className="inline-flex size-11 shrink-0 items-center justify-center rounded-full text-[#25D366] hover:bg-neutral-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
 						>
 							<FaWhatsapp className="size-5" aria-hidden="true" focusable="false" />
 						</a>
