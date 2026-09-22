@@ -11,10 +11,11 @@ export default function ({
 	eyebrow,
 	content = [],
 	ctas,
+	children,
 	image,
 	layout: l = 'image-left',
 	...props
-}: HeroSplit) {
+}: HeroSplit & { children?: React.ReactNode }) {
 	const layout = stegaClean(l)
 	const imageOnRight = layout === 'image-right'
 
@@ -59,6 +60,7 @@ export default function ({
 					}}
 				/>
 				<CTAList ctas={ctas} className="max-sm:*:w-full" />
+				{children}
 			</header>
 		</Module>
 	)

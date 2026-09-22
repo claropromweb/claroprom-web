@@ -6,11 +6,12 @@ import type {
 	PAGE_QUERY_RESULT,
 	PRODUCT_QUERY_RESULT,
 } from '@/sanity/types'
+import AboutCertification from './about-certification'
 import AccordionList from './accordion-list'
+import Banner from './banner'
 import BlogIndex from './blog/blog-index'
 import BlogPostContent from './blog/blog-post-content'
 import BlogPostList from './blog/blog-post-list'
-import Banner from './banner'
 import Breadcrumbs from './breadcrumbs'
 import Callout from './callout'
 import CardList from './card-list'
@@ -71,6 +72,11 @@ export default function ({
 
 	const moduleSpecificProps = (module: ModuleProps) => {
 		switch (module._type) {
+			case 'hero.split':
+				return stegaClean(page?.metadata?.slug?.current) === 'o-nama' &&
+					module._key === '592907de1711'
+					? { children: <AboutCertification /> }
+					: {}
 			case 'blog-post-content':
 				return { post }
 			case 'product-content':

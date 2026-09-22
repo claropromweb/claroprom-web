@@ -4,10 +4,11 @@ import type { FeatureSplit } from '@/sanity/types'
 import Img from '@/ui/img'
 import { Module } from '.'
 
-function IsoCertification({
+export function IsoCertification({
 	isoCertificateUrl,
 	isoQrImage,
-}: NonNullable<FeatureSplit['items']>[number]) {
+	showCaption = false,
+}: { showCaption?: boolean } & NonNullable<FeatureSplit['items']>[number]) {
 	const enteredUrl = stegaClean(isoCertificateUrl ?? '').trim()
 	let url: string | undefined
 	try {
@@ -45,20 +46,28 @@ function IsoCertification({
 					</a>
 				)}
 			</div>
-			{qrImage &&
-				(url ? (
-					<a
-						href={url}
-						target="_blank"
-						rel="noopener noreferrer"
-						aria-label="View ISO 13485 Certificate (opens in a new tab)"
-						className="shrink-0"
-					>
-						{qrImage}
-					</a>
-				) : (
-					qrImage
-				))}
+			{qrImage && (
+				<div className="shrink-0">
+					{url ? (
+						<a
+							href={url}
+							target="_blank"
+							rel="noopener noreferrer"
+							aria-label="View ISO 13485 Certificate (opens in a new tab)"
+							className="shrink-0"
+						>
+							{qrImage}
+						</a>
+					) : (
+						qrImage
+					)}
+					{showCaption && (
+						<p className="text-foreground/70 mt-2 text-center text-xs">
+							Scan to view certificate
+						</p>
+					)}
+				</div>
+			)}
 		</div>
 	)
 }
