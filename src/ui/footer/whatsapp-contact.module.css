@@ -11,7 +11,7 @@
 	border: 1px solid var(--color-stroke);
 	border-radius: 9999px;
 	background: var(--color-background);
-	color: var(--color-foreground);
+	color: #25D366;
 	box-shadow: 0 2px 8px rgb(0 0 0 / 8%);
 }
 
