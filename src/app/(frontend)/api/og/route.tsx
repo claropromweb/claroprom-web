@@ -5,6 +5,7 @@ import { SITE_URL } from '@/lib/site-url'
 import { cn } from '@/lib/utils'
 import { sanityFetchLive } from '@/sanity/lib/live'
 import { getSite } from '@/sanity/lib/queries'
+import { urlFor } from '@/sanity/lib/image'
 import type { OG_QUERY_RESULT } from '@/sanity/types'
 
 const { hostname } = new URL(SITE_URL!)
@@ -31,6 +32,36 @@ export async function GET(request: Request) {
 		}),
 		getSite(),
 	])
+
+
+	if (searchParams.get('homepage') === '1') {
+		const brand = 'Claro-prom'
+		const heading = 'European IVD & Histology Manufacturer'
+		const description = 'Histology, IVD and laboratory products manufactured in Croatia, EU.'
+		const logo = site?.logo?.image?.default
+		const fontText = brand + heading + description + 'claroprom.com'
+		return new ImageResponse(
+			<div style={{ display: 'flex', width: '100%', height: '100%', flexDirection: 'column', justifyContent: 'space-between', padding: '56px 72px', background: '#ffffff', color: '#262626', borderTop: '12px solid #e60012' }}>
+				<div style={{ display: 'flex', alignItems: 'center', gap: 28 }}>
+					{logo && <img src={urlFor(logo).url()} width={100} height={112} style={{ objectFit: 'contain' }} alt="Claro-prom logo" />}
+					<span style={{ fontSize: 64, fontWeight: 700 }}>{brand}</span>
+				</div>
+				<div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+					<div style={{ fontSize: 52, fontWeight: 700, lineHeight: 1.15 }}>{heading}</div>
+					<div style={{ fontSize: 28, lineHeight: 1.4, color: '#525252' }}>{description}</div>
+				</div>
+				<div style={{ fontSize: 26, color: '#e60012' }}>claroprom.com</div>
+			</div>,
+			{
+				width: 1200,
+				height: 630,
+				fonts: [
+					{ name: 'Geist', data: await loadGoogleFont('Geist:wght@400', fontText), weight: 400, style: 'normal' },
+					{ name: 'Geist', data: await loadGoogleFont('Geist:wght@700', fontText), weight: 700, style: 'normal' },
+				],
+			},
+		)
+	}
 
 	const [h1 = '', h2 = ''] =
 		(page?.title || site?.title)?.split(/(?:\s*[|-—]\s*)/) ?? []
