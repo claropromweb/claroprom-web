@@ -1,0 +1,40 @@
+.button {
+	position: fixed;
+	right: max(20px, env(safe-area-inset-right, 0px));
+	bottom: max(var(--whatsapp-bottom, 80px), calc(80px + env(safe-area-inset-bottom, 0px)));
+	z-index: 40;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 48px;
+	height: 48px;
+	border: 1px solid var(--color-stroke);
+	border-radius: 9999px;
+	background: var(--color-background);
+	color: var(--color-foreground);
+	box-shadow: 0 2px 8px rgb(0 0 0 / 8%);
+}
+
+@media (hover: hover) {
+	.button:hover {
+		background: var(--color-neutral-100);
+		border-color: var(--color-neutral-400);
+	}
+}
+
+.button:focus-visible {
+	outline: 2px solid var(--color-red-600);
+	outline-offset: 4px;
+}
+
+.button[data-obstructed='true'],
+:global(body:has(#header-open:checked)) .button,
+:global(body:has(dialog[open])) .button {
+	visibility: hidden;
+}
+
+@media (max-width: 47.999rem) {
+	:global(body:has(input:focus, textarea:focus, select:focus)) .button {
+		visibility: hidden;
+	}
+}
