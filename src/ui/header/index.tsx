@@ -12,7 +12,15 @@ export default async function ({ lang }: { lang?: string }) {
 	const site = await getSite(lang)
 
 	return (
-		<Wrapper className="bg-background/80 has-[.accordion:open]:bg-background max-md:header-open:bg-background max-md:header-open:text-foreground max-md:header-open:shadow-xl max-md:header-open:backdrop-blur-none sticky top-0 z-50 backdrop-blur transition-colors">
+		<Wrapper
+			search={(
+			<div className="border-stroke border-t">
+				<div className="w-full px-6 md:px-12 lg:px-16 py-3">
+					<ProductSearch />
+				</div>
+			</div>
+			)}
+			className="bg-background/80 has-[.accordion:open]:bg-background max-md:header-open:bg-background max-md:header-open:text-foreground max-md:header-open:shadow-xl max-md:header-open:backdrop-blur-none sticky top-0 z-50 backdrop-blur transition-colors">
 			<div className="w-full px-6 md:px-12 lg:px-16 relative flex items-center justify-between gap-4 py-4">
 				<Logo
 					lang={lang}
@@ -46,12 +54,6 @@ export default async function ({ lang }: { lang?: string }) {
 						className="hidden md:flex"
 					/>
 					<MobileToggle />
-				</div>
-			</div>
-
-			<div className="border-stroke border-t">
-				<div className="w-full px-6 md:px-12 lg:px-16 py-3">
-					<ProductSearch />
 				</div>
 			</div>
 		</Wrapper>
