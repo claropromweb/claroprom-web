@@ -1,9 +1,9 @@
+'use client'
+
 import { useQueryState } from 'nuqs'
 import { ROUTES } from '@/lib/env'
 import { SITE_URL } from '@/lib/site-url'
 import type { SearchModule } from '@/sanity/types'
-
-;('use client')
 
 export default function ({ scope }: { scope: SearchModule['scope'] }) {
 	const [query] = useQueryState('query')
