@@ -6,6 +6,8 @@ import { notFound, permanentRedirect } from 'next/navigation'
 import { ROUTES } from '@/lib/env'
 import { DEFAULT_LANG } from '@/lib/i18n'
 import resolveUrl from '@/lib/resolve-url'
+import { pageSeo } from '@/lib/seo'
+import { SITE_URL } from '@/lib/site-url'
 import { client } from '@/sanity/lib/client'
 import { urlFor } from '@/sanity/lib/image'
 import {
@@ -34,16 +36,25 @@ export default async function Page({ params }: Props) {
 	const page = await getPage(slug)
 	if (!page) notFound()
 
-	return <ModulesResolver page={page} />
+	return (
+		<>
+			{page.metadata?.slug?.current === 'proizvodi' && (
+				<h1 className="sr-only">Histology Products and Laboratory Reagents</h1>
+			)}
+			<ModulesResolver page={page} />
+		</>
+	)
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
 	const { slug } = await params
 	const page = await getPage(slug)
 	const site = await getSite(DEFAULT_LANG)
-	const { title, description, image, noIndex } = page?.metadata ?? {}
+	const { image, noIndex } = page?.metadata ?? {}
+	const { title, description } =
+		pageSeo[page?.metadata?.slug?.current ?? ''] ?? page?.metadata ?? {}
 
-	const canonical = page ? resolveUrl(page as any) : undefined
+	const canonical = page ? resolveUrl(page as any, { base: true }) : undefined
 
 	return {
 		title,
@@ -51,17 +62,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 		openGraph: {
 			title,
 			description,
-			url: canonical
-				? `${process.env.NEXT_PUBLIC_BASE_URL ?? ''}${canonical}`
-				: undefined,
+			url: canonical ? canonical : undefined,
 			images: [
 				image
 					? urlFor(image).width(1200).url()
 					: site?.ogimage
 						? urlFor(site.ogimage).width(1200).url()
-						: `${process.env.NEXT_PUBLIC_BASE_URL}/api/og?slug=${slug?.join('/') ?? ''}`,
+						: `${SITE_URL}/api/og?slug=${slug?.join('/') ?? ''}`,
 			],
 		},
+		twitter: { card: 'summary_large_image', title, description },
 		robots: {
 			index: noIndex ? false : undefined,
 		},
@@ -79,16 +89,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 async function getPage(slugInput?: string[]) {
 	const slug = !slugInput?.length ? 'index' : slugInput.join('/')
 	// Pages must reflect a publish on the next request, without a build or CDN TTL.
-	return client
-		.withConfig({ useCdn: false, token })
-		.fetch<PAGE_QUERY_RESULT>(
-			PAGE_QUERY,
-			{ slug },
-			{
-				perspective: (await draftMode()).isEnabled ? 'drafts' : 'published',
-				cache: 'no-store',
-			},
-		)
+	return client.withConfig({ useCdn: false, token }).fetch<PAGE_QUERY_RESULT>(
+		PAGE_QUERY,
+		{ slug },
+		{
+			perspective: (await draftMode()).isEnabled ? 'drafts' : 'published',
+			cache: 'no-store',
+		},
+	)
 }
 
 const PAGE_QUERY = groq`

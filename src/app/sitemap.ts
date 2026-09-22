@@ -3,6 +3,7 @@ import { groq } from 'next-sanity'
 import { ROUTES } from '@/lib/env'
 import { DEFAULT_LANG } from '@/lib/i18n'
 import { publicProductUrl } from '@/lib/public-product-url'
+import { SITE_URL } from '@/lib/site-url'
 import { sanityFetchLive } from '@/sanity/lib/live'
 
 export const dynamic = 'force-dynamic'
@@ -14,6 +15,7 @@ export default async function (): Promise<MetadataRoute.Sitemap> {
 		products: MetadataRoute.Sitemap
 		categories: MetadataRoute.Sitemap
 	}>({
+		perspective: 'published',
 		query: groq`{
 			'pages': *[
 				_type == 'page' && catalogArchive != true && language == 'en'
@@ -48,7 +50,7 @@ export default async function (): Promise<MetadataRoute.Sitemap> {
 				'priority': 0.5
 			},
 			'products': *[
-				_type == 'product' && hidden != true
+				_type == 'product' && hidden != true && language == 'en'
 				&& defined(metadata.slug.current)
 				&& metadata.noIndex != true
 			]|order(title){
@@ -61,7 +63,7 @@ export default async function (): Promise<MetadataRoute.Sitemap> {
 			}
 		}`,
 		params: {
-			baseUrl: process.env.NEXT_PUBLIC_BASE_URL,
+			baseUrl: SITE_URL,
 			blogDir: ROUTES.blog,
 			productsDir: ROUTES.products,
 			defaultLang: DEFAULT_LANG,

@@ -3,12 +3,13 @@ import { groq } from 'next-sanity'
 import { ROUTES } from '@/lib/env'
 import { DEFAULT_LANG } from '@/lib/i18n'
 import resolveUrl from '@/lib/resolve-url'
+import { SITE_URL } from '@/lib/site-url'
 import { getBlockText } from '@/lib/utils'
 import { urlFor } from '@/sanity/lib/image'
 import { sanityFetchLive } from '@/sanity/lib/live'
 import type { BLOG_RSS_QUERY_RESULT } from '@/sanity/types'
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL
+const BASE_URL = SITE_URL
 
 export async function GET() {
 	const { blog, posts } = await sanityFetchLive<BLOG_RSS_QUERY_RESULT>({

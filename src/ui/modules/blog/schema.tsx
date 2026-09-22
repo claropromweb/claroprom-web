@@ -1,4 +1,5 @@
 import { ROUTES } from '@/lib/env'
+import { SITE_URL } from '@/lib/site-url'
 import { getBlockText } from '@/lib/utils'
 import { urlFor } from '@/sanity/lib/image'
 import type { BLOG_POST_QUERY_RESULT } from '@/sanity/types'
@@ -18,10 +19,10 @@ export default function BlogPostSchema({
 		headline: post.title || post.metadata.title || '',
 		description: post.metadata.description || '',
 		datePublished: post.publishDate || undefined,
-		url: `${process.env.NEXT_PUBLIC_BASE_URL}/${ROUTES.blog}/${slug?.current}`,
+		url: `${SITE_URL}/${ROUTES.blog}/${slug?.current}`,
 		image: image
 			? urlFor(image).width(1200).url()
-			: `${process.env.NEXT_PUBLIC_BASE_URL}/api/og?slug=${ROUTES.blog}/${slug?.current}`,
+			: `${SITE_URL}/api/og?slug=${ROUTES.blog}/${slug?.current}`,
 		keywords:
 			post.categories?.map((category) => category.title).join(', ') ||
 			undefined,
@@ -40,7 +41,9 @@ export default function BlogPostSchema({
 	return (
 		<script
 			type="application/ld+json"
-			dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+			dangerouslySetInnerHTML={{
+				__html: JSON.stringify(schema).replace(/</g, '\\u003c'),
+			}}
 		/>
 	)
 }

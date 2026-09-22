@@ -3,7 +3,10 @@ import { groq } from 'next-sanity'
 import { notFound } from 'next/navigation'
 import { ROUTES } from '@/lib/env'
 import { DEFAULT_LANG } from '@/lib/i18n'
+import { categoryUrl } from '@/lib/product-category-url'
 import resolveUrl from '@/lib/resolve-url'
+import { breadcrumbs } from '@/lib/seo'
+import { SITE_URL } from '@/lib/site-url'
 import { urlFor } from '@/sanity/lib/image'
 import { sanityFetchLive } from '@/sanity/lib/live'
 import {
@@ -17,17 +20,22 @@ import CategoryPage, {
 	generateMetadata as categoryMetadata,
 	getCategory,
 } from '@/ui/modules/product/category-page'
+import StructuredData from '@/ui/structured-data'
 
 export const dynamic = 'force-dynamic'
 
 type Props = {
 	params: Promise<{ slug: string }>
+	searchParams?: Promise<{ page?: string | string[] }>
 }
 
-export default async function ({ params }: Props) {
+export default async function ({ params, searchParams }: Props) {
 	const { slug } = await params
 	if (await getCategory(slug))
-		return CategoryPage({ params: Promise.resolve({ category: slug }) })
+		return CategoryPage({
+			params: Promise.resolve({ category: slug }),
+			searchParams,
+		})
 	const product = await getProduct(slug)
 	if (!product) notFound()
 
@@ -53,54 +61,107 @@ export default async function ({ params }: Props) {
 				],
 			}
 
-	return <ModulesResolver product={resolvedProduct as typeof product} />
+	const category = product.category as any
+	const path = resolveUrl(product)
+	const codes = product.table?.map((row) => row.code).filter(Boolean) ?? []
+	return (
+		<>
+			<StructuredData
+				data={{
+					'@context': 'https://schema.org',
+					'@type': 'Product',
+					name: product.title,
+					url: SITE_URL + path,
+					sku: codes.length === 1 ? codes[0] : undefined,
+					description: product.metadata?.description || undefined,
+					image: product.image?.asset
+						? urlFor(product.image).width(1200).url()
+						: undefined,
+					category: category?.title_en || undefined,
+					manufacturer:
+						product.manufacturerRole === 'manufacturer'
+							? { '@id': `${SITE_URL}/#organization` }
+							: undefined,
+				}}
+			/>
+			<StructuredData
+				data={breadcrumbs([
+					{ name: 'Home', path: '/' },
+					{ name: 'Products', path: '/products' },
+					...(category?.showInCatalog && category?.slug_en?.current
+						? [
+								{
+									name: category.title_en,
+									path: categoryUrl(category.slug_en.current),
+								},
+							]
+						: []),
+					{ name: product.title ?? '', path },
+				])}
+			/>
+			<ModulesResolver product={resolvedProduct as typeof product} />
+		</>
+	)
 }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export async function generateMetadata({
+	params,
+	searchParams,
+}: Props): Promise<Metadata> {
 	const { slug: rawSlug } = await params
 	if (await getCategory(rawSlug))
-		return categoryMetadata({ params: Promise.resolve({ category: rawSlug }) })
+		return categoryMetadata({
+			params: Promise.resolve({ category: rawSlug }),
+			searchParams,
+		})
 	const product = await getProduct(rawSlug)
-	const { title, description, image, noIndex } = product?.metadata ?? {}
-
-	const canonical = product ? resolveUrl(product as any) : undefined
-
-	const alternates: Record<string, string> = {}
-	const translations = (product as any)?.translations as
-		| Array<{ value?: { language?: string; _type?: string; metadata?: any } }>
-		| undefined
-	translations?.forEach((entry) => {
-		const v = entry?.value
-		if (!v?.language) return
-		alternates[v.language] = resolveUrl(v as any)
-	})
-	if ((product as any)?.language)
-		alternates[(product as any).language as string] = canonical ?? '/'
-
+	if (!product) notFound()
+	const {
+		title: manualTitle,
+		description: manualDescription,
+		image,
+		noIndex,
+	} = product.metadata ?? {}
+	const codes = product.table
+		?.map((row) => row.code)
+		.filter(Boolean)
+		.join(', ')
+	const formats = product.table
+		?.map((row) => row.format)
+		.filter(Boolean)
+		.join(', ')
+	const title =
+		manualTitle || `${product.title}${codes ? ` (${codes})` : ''} | Claro-prom`
+	const description =
+		manualDescription ||
+		[
+			product.title,
+			codes ? `Code: ${codes}.` : '',
+			formats ? `Pack size: ${formats}.` : '',
+			product.manufacturerRole === 'manufacturer'
+				? 'Manufactured by Claro-prom.'
+				: '',
+		]
+			.filter(Boolean)
+			.join(' ')
+	const canonical = resolveUrl(product, { base: true })
+	const images = image
+		? [urlFor(image).width(1200).url()]
+		: product.image?.asset
+			? [urlFor(product.image).width(1200).url()]
+			: []
 	return {
-		title: title || product?.title,
+		title,
 		description,
-		openGraph: {
-			title: title || product?.title || undefined,
+		openGraph: { title, description, url: canonical, type: 'website', images },
+		twitter: {
+			card: images.length ? 'summary_large_image' : 'summary',
+			title,
 			description,
-			url: canonical
-				? `${process.env.NEXT_PUBLIC_BASE_URL ?? ''}${canonical}`
-				: undefined,
-			images: [
-				image
-					? urlFor(image).width(1200).url()
-					: product?.image
-						? urlFor(product.image).width(1200).url()
-						: `${process.env.NEXT_PUBLIC_BASE_URL}/api/og?slug=${ROUTES.products}/${product?.metadata?.slug?.current ?? ''}`,
-			],
+			images,
 		},
-		robots: {
-			index: noIndex ? false : undefined,
-		},
-		alternates: {
-			canonical,
-			languages: Object.keys(alternates).length ? alternates : undefined,
-		},
+		robots: { index: noIndex ? false : undefined },
+		alternates: { canonical },
 	}
 }
 

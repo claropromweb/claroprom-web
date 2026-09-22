@@ -2,6 +2,7 @@
 
 import { useQueryState } from 'nuqs'
 import { ROUTES } from '@/lib/env'
+import { SITE_URL } from '@/lib/site-url'
 import type { SearchModule } from '@/sanity/types'
 
 export default function ({ scope }: { scope: SearchModule['scope'] }) {
@@ -9,7 +10,7 @@ export default function ({ scope }: { scope: SearchModule['scope'] }) {
 
 	const href = [
 		`https://www.google.com/search?q=${query} `,
-		`site:${process.env.NEXT_PUBLIC_BASE_URL}`,
+		`site:${SITE_URL}`,
 		scope === 'blog posts' ? `/${ROUTES.blog}` : '',
 	].join('')
 

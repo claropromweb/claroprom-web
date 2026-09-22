@@ -1,5 +1,6 @@
 import { groq } from 'next-sanity'
 import { ROUTES } from '@/lib/env'
+import { SITE_URL } from '@/lib/site-url'
 import { client } from '@/sanity/lib/client'
 import type {
 	LLMS_BLOG_QUERY_RESULT,
@@ -7,7 +8,7 @@ import type {
 } from '@/sanity/types'
 
 export async function GET() {
-	const baseUrl = (process.env.NEXT_PUBLIC_BASE_URL ?? '').replace(/\/$/, '')
+	const baseUrl = (SITE_URL ?? '').replace(/\/$/, '')
 
 	const [pages, posts] = await Promise.all([
 		client.fetch<LLMS_PAGES_QUERY_RESULT>(LLMS_PAGES_QUERY),

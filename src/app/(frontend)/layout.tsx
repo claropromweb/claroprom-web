@@ -1,13 +1,19 @@
+import type { Metadata } from 'next'
 import { Geist } from 'next/font/google'
 import { NuqsAdapter } from 'nuqs/adapters/next/app'
 import { preconnect } from 'react-dom'
 import getLangServer from '@/lib/get-lang-server'
+import { organization } from '@/lib/seo'
+import { SITE_URL } from '@/lib/site-url'
 import CookieBannerWrapper from '@/ui/cookies/cookie-banner'
 import CookieConsentProviderWrapper from '@/ui/cookies/cookie-consent-provider'
 import Footer from '@/ui/footer'
 import Header from '@/ui/header'
 import VisualEditing from '@/ui/modules/visual-editing'
+import StructuredData from '@/ui/structured-data'
 import '@/app.css'
+
+export const metadata: Metadata = { metadataBase: new URL(SITE_URL) }
 
 const fontSans = Geist({
 	subsets: ['latin'],
@@ -27,6 +33,9 @@ export default async function RootLayout({
 				<body className="bg-background text-foreground antialiased">
 					<CookieConsentProviderWrapper>
 						<Header lang={lang} />
+						<StructuredData
+							data={{ '@context': 'https://schema.org', ...organization }}
+						/>
 						<main>{children}</main>
 						<Footer lang={lang} />
 

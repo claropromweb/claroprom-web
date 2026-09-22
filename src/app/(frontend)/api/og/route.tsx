@@ -1,12 +1,13 @@
 import { groq } from 'next-sanity'
 import { ImageResponse } from 'next/og'
 import { ROUTES } from '@/lib/env'
+import { SITE_URL } from '@/lib/site-url'
 import { cn } from '@/lib/utils'
 import { sanityFetchLive } from '@/sanity/lib/live'
 import { getSite } from '@/sanity/lib/queries'
 import type { OG_QUERY_RESULT } from '@/sanity/types'
 
-const { hostname } = new URL(process.env.NEXT_PUBLIC_BASE_URL!)
+const { hostname } = new URL(SITE_URL!)
 const blogDir = `${ROUTES.blog}/`
 
 const OG_QUERY = groq`*[_type == $type && metadata.slug.current == $slug][0]{
