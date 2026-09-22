@@ -564,6 +564,14 @@ export type FormModule = {
 	form?: FormReference
 }
 
+export type IsoQrImage = {
+	asset?: SanityImageAssetReference
+	media?: unknown // Unable to locate the referenced type "isoQrImage.media" in schema
+	hotspot?: SanityImageHotspot
+	crop?: SanityImageCrop
+	_type: 'image'
+}
+
 export type FeatureSplit = {
 	_type: 'feature-split'
 	attributes?: ModuleAttributes
@@ -572,6 +580,8 @@ export type FeatureSplit = {
 	items?: Array<{
 		header?: string
 		text?: string
+		isoCertificateUrl?: string
+		isoQrImage?: IsoQrImage
 		_type: 'item'
 		_key: string
 	}>

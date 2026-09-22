@@ -8,10 +8,7 @@ export default defineModule({
 	title: 'Feature split',
 	type: 'object',
 	icon: TfiLayoutMediaRight,
-	groups: [
-		{ name: 'content', default: true },
-		{ name: 'image' },
-	],
+	groups: [{ name: 'content', default: true }, { name: 'image' }],
 	fields: [
 		defineField({
 			name: 'pretitle',
@@ -40,6 +37,23 @@ export default defineModule({
 							name: 'text',
 							type: 'text',
 							rows: 4,
+						}),
+						defineField({
+							name: 'isoCertificateUrl',
+							title: 'ISO 13485 certificate URL',
+							type: 'url',
+							description:
+								'Optional external certificate link. Opens in a new tab.',
+							hidden: ({ parent }) => parent?._key !== '3ef95022d706',
+							validation: (rule) => rule.uri({ scheme: ['http', 'https'] }),
+						}),
+						defineField({
+							name: 'isoQrImage',
+							title: 'ISO 13485 QR code image',
+							type: 'image',
+							description:
+								'Optional QR image. Upload the complete code including its white border.',
+							hidden: ({ parent }) => parent?._key !== '3ef95022d706',
 						}),
 					],
 					preview: {
