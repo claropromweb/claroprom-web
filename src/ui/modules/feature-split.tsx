@@ -1,13 +1,53 @@
 import { stegaClean } from 'next-sanity'
-import Image from 'next/image'
 import { cn } from '@/lib/utils'
 import type { FeatureSplit } from '@/sanity/types'
 import Img from '@/ui/img'
 import { Module } from '.'
 
-// Frontend assets only; no Sanity fields or documents are required.
-const ISO_CERTIFICATE_URL = '/documents/claro-prom-iso-13485-certificate.pdf'
-const ISO_CERTIFICATE_QR_SRC: string | undefined = undefined
+function IsoCertification({
+	isoCertificateUrl,
+	isoQrImage,
+}: NonNullable<FeatureSplit['items']>[number]) {
+	const enteredUrl = stegaClean(isoCertificateUrl ?? '').trim()
+	let url: string | undefined
+	try {
+		const parsed = new URL(enteredUrl)
+		if (['https:', 'http:'].includes(parsed.protocol)) url = parsed.href
+	} catch {
+		// An empty or invalid URL must never become a public link.
+	}
+	const hasImage = Boolean(isoQrImage?.asset?._ref)
+	if (!url && !hasImage) return null
+
+	return (
+		<div className="flex flex-wrap items-center gap-4 pt-2">
+			<div className="min-w-0 flex-1 basis-52 space-y-2 text-sm leading-relaxed md:text-base">
+				<p className="font-semibold">ISO 13485 Quality Management System</p>
+				{url && (
+					<a
+						href={url}
+						target="_blank"
+						rel="noopener noreferrer"
+						className="text-red-600 underline underline-offset-4"
+					>
+						Claro-prom ISO 13485 Certificate
+						<span className="sr-only"> (opens in a new tab)</span>
+					</a>
+				)}
+			</div>
+			{hasImage && (
+				<Img
+					image={isoQrImage}
+					alt="QR code for the Claro-prom ISO 13485 certificate"
+					width={144}
+					height={144}
+					unoptimized
+					className="h-36 w-36 shrink-0 bg-white object-contain p-2"
+				/>
+			)}
+		</div>
+	)
+}
 
 export default function ({
 	pretitle,
@@ -35,7 +75,7 @@ export default function ({
 			<div className="grid items-center gap-10 md:grid-cols-2 md:gap-14 lg:gap-16">
 				{items && items.length > 0 && (
 					<div>
-						{items.map(({ _key, header, text }, index) => (
+						{items.map(({ _key, header, text, ...item }, index) => (
 							<div
 								key={_key}
 								className={cn(
@@ -54,42 +94,7 @@ export default function ({
 									</p>
 								)}
 								{props._key === 'e4653a80355f' && _key === '3ef95022d706' && (
-									<div className="flex flex-wrap items-center gap-4 pt-2">
-										<div className="min-w-0 flex-1 basis-52 space-y-2 text-sm leading-relaxed md:text-base">
-											<p className="font-semibold">
-												ISO 13485 Quality Management System
-											</p>
-											<a
-												href={ISO_CERTIFICATE_URL}
-												target="_blank"
-												rel="noopener noreferrer"
-												className="text-red-600 underline underline-offset-4"
-											>
-												Claro-prom ISO 13485 Certificate
-												<span className="sr-only">
-													{' '}
-													(PDF, opens in a new tab)
-												</span>
-											</a>
-										</div>
-										{ISO_CERTIFICATE_QR_SRC ? (
-											<Image
-												src={ISO_CERTIFICATE_QR_SRC}
-												alt="QR code for the Claro-prom ISO 13485 certificate"
-												width={144}
-												height={144}
-												unoptimized
-												className="h-36 w-36 shrink-0 bg-white object-contain p-2"
-											/>
-										) : (
-											<div
-												aria-label="Placeholder for the certificate QR code"
-												className="border-stroke text-foreground/50 flex h-36 w-36 shrink-0 items-center justify-center rounded border border-dashed p-2 text-center text-xs"
-											>
-												QR code
-											</div>
-										)}
-									</div>
+									<IsoCertification _key={_key} {...item} />
 								)}
 							</div>
 						))}
