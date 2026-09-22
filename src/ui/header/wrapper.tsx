@@ -3,7 +3,7 @@
 import { usePathname } from 'next/navigation'
 import { useEffect, useRef } from 'react'
 
-export default function (props: React.ComponentProps<'header'>) {
+export default function ({ children, search, ...props }: React.ComponentProps<'header'> & { search?: React.ReactNode }) {
 	const ref = useRef<HTMLDivElement>(null)
 	const pathname = usePathname()
 
@@ -22,7 +22,7 @@ export default function (props: React.ComponentProps<'header'>) {
 		window.addEventListener('resize', setHeight)
 
 		return () => window.removeEventListener('resize', setHeight)
-	}, [])
+	}, [pathname])
 
 	// close menus after navigation
 	useEffect(() => {
@@ -36,5 +36,10 @@ export default function (props: React.ComponentProps<'header'>) {
 		})
 	}, [pathname])
 
-	return <header ref={ref} role="banner" {...props} />
+	return (
+		<header ref={ref} role="banner" {...props}>
+			{children}
+			{pathname !== '/' && search}
+		</header>
+	)
 }
