@@ -77,7 +77,7 @@ export default function ({
 	return (
 		<Module {...props}>
 			{(pretitle || heading) && (
-				<header className="bg-red-600 px-6 py-14 text-center text-white md:py-16">
+				<header className="bg-red-600 px-6 py-6 text-center text-white md:py-8">
 					{pretitle && (
 						<p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/80">
 							{stegaClean(pretitle)}
@@ -92,7 +92,7 @@ export default function ({
 			)}
 
 			{!!categories?.length && (
-				<div className="grid sm:grid-cols-2 md:grid-cols-3">
+				<div className="grid gap-y-4 sm:grid-cols-2 md:grid-cols-3 md:gap-y-0">
 					{categories.map((category) => (
 						<CategoryColumn key={category._key} {...category} />
 					))}
