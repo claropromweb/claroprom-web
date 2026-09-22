@@ -1,8 +1,13 @@
 import { stegaClean } from 'next-sanity'
+import Image from 'next/image'
 import { cn } from '@/lib/utils'
 import type { FeatureSplit } from '@/sanity/types'
 import Img from '@/ui/img'
 import { Module } from '.'
+
+// Frontend assets only; no Sanity fields or documents are required.
+const ISO_CERTIFICATE_URL = '/documents/claro-prom-iso-13485-certificate.pdf'
+const ISO_CERTIFICATE_QR_SRC: string | undefined = undefined
 
 export default function ({
 	pretitle,
@@ -10,19 +15,20 @@ export default function ({
 	items,
 	image,
 	...props
-}: FeatureSplit) {
+}: FeatureSplit & { _key?: string }) {
 	return (
-		<Module className="section space-y-10 py-16 md:space-y-14 md:py-20 lg:py-24" {...props}>
+		<Module
+			className="section space-y-10 py-16 md:space-y-14 md:py-20 lg:py-24"
+			{...props}
+		>
 			{(pretitle || title) && (
 				<header className="mx-auto max-w-3xl space-y-3 text-center">
 					{pretitle && (
-						<p className="text-xs font-semibold uppercase tracking-[0.2em] text-red-600">
+						<p className="text-xs font-semibold tracking-[0.2em] text-red-600 uppercase">
 							{stegaClean(pretitle)}
 						</p>
 					)}
-					{title && (
-						<h2 className="h2 text-balance">{stegaClean(title)}</h2>
-					)}
+					{title && <h2 className="h2 text-balance">{stegaClean(title)}</h2>}
 				</header>
 			)}
 
@@ -43,9 +49,47 @@ export default function ({
 									<h3 className="text-lg font-bold">{stegaClean(header)}</h3>
 								)}
 								{text && (
-									<p className="text-sm leading-relaxed text-foreground/70 md:text-base">
+									<p className="text-foreground/70 text-sm leading-relaxed md:text-base">
 										{stegaClean(text)}
 									</p>
+								)}
+								{props._key === 'e4653a80355f' && _key === '3ef95022d706' && (
+									<div className="flex flex-wrap items-center gap-4 pt-2">
+										<div className="min-w-0 flex-1 basis-52 space-y-2 text-sm leading-relaxed md:text-base">
+											<p className="font-semibold">
+												ISO 13485 Quality Management System
+											</p>
+											<a
+												href={ISO_CERTIFICATE_URL}
+												target="_blank"
+												rel="noopener noreferrer"
+												className="text-red-600 underline underline-offset-4"
+											>
+												Claro-prom ISO 13485 Certificate
+												<span className="sr-only">
+													{' '}
+													(PDF, opens in a new tab)
+												</span>
+											</a>
+										</div>
+										{ISO_CERTIFICATE_QR_SRC ? (
+											<Image
+												src={ISO_CERTIFICATE_QR_SRC}
+												alt="QR code for the Claro-prom ISO 13485 certificate"
+												width={144}
+												height={144}
+												unoptimized
+												className="h-36 w-36 shrink-0 bg-white object-contain p-2"
+											/>
+										) : (
+											<div
+												aria-label="Placeholder for the certificate QR code"
+												className="border-stroke text-foreground/50 flex h-36 w-36 shrink-0 items-center justify-center rounded border border-dashed p-2 text-center text-xs"
+											>
+												QR code
+											</div>
+										)}
+									</div>
 								)}
 							</div>
 						))}
