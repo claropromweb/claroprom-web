@@ -4,6 +4,11 @@ import { notFound } from 'next/navigation'
 import { ROUTES } from '@/lib/env'
 import { DEFAULT_LANG } from '@/lib/i18n'
 import { categoryUrl } from '@/lib/product-category-url'
+import {
+	claroplastCopy,
+	productDescription,
+	withApprovedClaroplastCopy,
+} from '@/lib/product-seo'
 import resolveUrl from '@/lib/resolve-url'
 import { breadcrumbs } from '@/lib/seo'
 import { SITE_URL } from '@/lib/site-url'
@@ -64,6 +69,7 @@ export default async function ({ params, searchParams }: Props) {
 	const category = product.category as any
 	const path = resolveUrl(product)
 	const codes = product.table?.map((row) => row.code).filter(Boolean) ?? []
+	const isClaroplast = !!claroplastCopy(product.metadata?.slug?.current)
 	return (
 		<>
 			<StructuredData
@@ -71,9 +77,16 @@ export default async function ({ params, searchParams }: Props) {
 					'@context': 'https://schema.org',
 					'@type': 'Product',
 					name: product.title,
+					...(isClaroplast
+						? {
+								'@id': `${SITE_URL}${path}#product`,
+								brand: { '@type': 'Brand', name: 'Claroplast' },
+								countryOfOrigin: { '@type': 'Country', name: 'Croatia' },
+							}
+						: {}),
 					url: SITE_URL + path,
 					sku: codes.length === 1 ? codes[0] : undefined,
-					description: product.metadata?.description || undefined,
+					description: productDescription(product),
 					image: product.image?.asset
 						? urlFor(product.image).width(1200).url()
 						: undefined,
@@ -116,34 +129,14 @@ export async function generateMetadata({
 		})
 	const product = await getProduct(rawSlug)
 	if (!product) notFound()
-	const {
-		title: manualTitle,
-		description: manualDescription,
-		image,
-		noIndex,
-	} = product.metadata ?? {}
+	const { title: manualTitle, image, noIndex } = product.metadata ?? {}
 	const codes = product.table
 		?.map((row) => row.code)
 		.filter(Boolean)
 		.join(', ')
-	const formats = product.table
-		?.map((row) => row.format)
-		.filter(Boolean)
-		.join(', ')
 	const title =
 		manualTitle || `${product.title}${codes ? ` (${codes})` : ''} | Claro-prom`
-	const description =
-		manualDescription ||
-		[
-			product.title,
-			codes ? `Code: ${codes}.` : '',
-			formats ? `Pack size: ${formats}.` : '',
-			product.manufacturerRole === 'manufacturer'
-				? 'Manufactured by Claro-prom.'
-				: '',
-		]
-			.filter(Boolean)
-			.join(' ')
+	const description = productDescription(product)
 	const canonical = resolveUrl(product, { base: true })
 	const images = image
 		? [urlFor(image).width(1200).url()]
@@ -166,7 +159,7 @@ export async function generateMetadata({
 }
 
 async function getProduct(slug: string) {
-	return await sanityFetchLive<PRODUCT_QUERY_RESULT>({
+	const product = await sanityFetchLive<PRODUCT_QUERY_RESULT>({
 		query: PRODUCT_QUERY,
 		params: {
 			slug,
@@ -176,6 +169,7 @@ async function getProduct(slug: string) {
 			defaultLang: DEFAULT_LANG,
 		},
 	})
+	return product ? withApprovedClaroplastCopy(product) : product
 }
 
 const PRODUCT_QUERY = groq`*[_type == 'product' && hidden != true
