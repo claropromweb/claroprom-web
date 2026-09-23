@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { Suspense } from 'react'
 import { categoryUrl } from '@/lib/product-category-url'
+import { publicProductUrl } from '@/lib/public-product-url'
 import { breadcrumbs, categorySeo } from '@/lib/seo'
 import { CLAROPLAST_SLUG, SITE_URL } from '@/lib/site-url'
 import { urlFor } from '@/sanity/lib/image'
@@ -158,6 +159,32 @@ export default async function CategoryPage({ params, searchParams }: Props) {
 					{ name: title ?? '', path },
 				])}
 			/>
+			{isClaroplast && (
+				<StructuredData
+					data={{
+						'@context': 'https://schema.org',
+						'@type': 'CollectionPage',
+						'@id': `${SITE_URL}${path}#webpage`,
+						url: SITE_URL + path,
+						name: title,
+						description: categorySeo.claroplast.description,
+						publisher: { '@id': `${SITE_URL}/#organization` },
+						mainEntity: {
+							'@type': 'ItemList',
+							numberOfItems: products.length,
+							itemListElement: products.map((product, index) => ({
+								'@type': 'ListItem',
+								position: index + 1,
+								item: {
+									'@id': `${SITE_URL}${publicProductUrl(product.slug!)}#product`,
+									url: SITE_URL + publicProductUrl(product.slug!),
+									name: product.title,
+								},
+							})),
+						},
+					}}
+				/>
+			)}
 			<nav aria-label="Breadcrumb">
 				<Link href="/products" className="underline">
 					Products
