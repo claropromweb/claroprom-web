@@ -93,10 +93,28 @@ const nextConfig: NextConfig = {
 						destination: `${SITE_URL}/products/${CLAROPLAST_SLUG}`,
 						statusCode: 301,
 					})),
+					// Legacy Labexclean product paths go straight to the canonical host/path.
+					...(host === 'www.claroprom.com'
+						? []
+						: [
+								'/proizvodi/:slug*',
+								'/en/proizvodi/:slug*',
+								'/products/en/:slug*',
+								'/en/products/:slug*',
+							].map((source) => ({
+								source,
+								has: [{ type: 'host' as const, value: host }],
+								destination: `${SITE_URL}/products/:slug*`,
+								statusCode: 301,
+							}))),
 					{
-						source: '/:path((?!admin(?:/|$)|api(?:/|$)|_next(?:/|$)).*)',
+						// Labexclean is redirect-only, including admin, API and asset paths.
+						source:
+							host === 'www.claroprom.com'
+								? '/:path((?!admin(?:/|$)|api(?:/|$)|_next(?:/|$)).*)'
+								: '/:path*',
 						has: [{ type: 'host' as const, value: host }],
-						destination: `${SITE_URL}/:path`,
+						destination: `${SITE_URL}/${host === 'www.claroprom.com' ? ':path' : ':path*'}`,
 						statusCode: 301,
 					},
 				],
