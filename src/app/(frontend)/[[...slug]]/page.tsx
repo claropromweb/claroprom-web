@@ -6,7 +6,7 @@ import { notFound, permanentRedirect } from 'next/navigation'
 import { ROUTES } from '@/lib/env'
 import { DEFAULT_LANG } from '@/lib/i18n'
 import resolveUrl from '@/lib/resolve-url'
-import { pageSeo } from '@/lib/seo'
+import { pageSeo, website } from '@/lib/seo'
 import { SITE_URL } from '@/lib/site-url'
 import { client } from '@/sanity/lib/client'
 import { urlFor } from '@/sanity/lib/image'
@@ -20,6 +20,7 @@ import {
 import { token } from '@/sanity/lib/token'
 import type { PAGE_QUERY_RESULT } from '@/sanity/types'
 import ModulesResolver from '@/ui/modules'
+import StructuredData from '@/ui/structured-data'
 
 export const dynamic = 'force-dynamic'
 
@@ -38,6 +39,9 @@ export default async function Page({ params }: Props) {
 
 	return (
 		<>
+			{page.metadata?.slug?.current === 'index' && (
+				<StructuredData data={website} />
+			)}
 			{page.metadata?.slug?.current === 'proizvodi' && (
 				<h1 className="sr-only">Histology Products and Laboratory Reagents</h1>
 			)}
@@ -56,13 +60,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 	const canonical = page ? resolveUrl(page as any, { base: true }) : undefined
 	const isHomepage = page?.metadata?.slug?.current === 'index'
-	const socialTitle = isHomepage ? 'Claro-prom | European IVD & Histology Manufacturer' : title
-	const socialDescription = isHomepage ? 'Histology, IVD and laboratory products manufactured in Croatia, EU.' : description
+	const socialTitle = title
+	const socialDescription = description
 	const homepageImage = {
 		url: `${SITE_URL}/api/og?homepage=1`,
 		width: 1200,
 		height: 630,
-		alt: 'Claro-prom — European IVD & Histology Manufacturer',
+		alt: 'CLARO-PROM — European IVD & Histology Manufacturer',
 	}
 
 	return {
@@ -71,15 +75,19 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 		openGraph: {
 			title: socialTitle,
 			description: socialDescription,
-			...(isHomepage ? { siteName: 'Claro-prom', type: 'website' as const } : {}),
+			...(isHomepage
+				? { siteName: 'CLARO-PROM', type: 'website' as const }
+				: {}),
 			url: canonical ? canonical : undefined,
-			images: isHomepage ? [homepageImage] : [
-				image
-					? urlFor(image).width(1200).url()
-					: site?.ogimage
-						? urlFor(site.ogimage).width(1200).url()
-						: `${SITE_URL}/api/og?slug=${slug?.join('/') ?? ''}`,
-			],
+			images: isHomepage
+				? [homepageImage]
+				: [
+						image
+							? urlFor(image).width(1200).url()
+							: site?.ogimage
+								? urlFor(site.ogimage).width(1200).url()
+								: `${SITE_URL}/api/og?slug=${slug?.join('/') ?? ''}`,
+					],
 		},
 		twitter: {
 			card: 'summary_large_image',

@@ -11,9 +11,7 @@ function getBackgroundUrl(
 	image: NonNullable<HeroCover['image']>,
 	width: number,
 ) {
-	return urlFor(image)
-		.withOptions({ auto: 'format', q: 100, width })
-		.url()
+	return urlFor(image).withOptions({ auto: 'format', q: 100, width }).url()
 }
 
 export default function ({
@@ -25,8 +23,17 @@ export default function ({
 	verticalAlign: va = 'center',
 	maxHeight,
 	backgroundOverlay,
+	isHomepageHero = false,
 	...props
-}: HeroCover) {
+}: HeroCover & { isHomepageHero?: boolean }) {
+	// Correct homepage semantics without changing CMS content or its typography.
+	const primaryHeadingKey =
+		isHomepageHero &&
+		!content?.some((block) => block._type === 'block' && block.style === 'h1')
+			? content?.find(
+					(block) => block._type === 'block' && block.style === 'h2',
+				)?._key
+			: undefined
 	const textAlign = stegaClean(ta)
 	const verticalAlign = stegaClean(va)
 	const cleanMaxHeight = stegaClean(maxHeight)
@@ -64,7 +71,7 @@ export default function ({
 					<>
 						<div
 							aria-hidden
-							className="pointer-events-none absolute inset-0 rounded-2xl bg-cover bg-center bg-no-repeat bg-fixed md:hidden"
+							className="pointer-events-none absolute inset-0 rounded-2xl bg-cover bg-fixed bg-center bg-no-repeat md:hidden"
 							style={{
 								backgroundImage: `url(${mobileBg})`,
 								opacity,
@@ -72,7 +79,7 @@ export default function ({
 						/>
 						<div
 							aria-hidden
-							className="pointer-events-none absolute inset-0 hidden rounded-2xl bg-cover bg-center bg-no-repeat bg-fixed md:block"
+							className="pointer-events-none absolute inset-0 hidden rounded-2xl bg-cover bg-fixed bg-center bg-no-repeat md:block"
 							style={{
 								backgroundImage: `url(${desktopBg})`,
 								opacity,
@@ -100,6 +107,29 @@ export default function ({
 						<PortableText
 							value={content}
 							components={{
+								...(isHomepageHero
+									? {
+											block: {
+												h2: ({
+													children,
+													value,
+												}: {
+													children?: React.ReactNode
+													value: { _key?: string }
+												}) =>
+													value._key === primaryHeadingKey ? (
+														<h1 className="text-2xl! leading-8!">{children}</h1>
+													) : (
+														<h2>{children}</h2>
+													),
+												h4: ({ children }: { children?: React.ReactNode }) => (
+													<p className="text-lg! leading-7! font-bold">
+														{children}
+													</p>
+												),
+											},
+										}
+									: {}),
 								types: {
 									'custom-html': ({ value }) => <CustomHtml {...value} />,
 								},

@@ -1,6 +1,6 @@
 import Link from 'next/link'
-import { cn } from '@/lib/utils'
 import { DEFAULT_LANG } from '@/lib/i18n'
+import { cn } from '@/lib/utils'
 import { getSite } from '@/sanity/lib/queries'
 import Img from './img'
 
@@ -22,6 +22,7 @@ export default async function ({
 	return (
 		<Link
 			href={homeHref}
+			aria-label="CLARO-PROM home"
 			className={cn('logo text-foreground inline-block font-bold', className)}
 		>
 			{logo ? (
@@ -29,7 +30,7 @@ export default async function ({
 					image={logo}
 					width={100}
 					className="inline-block h-full w-auto object-contain"
-					alt={site?.title ?? ''}
+					alt="CLARO-PROM"
 				/>
 			) : (
 				site?.title

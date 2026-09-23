@@ -5,6 +5,8 @@ import { preconnect } from 'react-dom'
 import getLangServer from '@/lib/get-lang-server'
 import { organization } from '@/lib/seo'
 import { SITE_URL } from '@/lib/site-url'
+import { urlFor } from '@/sanity/lib/image'
+import { getSite } from '@/sanity/lib/queries'
 import CookieBannerWrapper from '@/ui/cookies/cookie-banner'
 import CookieConsentProviderWrapper from '@/ui/cookies/cookie-consent-provider'
 import Footer from '@/ui/footer'
@@ -26,6 +28,8 @@ export default async function RootLayout({
 }>) {
 	preconnect('https://cdn.sanity.io')
 	const lang = await getLangServer()
+	const site = await getSite(lang)
+	const logo = site?.logo?.image?.default
 
 	return (
 		<html lang="en" data-scroll-behavior="smooth">
@@ -34,7 +38,11 @@ export default async function RootLayout({
 					<CookieConsentProviderWrapper>
 						<Header lang={lang} />
 						<StructuredData
-							data={{ '@context': 'https://schema.org', ...organization }}
+							data={{
+								'@context': 'https://schema.org',
+								...organization,
+								...(logo ? { logo: urlFor(logo).url() } : {}),
+							}}
 						/>
 						<main>{children}</main>
 						<Footer lang={lang} />

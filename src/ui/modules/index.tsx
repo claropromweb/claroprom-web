@@ -72,6 +72,13 @@ export default function ({
 
 	const moduleSpecificProps = (module: ModuleProps) => {
 		switch (module._type) {
+			case 'hero.cover':
+				return {
+					isHomepageHero:
+						stegaClean(page?.metadata?.slug?.current) === 'index' &&
+						module._key ===
+							modules.find((item) => item?._type === 'hero.cover')?._key,
+				}
 			case 'hero.split':
 				return stegaClean(page?.metadata?.slug?.current) === 'o-nama' &&
 					module._key === '592907de1711'
