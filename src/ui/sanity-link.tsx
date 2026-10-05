@@ -37,7 +37,7 @@ export default function ({
 
 	// Repair the published distributor CTA's homepage target using the existing
 	// contact form's supported product parameter; keep its label and styling.
-	if (stegaClean(label)?.trim() === 'Become a distributor') {
+	if (stegaClean(label || props['aria-label'])?.trim() === 'Become a distributor') {
 		return (
 			<NextLink href="/kontakt?product=Distributor%20inquiry" {...linkProps} />
 		)
