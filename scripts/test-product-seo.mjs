@@ -14,14 +14,17 @@ assert.equal(productDescription({...base, metadata: {}, description: [], manufac
 assert.equal(productDescriptionText([{_type:'image', caption:'Not visible product copy'}, {_type:'block', children:[{_type:'span',text:'Polymer-'},{_type:'span',text:'modified\n wax'}], markDefs:[{text:'Ignore annotations'}]},block('For embedding.')]), 'Polymer-modified wax For embedding.')
 assert.equal(claroplastCopy('unrelated-product'), undefined)
 assert.equal(withApprovedClaroplastCopy(base), base)
-for (const [pack,code] of [['10','6666'],['2','345']]) {
- const original = {...base, language:'en', metadata:{slug:{current:`claroplast-a-${pack}-kg`},noIndex:false},table:[{code}],intendedPurpose:[block('Existing intended use')],shelfLife:'unchanged'}
+for (const [pack,code,catalogueNumber] of [['10','6666','CP00CLP'],['2','345','CP00CL2']]) {
+ const original = {...base, language:'en', metadata:{slug:{current:`claroplast-a-${pack}-kg`},noIndex:false},table:[{_key:'existing-row',_type:'row',code,format:undefined}],intendedPurpose:[block('Existing intended use')],shelfLife:'unchanged'}
  const before=JSON.stringify(original)
  const result=withApprovedClaroplastCopy(original)
  assert.equal(result.title,`Claroplast Histology Embedding Wax – ${pack} kg`)
  assert.equal(result.metadata.title,`Claroplast Histology Embedding Wax, ${pack} kg | CLARO-PROM`)
  assert.equal(result.metadata.slug,original.metadata.slug)
- assert.equal(result.table,original.table)
+ assert.deepEqual(result.table,[{...original.table[0],code:catalogueNumber}])
+ assert.equal(claroplastCopy(original.metadata.slug.current).catalogueNumber,catalogueNumber)
+ assert.equal(withApprovedClaroplastCopy(result).table[0].code,catalogueNumber)
+ assert.equal(result.table[0].format,undefined)
  assert.equal(result.intendedPurpose,original.intendedPurpose)
  assert.equal(result.shelfLife,'unchanged')
  assert.equal(result.manufacturerRole,'manufacturer')
@@ -29,5 +32,7 @@ for (const [pack,code] of [['10','6666'],['2','345']]) {
  assert.match(productDescription(result),new RegExp(`${pack} kg pack\\.$`))
  assert.match(productDescriptionText(result.description),/manufactured by CLARO-PROM d.o.o. in Croatia, European Union/)
  assert.equal(withApprovedClaroplastCopy({...original,language:'hr'}).title,base.title)
+ assert.equal(withApprovedClaroplastCopy({...original,language:'hr'}).table,original.table)
 }
-console.log('PASS: description priority, whitespace/Portable Text extraction, unchanged safe fallback, distributor safety, exact Claroplast copy, URL/code/regulatory preservation, immutable data and language scope.')
+assert.equal(claroplastCopy('claroplast-5-x-2-kg'),undefined)
+console.log('PASS: owner-confirmed catalogue numbers, immutable CMS rows, preserved empty format/regulatory data, exact unchanged SEO copy, URL/language scope and no transport-carton SKU.')

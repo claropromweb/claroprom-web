@@ -12,6 +12,8 @@ export function claroplastCopy(slug: string | undefined) {
 				: undefined
 	if (!pack) return undefined
 	return {
+		// Owner-confirmed catalogue numbers; transport cartons are not separate SKUs.
+		catalogueNumber: pack === '2 kg' ? 'CP00CL2' : 'CP00CLP',
 		title: `Claroplast Histology Embedding Wax, ${pack} | CLARO-PROM`,
 		name: `Claroplast Histology Embedding Wax – ${pack}`,
 		description: `Claroplast polymer-modified histology paraffin wax for tissue infiltration and embedding, manufactured by CLARO-PROM d.o.o. in Croatia, EU. ${pack} pack.`,
@@ -27,6 +29,8 @@ export function withApprovedClaroplastCopy(product: Product): Product {
 	if (!copy) return product
 	return {
 		...product,
+		// Correct the public read model only; preserve the source CMS rows and fields.
+		table: product.table?.map((row) => ({ ...row, code: copy.catalogueNumber })),
 		title: copy.name,
 		metadata: {
 			...product.metadata,
