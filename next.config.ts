@@ -79,46 +79,27 @@ const nextConfig: NextConfig = {
 			},
 		)
 		return [
-			...['labexclean.com', 'www.labexclean.com', 'www.claroprom.com'].flatMap(
-				(host) => [
-					...[
-						'/products/claroplast',
-						'/proizvodi/claroplast',
-						'/en/proizvodi/claroplast',
-						'/products/en/claroplast',
-						'/en/products/claroplast',
-					].map((source) => ({
-						source,
-						has: [{ type: 'host' as const, value: host }],
-						destination: `${SITE_URL}/products/${CLAROPLAST_SLUG}`,
-						statusCode: 301,
-					})),
-					// Legacy Labexclean product paths go straight to the canonical host/path.
-					...(host === 'www.claroprom.com'
-						? []
-						: [
-								'/proizvodi/:slug*',
-								'/en/proizvodi/:slug*',
-								'/products/en/:slug*',
-								'/en/products/:slug*',
-							].map((source) => ({
-								source,
-								has: [{ type: 'host' as const, value: host }],
-								destination: `${SITE_URL}/products/:slug*`,
-								statusCode: 301,
-							}))),
-					{
-						// Labexclean is redirect-only, including admin, API and asset paths.
-						source:
-							host === 'www.claroprom.com'
-								? '/:path((?!admin(?:/|$)|api(?:/|$)|_next(?:/|$)).*)'
-								: '/:path*',
-						has: [{ type: 'host' as const, value: host }],
-						destination: `${SITE_URL}/${host === 'www.claroprom.com' ? ':path' : ':path*'}`,
-						statusCode: 301,
-					},
-				],
-			),
+			...['www.claroprom.com'].flatMap((host) => [
+				...[
+					'/products/claroplast',
+					'/proizvodi/claroplast',
+					'/en/proizvodi/claroplast',
+					'/products/en/claroplast',
+					'/en/products/claroplast',
+				].map((source) => ({
+					source,
+					has: [{ type: 'host' as const, value: host }],
+					destination: `${SITE_URL}/products/${CLAROPLAST_SLUG}`,
+					statusCode: 301,
+				})),
+				{
+					// Preserve the existing canonical-host redirect for Claro-prom.
+					source: '/:path((?!admin(?:/|$)|api(?:/|$)|_next(?:/|$)).*)',
+					has: [{ type: 'host' as const, value: host }],
+					destination: `${SITE_URL}/:path`,
+					statusCode: 301,
+				},
+			]),
 			...[
 				'/products/claroplast',
 				'/proizvodi/claroplast',
@@ -150,7 +131,11 @@ const nextConfig: NextConfig = {
 					destination: publicProductUrl(redirect.destination),
 				}),
 			),
-		]
+		].map((redirect) => ({
+			...redirect,
+			// Removed-domain requests must reach the 410 response, not legacy redirects.
+			missing: [{ type: 'host' as const, value: '(www\\.)?labexclean\\.com' }],
+		}))
 	},
 }
 

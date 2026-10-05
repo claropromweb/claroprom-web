@@ -35,6 +35,14 @@ export default function ({
 			stegaClean(external),
 	}
 
+	// Repair the published distributor CTA's homepage target using the existing
+	// contact form's supported product parameter; keep its label and styling.
+	if (stegaClean(label)?.trim() === 'Become a distributor') {
+		return (
+			<NextLink href="/kontakt?product=Distributor%20inquiry" {...linkProps} />
+		)
+	}
+
 	if (type === 'internal' && internal) {
 		// GROQ LINK_QUERY already builds a localized slug string;
 		// fall back to resolveUrl when consumers pass raw page documents.
@@ -53,7 +61,9 @@ export default function ({
 	}
 
 	if (type === 'external' && external)
-		return <NextLink href={publicProductUrl(stegaClean(external))} {...linkProps} />
+		return (
+			<NextLink href={publicProductUrl(stegaClean(external))} {...linkProps} />
+		)
 
 	return <span {...linkProps} />
 }

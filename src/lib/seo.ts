@@ -48,7 +48,7 @@ export const organization = {
 		'Family-owned Croatian manufacturer of histology products, laboratory reagents and laboratory cleaning products with more than 30 years of experience.',
 	telephone: '+38598818891',
 	email: 'claroprom@gmail.com',
-	vatID: 'HR50624653521',
+	vatID: 'HR56024653521',
 	identifier: {
 		'@type': 'PropertyValue',
 		propertyID: 'EUDAMED SRN',
