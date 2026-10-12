@@ -71,7 +71,9 @@ export default async function (): Promise<MetadataRoute.Sitemap> {
 		},
 	})
 
-	const entries = Object.values(data).flat()
+	const entries = Object.values(data)
+		.flat()
+		.concat([{ url: SITE_URL + '/distributors', priority: 0.6 }])
 	return Array.from(
 		new Map(
 			entries.concat(medicaSitemapEntries(entries, SITE_URL)).map((entry) => {

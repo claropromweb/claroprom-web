@@ -1,7 +1,9 @@
 import Link from 'next/link'
+import { inquiryRows } from '@/lib/inquiry-items'
 import { claroplastPack } from '@/lib/outreach'
 import { publicProductUrl } from '@/lib/public-product-url'
 import { cn } from '@/lib/utils'
+import { AddToInquiry } from '@/ui/inquiry/controls'
 import ProductPhoto, { safeProductPhoto } from './product-photo'
 
 export type ProductPreviewItem = {
@@ -12,7 +14,11 @@ export type ProductPreviewItem = {
 	shortDescription?: string | null
 	categorySlug?: string | null
 	categoryTitle?: string | null
-	table?: Array<{ code?: string | null; format?: string | null }> | null
+	table?: Array<{
+		_key?: string
+		code?: string | null
+		format?: string | null
+	}> | null
 	image?: React.ComponentProps<typeof ProductPhoto>['image']
 }
 
@@ -38,6 +44,12 @@ export default function ProductPreview({
 	// No automatic description/intended-purpose fallback: summaries require editorial review.
 	const summary = product.shortDescription?.trim()
 	const hasPhoto = !!safeProductPhoto(product.image)
+	const inquiryItems = inquiryRows({
+		...product,
+		metadata: {
+			slug: { current: product.slug?.split('/').filter(Boolean).at(-1) },
+		},
+	})
 	return (
 		<li
 			className={cn(
@@ -101,6 +113,7 @@ export default function ProductPreview({
 					</span>
 				)}
 			</div>
+			{inquiryItems.length === 1 && <AddToInquiry item={inquiryItems[0]} />}
 		</li>
 	)
 }

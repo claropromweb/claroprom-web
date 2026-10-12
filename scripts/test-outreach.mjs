@@ -141,6 +141,7 @@ const code = ts.transpileModule(
 ).outputText
 const sandbox = {
 	exports: {},
+	TextDecoder,
 	process: {
 		env: {
 			RESEND_API_KEY: 'test-only',

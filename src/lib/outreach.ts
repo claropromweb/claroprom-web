@@ -31,6 +31,8 @@ export function inquiryHref(
 	const params = new URLSearchParams({ inquiry: type })
 	if (product) params.set('product', product)
 	if (code) params.set('code', code)
+	if (type === 'distributor')
+		return '/distributors?' + params.toString() + '#distributor-inquiry'
 	return '/kontakt?' + params.toString()
 }
 export function contactContext(params: Pick<URLSearchParams, 'get'>) {
