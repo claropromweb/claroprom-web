@@ -2,9 +2,10 @@
 
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { VscCheck, VscLoading } from 'react-icons/vsc'
 import type { Lang } from '@/lib/i18n'
+import { contactContext, INQUIRY_TYPES } from '@/lib/outreach'
 import { cn } from '@/lib/utils'
 import { getFormTranslations } from './translations'
 
@@ -24,10 +25,14 @@ export default function ContactForm({
 	const [status, setStatus] = useState<Status>('idle')
 
 	// Pre-fill the product field when arriving from a product "ask for a quote" link.
-	const productParam = searchParams.get('code') || searchParams.get('product') || ''
+	const context = contactContext(searchParams)
+	const productParam = context.topic
+	const submitting = useRef(false)
 
 	async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
 		e.preventDefault()
+		if (submitting.current) return
+		submitting.current = true
 		const form = e.currentTarget
 		const formData = new FormData(form)
 
@@ -39,6 +44,9 @@ export default function ContactForm({
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({
 					name: formData.get('name'),
+					inquiry: formData.get('inquiry'),
+					privacy: formData.get('privacy') === 'on',
+					website: formData.get('website'),
 					email: formData.get('email'),
 					phone: formData.get('phone'),
 					lab: formData.get('lab'),
@@ -55,6 +63,8 @@ export default function ContactForm({
 			form.reset()
 		} catch {
 			setStatus('error')
+		} finally {
+			submitting.current = false
 		}
 	}
 
@@ -71,20 +81,44 @@ export default function ContactForm({
 	}
 
 	return (
-		<form onSubmit={handleSubmit} className="grid gap-6">
+		<form
+			key={searchParams.toString()}
+			onSubmit={handleSubmit}
+			className="grid gap-6"
+			aria-busy={status === 'submitting'}
+		>
+			<label className="grid gap-2">
+				<span className="font-semibold">Inquiry type</span>
+				<select
+					name="inquiry"
+					defaultValue={context.type}
+					className="w-full rounded-md border border-neutral-300 px-3 py-3"
+				>
+					{Object.entries(INQUIRY_TYPES).map(([value, label]) => (
+						<option key={value} value={value}>
+							{label}
+						</option>
+					))}
+				</select>
+			</label>
+			<div aria-hidden="true" className="hidden">
+				<label>
+					Website
+					<input name="website" tabIndex={-1} autoComplete="off" />
+				</label>
+			</div>
 			<div className="grid gap-6 sm:grid-cols-2">
 				<Field name="name" label={t.name} required />
 				<Field name="email" label={t.email} type="email" required />
 			</div>
 
-			<Field name="phone" label={t.phone} type="tel" required />
+			<Field name="phone" label={t.phone + ' (optional)'} type="tel" />
 
 			<Field name="lab" label={t.lab} />
 
 			<Field
 				name="product"
-				label={t.product}
-				required
+				label={context.type === 'meeting' ? 'Meeting / topic' : t.product}
 				defaultValue={productParam}
 			/>
 
@@ -94,6 +128,7 @@ export default function ContactForm({
 				</span>
 				<textarea
 					name="request"
+					defaultValue={context.request}
 					required
 					rows={8}
 					className="bg-foreground/5 border-foreground/15 focus:border-foreground/40 w-full resize-y rounded-md border px-3 py-2 leading-normal outline-none"
@@ -132,9 +167,7 @@ export default function ContactForm({
 					disabled={status === 'submitting'}
 					className="gap-ch inline-flex items-center justify-center rounded-md bg-red-600 px-8 py-3 font-semibold text-white transition-colors hover:bg-red-700 active:scale-98 disabled:opacity-60"
 				>
-					{status === 'submitting' && (
-						<VscLoading className="animate-spin" />
-					)}
+					{status === 'submitting' && <VscLoading className="animate-spin" />}
 					{status === 'submitting' ? t.submitting : t.submit}
 				</button>
 			</div>

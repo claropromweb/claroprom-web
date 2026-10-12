@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { groq } from 'next-sanity'
 import { notFound } from 'next/navigation'
+import { MEDICA, preparedMedicaPost } from '@/content/medica-2026'
 import { ROUTES } from '@/lib/env'
 import { DEFAULT_LANG, languages, type Lang } from '@/lib/i18n'
 import resolveUrl from '@/lib/resolve-url'
@@ -95,7 +96,7 @@ export async function generateStaticParams() {
 async function getPost(slugInput: string[]) {
 	const { slug, lang } = processSlug(slugInput)
 
-	return await sanityFetchLive<BLOG_POST_QUERY_RESULT>({
+	const cmsPost = await sanityFetchLive<BLOG_POST_QUERY_RESULT>({
 		query: BLOG_POST_QUERY,
 		params: {
 			slug,
@@ -104,6 +105,9 @@ async function getPost(slugInput: string[]) {
 			defaultLang: DEFAULT_LANG,
 		},
 	})
+	const prepared =
+		slug === MEDICA.slug && lang === 'en' ? preparedMedicaPost() : null
+	return cmsPost || (prepared as unknown as BLOG_POST_QUERY_RESULT)
 }
 
 function processSlug(slug: string[]): { slug: string; lang?: Lang } {

@@ -13,6 +13,12 @@ import type { CATALOG_CATEGORY_QUERY_RESULT } from '@/sanity/types'
 import Img from '@/ui/img'
 import PaginatedProducts from '@/ui/modules/product/product-list/paginated-products'
 import StructuredData from '@/ui/structured-data'
+import {
+	ClaroplastActions,
+	ClaroplastClosing,
+	ClaroplastOverview,
+	ClaroplastVariants,
+} from './claroplast-outreach'
 
 type Props = {
 	params: Promise<{ category: string }>
@@ -194,9 +200,10 @@ export default async function CategoryPage({ params, searchParams }: Props) {
 			</nav>
 			<header className="space-y-5">
 				<h1 className="text-3xl font-semibold md:text-4xl">{title}</h1>
+				{isClaroplast && <ClaroplastActions />}
 				{isClaroplast ? (
 					<div className="max-w-3xl space-y-5">
-						{paragraphs.map((text, i) =>
+						{paragraphs.slice(0, 1).map((text, i) =>
 							text.trim() === 'OEM / Private Label Manufacturing' ? (
 								<h2 key={i}>OEM and Private-Label Histology Paraffin</h2>
 							) : (
@@ -205,9 +212,6 @@ export default async function CategoryPage({ params, searchParams }: Props) {
 								</p>
 							),
 						)}
-						<Link href="/kontakt" className="underline">
-							Contact Claro-prom about OEM and private-label manufacturing
-						</Link>
 					</div>
 				) : (
 					category.description && (
@@ -226,15 +230,63 @@ export default async function CategoryPage({ params, searchParams }: Props) {
 					/>
 				)}
 			</header>
-			<Suspense fallback={<p>Loading products...</p>}>
-				<PaginatedProducts
-					products={products}
-					productsPerPage={perPage}
-					filterByQuery={false}
-					serverPagination={pagination}
-					noProductsLabel="No products available yet."
-				/>
-			</Suspense>
+			{isClaroplast && (
+				<>
+					<ClaroplastOverview />
+					<ClaroplastVariants />
+					<section className="max-w-3xl space-y-5">
+						{paragraphs.slice(1).map((text, i) =>
+							text.trim() === 'OEM / Private Label Manufacturing' ? (
+								<h2 key={i} className="text-2xl font-semibold">
+									OEM and Private-Label Histology Paraffin
+								</h2>
+							) : (
+								<p key={i} className="whitespace-pre-line">
+									{text}
+								</p>
+							),
+						)}
+						<Link
+							href="/kontakt?inquiry=distributor&product=Claroplast%20Histology%20Paraffin%20Wax"
+							className="underline"
+						>
+							Contact Claro-prom about OEM and private-label manufacturing
+						</Link>
+					</section>
+				</>
+			)}
+			{!isClaroplast && (
+				<Suspense fallback={<p>Loading products...</p>}>
+					<PaginatedProducts
+						products={products}
+						productsPerPage={perPage}
+						filterByQuery={false}
+						serverPagination={pagination}
+						noProductsLabel="No products available yet."
+					/>
+				</Suspense>
+			)}
+			{isClaroplast && (
+				<section
+					className="space-y-4"
+					aria-labelledby="technical-documentation"
+				>
+					<h2 id="technical-documentation" className="text-2xl font-semibold">
+						Technical Documentation
+					</h2>
+					<p>
+						Contact our team to request the documentation relevant to your
+						requirements.
+					</p>
+					<a
+						className="underline"
+						href="/kontakt?inquiry=documentation&product=Claroplast%20Histology%20Paraffin%20Wax"
+					>
+						Request technical documentation
+					</a>
+				</section>
+			)}
+			{isClaroplast && <ClaroplastClosing />}
 		</article>
 	)
 }
@@ -248,7 +300,7 @@ const CATALOG_CATEGORY_QUERY = groq`*[
 		_type == 'product' && hidden != true && language == 'en'
 		&& category._ref == ^._id && defined(metadata.slug.current)
 	]|order(title asc){
-		_id, title, image{..., asset->},
+		_id, title, table, image{..., asset->},
 		'slug': '/products/en/' + metadata.slug.current
 	}
 }`

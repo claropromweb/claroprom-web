@@ -71,7 +71,7 @@ export default async function ({
 const PRODUCT_LIST_QUERY = groq`
 	*[_type == 'product' && hidden != true && coalesce(language, $defaultLang) == $lang]|order(title asc){
 		_id,
-		title,
+		title, table,
 		image{
 			...,
 			asset->

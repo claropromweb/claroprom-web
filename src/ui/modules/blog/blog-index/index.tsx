@@ -1,5 +1,6 @@
 import { groq, PortableText } from 'next-sanity'
 import { Suspense } from 'react'
+import { preparedMedicaPost } from '@/content/medica-2026'
 import { ROUTES } from '@/lib/env'
 import { cn } from '@/lib/utils'
 import { sanityFetchLive } from '@/sanity/lib/live'
@@ -16,11 +17,20 @@ export default async function ({
 	postsPerPage = 6,
 	...props
 }: BlogIndex & ModuleProps) {
-	const posts = await sanityFetchLive<any>({
+	const cmsPosts = await sanityFetchLive<any>({
 		query: BLOG_INDEX_QUERY,
 		params: { blogDir: `/${ROUTES.blog}/` },
 	})
 
+	const prepared = preparedMedicaPost()
+	const posts =
+		prepared &&
+		!cmsPosts?.some(
+			(post: any) =>
+				post.metadata?.slug?.current === prepared.metadata.slug.current,
+		)
+			? [prepared, ...(cmsPosts ?? [])]
+			: (cmsPosts ?? [])
 	return (
 		<Module className={cn('section space-y-lh', intro && 'pt-4')} {...props}>
 			{intro && (

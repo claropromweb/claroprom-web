@@ -3,6 +3,12 @@ import Link from 'next/link'
 import { ROUTES } from '@/lib/env'
 import getLangServer from '@/lib/get-lang-server'
 import { DEFAULT_LANG } from '@/lib/i18n'
+import {
+	claroplastPack,
+	hasPackSize,
+	inquiryHref,
+	relevantProducts,
+} from '@/lib/outreach'
 import { categoryUrl } from '@/lib/product-category-url'
 import { cn } from '@/lib/utils'
 import { sanityFetchLive } from '@/sanity/lib/live'
@@ -106,8 +112,10 @@ export default async function ({
 			})
 	const quoteHref = explicitQuoteHref ?? contactPage?.url ?? null
 	const productName = stegaClean(product.title ?? '')
+	const pack = claroplastPack(product.metadata?.slug?.current)
+	const showFormat = hasPackSize(product.table)
 
-	const related =
+	const candidates =
 		showRelated && category?._id
 			? await sanityFetchLive<any>({
 					query: RELATED_PRODUCTS_QUERY,
@@ -122,6 +130,11 @@ export default async function ({
 				})
 			: []
 
+	const related = relevantProducts(
+		{ title: productName, slug: product.metadata?.slug?.current },
+		candidates ?? [],
+		relatedLimit,
+	)
 	return (
 		<Module as="article" {...props}>
 			<header className="full-bleed bg-red-600 px-6 py-12 text-center text-white md:py-14">
@@ -205,6 +218,22 @@ export default async function ({
 						</div>
 					)}
 
+					{pack && (
+						<dl className="grid gap-4 rounded-lg border border-neutral-200 bg-neutral-50 p-5 sm:grid-cols-2">
+							<div>
+								<dt className="text-sm text-neutral-500">Packaging</dt>
+								<dd className="font-semibold">{pack.packaging}</dd>
+							</div>
+							<div>
+								<dt className="text-sm text-neutral-500">Catalogue No.</dt>
+								<dd className="font-semibold">{pack.code}</dd>
+							</div>
+							<div className="sm:col-span-2">
+								<dt className="text-sm text-neutral-500">Manufacturer</dt>
+								<dd>CLARO-PROM d.o.o. · Croatia, European Union</dd>
+							</div>
+						</dl>
+					)}
 					{!!product.description?.length && (
 						<div className="prose max-w-none">
 							<PortableText value={product.description} />
@@ -264,7 +293,11 @@ export default async function ({
 								<thead>
 									<tr className="bg-foreground/5">
 										<th className="px-4 py-2 font-semibold">{t.code}</th>
-										<th className="px-4 py-2 font-semibold">{t.format}</th>
+										{showFormat && (
+											<th className="px-4 py-2 font-semibold">
+												Packaging / pack size
+											</th>
+										)}
 										{quoteHref && <th className="px-4 py-2" />}
 									</tr>
 								</thead>
@@ -274,19 +307,27 @@ export default async function ({
 										return (
 											<tr key={row._key} className="border-stroke border-t">
 												<td className="px-4 py-2 align-middle">{row.code}</td>
-												<td className="text-foreground/70 px-4 py-2 align-middle">
-													{row.format}
-												</td>
+												{showFormat && (
+													<td className="text-foreground/70 px-4 py-2 align-middle">
+														{row.format}
+													</td>
+												)}
 												{quoteHref && (
 													<td className="px-4 py-2 text-right align-middle">
 														<Link
-															href={withParam(
-																productName
-																	? withParam(quoteHref, 'product', productName)
-																	: quoteHref,
-																'code',
-																code,
-															)}
+															href={
+																withParam(
+																	productName
+																		? withParam(
+																				quoteHref,
+																				'product',
+																				productName,
+																			)
+																		: quoteHref,
+																	'code',
+																	code,
+																) + '&inquiry=quote'
+															}
 															className={QUOTE_BUTTON}
 														>
 															{t.askForQuote}
@@ -301,6 +342,44 @@ export default async function ({
 						</div>
 					)}
 
+					<section className="space-y-3 border-t border-neutral-200 pt-5">
+						<h2 className="text-lg font-semibold">Technical Documentation</h2>
+						<p className="text-sm">
+							Contact our team to request documentation relevant to this
+							product.
+						</p>
+						<Link
+							className="underline"
+							href={inquiryHref(
+								'documentation',
+								productName,
+								product.table?.[0]?.code || undefined,
+							)}
+						>
+							Request technical documentation
+						</Link>
+						{pack && (
+							<div className="flex flex-wrap gap-4 text-sm">
+								<Link
+									className="underline"
+									href={inquiryHref('distributor', productName, pack.code)}
+								>
+									Distributor inquiry
+								</Link>
+								<Link
+									className="underline"
+									href={inquiryHref('sample', productName, pack.code)}
+								>
+									Request a sample
+								</Link>
+							</div>
+						)}
+					</section>
+					{pack?.packaging === '2 kg' && (
+						<p className="text-sm text-neutral-600">
+							Transport carton: 5 × 2 kg. Not a separate product or SKU.
+						</p>
+					)}
 					{(ifuUrl || declarationUrl || technicalUrl || safetyUrl) && (
 						<div className="flex flex-wrap gap-3">
 							{ifuUrl && (
@@ -388,9 +467,9 @@ const RELATED_PRODUCTS_QUERY = groq`
 		&& _id != $id
 		&& category._ref == $categoryId
 		&& coalesce(language, $defaultLang) == $lang
-	]|order(title asc)[0...$limit]{
+	]|order(title asc){
 		_id,
-		title,
+		title, table,
 		image{
 			...,
 			asset->

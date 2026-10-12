@@ -1,3 +1,4 @@
+import { MEDICA, MEDICA_PATH } from '@/content/medica-2026'
 import { ROUTES } from '@/lib/env'
 import { SITE_URL } from '@/lib/site-url'
 import { getBlockText } from '@/lib/utils'
@@ -19,7 +20,10 @@ export default function BlogPostSchema({
 		headline: post.title || post.metadata.title || '',
 		description: post.metadata.description || '',
 		datePublished: post.publishDate || undefined,
-		url: `${SITE_URL}/${ROUTES.blog}/${slug?.current}`,
+		url:
+			slug?.current === MEDICA.slug
+				? SITE_URL + MEDICA_PATH
+				: `${SITE_URL}/${ROUTES.blog}/${slug?.current}`,
 		image: image
 			? urlFor(image).width(1200).url()
 			: `${SITE_URL}/api/og?slug=${ROUTES.blog}/${slug?.current}`,

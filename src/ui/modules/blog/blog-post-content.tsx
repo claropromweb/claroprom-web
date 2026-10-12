@@ -1,4 +1,7 @@
 import { PortableText } from 'next-sanity'
+import Link from 'next/link'
+import { MEDICA } from '@/content/medica-2026'
+import { inquiryHref } from '@/lib/outreach'
 import { cn } from '@/lib/utils'
 import type {
 	BLOG_POST_QUERY_RESULT,
@@ -52,6 +55,9 @@ export default function ({
 								linked
 							/>
 							<Date date={post.publishDate} />
+							{post._id === 'prepared-medica-2026' && !post.publishDate && (
+								<span>Draft preview · publication date pending approval</span>
+							)}
 							<span>{Math.ceil(post.readTime)} min read</span>
 						</div>
 					</div>
@@ -65,6 +71,20 @@ export default function ({
 					/>
 
 					<div className={cn(css.body, 'prose mx-auto grid w-full max-w-4xl')}>
+						{post.metadata?.slug?.current === MEDICA.slug && (
+							<div className="mb-6 rounded-lg border border-neutral-200 bg-neutral-50 p-5">
+								<p className="font-semibold">
+									{MEDICA.dates} · {MEDICA.location}
+								</p>
+								<p>{MEDICA.stand}</p>
+								<Link
+									className="mt-4 inline-flex rounded-md bg-red-600 px-5 py-3 font-semibold text-white"
+									href={inquiryHref('meeting')}
+								>
+									Arrange a meeting at MEDICA 2026
+								</Link>
+							</div>
+						)}
 						<PortableText
 							value={post.content ?? []}
 							components={{
