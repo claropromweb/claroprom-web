@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { claroplastPack } from '@/lib/outreach'
 import { publicProductUrl } from '@/lib/public-product-url'
 import { cn } from '@/lib/utils'
-import ProductPhoto from './product-photo'
+import ProductPhoto, { safeProductPhoto } from './product-photo'
 
 export type ProductPreviewItem = {
 	_id: string
@@ -37,6 +37,7 @@ export default function ProductPreview({
 			]
 	// No automatic description/intended-purpose fallback: summaries require editorial review.
 	const summary = product.shortDescription?.trim()
+	const hasPhoto = !!safeProductPhoto(product.image)
 	return (
 		<li
 			className={cn(
@@ -44,7 +45,7 @@ export default function ProductPreview({
 				className,
 			)}
 		>
-			{product.image?.asset && (
+			{hasPhoto && (
 				<figure className="flex aspect-square w-full items-center justify-center overflow-hidden rounded-md bg-neutral-50 p-2">
 					<ProductPhoto
 						image={product.image}
@@ -52,8 +53,8 @@ export default function ProductPreview({
 						width={640}
 						sizes="(max-width: 639px) 90vw, (max-width: 1023px) 40vw, 22vw"
 					/>
-					{product.image.caption && (
-						<span className="sr-only">{product.image.caption}</span>
+					{product.image?.caption && (
+						<span className="sr-only">{product.image?.caption}</span>
 					)}
 				</figure>
 			)}
@@ -61,7 +62,7 @@ export default function ProductPreview({
 				{product.slug ? (
 					<Link
 						href={publicProductUrl(product.slug)}
-						className="text-base leading-snug font-semibold break-words text-current before:absolute before:inset-0 hover:underline"
+						className="text-base leading-snug font-semibold break-words text-current before:absolute before:inset-0 hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600"
 					>
 						{pack?.name ?? product.title}
 					</Link>
@@ -76,7 +77,7 @@ export default function ProductPreview({
 					</p>
 				)}
 				{product.image?.caption && (
-					<p className="text-xs text-neutral-500">{product.image.caption}</p>
+					<p className="text-xs text-neutral-500">{product.image?.caption}</p>
 				)}
 				{(formats.length > 0 || codes.length > 0) && (
 					<dl className="mt-auto space-y-2 border-t border-neutral-100 pt-3 text-sm">

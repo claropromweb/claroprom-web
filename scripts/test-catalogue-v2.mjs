@@ -286,3 +286,67 @@ if (process.env.CATALOGUE_FIXTURE_OUTPUT) {
 console.log(
 	'PASS: actual card/detail rendering, optional summaries, missing images/rows/docs, codes, multi-pack display, separate intended purpose, gallery order/captions/lazy images, crop/hotspot, optional schema. Isolated fixtures only; no CMS writes or emails.',
 )
+
+// V2.1: corrupt dimensions/references/geometry must not crash rendering.
+const safePhoto = load(
+	path.resolve('src/ui/modules/product/product-photo.tsx'),
+).safeProductPhoto
+assert.equal(
+	safePhoto({
+		asset: { url: 'https://example.invalid/not-a-sanity-image.jpg' },
+	}),
+	null,
+)
+const corrupt = {
+	...image,
+	asset: {
+		...image.asset,
+		url: 'bad-url',
+		metadata: { dimensions: { width: 0, height: 0 }, lqip: 42 },
+	},
+	crop: { top: 1, bottom: 1, left: NaN, right: 0 },
+	hotspot: { x: NaN, y: 0.5, width: 0, height: 1 },
+}
+assert.equal(safePhoto(corrupt).image.asset._ref, image.asset._id)
+assert.equal(safePhoto(corrupt).image.crop, undefined)
+assert.equal(safePhoto(corrupt).image.hotspot, undefined)
+assert.ok(
+	renderToStaticMarkup(
+		React.createElement(Photo, {
+			image: corrupt,
+			title: 'Fixture',
+			width: 640,
+			sizes: '90vw',
+		}),
+	).includes('<img'),
+)
+assert.ok(
+	!renderToStaticMarkup(
+		React.createElement(Card, {
+			product: { ...base, image: { asset: { _id: 'broken' } } },
+		}),
+	).includes('<figure'),
+)
+const brokenDetail = renderToStaticMarkup(
+	await Detail({
+		product: { ...detailBase, image: { asset: { _id: 'broken' } } },
+		showRelated: false,
+	}),
+)
+assert.ok(!brokenDetail.includes('<figure'))
+assert.ok(!brokenDetail.includes('md:grid-cols-2'))
+const Packaging = load(
+	path.resolve('src/ui/modules/product/claroplast-outreach.tsx'),
+).ClaroplastPackagingAdvantage
+const hubPackaging = renderToStaticMarkup(React.createElement(Packaging))
+assert.match(hubPackaging, /10 kg pack/)
+assert.match(hubPackaging, /5 × 2 kg/)
+assert.match(hubPackaging, /durable inner bag/)
+const transport = renderToStaticMarkup(
+	React.createElement(Packaging, { transportOnly: true }),
+)
+assert.ok(!transport.includes('10 kg'))
+assert.match(transport, /not a separate product or SKU/)
+console.log(
+	'PASS: V2.1 invalid asset/metadata/crop/hotspot guards and owner-confirmed packaging scope.',
+)

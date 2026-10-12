@@ -10,7 +10,7 @@
     "approvedPublicDescriptions": 3,
     "intendedPurposeTexts": 1,
     "intendedPurposeWithSupportingDocument": 0,
-    "mainPhotos": 2,
+    "mainPhotos": 3,
     "galleries": 0,
     "sourcePackSizes": 44,
     "publicConfirmedPackSizes": 46,
@@ -19,7 +19,9 @@
     "reviewRows": 48,
     "ivdReviewRows": 44,
     "existingSummaryReuseCandidates": 3,
-    "newFunctionalDrafts": 0
+    "newFunctionalDrafts": 15,
+    "photoLabelConfirmedPackSizes": 1,
+    "ivdDraftGroups": 15
   },
   "products": [
     {
@@ -63,7 +65,7 @@
       "legacyRouteCandidate": null,
       "urlNote": "Public EN catalogue",
       "source": "Published Sanity product record, revision GXon7RN0Hm0wO29GQnrj6A",
-      "status": "INSUFFICIENT SOURCE",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
       "ownerInputRequired": "Approved intended use, exact formulation identity and whether these pack variants share the same approved description. Keep 4%, 10% and 37% separate; verify glass/plastic correspondence.",
       "missing": [
         "Detailed description",
@@ -72,7 +74,9 @@
         "SKU-specific photo",
         "Optional additional photographs",
         "Approved documents (if available)"
-      ]
+      ],
+      "currentRevision": "GXon7RN0Hm0wO29GQnrj6A",
+      "mainImageCaption": null
     },
     {
       "id": "e18a6436-171b-48be-a05f-6fa7e9231724",
@@ -115,7 +119,7 @@
       "legacyRouteCandidate": null,
       "urlNote": "Public EN catalogue",
       "source": "Published Sanity product record, revision GXon7RN0Hm0wO29GQnroWw",
-      "status": "INSUFFICIENT SOURCE",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
       "ownerInputRequired": "Approved intended use, exact formulation identity and whether these pack variants share the same approved description. Keep 4%, 10% and 37% separate; verify glass/plastic correspondence.",
       "missing": [
         "Detailed description",
@@ -124,7 +128,9 @@
         "SKU-specific photo",
         "Optional additional photographs",
         "Approved documents (if available)"
-      ]
+      ],
+      "currentRevision": "GXon7RN0Hm0wO29GQnroWw",
+      "mainImageCaption": null
     },
     {
       "id": "6b047954-1a63-4901-8be3-851d967bfc32",
@@ -167,7 +173,7 @@
       "legacyRouteCandidate": null,
       "urlNote": "Public EN catalogue",
       "source": "Published Sanity product record, revision MwWOMVq9aGfEEH7OTjsLBt",
-      "status": "INSUFFICIENT SOURCE",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
       "ownerInputRequired": "Approved intended use, exact formulation identity and whether these pack variants share the same approved description. Keep 4%, 10% and 37% separate; verify glass/plastic correspondence.",
       "missing": [
         "Detailed description",
@@ -176,7 +182,9 @@
         "SKU-specific photo",
         "Optional additional photographs",
         "Approved documents (if available)"
-      ]
+      ],
+      "currentRevision": "MwWOMVq9aGfEEH7OTjsLBt",
+      "mainImageCaption": null
     },
     {
       "id": "67f5dfb0-57c5-484c-b9ec-ceee8e416db2",
@@ -219,7 +227,7 @@
       "legacyRouteCandidate": null,
       "urlNote": "Public EN catalogue",
       "source": "Published Sanity product record, revision GXon7RN0Hm0wO29GQnrt9C",
-      "status": "INSUFFICIENT SOURCE",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
       "ownerInputRequired": "Approved intended use, exact formulation identity and whether these pack variants share the same approved description. Keep 4%, 10% and 37% separate; verify glass/plastic correspondence.",
       "missing": [
         "Detailed description",
@@ -228,7 +236,9 @@
         "SKU-specific photo",
         "Optional additional photographs",
         "Approved documents (if available)"
-      ]
+      ],
+      "currentRevision": "GXon7RN0Hm0wO29GQnrt9C",
+      "mainImageCaption": null
     },
     {
       "id": "60a19412-3a63-4a27-aabf-e015621fe66e",
@@ -271,7 +281,7 @@
       "legacyRouteCandidate": null,
       "urlNote": "Public EN catalogue",
       "source": "Published Sanity product record, revision MwWOMVq9aGfEEH7OTjsO1h",
-      "status": "INSUFFICIENT SOURCE",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
       "ownerInputRequired": "Approved intended use, exact formulation identity and whether these pack variants share the same approved description. Keep 4%, 10% and 37% separate; verify glass/plastic correspondence.",
       "missing": [
         "Detailed description",
@@ -280,7 +290,9 @@
         "SKU-specific photo",
         "Optional additional photographs",
         "Approved documents (if available)"
-      ]
+      ],
+      "currentRevision": "MwWOMVq9aGfEEH7OTjsO1h",
+      "mainImageCaption": null
     },
     {
       "id": "2310249d-dd2a-4143-a16b-74a158134b29",
@@ -323,7 +335,7 @@
       "legacyRouteCandidate": null,
       "urlNote": "Public EN catalogue",
       "source": "Published Sanity product record, revision 8ht4z1wR2A8VHxtw1eV7SB",
-      "status": "INSUFFICIENT SOURCE",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
       "ownerInputRequired": "Approved intended use, exact formulation identity and whether these pack variants share the same approved description. Keep 4%, 10% and 37% separate; verify glass/plastic correspondence.",
       "missing": [
         "Detailed description",
@@ -332,7 +344,9 @@
         "SKU-specific photo",
         "Optional additional photographs",
         "Approved documents (if available)"
-      ]
+      ],
+      "currentRevision": "8ht4z1wR2A8VHxtw1eV7SB",
+      "mainImageCaption": null
     },
     {
       "id": "89cf8290-0639-4b04-b6b2-05b25dde7957",
@@ -375,7 +389,7 @@
       "legacyRouteCandidate": null,
       "urlNote": "Public EN catalogue",
       "source": "Published Sanity product record, revision 8ht4z1wR2A8VHxtw1eVDIV",
-      "status": "INSUFFICIENT SOURCE",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
       "ownerInputRequired": "Approved intended use, exact formulation identity and whether these pack variants share the same approved description. Keep 4%, 10% and 37% separate; verify glass/plastic correspondence.",
       "missing": [
         "Detailed description",
@@ -384,7 +398,9 @@
         "SKU-specific photo",
         "Optional additional photographs",
         "Approved documents (if available)"
-      ]
+      ],
+      "currentRevision": "8ht4z1wR2A8VHxtw1eVDIV",
+      "mainImageCaption": null
     },
     {
       "id": "fcc7b3d6-1df3-4c0b-9abe-b902ce50cf9f",
@@ -427,7 +443,7 @@
       "legacyRouteCandidate": null,
       "urlNote": "Public EN catalogue",
       "source": "Published Sanity product record, revision MwWOMVq9aGfEEH7OTjsF49",
-      "status": "INSUFFICIENT SOURCE",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
       "ownerInputRequired": "Approved intended use, exact formulation identity and whether these pack variants share the same approved description. Keep 4%, 10% and 37% separate; verify glass/plastic correspondence.",
       "missing": [
         "Detailed description",
@@ -436,7 +452,9 @@
         "SKU-specific photo",
         "Optional additional photographs",
         "Approved documents (if available)"
-      ]
+      ],
+      "currentRevision": "MwWOMVq9aGfEEH7OTjsF49",
+      "mainImageCaption": null
     },
     {
       "id": "65082ed4-a129-4c7b-ae4b-ef0a4cdacfc8",
@@ -479,7 +497,7 @@
       "legacyRouteCandidate": null,
       "urlNote": "Public EN catalogue",
       "source": "Published Sanity product record, revision GXon7RN0Hm0wO29GQnsPo3",
-      "status": "INSUFFICIENT SOURCE",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
       "ownerInputRequired": "Approved product-specific application and intended use; no purity, process or chemistry specification inferred from the name.",
       "missing": [
         "Detailed description",
@@ -488,7 +506,9 @@
         "SKU-specific photo",
         "Optional additional photographs",
         "Approved documents (if available)"
-      ]
+      ],
+      "currentRevision": "GXon7RN0Hm0wO29GQnsPo3",
+      "mainImageCaption": null
     },
     {
       "id": "83bdbf73-d7f8-42d3-bd0c-4a055170d022",
@@ -531,7 +551,7 @@
       "legacyRouteCandidate": null,
       "urlNote": "Public EN catalogue",
       "source": "Published Sanity product record, revision aMxuB38zD5OHLKwsnSqDUd",
-      "status": "INSUFFICIENT SOURCE",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
       "ownerInputRequired": "Approved product-specific application and intended use; no purity, process or chemistry specification inferred from the name.",
       "missing": [
         "Detailed description",
@@ -540,7 +560,9 @@
         "SKU-specific photo",
         "Optional additional photographs",
         "Approved documents (if available)"
-      ]
+      ],
+      "currentRevision": "aMxuB38zD5OHLKwsnSqDUd",
+      "mainImageCaption": null
     },
     {
       "id": "de7f9e03-8e51-43bb-a8c4-f997f9a3b103",
@@ -583,7 +605,7 @@
       "legacyRouteCandidate": null,
       "urlNote": "Public EN catalogue",
       "source": "Published Sanity product record, revision MwWOMVq9aGfEEH7OTjsy9T",
-      "status": "INSUFFICIENT SOURCE",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
       "ownerInputRequired": "Approved product-specific application and intended use; no purity, process or chemistry specification inferred from the name.",
       "missing": [
         "Detailed description",
@@ -592,7 +614,9 @@
         "SKU-specific photo",
         "Optional additional photographs",
         "Approved documents (if available)"
-      ]
+      ],
+      "currentRevision": "MwWOMVq9aGfEEH7OTjsy9T",
+      "mainImageCaption": null
     },
     {
       "id": "caf938a1-fdbe-40d7-a296-14177067103f",
@@ -635,7 +659,7 @@
       "legacyRouteCandidate": null,
       "urlNote": "Public EN catalogue",
       "source": "Published Sanity product record, revision aMxuB38zD5OHLKwsnSpcRM",
-      "status": "INSUFFICIENT SOURCE",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
       "ownerInputRequired": "Approved product-specific use. Confirm Xylene Substitute separately from Xylene; no toxicity or equipment compatibility claim without evidence.",
       "missing": [
         "Detailed description",
@@ -644,7 +668,9 @@
         "SKU-specific photo",
         "Optional additional photographs",
         "Approved documents (if available)"
-      ]
+      ],
+      "currentRevision": "aMxuB38zD5OHLKwsnSpcRM",
+      "mainImageCaption": null
     },
     {
       "id": "4a18a104-ff8b-4d6f-b224-653aad74fb92",
@@ -687,7 +713,7 @@
       "legacyRouteCandidate": null,
       "urlNote": "Public EN catalogue",
       "source": "Published Sanity product record, revision aMxuB38zD5OHLKwsnSpf3P",
-      "status": "INSUFFICIENT SOURCE",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
       "ownerInputRequired": "Approved product-specific use. Confirm Xylene Substitute separately from Xylene; no toxicity or equipment compatibility claim without evidence.",
       "missing": [
         "Detailed description",
@@ -696,7 +722,9 @@
         "SKU-specific photo",
         "Optional additional photographs",
         "Approved documents (if available)"
-      ]
+      ],
+      "currentRevision": "aMxuB38zD5OHLKwsnSpf3P",
+      "mainImageCaption": null
     },
     {
       "id": "3c32cf79-39c3-4bf8-bf48-5f201e67b608",
@@ -739,7 +767,7 @@
       "legacyRouteCandidate": null,
       "urlNote": "Public EN catalogue",
       "source": "Published Sanity product record, revision MwWOMVq9aGfEEH7OTjsTyt",
-      "status": "INSUFFICIENT SOURCE",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
       "ownerInputRequired": "Approved product-specific use. Confirm Xylene Substitute separately from Xylene; no toxicity or equipment compatibility claim without evidence.",
       "missing": [
         "Detailed description",
@@ -748,7 +776,9 @@
         "SKU-specific photo",
         "Optional additional photographs",
         "Approved documents (if available)"
-      ]
+      ],
+      "currentRevision": "MwWOMVq9aGfEEH7OTjsTyt",
+      "mainImageCaption": null
     },
     {
       "id": "e79f3f00-8023-49d2-8cdb-b95534c9962f",
@@ -791,7 +821,7 @@
       "legacyRouteCandidate": null,
       "urlNote": "Public EN catalogue",
       "source": "Published Sanity product record, revision M3OQuuH4IiA2wtqZQKbxyx",
-      "status": "INSUFFICIENT SOURCE",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
       "ownerInputRequired": "Approved product-specific use. Confirm Xylene Substitute separately from Xylene; no toxicity or equipment compatibility claim without evidence.",
       "missing": [
         "Detailed description",
@@ -800,7 +830,9 @@
         "SKU-specific photo",
         "Optional additional photographs",
         "Approved documents (if available)"
-      ]
+      ],
+      "currentRevision": "M3OQuuH4IiA2wtqZQKbxyx",
+      "mainImageCaption": null
     },
     {
       "id": "96c3b4db-c11a-49fd-a087-6b96f62ea7fc",
@@ -843,7 +875,7 @@
       "legacyRouteCandidate": null,
       "urlNote": "Public EN catalogue",
       "source": "Published Sanity product record, revision MwWOMVq9aGfEEH7OTjsWad",
-      "status": "INSUFFICIENT SOURCE",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
       "ownerInputRequired": "Approved product-specific use. Confirm Xylene Substitute separately from Xylene; no toxicity or equipment compatibility claim without evidence.",
       "missing": [
         "Detailed description",
@@ -852,7 +884,9 @@
         "SKU-specific photo",
         "Optional additional photographs",
         "Approved documents (if available)"
-      ]
+      ],
+      "currentRevision": "MwWOMVq9aGfEEH7OTjsWad",
+      "mainImageCaption": null
     },
     {
       "id": "8198c46c-6d27-49a8-a024-00f1a2c07a89",
@@ -895,7 +929,7 @@
       "legacyRouteCandidate": null,
       "urlNote": "Public EN catalogue",
       "source": "Published Sanity product record, revision GXon7RN0Hm0wO29GQnsKNH",
-      "status": "INSUFFICIENT SOURCE",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
       "ownerInputRequired": "Approved product function and intended use; formulation/base and compatibility only from controlled documents.",
       "missing": [
         "Detailed description",
@@ -904,7 +938,9 @@
         "SKU-specific photo",
         "Optional additional photographs",
         "Approved documents (if available)"
-      ]
+      ],
+      "currentRevision": "GXon7RN0Hm0wO29GQnsKNH",
+      "mainImageCaption": null
     },
     {
       "id": "7ae74101-f3c6-43dd-81c0-703c54ad3f2e",
@@ -947,7 +983,7 @@
       "legacyRouteCandidate": null,
       "urlNote": "Public EN catalogue",
       "source": "Published Sanity product record, revision aMxuB38zD5OHLKwsnSq7OW",
-      "status": "INSUFFICIENT SOURCE",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
       "ownerInputRequired": "Approved product function and intended use; formulation/base and compatibility only from controlled documents.",
       "missing": [
         "Detailed description",
@@ -956,7 +992,9 @@
         "SKU-specific photo",
         "Optional additional photographs",
         "Approved documents (if available)"
-      ]
+      ],
+      "currentRevision": "aMxuB38zD5OHLKwsnSq7OW",
+      "mainImageCaption": null
     },
     {
       "id": "44c067f6-3c0b-462d-ad1c-f51a9c44d078",
@@ -999,7 +1037,7 @@
       "legacyRouteCandidate": null,
       "urlNote": "Public EN catalogue",
       "source": "Published Sanity product record, revision GXon7RN0Hm0wO29GQnsIKz",
-      "status": "INSUFFICIENT SOURCE",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
       "ownerInputRequired": "Approved product function and intended use; formulation/base and compatibility only from controlled documents.",
       "missing": [
         "Detailed description",
@@ -1008,7 +1046,9 @@
         "SKU-specific photo",
         "Optional additional photographs",
         "Approved documents (if available)"
-      ]
+      ],
+      "currentRevision": "GXon7RN0Hm0wO29GQnsIKz",
+      "mainImageCaption": null
     },
     {
       "id": "404d6506-1437-44ba-a1d3-7f09ae5434db",
@@ -1051,7 +1091,7 @@
       "legacyRouteCandidate": null,
       "urlNote": "Public EN catalogue",
       "source": "Published Sanity product record, revision GXon7RN0Hm0wO29GQnsONe",
-      "status": "INSUFFICIENT SOURCE",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
       "ownerInputRequired": "Approved product function and intended use; formulation/base and compatibility only from controlled documents.",
       "missing": [
         "Detailed description",
@@ -1060,7 +1100,9 @@
         "SKU-specific photo",
         "Optional additional photographs",
         "Approved documents (if available)"
-      ]
+      ],
+      "currentRevision": "GXon7RN0Hm0wO29GQnsONe",
+      "mainImageCaption": null
     },
     {
       "id": "4b2e15ae-8d71-4778-9bb5-bc586ea8397c",
@@ -1089,8 +1131,8 @@
       "detailedDescriptionProposedEN": "Claroplast is a polymer-modified histology paraffin wax intended for routine tissue infiltration and embedding. It is manufactured by CLARO-PROM d.o.o. in Croatia, European Union, and supplied in a 10 kg pack.",
       "intendedPurposeVerbatim": null,
       "intendedPurposeAuthority": "OWNER INPUT REQUIRED",
-      "mainImage": "https://cdn.sanity.io/images/ddtwki7e/production/34e609d84fcd96a456977d7137f9c9d7649b2bdd-1074x1074.webp",
-      "mainImageAssetId": "image-34e609d84fcd96a456977d7137f9c9d7649b2bdd-1074x1074-webp",
+      "mainImage": "https://cdn.sanity.io/images/ddtwki7e/production/a32df7b692ad48267bb8af315bdb11110a7fd603-1024x768.jpg",
+      "mainImageAssetId": "image-a32df7b692ad48267bb8af315bdb11110a7fd603-1024x768-jpg",
       "mainImageAlt": null,
       "gallery": [],
       "documents": {
@@ -1110,7 +1152,9 @@
         "Optional additional photographs",
         "Confirmed packaging",
         "Approved documents (if available)"
-      ]
+      ],
+      "currentRevision": "ngxkL2J28yWAiW7JQCRXVw",
+      "mainImageCaption": null
     },
     {
       "id": "5e3f0063-c019-4aed-9fc6-fa4bdf63e2a7",
@@ -1155,7 +1199,9 @@
         "Optional additional photographs",
         "Confirmed packaging",
         "Approved documents (if available)"
-      ]
+      ],
+      "currentRevision": "XnIpi0i6mdZHR0bJRGcIlF",
+      "mainImageCaption": null
     },
     {
       "id": "7e1aabab-6bb0-4c0e-a5c8-fb7d6be49ddf",
@@ -1204,7 +1250,9 @@
         "Optional additional photographs",
         "Confirmed packaging",
         "Approved documents (if available)"
-      ]
+      ],
+      "currentRevision": "M3OQuuH4IiA2wtqZQKdEW0",
+      "mainImageCaption": null
     },
     {
       "id": "269d62d5-e498-463b-8af3-98de945e5923",
@@ -1247,7 +1295,7 @@
       "legacyRouteCandidate": null,
       "urlNote": "Public EN catalogue",
       "source": "Published Sanity product record, revision aMxuB38zD5OHLKwsnSqZdH",
-      "status": "INSUFFICIENT SOURCE",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
       "ownerInputRequired": "Approved product-specific application and intended use; no purity, process or chemistry specification inferred from the name.",
       "missing": [
         "Detailed description",
@@ -1256,7 +1304,9 @@
         "SKU-specific photo",
         "Optional additional photographs",
         "Approved documents (if available)"
-      ]
+      ],
+      "currentRevision": "aMxuB38zD5OHLKwsnSqZdH",
+      "mainImageCaption": null
     },
     {
       "id": "292998ef-98b3-4b5a-a9a3-e90c50838655",
@@ -1299,7 +1349,7 @@
       "legacyRouteCandidate": null,
       "urlNote": "Public EN catalogue",
       "source": "Published Sanity product record, revision MwWOMVq9aGfEEH7OTjtOdV",
-      "status": "INSUFFICIENT SOURCE",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
       "ownerInputRequired": "Approved product-specific application and intended use; no purity, process or chemistry specification inferred from the name.",
       "missing": [
         "Detailed description",
@@ -1308,7 +1358,9 @@
         "SKU-specific photo",
         "Optional additional photographs",
         "Approved documents (if available)"
-      ]
+      ],
+      "currentRevision": "MwWOMVq9aGfEEH7OTjtOdV",
+      "mainImageCaption": null
     },
     {
       "id": "0506238b-2fdd-4ea9-a470-2e7606be1acf",
@@ -1351,7 +1403,7 @@
       "legacyRouteCandidate": null,
       "urlNote": "Public EN catalogue",
       "source": "Published Sanity product record, revision aMxuB38zD5OHLKwsnSqaui",
-      "status": "INSUFFICIENT SOURCE",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
       "ownerInputRequired": "Approved product-specific application and intended use; no purity, process or chemistry specification inferred from the name.",
       "missing": [
         "Detailed description",
@@ -1360,7 +1412,9 @@
         "SKU-specific photo",
         "Optional additional photographs",
         "Approved documents (if available)"
-      ]
+      ],
+      "currentRevision": "aMxuB38zD5OHLKwsnSqaui",
+      "mainImageCaption": null
     },
     {
       "id": "448a3c23-ab10-4646-8e8f-6b55a448400f",
@@ -1403,7 +1457,7 @@
       "legacyRouteCandidate": null,
       "urlNote": "Public EN catalogue",
       "source": "Published Sanity product record, revision MwWOMVq9aGfEEH7OTjtJzB",
-      "status": "INSUFFICIENT SOURCE",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
       "ownerInputRequired": "Approved product-specific application and intended use; no purity, process or chemistry specification inferred from the name.",
       "missing": [
         "Detailed description",
@@ -1412,7 +1466,9 @@
         "SKU-specific photo",
         "Optional additional photographs",
         "Approved documents (if available)"
-      ]
+      ],
+      "currentRevision": "MwWOMVq9aGfEEH7OTjtJzB",
+      "mainImageCaption": null
     },
     {
       "id": "f7b599ad-8190-4918-a52d-ec8e99253e94",
@@ -1455,7 +1511,7 @@
       "legacyRouteCandidate": null,
       "urlNote": "Public EN catalogue",
       "source": "Published Sanity product record, revision MwWOMVq9aGfEEH7OTjtMlT",
-      "status": "INSUFFICIENT SOURCE",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
       "ownerInputRequired": "Approved product-specific application and intended use; no purity, process or chemistry specification inferred from the name.",
       "missing": [
         "Detailed description",
@@ -1464,7 +1520,9 @@
         "SKU-specific photo",
         "Optional additional photographs",
         "Approved documents (if available)"
-      ]
+      ],
+      "currentRevision": "MwWOMVq9aGfEEH7OTjtMlT",
+      "mainImageCaption": null
     },
     {
       "id": "db62555e-3473-4456-8e9e-e5bb9416c209",
@@ -1507,7 +1565,7 @@
       "legacyRouteCandidate": null,
       "urlNote": "Public EN catalogue",
       "source": "Published Sanity product record, revision aMxuB38zD5OHLKwsnSqXtF",
-      "status": "INSUFFICIENT SOURCE",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
       "ownerInputRequired": "Approved product-specific application and intended use; no purity, process or chemistry specification inferred from the name.",
       "missing": [
         "Detailed description",
@@ -1516,7 +1574,9 @@
         "SKU-specific photo",
         "Optional additional photographs",
         "Approved documents (if available)"
-      ]
+      ],
+      "currentRevision": "aMxuB38zD5OHLKwsnSqXtF",
+      "mainImageCaption": null
     },
     {
       "id": "0e84304c-abf1-44b2-92be-567605232b83",
@@ -1559,7 +1619,7 @@
       "legacyRouteCandidate": null,
       "urlNote": "Public EN catalogue",
       "source": "Published Sanity product record, revision aMxuB38zD5OHLKwsnSqQla",
-      "status": "INSUFFICIENT SOURCE",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
       "ownerInputRequired": "Approved product-specific application and intended use; no purity, process or chemistry specification inferred from the name.",
       "missing": [
         "Detailed description",
@@ -1568,7 +1628,9 @@
         "SKU-specific photo",
         "Optional additional photographs",
         "Approved documents (if available)"
-      ]
+      ],
+      "currentRevision": "aMxuB38zD5OHLKwsnSqQla",
+      "mainImageCaption": null
     },
     {
       "id": "e3694ac0-031e-4fc1-8189-6ce4ae1d9e5e",
@@ -1611,7 +1673,7 @@
       "legacyRouteCandidate": null,
       "urlNote": "Public EN catalogue",
       "source": "Published Sanity product record, revision M3OQuuH4IiA2wtqZQKbrYy",
-      "status": "INSUFFICIENT SOURCE",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
       "ownerInputRequired": "Approved product-specific application and intended use; no purity, process or chemistry specification inferred from the name.",
       "missing": [
         "Detailed description",
@@ -1620,7 +1682,9 @@
         "SKU-specific photo",
         "Optional additional photographs",
         "Approved documents (if available)"
-      ]
+      ],
+      "currentRevision": "M3OQuuH4IiA2wtqZQKbrYy",
+      "mainImageCaption": null
     },
     {
       "id": "77b22f6d-1b3e-4eb3-addb-bfbbba20493e",
@@ -1663,7 +1727,7 @@
       "legacyRouteCandidate": null,
       "urlNote": "Public EN catalogue",
       "source": "Published Sanity product record, revision aMxuB38zD5OHLKwsnSqUlQ",
-      "status": "INSUFFICIENT SOURCE",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
       "ownerInputRequired": "Approved product-specific application and intended use; no purity, process or chemistry specification inferred from the name.",
       "missing": [
         "Detailed description",
@@ -1672,7 +1736,9 @@
         "SKU-specific photo",
         "Optional additional photographs",
         "Approved documents (if available)"
-      ]
+      ],
+      "currentRevision": "aMxuB38zD5OHLKwsnSqUlQ",
+      "mainImageCaption": null
     },
     {
       "id": "6626f39d-59cf-4fc3-8901-9db98b4018f9",
@@ -1715,7 +1781,7 @@
       "legacyRouteCandidate": null,
       "urlNote": "Public EN catalogue",
       "source": "Published Sanity product record, revision aMxuB38zD5OHLKwsnSqKsB",
-      "status": "INSUFFICIENT SOURCE",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
       "ownerInputRequired": "Approved product-specific application and intended use; no purity, process or chemistry specification inferred from the name.",
       "missing": [
         "Detailed description",
@@ -1724,7 +1790,9 @@
         "SKU-specific photo",
         "Optional additional photographs",
         "Approved documents (if available)"
-      ]
+      ],
+      "currentRevision": "aMxuB38zD5OHLKwsnSqKsB",
+      "mainImageCaption": null
     },
     {
       "id": "efb3ecc2-ce49-4438-94ce-31f0e1c0a1f6",
@@ -1767,7 +1835,7 @@
       "legacyRouteCandidate": null,
       "urlNote": "Public EN catalogue",
       "source": "Published Sanity product record, revision MwWOMVq9aGfEEH7OTjtC2v",
-      "status": "INSUFFICIENT SOURCE",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
       "ownerInputRequired": "Approved product-specific application and intended use; no purity, process or chemistry specification inferred from the name.",
       "missing": [
         "Detailed description",
@@ -1776,7 +1844,9 @@
         "SKU-specific photo",
         "Optional additional photographs",
         "Approved documents (if available)"
-      ]
+      ],
+      "currentRevision": "MwWOMVq9aGfEEH7OTjtC2v",
+      "mainImageCaption": null
     },
     {
       "id": "32a7bb9c-170d-4009-aa27-cf5d5b6c823d",
@@ -1819,7 +1889,7 @@
       "legacyRouteCandidate": null,
       "urlNote": "Public EN catalogue",
       "source": "Published Sanity product record, revision M3OQuuH4IiA2wtqZQKbkfQ",
-      "status": "INSUFFICIENT SOURCE",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
       "ownerInputRequired": "Approved product-specific application and intended use; no purity, process or chemistry specification inferred from the name.",
       "missing": [
         "Detailed description",
@@ -1828,7 +1898,9 @@
         "SKU-specific photo",
         "Optional additional photographs",
         "Approved documents (if available)"
-      ]
+      ],
+      "currentRevision": "M3OQuuH4IiA2wtqZQKbkfQ",
+      "mainImageCaption": null
     },
     {
       "id": "1fdab584-544b-47cc-a522-5cddaa1d4ce8",
@@ -1871,7 +1943,7 @@
       "legacyRouteCandidate": null,
       "urlNote": "Public EN catalogue",
       "source": "Published Sanity product record, revision MwWOMVq9aGfEEH7OTjt12n",
-      "status": "INSUFFICIENT SOURCE",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
       "ownerInputRequired": "Approved product-specific application and intended use; no purity, process or chemistry specification inferred from the name.",
       "missing": [
         "Detailed description",
@@ -1880,7 +1952,9 @@
         "SKU-specific photo",
         "Optional additional photographs",
         "Approved documents (if available)"
-      ]
+      ],
+      "currentRevision": "MwWOMVq9aGfEEH7OTjt12n",
+      "mainImageCaption": null
     },
     {
       "id": "50482a66-d710-4aa8-ba75-8f56deaee35c",
@@ -1923,7 +1997,7 @@
       "legacyRouteCandidate": null,
       "urlNote": "Public EN catalogue",
       "source": "Published Sanity product record, revision aMxuB38zD5OHLKwsnSqGcS",
-      "status": "INSUFFICIENT SOURCE",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
       "ownerInputRequired": "Approved product-specific application and intended use; no purity, process or chemistry specification inferred from the name.",
       "missing": [
         "Detailed description",
@@ -1932,7 +2006,9 @@
         "SKU-specific photo",
         "Optional additional photographs",
         "Approved documents (if available)"
-      ]
+      ],
+      "currentRevision": "aMxuB38zD5OHLKwsnSqGcS",
+      "mainImageCaption": null
     },
     {
       "id": "9079fe0e-d658-4e48-ac48-23f7aadb31b2",
@@ -1975,7 +2051,7 @@
       "legacyRouteCandidate": null,
       "urlNote": "Public EN catalogue",
       "source": "Published Sanity product record, revision GXon7RN0Hm0wO29GQnsY1Q",
-      "status": "INSUFFICIENT SOURCE",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
       "ownerInputRequired": "Approved product-specific application and intended use; no purity, process or chemistry specification inferred from the name.",
       "missing": [
         "Detailed description",
@@ -1984,7 +2060,9 @@
         "SKU-specific photo",
         "Optional additional photographs",
         "Approved documents (if available)"
-      ]
+      ],
+      "currentRevision": "GXon7RN0Hm0wO29GQnsY1Q",
+      "mainImageCaption": null
     },
     {
       "id": "e579bd5f-8f76-4405-91f4-e5fa04068167",
@@ -2027,7 +2105,7 @@
       "legacyRouteCandidate": null,
       "urlNote": "Public EN catalogue",
       "source": "Published Sanity product record, revision MwWOMVq9aGfEEH7OTjsgLP",
-      "status": "INSUFFICIENT SOURCE",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
       "ownerInputRequired": "Approved staining purpose, relevant specimen types and protocol references, separately for each reagent.",
       "missing": [
         "Detailed description",
@@ -2036,7 +2114,9 @@
         "SKU-specific photo",
         "Optional additional photographs",
         "Approved documents (if available)"
-      ]
+      ],
+      "currentRevision": "MwWOMVq9aGfEEH7OTjsgLP",
+      "mainImageCaption": null
     },
     {
       "id": "f5ee9e66-cdf6-49f3-bb91-4f2e9a87e652",
@@ -2079,7 +2159,7 @@
       "legacyRouteCandidate": null,
       "urlNote": "Public EN catalogue",
       "source": "Published Sanity product record, revision aMxuB38zD5OHLKwsnSpgBJ",
-      "status": "INSUFFICIENT SOURCE",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
       "ownerInputRequired": "Approved staining purpose, relevant specimen types and protocol references, separately for each reagent.",
       "missing": [
         "Detailed description",
@@ -2088,7 +2168,9 @@
         "SKU-specific photo",
         "Optional additional photographs",
         "Approved documents (if available)"
-      ]
+      ],
+      "currentRevision": "aMxuB38zD5OHLKwsnSpgBJ",
+      "mainImageCaption": null
     },
     {
       "id": "36a7691c-7768-434d-a6d9-f1d7a41142c9",
@@ -2131,7 +2213,7 @@
       "legacyRouteCandidate": null,
       "urlNote": "Public EN catalogue",
       "source": "Published Sanity product record, revision GXon7RN0Hm0wO29GQns5Mw",
-      "status": "INSUFFICIENT SOURCE",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
       "ownerInputRequired": "Approved staining purpose, relevant specimen types and protocol references, separately for each reagent.",
       "missing": [
         "Detailed description",
@@ -2140,7 +2222,9 @@
         "SKU-specific photo",
         "Optional additional photographs",
         "Approved documents (if available)"
-      ]
+      ],
+      "currentRevision": "GXon7RN0Hm0wO29GQns5Mw",
+      "mainImageCaption": null
     },
     {
       "id": "600b2643-25e4-46b9-8032-b1e01971a745",
@@ -2183,7 +2267,7 @@
       "legacyRouteCandidate": null,
       "urlNote": "Public EN catalogue",
       "source": "Published Sanity product record, revision MwWOMVq9aGfEEH7OTjsnXx",
-      "status": "INSUFFICIENT SOURCE",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
       "ownerInputRequired": "Approved product-specific application and intended use; no purity, process or chemistry specification inferred from the name.",
       "missing": [
         "Detailed description",
@@ -2192,7 +2276,9 @@
         "SKU-specific photo",
         "Optional additional photographs",
         "Approved documents (if available)"
-      ]
+      ],
+      "currentRevision": "MwWOMVq9aGfEEH7OTjsnXx",
+      "mainImageCaption": null
     },
     {
       "id": "6bfa18d2-e064-49c7-80d8-a12fb303d05b",
@@ -2235,7 +2321,7 @@
       "legacyRouteCandidate": null,
       "urlNote": "Public EN catalogue",
       "source": "Published Sanity product record, revision aMxuB38zD5OHLKwsnSq0ND",
-      "status": "INSUFFICIENT SOURCE",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
       "ownerInputRequired": "Approved product-specific application and intended use; no purity, process or chemistry specification inferred from the name.",
       "missing": [
         "Detailed description",
@@ -2244,7 +2330,9 @@
         "SKU-specific photo",
         "Optional additional photographs",
         "Approved documents (if available)"
-      ]
+      ],
+      "currentRevision": "aMxuB38zD5OHLKwsnSq0ND",
+      "mainImageCaption": null
     },
     {
       "id": "5fb8b759-431e-4535-9ac5-23c513e33a95",
@@ -2287,7 +2375,7 @@
       "legacyRouteCandidate": null,
       "urlNote": "Public EN catalogue",
       "source": "Published Sanity product record, revision aMxuB38zD5OHLKwsnSq18s",
-      "status": "INSUFFICIENT SOURCE",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
       "ownerInputRequired": "Approved product-specific application and intended use; no purity, process or chemistry specification inferred from the name.",
       "missing": [
         "Detailed description",
@@ -2296,7 +2384,9 @@
         "SKU-specific photo",
         "Optional additional photographs",
         "Approved documents (if available)"
-      ]
+      ],
+      "currentRevision": "aMxuB38zD5OHLKwsnSq18s",
+      "mainImageCaption": null
     },
     {
       "id": "db93d3c8-35fb-4b1f-b1e9-8823d7baffb9",
@@ -2325,8 +2415,8 @@
       "detailedDescriptionProposedEN": "Alkaline laboratory cleaning concentrate for manual cleaning of laboratory glassware, equipment and surfaces. Suitable for the removal of heavy contamination.",
       "intendedPurposeVerbatim": null,
       "intendedPurposeAuthority": "OWNER INPUT REQUIRED",
-      "mainImage": null,
-      "mainImageAssetId": null,
+      "mainImage": "https://cdn.sanity.io/images/ddtwki7e/production/f67403e73e3abecc3f6e02e69ae63a003a6bb067-1080x1072.jpg",
+      "mainImageAssetId": "image-f67403e73e3abecc3f6e02e69ae63a003a6bb067-1080x1072-jpg",
       "mainImageAlt": null,
       "gallery": [],
       "documents": {
@@ -2343,11 +2433,17 @@
       "ownerInputRequired": "Approve using the exact existing first sentence as a short summary. Confirm photo/pack correspondence and any missing packaging.",
       "missing": [
         "Intended purpose",
-        "SKU-specific photo",
         "Optional additional photographs",
         "Confirmed packaging",
         "Approved documents (if available)"
-      ]
+      ],
+      "currentRevision": "7oK4Gr8mQwy1DSz0yH2RqS",
+      "mainImageCaption": null,
+      "packagingLabelEvidence": {
+        "value": "1000 ml",
+        "source": "https://cdn.sanity.io/images/ddtwki7e/production/f67403e73e3abecc3f6e02e69ae63a003a6bb067-1080x1072.jpg",
+        "status": "VISUALLY VERIFIED — label read in hosted Preview; CMS pack-size field unchanged"
+      }
     },
     {
       "id": "5c4274fa-b658-4aa1-b436-b37ab3ddf6b5",
@@ -2390,7 +2486,7 @@
       "legacyRouteCandidate": null,
       "urlNote": "Public EN catalogue",
       "source": "Published Sanity product record, revision aMxuB38zD5OHLKwsnSpu7Z",
-      "status": "INSUFFICIENT SOURCE",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
       "ownerInputRequired": "Approved staining purpose, relevant specimen types and protocol references, separately for each reagent.",
       "missing": [
         "Detailed description",
@@ -2399,7 +2495,9 @@
         "SKU-specific photo",
         "Optional additional photographs",
         "Approved documents (if available)"
-      ]
+      ],
+      "currentRevision": "aMxuB38zD5OHLKwsnSpu7Z",
+      "mainImageCaption": null
     },
     {
       "id": "ef01d122-f2c1-4de0-b4fe-a65e2fbf4012",
@@ -2442,7 +2540,7 @@
       "legacyRouteCandidate": null,
       "urlNote": "Public EN catalogue",
       "source": "Published Sanity product record, revision MwWOMVq9aGfEEH7OTjsiGx",
-      "status": "INSUFFICIENT SOURCE",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
       "ownerInputRequired": "Approved staining purpose, relevant specimen types and protocol references, separately for each reagent.",
       "missing": [
         "Detailed description",
@@ -2451,7 +2549,9 @@
         "SKU-specific photo",
         "Optional additional photographs",
         "Approved documents (if available)"
-      ]
+      ],
+      "currentRevision": "MwWOMVq9aGfEEH7OTjsiGx",
+      "mainImageCaption": null
     },
     {
       "id": "86bf8c16-1ad7-42f2-8695-5d6f62970293",
@@ -2494,7 +2594,7 @@
       "legacyRouteCandidate": null,
       "urlNote": "Public EN catalogue",
       "source": "Published Sanity product record, revision aMxuB38zD5OHLKwsnSpsmx",
-      "status": "INSUFFICIENT SOURCE",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
       "ownerInputRequired": "Approved staining purpose, relevant specimen types and protocol references, separately for each reagent.",
       "missing": [
         "Detailed description",
@@ -2503,7 +2603,10 @@
         "SKU-specific photo",
         "Optional additional photographs",
         "Approved documents (if available)"
-      ]
+      ],
+      "currentRevision": "aMxuB38zD5OHLKwsnSpsmx",
+      "mainImageCaption": null
     }
-  ]
+  ],
+  "readAt": "2026-10-12T11:28:56.727Z"
 }

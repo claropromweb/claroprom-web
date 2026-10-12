@@ -1,0 +1,2745 @@
+{
+  "readAt": "2026-10-12T11:28:56.727Z",
+  "base": "PR #25, technical V2.1 pending owner release",
+  "scope": "Draft content only — no CMS import or intendedPurpose generation",
+  "sources": {
+    "S1": {
+      "title": "Leica Biosystems — An Introduction to Specimen Processing",
+      "url": "https://www.leicabiosystems.com/knowledge-pathway/an-introduction-to-specimen-processing/",
+      "scope": "General fixation, graded ethanol dehydration and clearing terminology. No CLARO-PROM formulation evidence."
+    },
+    "S2": {
+      "title": "Leica Biosystems — The Science of Tissue Processing",
+      "url": "https://www.leicabiosystems.com/sites/default/files/media_document-file/2023-06/210356_Science_of_Tissue_Processing_PPT_for_Knowledge_Pathway.pdf",
+      "scope": "General tissue-processing sequence and solvent roles; no transfer of instrument validation or reagent specifications."
+    },
+    "S3": {
+      "title": "Bio-Optica — General catalogue, Coverglassing / Mounting media, pp. 78–79",
+      "url": "https://www.bio-optica.it/upl/cms/attach/20180530/104727143_4177.pdf",
+      "scope": "Mounting-medium category and coverslipping; competitor chemical bases and compatibility not transferred."
+    },
+    "S4": {
+      "title": "Merck / Sigma-Aldrich — Hematology Stains",
+      "url": "https://www.sigmaaldrich.com/IN/en/products/clinical-diagnostics/tissue-diagnostics/hematology-stains",
+      "scope": "General Giemsa and May–Grünwald staining categories; no specimen/protocol/performance approval for CLARO-PROM."
+    },
+    "S5": {
+      "title": "Merck — Immersion oil for microscopy, principle section",
+      "url": "https://www.sigmaaldrich.com/deepweb/assets/sigmaaldrich/product/documents/417/210/104699ug-mk.pdf",
+      "scope": "General role of oil between specimen and oil-immersion objective. No refractive index, optical grade or compatibility transferred."
+    },
+    "S6": {
+      "title": "Bio-Optica — General catalogue, Formalin concentrate, p. 8",
+      "url": "https://www.bio-optica.it/upl/cms/attach/20180530/104727143_4177.pdf",
+      "scope": "General catalogue treatment of concentrated formaldehyde as a source reagent. Competitor concentration, composition, material or approved use is not transferred."
+    }
+  },
+  "families": [
+    {
+      "key": "10-nb",
+      "name": "10% NB Formaldehyde Solution",
+      "short": "Neutral-buffered formaldehyde solution for tissue fixation, retaining the catalogue designation “10% NB”.",
+      "detail": "Neutral-buffered formaldehyde solution for the fixation stage of tissue preparation. Formaldehyde-based fixatives are used to preserve tissue before subsequent processing, sectioning and microscopic examination. The catalogue designation “10% NB” identifies this group separately from the 4% NB and concentrated 37% products.",
+      "sources": [
+        "S1",
+        "S2"
+      ],
+      "questions": [
+        "Does “10% NB” denote 10% formaldehyde, 10% neutral-buffered formalin, or another labelled concentration convention? Confirm units and exact approved name.",
+        "Approve, modify or reject the proposed tissue-fixation function; are 1 L, 5 L and 10 L the same approved formulation?"
+      ],
+      "critical": "Exact concentration terminology and approved fixation application must be confirmed; no equivalence to 4% or 10% formalin is asserted.",
+      "skus": [
+        {
+          "id": "26c83323-8554-429f-b524-ef1b700283a7",
+          "name": "10% NB Formaldehyde Solution, 1 L",
+          "codes": [
+            "CP00F10"
+          ],
+          "packaging": [
+            "1 L"
+          ]
+        },
+        {
+          "id": "e18a6436-171b-48be-a05f-6fa7e9231724",
+          "name": "10% NB Formaldehyde Solution, 10 L",
+          "codes": [
+            "CP00F10C"
+          ],
+          "packaging": [
+            "10 L"
+          ]
+        },
+        {
+          "id": "6b047954-1a63-4901-8be3-851d967bfc32",
+          "name": "10% NB Formaldehyde Solution, 5 L",
+          "codes": [
+            "CP00F10A"
+          ],
+          "packaging": [
+            "5 L"
+          ]
+        }
+      ],
+      "approvalStatus": "PROPOSED — OWNER REVIEW",
+      "shortLength": 105,
+      "detailedWords": 41
+    },
+    {
+      "key": "4-nb",
+      "name": "4% NB Formaldehyde Solution",
+      "short": "Neutral-buffered formaldehyde solution for tissue fixation, retaining the catalogue designation “4% NB”.",
+      "detail": "Neutral-buffered formaldehyde solution for fixation before laboratory tissue processing. Fixation preserves the specimen ahead of the steps used to prepare sections for staining and microscopic examination. This group retains the catalogue designation “4% NB” and is presented separately from other formaldehyde concentrations and formulations.",
+      "sources": [
+        "S1",
+        "S2"
+      ],
+      "questions": [
+        "Confirm the “4% NB” concentration convention and approved fixation application.",
+        "Are 1 L, 5 L and 10 L the same formulation, and is this group distinct from the “10% NB” group?"
+      ],
+      "critical": "Concentration units, buffer identity and product-specific intended use remain unverified.",
+      "skus": [
+        {
+          "id": "2310249d-dd2a-4143-a16b-74a158134b29",
+          "name": "4% NB Formaldehyde Solution, 1 L",
+          "codes": [
+            "CP00F4"
+          ],
+          "packaging": [
+            "1 L"
+          ]
+        },
+        {
+          "id": "89cf8290-0639-4b04-b6b2-05b25dde7957",
+          "name": "4% NB Formaldehyde Solution, 10 L",
+          "codes": [
+            "CP00F410"
+          ],
+          "packaging": [
+            "10 L"
+          ]
+        },
+        {
+          "id": "fcc7b3d6-1df3-4c0b-9abe-b902ce50cf9f",
+          "name": "4% NB Formaldehyde Solution, 5 L",
+          "codes": [
+            "CP00F45"
+          ],
+          "packaging": [
+            "5 L"
+          ]
+        }
+      ],
+      "approvalStatus": "PROPOSED — OWNER REVIEW",
+      "shortLength": 104,
+      "detailedWords": 44
+    },
+    {
+      "key": "37-formaldehyde",
+      "name": "37% Formaldehyde Solution",
+      "short": "Concentrated formaldehyde solution for laboratory reagent preparation, supplied under the labelled 37% designation.",
+      "detail": "A concentrated formaldehyde solution for laboratory reagent preparation. Concentrated solutions serve as source reagents where a laboratory procedure calls for a prepared formaldehyde-based solution. This catalogue group includes separately identified glass and plastic presentations, each retaining its own product code and packaging.",
+      "sources": [
+        "S6",
+        "S1"
+      ],
+      "questions": [
+        "Is this a stock reagent for laboratory solution preparation, or is another commercial application approved?",
+        "Do the glass and plastic 1 L presentations contain the same formulation? Confirm concentration units; no dilution instructions will be invented."
+      ],
+      "critical": "No ready-to-use fixation claim or dilution protocol is proposed.",
+      "skus": [
+        {
+          "id": "67f5dfb0-57c5-484c-b9ec-ceee8e416db2",
+          "name": "37% Formaldehyde Solution, 1 L (Glass)",
+          "codes": [
+            "CP00FOS"
+          ],
+          "packaging": [
+            "1 L glass"
+          ]
+        },
+        {
+          "id": "60a19412-3a63-4a27-aabf-e015621fe66e",
+          "name": "37% Formaldehyde Solution, 1 L (Plastic)",
+          "codes": [
+            "CP00FO"
+          ],
+          "packaging": [
+            "1 L plastic"
+          ]
+        }
+      ],
+      "approvalStatus": "PROPOSED — OWNER REVIEW",
+      "shortLength": 115,
+      "detailedWords": 42
+    },
+    {
+      "key": "absolute-ethanol",
+      "name": "Absolute Ethanol, IVD Reagent",
+      "short": "Absolute ethanol reagent for the dehydration stages of laboratory specimen preparation before clearing.",
+      "detail": "An ethanol reagent for alcohol-based specimen preparation, including dehydration before clearing. In graded processing sequences, progressively stronger alcohol solutions replace specimen water ahead of paraffin infiltration. The product retains the catalogue designation “Absolute Ethanol” and is supplied in the separately coded pack sizes listed below.",
+      "sources": [
+        "S1",
+        "S2"
+      ],
+      "questions": [
+        "Confirm dehydration as the approved commercial function and identify any denaturant or purity fact that may be published.",
+        "Are 1 L, 5 L and 10 L the same formulation?"
+      ],
+      "critical": "No purity grade, water limit, denaturant or diagnostic use is inferred.",
+      "skus": [
+        {
+          "id": "65082ed4-a129-4c7b-ae4b-ef0a4cdacfc8",
+          "name": "Absolute Ethanol, IVD Reagent, 1 L",
+          "codes": [
+            "CPEAI"
+          ],
+          "packaging": [
+            "1 L"
+          ]
+        },
+        {
+          "id": "83bdbf73-d7f8-42d3-bd0c-4a055170d022",
+          "name": "Absolute Ethanol, IVD Reagent, 10 L",
+          "codes": [
+            "CPEAI10"
+          ],
+          "packaging": [
+            "10 L"
+          ]
+        },
+        {
+          "id": "de7f9e03-8e51-43bb-a8c4-f997f9a3b103",
+          "name": "Absolute Ethanol, IVD Reagent, 5 L",
+          "codes": [
+            "CPEAI5"
+          ],
+          "packaging": [
+            "5 L"
+          ]
+        }
+      ],
+      "approvalStatus": "PROPOSED — OWNER REVIEW",
+      "shortLength": 103,
+      "detailedWords": 45
+    },
+    {
+      "key": "ethanol-50",
+      "name": "Ethanol 50% v/v, IVD Reagent",
+      "short": "Ethanol solution at 50% v/v, for graded alcohol steps in laboratory specimen preparation.",
+      "detail": "An ethanol solution at 50% v/v for graded alcohol steps in laboratory specimen preparation. Alcohol solutions allow concentration changes between aqueous and higher-strength alcohol stages. Placement in the sequence depends on the specimen-preparation method. This concentration is catalogued separately from other strengths and supplied in separately coded pack sizes.",
+      "sources": [
+        "S1",
+        "S2"
+      ],
+      "questions": [
+        "Approve, modify or reject graded alcohol processing as the function of the 50% v/v formulation; which preparation stage is appropriate?",
+        "Are 1 L, 5 L and 10 L the same formulation? Confirm any denaturant or approved specification that can be mentioned."
+      ],
+      "critical": "Each concentration remains a separate proposed group; no interchangeability, disinfection claim or protocol is inferred.",
+      "skus": [
+        {
+          "id": "269d62d5-e498-463b-8af3-98de945e5923",
+          "name": "Ethanol 50% v/v, IVD Reagent, 1 L",
+          "codes": [
+            "CPE50I"
+          ],
+          "packaging": [
+            "1 L"
+          ]
+        },
+        {
+          "id": "292998ef-98b3-4b5a-a9a3-e90c50838655",
+          "name": "Ethanol 50% v/v, IVD Reagent, 10 L",
+          "codes": [
+            "CPE50I10"
+          ],
+          "packaging": [
+            "10 L"
+          ]
+        },
+        {
+          "id": "0506238b-2fdd-4ea9-a470-2e7606be1acf",
+          "name": "Ethanol 50% v/v, IVD Reagent, 5 L",
+          "codes": [
+            "CPE50I5"
+          ],
+          "packaging": [
+            "5 L"
+          ]
+        }
+      ],
+      "approvalStatus": "PROPOSED — OWNER REVIEW",
+      "shortLength": 89,
+      "detailedWords": 49
+    },
+    {
+      "key": "ethanol-70",
+      "name": "Ethanol 70% v/v, IVD Reagent",
+      "short": "Ethanol solution at 70% v/v, for graded alcohol steps in laboratory specimen preparation.",
+      "detail": "An ethanol solution at 70% v/v for graded alcohol steps in laboratory specimen preparation. Alcohol solutions allow concentration changes between aqueous and higher-strength alcohol stages. Placement in the sequence depends on the specimen-preparation method. This concentration is catalogued separately from other strengths and supplied in separately coded pack sizes.",
+      "sources": [
+        "S1",
+        "S2"
+      ],
+      "questions": [
+        "Approve, modify or reject graded alcohol processing as the function of the 70% v/v formulation; which preparation stage is appropriate?",
+        "Are 1 L, 5 L and 10 L the same formulation? Confirm any denaturant or approved specification that can be mentioned."
+      ],
+      "critical": "Each concentration remains a separate proposed group; no interchangeability, disinfection claim or protocol is inferred.",
+      "skus": [
+        {
+          "id": "448a3c23-ab10-4646-8e8f-6b55a448400f",
+          "name": "Ethanol 70% v/v, IVD Reagent, 1 L",
+          "codes": [
+            "CPE70I"
+          ],
+          "packaging": [
+            "1 L"
+          ]
+        },
+        {
+          "id": "f7b599ad-8190-4918-a52d-ec8e99253e94",
+          "name": "Ethanol 70% v/v, IVD Reagent, 10 L",
+          "codes": [
+            "CPE70I10"
+          ],
+          "packaging": [
+            "10 L"
+          ]
+        },
+        {
+          "id": "db62555e-3473-4456-8e9e-e5bb9416c209",
+          "name": "Ethanol 70% v/v, IVD Reagent, 5 L",
+          "codes": [
+            "CPE70I5"
+          ],
+          "packaging": [
+            "5 L"
+          ]
+        }
+      ],
+      "approvalStatus": "PROPOSED — OWNER REVIEW",
+      "shortLength": 89,
+      "detailedWords": 49
+    },
+    {
+      "key": "ethanol-80",
+      "name": "Ethanol 80% v/v, IVD Reagent",
+      "short": "Ethanol solution at 80% v/v, for graded alcohol steps in laboratory specimen preparation.",
+      "detail": "An ethanol solution at 80% v/v for graded alcohol steps in laboratory specimen preparation. Alcohol solutions allow concentration changes between aqueous and higher-strength alcohol stages. Placement in the sequence depends on the specimen-preparation method. This concentration is catalogued separately from other strengths and supplied in separately coded pack sizes.",
+      "sources": [
+        "S1",
+        "S2"
+      ],
+      "questions": [
+        "Approve, modify or reject graded alcohol processing as the function of the 80% v/v formulation; which preparation stage is appropriate?",
+        "Are 1 L, 5 L and 10 L the same formulation? Confirm any denaturant or approved specification that can be mentioned."
+      ],
+      "critical": "Each concentration remains a separate proposed group; no interchangeability, disinfection claim or protocol is inferred.",
+      "skus": [
+        {
+          "id": "0e84304c-abf1-44b2-92be-567605232b83",
+          "name": "Ethanol 80% v/v, IVD Reagent, 1 L",
+          "codes": [
+            "CPE80I"
+          ],
+          "packaging": [
+            "1 L"
+          ]
+        },
+        {
+          "id": "e3694ac0-031e-4fc1-8189-6ce4ae1d9e5e",
+          "name": "Ethanol 80% v/v, IVD Reagent, 10 L",
+          "codes": [
+            "CPE80I10"
+          ],
+          "packaging": [
+            "10 L"
+          ]
+        },
+        {
+          "id": "77b22f6d-1b3e-4eb3-addb-bfbbba20493e",
+          "name": "Ethanol 80% v/v, IVD Reagent, 5 L",
+          "codes": [
+            "CPE80I5"
+          ],
+          "packaging": [
+            "5 L"
+          ]
+        }
+      ],
+      "approvalStatus": "PROPOSED — OWNER REVIEW",
+      "shortLength": 89,
+      "detailedWords": 49
+    },
+    {
+      "key": "ethanol-95",
+      "name": "Ethanol 95% v/v, IVD Reagent",
+      "short": "Ethanol solution at 95% v/v, for graded alcohol steps in laboratory specimen preparation.",
+      "detail": "An ethanol solution at 95% v/v for graded alcohol steps in laboratory specimen preparation. Alcohol solutions allow concentration changes between aqueous and higher-strength alcohol stages. Placement in the sequence depends on the specimen-preparation method. This concentration is catalogued separately from other strengths and supplied in separately coded pack sizes.",
+      "sources": [
+        "S1",
+        "S2"
+      ],
+      "questions": [
+        "Approve, modify or reject graded alcohol processing as the function of the 95% v/v formulation; which preparation stage is appropriate?",
+        "Are 1 L, 5 L and 10 L the same formulation? Confirm any denaturant or approved specification that can be mentioned."
+      ],
+      "critical": "Each concentration remains a separate proposed group; no interchangeability, disinfection claim or protocol is inferred.",
+      "skus": [
+        {
+          "id": "6626f39d-59cf-4fc3-8901-9db98b4018f9",
+          "name": "Ethanol 95% v/v, IVD Reagent, 1 L",
+          "codes": [
+            "CPE95I"
+          ],
+          "packaging": [
+            "1 L"
+          ]
+        },
+        {
+          "id": "efb3ecc2-ce49-4438-94ce-31f0e1c0a1f6",
+          "name": "Ethanol 95% v/v, IVD Reagent, 10 L",
+          "codes": [
+            "CPE95I10"
+          ],
+          "packaging": [
+            "10 L"
+          ]
+        },
+        {
+          "id": "32a7bb9c-170d-4009-aa27-cf5d5b6c823d",
+          "name": "Ethanol 95% v/v, IVD Reagent, 5 L",
+          "codes": [
+            "CPE95I5"
+          ],
+          "packaging": [
+            "5 L"
+          ]
+        }
+      ],
+      "approvalStatus": "PROPOSED — OWNER REVIEW",
+      "shortLength": 89,
+      "detailedWords": 49
+    },
+    {
+      "key": "ethanol-96",
+      "name": "Ethanol 96% v/v, IVD Reagent",
+      "short": "Ethanol solution at 96% v/v, for graded alcohol steps in laboratory specimen preparation.",
+      "detail": "An ethanol solution at 96% v/v for graded alcohol steps in laboratory specimen preparation. Alcohol solutions allow concentration changes between aqueous and higher-strength alcohol stages. Placement in the sequence depends on the specimen-preparation method. This concentration is catalogued separately from other strengths and supplied in separately coded pack sizes.",
+      "sources": [
+        "S1",
+        "S2"
+      ],
+      "questions": [
+        "Approve, modify or reject graded alcohol processing as the function of the 96% v/v formulation; which preparation stage is appropriate?",
+        "Are 1 L, 5 L and 10 L the same formulation? Confirm any denaturant or approved specification that can be mentioned."
+      ],
+      "critical": "Each concentration remains a separate proposed group; no interchangeability, disinfection claim or protocol is inferred.",
+      "skus": [
+        {
+          "id": "1fdab584-544b-47cc-a522-5cddaa1d4ce8",
+          "name": "Ethanol 96% v/v, IVD Reagent, 1 L",
+          "codes": [
+            "CPE96I"
+          ],
+          "packaging": [
+            "1 L"
+          ]
+        },
+        {
+          "id": "50482a66-d710-4aa8-ba75-8f56deaee35c",
+          "name": "Ethanol 96% v/v, IVD Reagent, 10 L",
+          "codes": [
+            "CPE96I10"
+          ],
+          "packaging": [
+            "10 L"
+          ]
+        },
+        {
+          "id": "9079fe0e-d658-4e48-ac48-23f7aadb31b2",
+          "name": "Ethanol 96% v/v, IVD Reagent, 5 L",
+          "codes": [
+            "CPE96I5"
+          ],
+          "packaging": [
+            "5 L"
+          ]
+        }
+      ],
+      "approvalStatus": "PROPOSED — OWNER REVIEW",
+      "shortLength": 89,
+      "detailedWords": 49
+    },
+    {
+      "key": "claroclear-substitute",
+      "name": "Claroclear Xylene Substitute",
+      "short": "Xylene-substitute reagent for clearing in laboratory specimen preparation before paraffin infiltration.",
+      "detail": "A xylene-substitute reagent for the clearing stage of laboratory specimen preparation. Clearing is the transition between alcohol-based processing and paraffin infiltration. Claroclear Xylene Substitute is presented as a separate product group from Claroclear Xylene, with its own catalogue numbers and available pack sizes.",
+      "sources": [
+        "S1",
+        "S2"
+      ],
+      "questions": [
+        "Confirm tissue clearing as the approved commercial function; is any slide-processing application also approved?",
+        "Are 1 L and 10 L the same formulation? Identify permitted compatibility statements from approved documents only."
+      ],
+      "critical": "No chemical base, safety superiority or universal compatibility claim.",
+      "skus": [
+        {
+          "id": "caf938a1-fdbe-40d7-a296-14177067103f",
+          "name": "Claroclear Xylene Substitute, 1 L",
+          "codes": [
+            "CP00XLS"
+          ],
+          "packaging": [
+            "1 L"
+          ]
+        },
+        {
+          "id": "4a18a104-ff8b-4d6f-b224-653aad74fb92",
+          "name": "Claroclear Xylene Substitute, 10 L",
+          "codes": [
+            "CP00XLS1"
+          ],
+          "packaging": [
+            "10 L"
+          ]
+        }
+      ],
+      "approvalStatus": "PROPOSED — OWNER REVIEW",
+      "shortLength": 103,
+      "detailedWords": 43
+    },
+    {
+      "key": "claroclear-xylene",
+      "name": "Claroclear Xylene",
+      "short": "Xylene reagent for clearing in laboratory specimen preparation as part of an approved processing sequence.",
+      "detail": "A xylene reagent for clearing in laboratory specimen preparation. In conventional paraffin workflows, the clearing stage follows alcohol-based dehydration and precedes wax infiltration. Claroclear Xylene is catalogued separately from the xylene-substitute group, with distinct product codes for the listed packaging presentations.",
+      "sources": [
+        "S1",
+        "S2"
+      ],
+      "questions": [
+        "Confirm tissue clearing as the approved function and any additional approved application.",
+        "Are 1 L glass, 1 L plastic and 10 L variants the same formulation or only related products?"
+      ],
+      "critical": "Glass/plastic variants are mapped separately; xylene and its substitute are not merged.",
+      "skus": [
+        {
+          "id": "3c32cf79-39c3-4bf8-bf48-5f201e67b608",
+          "name": "Claroclear Xylene, 1 L (Glass)",
+          "codes": [
+            "CP00XL"
+          ],
+          "packaging": [
+            "1 L glass"
+          ]
+        },
+        {
+          "id": "e79f3f00-8023-49d2-8cdb-b95534c9962f",
+          "name": "Claroclear Xylene, 1 L (Plastic)",
+          "codes": [
+            "CP00XL1"
+          ],
+          "packaging": [
+            "1 L"
+          ]
+        },
+        {
+          "id": "96c3b4db-c11a-49fd-a087-6b96f62ea7fc",
+          "name": "Claroclear Xylene, 10 L",
+          "codes": [
+            "CP00XL2"
+          ],
+          "packaging": [
+            "10 L"
+          ]
+        }
+      ],
+      "approvalStatus": "PROPOSED — OWNER REVIEW",
+      "shortLength": 106,
+      "detailedWords": 41
+    },
+    {
+      "key": "claromount",
+      "name": "Claromount",
+      "short": "Mounting medium for coverslipping prepared microscope slides and supporting subsequent microscopic examination.",
+      "detail": "A mounting medium for the finishing stage of microscope-slide preparation. Mounting places a prepared specimen beneath a coverslip for subsequent microscopic examination. The mounting-medium category forms part of the workflow after specimen preparation and staining; Claromount is offered in separately coded pack sizes.",
+      "sources": [
+        "S3"
+      ],
+      "questions": [
+        "Confirm that “mounting medium for coverslipping” correctly describes Claromount.",
+        "Are 50, 100, 200 and 500 mL the same formulation? Which base, drying or compatibility facts are approved for publication, if any?"
+      ],
+      "critical": "Mounting-medium identity itself needs manufacturer confirmation; no base or stain compatibility claim.",
+      "skus": [
+        {
+          "id": "8198c46c-6d27-49a8-a024-00f1a2c07a89",
+          "name": "Claromount, 100 mL",
+          "codes": [
+            "CP00MT1"
+          ],
+          "packaging": [
+            "100 mL"
+          ]
+        },
+        {
+          "id": "7ae74101-f3c6-43dd-81c0-703c54ad3f2e",
+          "name": "Claromount, 200 mL",
+          "codes": [
+            "CP00MT2"
+          ],
+          "packaging": [
+            "200 mL"
+          ]
+        },
+        {
+          "id": "44c067f6-3c0b-462d-ad1c-f51a9c44d078",
+          "name": "Claromount, 50 mL",
+          "codes": [
+            "CP00MT"
+          ],
+          "packaging": [
+            "50 mL"
+          ]
+        },
+        {
+          "id": "404d6506-1437-44ba-a1d3-7f09ae5434db",
+          "name": "Claromount, 500 mL",
+          "codes": [
+            "CP00MT3"
+          ],
+          "packaging": [
+            "500 mL"
+          ]
+        }
+      ],
+      "approvalStatus": "PROPOSED — OWNER REVIEW",
+      "shortLength": 111,
+      "detailedWords": 43
+    },
+    {
+      "key": "giemsa",
+      "name": "Giemsa Solution",
+      "short": "Giemsa staining solution for visual differentiation of cellular structures in microscopic preparations.",
+      "detail": "A Giemsa staining solution for microscopic preparations requiring visual differentiation of cellular structures. Staining adds contrast to structures that can otherwise be difficult to distinguish under light microscopy. The solution belongs to the Giemsa reagent category and is supplied in the listed catalogue pack sizes.",
+      "sources": [
+        "S4"
+      ],
+      "questions": [
+        "Approve the general cellular-staining description and identify the approved specimen scope.",
+        "Are 100 mL, 500 mL and 1 L the same formulation? Is a specific combination with May–Grünwald approved?"
+      ],
+      "critical": "No parasite indication, staining time, buffer pH or guaranteed colour/performance claim.",
+      "skus": [
+        {
+          "id": "e579bd5f-8f76-4405-91f4-e5fa04068167",
+          "name": "Giemsa Solution, 1 L",
+          "codes": [
+            "CP00G3"
+          ],
+          "packaging": [
+            "1 L"
+          ]
+        },
+        {
+          "id": "f5ee9e66-cdf6-49f3-bb91-4f2e9a87e652",
+          "name": "Giemsa Solution, 100 mL",
+          "codes": [
+            "CP00G1"
+          ],
+          "packaging": [
+            "100 mL"
+          ]
+        },
+        {
+          "id": "36a7691c-7768-434d-a6d9-f1d7a41142c9",
+          "name": "Giemsa Solution, 500 mL",
+          "codes": [
+            "CP00G2"
+          ],
+          "packaging": [
+            "500 mL"
+          ]
+        }
+      ],
+      "approvalStatus": "PROPOSED — OWNER REVIEW",
+      "shortLength": 103,
+      "detailedWords": 45
+    },
+    {
+      "key": "may-grunwald",
+      "name": "May–Grünwald Solution",
+      "short": "May–Grünwald staining solution for visual differentiation of cells in laboratory microscopic preparations.",
+      "detail": "A May–Grünwald staining solution for microscopic preparations requiring cellular differentiation. May–Grünwald belongs to the Romanowsky-type staining category, which includes established combined staining methods. This reagent is catalogued separately from Giemsa and supplied in distinct pack sizes, allowing laboratories to select the appropriate presentation for their workflow.",
+      "sources": [
+        "S4"
+      ],
+      "questions": [
+        "Approve the general cellular-staining function; is a May–Grünwald–Giemsa combination approved for this formulation?",
+        "Are 100 mL, 500 mL and 1 L the same formulation? Confirm the official commercial spelling without changing public names now."
+      ],
+      "critical": "No protocol, specimen indication or specific performance result is assigned.",
+      "skus": [
+        {
+          "id": "5c4274fa-b658-4aa1-b436-b37ab3ddf6b5",
+          "name": "May Gruenwald Solution, 1 L",
+          "codes": [
+            "CP00MY2"
+          ],
+          "packaging": [
+            "1 L"
+          ]
+        },
+        {
+          "id": "ef01d122-f2c1-4de0-b4fe-a65e2fbf4012",
+          "name": "May Gruenwald Solution, 100 mL",
+          "codes": [
+            "CP00MY"
+          ],
+          "packaging": [
+            "100 mL"
+          ]
+        },
+        {
+          "id": "86bf8c16-1ad7-42f2-8695-5d6f62970293",
+          "name": "May Gruenwald Solution, 500 mL",
+          "codes": [
+            "CP00MY1"
+          ],
+          "packaging": [
+            "500 mL"
+          ]
+        }
+      ],
+      "approvalStatus": "PROPOSED — OWNER REVIEW",
+      "shortLength": 106,
+      "detailedWords": 46
+    },
+    {
+      "key": "immersion-oil",
+      "name": "Immersion Oil",
+      "short": "Microscopy immersion oil for use between the prepared slide and an oil-immersion objective.",
+      "detail": "An immersion oil for microscopy using oil-immersion objectives. The oil provides a medium between the prepared slide and the objective, supporting the optical interface used in oil-immersion examination. This product group is supplied in separately coded volumes for selection according to laboratory requirements.",
+      "sources": [
+        "S5"
+      ],
+      "questions": [
+        "Confirm the proposed microscopy function and the approved objective/specimen scope.",
+        "Are 100, 200 and 500 mL the same formulation? Which optical specifications, if any, are approved for publication?"
+      ],
+      "critical": "No refractive index, oil type, objective brand compatibility or optical performance specification.",
+      "skus": [
+        {
+          "id": "600b2643-25e4-46b9-8032-b1e01971a745",
+          "name": "Immersion Oil, 100 mL",
+          "codes": [
+            "CP00CD"
+          ],
+          "packaging": [
+            "100 mL"
+          ]
+        },
+        {
+          "id": "6bfa18d2-e064-49c7-80d8-a12fb303d05b",
+          "name": "Immersion Oil, 200 mL",
+          "codes": [
+            "CP00CD1"
+          ],
+          "packaging": [
+            "200 mL"
+          ]
+        },
+        {
+          "id": "5fb8b759-431e-4535-9ac5-23c513e33a95",
+          "name": "Immersion Oil, 500 mL",
+          "codes": [
+            "CP00CD2"
+          ],
+          "packaging": [
+            "500 mL"
+          ]
+        }
+      ],
+      "approvalStatus": "PROPOSED — OWNER REVIEW",
+      "shortLength": 91,
+      "detailedWords": 43
+    }
+  ],
+  "mappings": [
+    {
+      "id": "26c83323-8554-429f-b524-ef1b700283a7",
+      "expectedRevision": "GXon7RN0Hm0wO29GQnrj6A",
+      "name": "10% NB Formaldehyde Solution, 1 L",
+      "catalogueNumbers": [
+        "CP00F10"
+      ],
+      "packaging": [
+        "1 L"
+      ],
+      "url": "https://claroprom.com/products/10-nb-formaldehyde-solution-cp00f10",
+      "proposedFamily": "10-nb",
+      "proposedShortDescription": "Neutral-buffered formaldehyde solution for tissue fixation, retaining the catalogue designation “10% NB”.",
+      "proposedDetailedDescription": "Neutral-buffered formaldehyde solution for the fixation stage of tissue preparation. Formaldehyde-based fixatives are used to preserve tissue before subsequent processing, sectioning and microscopic examination. The catalogue designation “10% NB” identifies this group separately from the 4% NB and concentrated 37% products.",
+      "existingIntendedPurpose": null,
+      "intendedPurposeStatus": "BLOCKED — SPECIFIC FACT MISSING: approved intended-purpose wording",
+      "sources": [
+        {
+          "title": "Leica Biosystems — An Introduction to Specimen Processing",
+          "url": "https://www.leicabiosystems.com/knowledge-pathway/an-introduction-to-specimen-processing/",
+          "scope": "General fixation, graded ethanol dehydration and clearing terminology. No CLARO-PROM formulation evidence."
+        },
+        {
+          "title": "Leica Biosystems — The Science of Tissue Processing",
+          "url": "https://www.leicabiosystems.com/sites/default/files/media_document-file/2023-06/210356_Science_of_Tissue_Processing_PPT_for_Knowledge_Pathway.pdf",
+          "scope": "General tissue-processing sequence and solvent roles; no transfer of instrument validation or reagent specifications."
+        }
+      ],
+      "confidence": {
+        "confirmedProductFact": "Published catalogue identity, code, labelled concentration/name and pack-size fields only.",
+        "generalTechnicalKnowledge": "Reagent-category role from official technical references; draft-level context only.",
+        "manufacturerVerificationRequired": "Exact concentration terminology and approved fixation application must be confirmed; no equivalence to 4% or 10% formalin is asserted."
+      },
+      "ownerInput": [
+        "Does “10% NB” denote 10% formaldehyde, 10% neutral-buffered formalin, or another labelled concentration convention? Confirm units and exact approved name.",
+        "Approve, modify or reject the proposed tissue-fixation function; are 1 L, 5 L and 10 L the same approved formulation?"
+      ],
+      "approvalStatus": "PROPOSED — OWNER REVIEW",
+      "familyEquivalenceConfirmed": false,
+      "previousValues": {
+        "shortDescription": null,
+        "description": null,
+        "intendedPurpose": null
+      },
+      "publicationAllowed": false
+    },
+    {
+      "id": "e18a6436-171b-48be-a05f-6fa7e9231724",
+      "expectedRevision": "GXon7RN0Hm0wO29GQnroWw",
+      "name": "10% NB Formaldehyde Solution, 10 L",
+      "catalogueNumbers": [
+        "CP00F10C"
+      ],
+      "packaging": [
+        "10 L"
+      ],
+      "url": "https://claroprom.com/products/10-nb-formaldehyde-solution-cp00f10c",
+      "proposedFamily": "10-nb",
+      "proposedShortDescription": "Neutral-buffered formaldehyde solution for tissue fixation, retaining the catalogue designation “10% NB”.",
+      "proposedDetailedDescription": "Neutral-buffered formaldehyde solution for the fixation stage of tissue preparation. Formaldehyde-based fixatives are used to preserve tissue before subsequent processing, sectioning and microscopic examination. The catalogue designation “10% NB” identifies this group separately from the 4% NB and concentrated 37% products.",
+      "existingIntendedPurpose": null,
+      "intendedPurposeStatus": "BLOCKED — SPECIFIC FACT MISSING: approved intended-purpose wording",
+      "sources": [
+        {
+          "title": "Leica Biosystems — An Introduction to Specimen Processing",
+          "url": "https://www.leicabiosystems.com/knowledge-pathway/an-introduction-to-specimen-processing/",
+          "scope": "General fixation, graded ethanol dehydration and clearing terminology. No CLARO-PROM formulation evidence."
+        },
+        {
+          "title": "Leica Biosystems — The Science of Tissue Processing",
+          "url": "https://www.leicabiosystems.com/sites/default/files/media_document-file/2023-06/210356_Science_of_Tissue_Processing_PPT_for_Knowledge_Pathway.pdf",
+          "scope": "General tissue-processing sequence and solvent roles; no transfer of instrument validation or reagent specifications."
+        }
+      ],
+      "confidence": {
+        "confirmedProductFact": "Published catalogue identity, code, labelled concentration/name and pack-size fields only.",
+        "generalTechnicalKnowledge": "Reagent-category role from official technical references; draft-level context only.",
+        "manufacturerVerificationRequired": "Exact concentration terminology and approved fixation application must be confirmed; no equivalence to 4% or 10% formalin is asserted."
+      },
+      "ownerInput": [
+        "Does “10% NB” denote 10% formaldehyde, 10% neutral-buffered formalin, or another labelled concentration convention? Confirm units and exact approved name.",
+        "Approve, modify or reject the proposed tissue-fixation function; are 1 L, 5 L and 10 L the same approved formulation?"
+      ],
+      "approvalStatus": "PROPOSED — OWNER REVIEW",
+      "familyEquivalenceConfirmed": false,
+      "previousValues": {
+        "shortDescription": null,
+        "description": null,
+        "intendedPurpose": null
+      },
+      "publicationAllowed": false
+    },
+    {
+      "id": "6b047954-1a63-4901-8be3-851d967bfc32",
+      "expectedRevision": "MwWOMVq9aGfEEH7OTjsLBt",
+      "name": "10% NB Formaldehyde Solution, 5 L",
+      "catalogueNumbers": [
+        "CP00F10A"
+      ],
+      "packaging": [
+        "5 L"
+      ],
+      "url": "https://claroprom.com/products/10-nb-formaldehyde-solution-cp00f10a",
+      "proposedFamily": "10-nb",
+      "proposedShortDescription": "Neutral-buffered formaldehyde solution for tissue fixation, retaining the catalogue designation “10% NB”.",
+      "proposedDetailedDescription": "Neutral-buffered formaldehyde solution for the fixation stage of tissue preparation. Formaldehyde-based fixatives are used to preserve tissue before subsequent processing, sectioning and microscopic examination. The catalogue designation “10% NB” identifies this group separately from the 4% NB and concentrated 37% products.",
+      "existingIntendedPurpose": null,
+      "intendedPurposeStatus": "BLOCKED — SPECIFIC FACT MISSING: approved intended-purpose wording",
+      "sources": [
+        {
+          "title": "Leica Biosystems — An Introduction to Specimen Processing",
+          "url": "https://www.leicabiosystems.com/knowledge-pathway/an-introduction-to-specimen-processing/",
+          "scope": "General fixation, graded ethanol dehydration and clearing terminology. No CLARO-PROM formulation evidence."
+        },
+        {
+          "title": "Leica Biosystems — The Science of Tissue Processing",
+          "url": "https://www.leicabiosystems.com/sites/default/files/media_document-file/2023-06/210356_Science_of_Tissue_Processing_PPT_for_Knowledge_Pathway.pdf",
+          "scope": "General tissue-processing sequence and solvent roles; no transfer of instrument validation or reagent specifications."
+        }
+      ],
+      "confidence": {
+        "confirmedProductFact": "Published catalogue identity, code, labelled concentration/name and pack-size fields only.",
+        "generalTechnicalKnowledge": "Reagent-category role from official technical references; draft-level context only.",
+        "manufacturerVerificationRequired": "Exact concentration terminology and approved fixation application must be confirmed; no equivalence to 4% or 10% formalin is asserted."
+      },
+      "ownerInput": [
+        "Does “10% NB” denote 10% formaldehyde, 10% neutral-buffered formalin, or another labelled concentration convention? Confirm units and exact approved name.",
+        "Approve, modify or reject the proposed tissue-fixation function; are 1 L, 5 L and 10 L the same approved formulation?"
+      ],
+      "approvalStatus": "PROPOSED — OWNER REVIEW",
+      "familyEquivalenceConfirmed": false,
+      "previousValues": {
+        "shortDescription": null,
+        "description": null,
+        "intendedPurpose": null
+      },
+      "publicationAllowed": false
+    },
+    {
+      "id": "67f5dfb0-57c5-484c-b9ec-ceee8e416db2",
+      "expectedRevision": "GXon7RN0Hm0wO29GQnrt9C",
+      "name": "37% Formaldehyde Solution, 1 L (Glass)",
+      "catalogueNumbers": [
+        "CP00FOS"
+      ],
+      "packaging": [
+        "1 L glass"
+      ],
+      "url": "https://claroprom.com/products/37-formaldehyde-solution-cp00fos",
+      "proposedFamily": "37-formaldehyde",
+      "proposedShortDescription": "Concentrated formaldehyde solution for laboratory reagent preparation, supplied under the labelled 37% designation.",
+      "proposedDetailedDescription": "A concentrated formaldehyde solution for laboratory reagent preparation. Concentrated solutions serve as source reagents where a laboratory procedure calls for a prepared formaldehyde-based solution. This catalogue group includes separately identified glass and plastic presentations, each retaining its own product code and packaging.",
+      "existingIntendedPurpose": null,
+      "intendedPurposeStatus": "BLOCKED — SPECIFIC FACT MISSING: approved intended-purpose wording",
+      "sources": [
+        {
+          "title": "Bio-Optica — General catalogue, Formalin concentrate, p. 8",
+          "url": "https://www.bio-optica.it/upl/cms/attach/20180530/104727143_4177.pdf",
+          "scope": "General catalogue treatment of concentrated formaldehyde as a source reagent. Competitor concentration, composition, material or approved use is not transferred."
+        },
+        {
+          "title": "Leica Biosystems — An Introduction to Specimen Processing",
+          "url": "https://www.leicabiosystems.com/knowledge-pathway/an-introduction-to-specimen-processing/",
+          "scope": "General fixation, graded ethanol dehydration and clearing terminology. No CLARO-PROM formulation evidence."
+        }
+      ],
+      "confidence": {
+        "confirmedProductFact": "Published catalogue identity, code, labelled concentration/name and pack-size fields only.",
+        "generalTechnicalKnowledge": "Reagent-category role from official technical references; draft-level context only.",
+        "manufacturerVerificationRequired": "No ready-to-use fixation claim or dilution protocol is proposed."
+      },
+      "ownerInput": [
+        "Is this a stock reagent for laboratory solution preparation, or is another commercial application approved?",
+        "Do the glass and plastic 1 L presentations contain the same formulation? Confirm concentration units; no dilution instructions will be invented."
+      ],
+      "approvalStatus": "PROPOSED — OWNER REVIEW",
+      "familyEquivalenceConfirmed": false,
+      "previousValues": {
+        "shortDescription": null,
+        "description": null,
+        "intendedPurpose": null
+      },
+      "publicationAllowed": false
+    },
+    {
+      "id": "60a19412-3a63-4a27-aabf-e015621fe66e",
+      "expectedRevision": "MwWOMVq9aGfEEH7OTjsO1h",
+      "name": "37% Formaldehyde Solution, 1 L (Plastic)",
+      "catalogueNumbers": [
+        "CP00FO"
+      ],
+      "packaging": [
+        "1 L plastic"
+      ],
+      "url": "https://claroprom.com/products/37-formaldehyde-solution-cp00fo",
+      "proposedFamily": "37-formaldehyde",
+      "proposedShortDescription": "Concentrated formaldehyde solution for laboratory reagent preparation, supplied under the labelled 37% designation.",
+      "proposedDetailedDescription": "A concentrated formaldehyde solution for laboratory reagent preparation. Concentrated solutions serve as source reagents where a laboratory procedure calls for a prepared formaldehyde-based solution. This catalogue group includes separately identified glass and plastic presentations, each retaining its own product code and packaging.",
+      "existingIntendedPurpose": null,
+      "intendedPurposeStatus": "BLOCKED — SPECIFIC FACT MISSING: approved intended-purpose wording",
+      "sources": [
+        {
+          "title": "Bio-Optica — General catalogue, Formalin concentrate, p. 8",
+          "url": "https://www.bio-optica.it/upl/cms/attach/20180530/104727143_4177.pdf",
+          "scope": "General catalogue treatment of concentrated formaldehyde as a source reagent. Competitor concentration, composition, material or approved use is not transferred."
+        },
+        {
+          "title": "Leica Biosystems — An Introduction to Specimen Processing",
+          "url": "https://www.leicabiosystems.com/knowledge-pathway/an-introduction-to-specimen-processing/",
+          "scope": "General fixation, graded ethanol dehydration and clearing terminology. No CLARO-PROM formulation evidence."
+        }
+      ],
+      "confidence": {
+        "confirmedProductFact": "Published catalogue identity, code, labelled concentration/name and pack-size fields only.",
+        "generalTechnicalKnowledge": "Reagent-category role from official technical references; draft-level context only.",
+        "manufacturerVerificationRequired": "No ready-to-use fixation claim or dilution protocol is proposed."
+      },
+      "ownerInput": [
+        "Is this a stock reagent for laboratory solution preparation, or is another commercial application approved?",
+        "Do the glass and plastic 1 L presentations contain the same formulation? Confirm concentration units; no dilution instructions will be invented."
+      ],
+      "approvalStatus": "PROPOSED — OWNER REVIEW",
+      "familyEquivalenceConfirmed": false,
+      "previousValues": {
+        "shortDescription": null,
+        "description": null,
+        "intendedPurpose": null
+      },
+      "publicationAllowed": false
+    },
+    {
+      "id": "2310249d-dd2a-4143-a16b-74a158134b29",
+      "expectedRevision": "8ht4z1wR2A8VHxtw1eV7SB",
+      "name": "4% NB Formaldehyde Solution, 1 L",
+      "catalogueNumbers": [
+        "CP00F4"
+      ],
+      "packaging": [
+        "1 L"
+      ],
+      "url": "https://claroprom.com/products/4-nb-formaldehyde-solution-cp00f4",
+      "proposedFamily": "4-nb",
+      "proposedShortDescription": "Neutral-buffered formaldehyde solution for tissue fixation, retaining the catalogue designation “4% NB”.",
+      "proposedDetailedDescription": "Neutral-buffered formaldehyde solution for fixation before laboratory tissue processing. Fixation preserves the specimen ahead of the steps used to prepare sections for staining and microscopic examination. This group retains the catalogue designation “4% NB” and is presented separately from other formaldehyde concentrations and formulations.",
+      "existingIntendedPurpose": null,
+      "intendedPurposeStatus": "BLOCKED — SPECIFIC FACT MISSING: approved intended-purpose wording",
+      "sources": [
+        {
+          "title": "Leica Biosystems — An Introduction to Specimen Processing",
+          "url": "https://www.leicabiosystems.com/knowledge-pathway/an-introduction-to-specimen-processing/",
+          "scope": "General fixation, graded ethanol dehydration and clearing terminology. No CLARO-PROM formulation evidence."
+        },
+        {
+          "title": "Leica Biosystems — The Science of Tissue Processing",
+          "url": "https://www.leicabiosystems.com/sites/default/files/media_document-file/2023-06/210356_Science_of_Tissue_Processing_PPT_for_Knowledge_Pathway.pdf",
+          "scope": "General tissue-processing sequence and solvent roles; no transfer of instrument validation or reagent specifications."
+        }
+      ],
+      "confidence": {
+        "confirmedProductFact": "Published catalogue identity, code, labelled concentration/name and pack-size fields only.",
+        "generalTechnicalKnowledge": "Reagent-category role from official technical references; draft-level context only.",
+        "manufacturerVerificationRequired": "Concentration units, buffer identity and product-specific intended use remain unverified."
+      },
+      "ownerInput": [
+        "Confirm the “4% NB” concentration convention and approved fixation application.",
+        "Are 1 L, 5 L and 10 L the same formulation, and is this group distinct from the “10% NB” group?"
+      ],
+      "approvalStatus": "PROPOSED — OWNER REVIEW",
+      "familyEquivalenceConfirmed": false,
+      "previousValues": {
+        "shortDescription": null,
+        "description": null,
+        "intendedPurpose": null
+      },
+      "publicationAllowed": false
+    },
+    {
+      "id": "89cf8290-0639-4b04-b6b2-05b25dde7957",
+      "expectedRevision": "8ht4z1wR2A8VHxtw1eVDIV",
+      "name": "4% NB Formaldehyde Solution, 10 L",
+      "catalogueNumbers": [
+        "CP00F410"
+      ],
+      "packaging": [
+        "10 L"
+      ],
+      "url": "https://claroprom.com/products/4-nb-formaldehyde-solution-cp00f410",
+      "proposedFamily": "4-nb",
+      "proposedShortDescription": "Neutral-buffered formaldehyde solution for tissue fixation, retaining the catalogue designation “4% NB”.",
+      "proposedDetailedDescription": "Neutral-buffered formaldehyde solution for fixation before laboratory tissue processing. Fixation preserves the specimen ahead of the steps used to prepare sections for staining and microscopic examination. This group retains the catalogue designation “4% NB” and is presented separately from other formaldehyde concentrations and formulations.",
+      "existingIntendedPurpose": null,
+      "intendedPurposeStatus": "BLOCKED — SPECIFIC FACT MISSING: approved intended-purpose wording",
+      "sources": [
+        {
+          "title": "Leica Biosystems — An Introduction to Specimen Processing",
+          "url": "https://www.leicabiosystems.com/knowledge-pathway/an-introduction-to-specimen-processing/",
+          "scope": "General fixation, graded ethanol dehydration and clearing terminology. No CLARO-PROM formulation evidence."
+        },
+        {
+          "title": "Leica Biosystems — The Science of Tissue Processing",
+          "url": "https://www.leicabiosystems.com/sites/default/files/media_document-file/2023-06/210356_Science_of_Tissue_Processing_PPT_for_Knowledge_Pathway.pdf",
+          "scope": "General tissue-processing sequence and solvent roles; no transfer of instrument validation or reagent specifications."
+        }
+      ],
+      "confidence": {
+        "confirmedProductFact": "Published catalogue identity, code, labelled concentration/name and pack-size fields only.",
+        "generalTechnicalKnowledge": "Reagent-category role from official technical references; draft-level context only.",
+        "manufacturerVerificationRequired": "Concentration units, buffer identity and product-specific intended use remain unverified."
+      },
+      "ownerInput": [
+        "Confirm the “4% NB” concentration convention and approved fixation application.",
+        "Are 1 L, 5 L and 10 L the same formulation, and is this group distinct from the “10% NB” group?"
+      ],
+      "approvalStatus": "PROPOSED — OWNER REVIEW",
+      "familyEquivalenceConfirmed": false,
+      "previousValues": {
+        "shortDescription": null,
+        "description": null,
+        "intendedPurpose": null
+      },
+      "publicationAllowed": false
+    },
+    {
+      "id": "fcc7b3d6-1df3-4c0b-9abe-b902ce50cf9f",
+      "expectedRevision": "MwWOMVq9aGfEEH7OTjsF49",
+      "name": "4% NB Formaldehyde Solution, 5 L",
+      "catalogueNumbers": [
+        "CP00F45"
+      ],
+      "packaging": [
+        "5 L"
+      ],
+      "url": "https://claroprom.com/products/4-nb-formaldehyde-solution-cp00f45",
+      "proposedFamily": "4-nb",
+      "proposedShortDescription": "Neutral-buffered formaldehyde solution for tissue fixation, retaining the catalogue designation “4% NB”.",
+      "proposedDetailedDescription": "Neutral-buffered formaldehyde solution for fixation before laboratory tissue processing. Fixation preserves the specimen ahead of the steps used to prepare sections for staining and microscopic examination. This group retains the catalogue designation “4% NB” and is presented separately from other formaldehyde concentrations and formulations.",
+      "existingIntendedPurpose": null,
+      "intendedPurposeStatus": "BLOCKED — SPECIFIC FACT MISSING: approved intended-purpose wording",
+      "sources": [
+        {
+          "title": "Leica Biosystems — An Introduction to Specimen Processing",
+          "url": "https://www.leicabiosystems.com/knowledge-pathway/an-introduction-to-specimen-processing/",
+          "scope": "General fixation, graded ethanol dehydration and clearing terminology. No CLARO-PROM formulation evidence."
+        },
+        {
+          "title": "Leica Biosystems — The Science of Tissue Processing",
+          "url": "https://www.leicabiosystems.com/sites/default/files/media_document-file/2023-06/210356_Science_of_Tissue_Processing_PPT_for_Knowledge_Pathway.pdf",
+          "scope": "General tissue-processing sequence and solvent roles; no transfer of instrument validation or reagent specifications."
+        }
+      ],
+      "confidence": {
+        "confirmedProductFact": "Published catalogue identity, code, labelled concentration/name and pack-size fields only.",
+        "generalTechnicalKnowledge": "Reagent-category role from official technical references; draft-level context only.",
+        "manufacturerVerificationRequired": "Concentration units, buffer identity and product-specific intended use remain unverified."
+      },
+      "ownerInput": [
+        "Confirm the “4% NB” concentration convention and approved fixation application.",
+        "Are 1 L, 5 L and 10 L the same formulation, and is this group distinct from the “10% NB” group?"
+      ],
+      "approvalStatus": "PROPOSED — OWNER REVIEW",
+      "familyEquivalenceConfirmed": false,
+      "previousValues": {
+        "shortDescription": null,
+        "description": null,
+        "intendedPurpose": null
+      },
+      "publicationAllowed": false
+    },
+    {
+      "id": "65082ed4-a129-4c7b-ae4b-ef0a4cdacfc8",
+      "expectedRevision": "GXon7RN0Hm0wO29GQnsPo3",
+      "name": "Absolute Ethanol, IVD Reagent, 1 L",
+      "catalogueNumbers": [
+        "CPEAI"
+      ],
+      "packaging": [
+        "1 L"
+      ],
+      "url": "https://claroprom.com/products/absolute-ethanol-ivd-reagent-cpeai",
+      "proposedFamily": "absolute-ethanol",
+      "proposedShortDescription": "Absolute ethanol reagent for the dehydration stages of laboratory specimen preparation before clearing.",
+      "proposedDetailedDescription": "An ethanol reagent for alcohol-based specimen preparation, including dehydration before clearing. In graded processing sequences, progressively stronger alcohol solutions replace specimen water ahead of paraffin infiltration. The product retains the catalogue designation “Absolute Ethanol” and is supplied in the separately coded pack sizes listed below.",
+      "existingIntendedPurpose": null,
+      "intendedPurposeStatus": "BLOCKED — SPECIFIC FACT MISSING: approved intended-purpose wording",
+      "sources": [
+        {
+          "title": "Leica Biosystems — An Introduction to Specimen Processing",
+          "url": "https://www.leicabiosystems.com/knowledge-pathway/an-introduction-to-specimen-processing/",
+          "scope": "General fixation, graded ethanol dehydration and clearing terminology. No CLARO-PROM formulation evidence."
+        },
+        {
+          "title": "Leica Biosystems — The Science of Tissue Processing",
+          "url": "https://www.leicabiosystems.com/sites/default/files/media_document-file/2023-06/210356_Science_of_Tissue_Processing_PPT_for_Knowledge_Pathway.pdf",
+          "scope": "General tissue-processing sequence and solvent roles; no transfer of instrument validation or reagent specifications."
+        }
+      ],
+      "confidence": {
+        "confirmedProductFact": "Published catalogue identity, code, labelled concentration/name and pack-size fields only.",
+        "generalTechnicalKnowledge": "Reagent-category role from official technical references; draft-level context only.",
+        "manufacturerVerificationRequired": "No purity grade, water limit, denaturant or diagnostic use is inferred."
+      },
+      "ownerInput": [
+        "Confirm dehydration as the approved commercial function and identify any denaturant or purity fact that may be published.",
+        "Are 1 L, 5 L and 10 L the same formulation?"
+      ],
+      "approvalStatus": "PROPOSED — OWNER REVIEW",
+      "familyEquivalenceConfirmed": false,
+      "previousValues": {
+        "shortDescription": null,
+        "description": null,
+        "intendedPurpose": null
+      },
+      "publicationAllowed": false
+    },
+    {
+      "id": "83bdbf73-d7f8-42d3-bd0c-4a055170d022",
+      "expectedRevision": "aMxuB38zD5OHLKwsnSqDUd",
+      "name": "Absolute Ethanol, IVD Reagent, 10 L",
+      "catalogueNumbers": [
+        "CPEAI10"
+      ],
+      "packaging": [
+        "10 L"
+      ],
+      "url": "https://claroprom.com/products/absolute-ethanol-cpeai10",
+      "proposedFamily": "absolute-ethanol",
+      "proposedShortDescription": "Absolute ethanol reagent for the dehydration stages of laboratory specimen preparation before clearing.",
+      "proposedDetailedDescription": "An ethanol reagent for alcohol-based specimen preparation, including dehydration before clearing. In graded processing sequences, progressively stronger alcohol solutions replace specimen water ahead of paraffin infiltration. The product retains the catalogue designation “Absolute Ethanol” and is supplied in the separately coded pack sizes listed below.",
+      "existingIntendedPurpose": null,
+      "intendedPurposeStatus": "BLOCKED — SPECIFIC FACT MISSING: approved intended-purpose wording",
+      "sources": [
+        {
+          "title": "Leica Biosystems — An Introduction to Specimen Processing",
+          "url": "https://www.leicabiosystems.com/knowledge-pathway/an-introduction-to-specimen-processing/",
+          "scope": "General fixation, graded ethanol dehydration and clearing terminology. No CLARO-PROM formulation evidence."
+        },
+        {
+          "title": "Leica Biosystems — The Science of Tissue Processing",
+          "url": "https://www.leicabiosystems.com/sites/default/files/media_document-file/2023-06/210356_Science_of_Tissue_Processing_PPT_for_Knowledge_Pathway.pdf",
+          "scope": "General tissue-processing sequence and solvent roles; no transfer of instrument validation or reagent specifications."
+        }
+      ],
+      "confidence": {
+        "confirmedProductFact": "Published catalogue identity, code, labelled concentration/name and pack-size fields only.",
+        "generalTechnicalKnowledge": "Reagent-category role from official technical references; draft-level context only.",
+        "manufacturerVerificationRequired": "No purity grade, water limit, denaturant or diagnostic use is inferred."
+      },
+      "ownerInput": [
+        "Confirm dehydration as the approved commercial function and identify any denaturant or purity fact that may be published.",
+        "Are 1 L, 5 L and 10 L the same formulation?"
+      ],
+      "approvalStatus": "PROPOSED — OWNER REVIEW",
+      "familyEquivalenceConfirmed": false,
+      "previousValues": {
+        "shortDescription": null,
+        "description": null,
+        "intendedPurpose": null
+      },
+      "publicationAllowed": false
+    },
+    {
+      "id": "de7f9e03-8e51-43bb-a8c4-f997f9a3b103",
+      "expectedRevision": "MwWOMVq9aGfEEH7OTjsy9T",
+      "name": "Absolute Ethanol, IVD Reagent, 5 L",
+      "catalogueNumbers": [
+        "CPEAI5"
+      ],
+      "packaging": [
+        "5 L"
+      ],
+      "url": "https://claroprom.com/products/absolute-ethanol-cpeai5",
+      "proposedFamily": "absolute-ethanol",
+      "proposedShortDescription": "Absolute ethanol reagent for the dehydration stages of laboratory specimen preparation before clearing.",
+      "proposedDetailedDescription": "An ethanol reagent for alcohol-based specimen preparation, including dehydration before clearing. In graded processing sequences, progressively stronger alcohol solutions replace specimen water ahead of paraffin infiltration. The product retains the catalogue designation “Absolute Ethanol” and is supplied in the separately coded pack sizes listed below.",
+      "existingIntendedPurpose": null,
+      "intendedPurposeStatus": "BLOCKED — SPECIFIC FACT MISSING: approved intended-purpose wording",
+      "sources": [
+        {
+          "title": "Leica Biosystems — An Introduction to Specimen Processing",
+          "url": "https://www.leicabiosystems.com/knowledge-pathway/an-introduction-to-specimen-processing/",
+          "scope": "General fixation, graded ethanol dehydration and clearing terminology. No CLARO-PROM formulation evidence."
+        },
+        {
+          "title": "Leica Biosystems — The Science of Tissue Processing",
+          "url": "https://www.leicabiosystems.com/sites/default/files/media_document-file/2023-06/210356_Science_of_Tissue_Processing_PPT_for_Knowledge_Pathway.pdf",
+          "scope": "General tissue-processing sequence and solvent roles; no transfer of instrument validation or reagent specifications."
+        }
+      ],
+      "confidence": {
+        "confirmedProductFact": "Published catalogue identity, code, labelled concentration/name and pack-size fields only.",
+        "generalTechnicalKnowledge": "Reagent-category role from official technical references; draft-level context only.",
+        "manufacturerVerificationRequired": "No purity grade, water limit, denaturant or diagnostic use is inferred."
+      },
+      "ownerInput": [
+        "Confirm dehydration as the approved commercial function and identify any denaturant or purity fact that may be published.",
+        "Are 1 L, 5 L and 10 L the same formulation?"
+      ],
+      "approvalStatus": "PROPOSED — OWNER REVIEW",
+      "familyEquivalenceConfirmed": false,
+      "previousValues": {
+        "shortDescription": null,
+        "description": null,
+        "intendedPurpose": null
+      },
+      "publicationAllowed": false
+    },
+    {
+      "id": "caf938a1-fdbe-40d7-a296-14177067103f",
+      "expectedRevision": "aMxuB38zD5OHLKwsnSpcRM",
+      "name": "Claroclear Xylene Substitute, 1 L",
+      "catalogueNumbers": [
+        "CP00XLS"
+      ],
+      "packaging": [
+        "1 L"
+      ],
+      "url": "https://claroprom.com/products/claroclear-xylene-substitute-cp00xls",
+      "proposedFamily": "claroclear-substitute",
+      "proposedShortDescription": "Xylene-substitute reagent for clearing in laboratory specimen preparation before paraffin infiltration.",
+      "proposedDetailedDescription": "A xylene-substitute reagent for the clearing stage of laboratory specimen preparation. Clearing is the transition between alcohol-based processing and paraffin infiltration. Claroclear Xylene Substitute is presented as a separate product group from Claroclear Xylene, with its own catalogue numbers and available pack sizes.",
+      "existingIntendedPurpose": null,
+      "intendedPurposeStatus": "BLOCKED — SPECIFIC FACT MISSING: approved intended-purpose wording",
+      "sources": [
+        {
+          "title": "Leica Biosystems — An Introduction to Specimen Processing",
+          "url": "https://www.leicabiosystems.com/knowledge-pathway/an-introduction-to-specimen-processing/",
+          "scope": "General fixation, graded ethanol dehydration and clearing terminology. No CLARO-PROM formulation evidence."
+        },
+        {
+          "title": "Leica Biosystems — The Science of Tissue Processing",
+          "url": "https://www.leicabiosystems.com/sites/default/files/media_document-file/2023-06/210356_Science_of_Tissue_Processing_PPT_for_Knowledge_Pathway.pdf",
+          "scope": "General tissue-processing sequence and solvent roles; no transfer of instrument validation or reagent specifications."
+        }
+      ],
+      "confidence": {
+        "confirmedProductFact": "Published catalogue identity, code, labelled concentration/name and pack-size fields only.",
+        "generalTechnicalKnowledge": "Reagent-category role from official technical references; draft-level context only.",
+        "manufacturerVerificationRequired": "No chemical base, safety superiority or universal compatibility claim."
+      },
+      "ownerInput": [
+        "Confirm tissue clearing as the approved commercial function; is any slide-processing application also approved?",
+        "Are 1 L and 10 L the same formulation? Identify permitted compatibility statements from approved documents only."
+      ],
+      "approvalStatus": "PROPOSED — OWNER REVIEW",
+      "familyEquivalenceConfirmed": false,
+      "previousValues": {
+        "shortDescription": null,
+        "description": null,
+        "intendedPurpose": null
+      },
+      "publicationAllowed": false
+    },
+    {
+      "id": "4a18a104-ff8b-4d6f-b224-653aad74fb92",
+      "expectedRevision": "aMxuB38zD5OHLKwsnSpf3P",
+      "name": "Claroclear Xylene Substitute, 10 L",
+      "catalogueNumbers": [
+        "CP00XLS1"
+      ],
+      "packaging": [
+        "10 L"
+      ],
+      "url": "https://claroprom.com/products/claroclear-xylene-substitute-cp00xls1",
+      "proposedFamily": "claroclear-substitute",
+      "proposedShortDescription": "Xylene-substitute reagent for clearing in laboratory specimen preparation before paraffin infiltration.",
+      "proposedDetailedDescription": "A xylene-substitute reagent for the clearing stage of laboratory specimen preparation. Clearing is the transition between alcohol-based processing and paraffin infiltration. Claroclear Xylene Substitute is presented as a separate product group from Claroclear Xylene, with its own catalogue numbers and available pack sizes.",
+      "existingIntendedPurpose": null,
+      "intendedPurposeStatus": "BLOCKED — SPECIFIC FACT MISSING: approved intended-purpose wording",
+      "sources": [
+        {
+          "title": "Leica Biosystems — An Introduction to Specimen Processing",
+          "url": "https://www.leicabiosystems.com/knowledge-pathway/an-introduction-to-specimen-processing/",
+          "scope": "General fixation, graded ethanol dehydration and clearing terminology. No CLARO-PROM formulation evidence."
+        },
+        {
+          "title": "Leica Biosystems — The Science of Tissue Processing",
+          "url": "https://www.leicabiosystems.com/sites/default/files/media_document-file/2023-06/210356_Science_of_Tissue_Processing_PPT_for_Knowledge_Pathway.pdf",
+          "scope": "General tissue-processing sequence and solvent roles; no transfer of instrument validation or reagent specifications."
+        }
+      ],
+      "confidence": {
+        "confirmedProductFact": "Published catalogue identity, code, labelled concentration/name and pack-size fields only.",
+        "generalTechnicalKnowledge": "Reagent-category role from official technical references; draft-level context only.",
+        "manufacturerVerificationRequired": "No chemical base, safety superiority or universal compatibility claim."
+      },
+      "ownerInput": [
+        "Confirm tissue clearing as the approved commercial function; is any slide-processing application also approved?",
+        "Are 1 L and 10 L the same formulation? Identify permitted compatibility statements from approved documents only."
+      ],
+      "approvalStatus": "PROPOSED — OWNER REVIEW",
+      "familyEquivalenceConfirmed": false,
+      "previousValues": {
+        "shortDescription": null,
+        "description": null,
+        "intendedPurpose": null
+      },
+      "publicationAllowed": false
+    },
+    {
+      "id": "3c32cf79-39c3-4bf8-bf48-5f201e67b608",
+      "expectedRevision": "MwWOMVq9aGfEEH7OTjsTyt",
+      "name": "Claroclear Xylene, 1 L (Glass)",
+      "catalogueNumbers": [
+        "CP00XL"
+      ],
+      "packaging": [
+        "1 L glass"
+      ],
+      "url": "https://claroprom.com/products/claroclear-xylene-cp00xl",
+      "proposedFamily": "claroclear-xylene",
+      "proposedShortDescription": "Xylene reagent for clearing in laboratory specimen preparation as part of an approved processing sequence.",
+      "proposedDetailedDescription": "A xylene reagent for clearing in laboratory specimen preparation. In conventional paraffin workflows, the clearing stage follows alcohol-based dehydration and precedes wax infiltration. Claroclear Xylene is catalogued separately from the xylene-substitute group, with distinct product codes for the listed packaging presentations.",
+      "existingIntendedPurpose": null,
+      "intendedPurposeStatus": "BLOCKED — SPECIFIC FACT MISSING: approved intended-purpose wording",
+      "sources": [
+        {
+          "title": "Leica Biosystems — An Introduction to Specimen Processing",
+          "url": "https://www.leicabiosystems.com/knowledge-pathway/an-introduction-to-specimen-processing/",
+          "scope": "General fixation, graded ethanol dehydration and clearing terminology. No CLARO-PROM formulation evidence."
+        },
+        {
+          "title": "Leica Biosystems — The Science of Tissue Processing",
+          "url": "https://www.leicabiosystems.com/sites/default/files/media_document-file/2023-06/210356_Science_of_Tissue_Processing_PPT_for_Knowledge_Pathway.pdf",
+          "scope": "General tissue-processing sequence and solvent roles; no transfer of instrument validation or reagent specifications."
+        }
+      ],
+      "confidence": {
+        "confirmedProductFact": "Published catalogue identity, code, labelled concentration/name and pack-size fields only.",
+        "generalTechnicalKnowledge": "Reagent-category role from official technical references; draft-level context only.",
+        "manufacturerVerificationRequired": "Glass/plastic variants are mapped separately; xylene and its substitute are not merged."
+      },
+      "ownerInput": [
+        "Confirm tissue clearing as the approved function and any additional approved application.",
+        "Are 1 L glass, 1 L plastic and 10 L variants the same formulation or only related products?"
+      ],
+      "approvalStatus": "PROPOSED — OWNER REVIEW",
+      "familyEquivalenceConfirmed": false,
+      "previousValues": {
+        "shortDescription": null,
+        "description": null,
+        "intendedPurpose": null
+      },
+      "publicationAllowed": false
+    },
+    {
+      "id": "e79f3f00-8023-49d2-8cdb-b95534c9962f",
+      "expectedRevision": "M3OQuuH4IiA2wtqZQKbxyx",
+      "name": "Claroclear Xylene, 1 L (Plastic)",
+      "catalogueNumbers": [
+        "CP00XL1"
+      ],
+      "packaging": [
+        "1 L"
+      ],
+      "url": "https://claroprom.com/products/claroclear-xylene",
+      "proposedFamily": "claroclear-xylene",
+      "proposedShortDescription": "Xylene reagent for clearing in laboratory specimen preparation as part of an approved processing sequence.",
+      "proposedDetailedDescription": "A xylene reagent for clearing in laboratory specimen preparation. In conventional paraffin workflows, the clearing stage follows alcohol-based dehydration and precedes wax infiltration. Claroclear Xylene is catalogued separately from the xylene-substitute group, with distinct product codes for the listed packaging presentations.",
+      "existingIntendedPurpose": null,
+      "intendedPurposeStatus": "BLOCKED — SPECIFIC FACT MISSING: approved intended-purpose wording",
+      "sources": [
+        {
+          "title": "Leica Biosystems — An Introduction to Specimen Processing",
+          "url": "https://www.leicabiosystems.com/knowledge-pathway/an-introduction-to-specimen-processing/",
+          "scope": "General fixation, graded ethanol dehydration and clearing terminology. No CLARO-PROM formulation evidence."
+        },
+        {
+          "title": "Leica Biosystems — The Science of Tissue Processing",
+          "url": "https://www.leicabiosystems.com/sites/default/files/media_document-file/2023-06/210356_Science_of_Tissue_Processing_PPT_for_Knowledge_Pathway.pdf",
+          "scope": "General tissue-processing sequence and solvent roles; no transfer of instrument validation or reagent specifications."
+        }
+      ],
+      "confidence": {
+        "confirmedProductFact": "Published catalogue identity, code, labelled concentration/name and pack-size fields only.",
+        "generalTechnicalKnowledge": "Reagent-category role from official technical references; draft-level context only.",
+        "manufacturerVerificationRequired": "Glass/plastic variants are mapped separately; xylene and its substitute are not merged."
+      },
+      "ownerInput": [
+        "Confirm tissue clearing as the approved function and any additional approved application.",
+        "Are 1 L glass, 1 L plastic and 10 L variants the same formulation or only related products?"
+      ],
+      "approvalStatus": "PROPOSED — OWNER REVIEW",
+      "familyEquivalenceConfirmed": false,
+      "previousValues": {
+        "shortDescription": null,
+        "description": null,
+        "intendedPurpose": null
+      },
+      "publicationAllowed": false
+    },
+    {
+      "id": "96c3b4db-c11a-49fd-a087-6b96f62ea7fc",
+      "expectedRevision": "MwWOMVq9aGfEEH7OTjsWad",
+      "name": "Claroclear Xylene, 10 L",
+      "catalogueNumbers": [
+        "CP00XL2"
+      ],
+      "packaging": [
+        "10 L"
+      ],
+      "url": "https://claroprom.com/products/claroclear-xylene-cp00xl2",
+      "proposedFamily": "claroclear-xylene",
+      "proposedShortDescription": "Xylene reagent for clearing in laboratory specimen preparation as part of an approved processing sequence.",
+      "proposedDetailedDescription": "A xylene reagent for clearing in laboratory specimen preparation. In conventional paraffin workflows, the clearing stage follows alcohol-based dehydration and precedes wax infiltration. Claroclear Xylene is catalogued separately from the xylene-substitute group, with distinct product codes for the listed packaging presentations.",
+      "existingIntendedPurpose": null,
+      "intendedPurposeStatus": "BLOCKED — SPECIFIC FACT MISSING: approved intended-purpose wording",
+      "sources": [
+        {
+          "title": "Leica Biosystems — An Introduction to Specimen Processing",
+          "url": "https://www.leicabiosystems.com/knowledge-pathway/an-introduction-to-specimen-processing/",
+          "scope": "General fixation, graded ethanol dehydration and clearing terminology. No CLARO-PROM formulation evidence."
+        },
+        {
+          "title": "Leica Biosystems — The Science of Tissue Processing",
+          "url": "https://www.leicabiosystems.com/sites/default/files/media_document-file/2023-06/210356_Science_of_Tissue_Processing_PPT_for_Knowledge_Pathway.pdf",
+          "scope": "General tissue-processing sequence and solvent roles; no transfer of instrument validation or reagent specifications."
+        }
+      ],
+      "confidence": {
+        "confirmedProductFact": "Published catalogue identity, code, labelled concentration/name and pack-size fields only.",
+        "generalTechnicalKnowledge": "Reagent-category role from official technical references; draft-level context only.",
+        "manufacturerVerificationRequired": "Glass/plastic variants are mapped separately; xylene and its substitute are not merged."
+      },
+      "ownerInput": [
+        "Confirm tissue clearing as the approved function and any additional approved application.",
+        "Are 1 L glass, 1 L plastic and 10 L variants the same formulation or only related products?"
+      ],
+      "approvalStatus": "PROPOSED — OWNER REVIEW",
+      "familyEquivalenceConfirmed": false,
+      "previousValues": {
+        "shortDescription": null,
+        "description": null,
+        "intendedPurpose": null
+      },
+      "publicationAllowed": false
+    },
+    {
+      "id": "8198c46c-6d27-49a8-a024-00f1a2c07a89",
+      "expectedRevision": "GXon7RN0Hm0wO29GQnsKNH",
+      "name": "Claromount, 100 mL",
+      "catalogueNumbers": [
+        "CP00MT1"
+      ],
+      "packaging": [
+        "100 mL"
+      ],
+      "url": "https://claroprom.com/products/claromount-cp00mt1",
+      "proposedFamily": "claromount",
+      "proposedShortDescription": "Mounting medium for coverslipping prepared microscope slides and supporting subsequent microscopic examination.",
+      "proposedDetailedDescription": "A mounting medium for the finishing stage of microscope-slide preparation. Mounting places a prepared specimen beneath a coverslip for subsequent microscopic examination. The mounting-medium category forms part of the workflow after specimen preparation and staining; Claromount is offered in separately coded pack sizes.",
+      "existingIntendedPurpose": null,
+      "intendedPurposeStatus": "BLOCKED — SPECIFIC FACT MISSING: approved intended-purpose wording",
+      "sources": [
+        {
+          "title": "Bio-Optica — General catalogue, Coverglassing / Mounting media, pp. 78–79",
+          "url": "https://www.bio-optica.it/upl/cms/attach/20180530/104727143_4177.pdf",
+          "scope": "Mounting-medium category and coverslipping; competitor chemical bases and compatibility not transferred."
+        }
+      ],
+      "confidence": {
+        "confirmedProductFact": "Published catalogue identity, code, labelled concentration/name and pack-size fields only.",
+        "generalTechnicalKnowledge": "Reagent-category role from official technical references; draft-level context only.",
+        "manufacturerVerificationRequired": "Mounting-medium identity itself needs manufacturer confirmation; no base or stain compatibility claim."
+      },
+      "ownerInput": [
+        "Confirm that “mounting medium for coverslipping” correctly describes Claromount.",
+        "Are 50, 100, 200 and 500 mL the same formulation? Which base, drying or compatibility facts are approved for publication, if any?"
+      ],
+      "approvalStatus": "PROPOSED — OWNER REVIEW",
+      "familyEquivalenceConfirmed": false,
+      "previousValues": {
+        "shortDescription": null,
+        "description": null,
+        "intendedPurpose": null
+      },
+      "publicationAllowed": false
+    },
+    {
+      "id": "7ae74101-f3c6-43dd-81c0-703c54ad3f2e",
+      "expectedRevision": "aMxuB38zD5OHLKwsnSq7OW",
+      "name": "Claromount, 200 mL",
+      "catalogueNumbers": [
+        "CP00MT2"
+      ],
+      "packaging": [
+        "200 mL"
+      ],
+      "url": "https://claroprom.com/products/claromount-cp00mt2",
+      "proposedFamily": "claromount",
+      "proposedShortDescription": "Mounting medium for coverslipping prepared microscope slides and supporting subsequent microscopic examination.",
+      "proposedDetailedDescription": "A mounting medium for the finishing stage of microscope-slide preparation. Mounting places a prepared specimen beneath a coverslip for subsequent microscopic examination. The mounting-medium category forms part of the workflow after specimen preparation and staining; Claromount is offered in separately coded pack sizes.",
+      "existingIntendedPurpose": null,
+      "intendedPurposeStatus": "BLOCKED — SPECIFIC FACT MISSING: approved intended-purpose wording",
+      "sources": [
+        {
+          "title": "Bio-Optica — General catalogue, Coverglassing / Mounting media, pp. 78–79",
+          "url": "https://www.bio-optica.it/upl/cms/attach/20180530/104727143_4177.pdf",
+          "scope": "Mounting-medium category and coverslipping; competitor chemical bases and compatibility not transferred."
+        }
+      ],
+      "confidence": {
+        "confirmedProductFact": "Published catalogue identity, code, labelled concentration/name and pack-size fields only.",
+        "generalTechnicalKnowledge": "Reagent-category role from official technical references; draft-level context only.",
+        "manufacturerVerificationRequired": "Mounting-medium identity itself needs manufacturer confirmation; no base or stain compatibility claim."
+      },
+      "ownerInput": [
+        "Confirm that “mounting medium for coverslipping” correctly describes Claromount.",
+        "Are 50, 100, 200 and 500 mL the same formulation? Which base, drying or compatibility facts are approved for publication, if any?"
+      ],
+      "approvalStatus": "PROPOSED — OWNER REVIEW",
+      "familyEquivalenceConfirmed": false,
+      "previousValues": {
+        "shortDescription": null,
+        "description": null,
+        "intendedPurpose": null
+      },
+      "publicationAllowed": false
+    },
+    {
+      "id": "44c067f6-3c0b-462d-ad1c-f51a9c44d078",
+      "expectedRevision": "GXon7RN0Hm0wO29GQnsIKz",
+      "name": "Claromount, 50 mL",
+      "catalogueNumbers": [
+        "CP00MT"
+      ],
+      "packaging": [
+        "50 mL"
+      ],
+      "url": "https://claroprom.com/products/claromount-cp00mt",
+      "proposedFamily": "claromount",
+      "proposedShortDescription": "Mounting medium for coverslipping prepared microscope slides and supporting subsequent microscopic examination.",
+      "proposedDetailedDescription": "A mounting medium for the finishing stage of microscope-slide preparation. Mounting places a prepared specimen beneath a coverslip for subsequent microscopic examination. The mounting-medium category forms part of the workflow after specimen preparation and staining; Claromount is offered in separately coded pack sizes.",
+      "existingIntendedPurpose": null,
+      "intendedPurposeStatus": "BLOCKED — SPECIFIC FACT MISSING: approved intended-purpose wording",
+      "sources": [
+        {
+          "title": "Bio-Optica — General catalogue, Coverglassing / Mounting media, pp. 78–79",
+          "url": "https://www.bio-optica.it/upl/cms/attach/20180530/104727143_4177.pdf",
+          "scope": "Mounting-medium category and coverslipping; competitor chemical bases and compatibility not transferred."
+        }
+      ],
+      "confidence": {
+        "confirmedProductFact": "Published catalogue identity, code, labelled concentration/name and pack-size fields only.",
+        "generalTechnicalKnowledge": "Reagent-category role from official technical references; draft-level context only.",
+        "manufacturerVerificationRequired": "Mounting-medium identity itself needs manufacturer confirmation; no base or stain compatibility claim."
+      },
+      "ownerInput": [
+        "Confirm that “mounting medium for coverslipping” correctly describes Claromount.",
+        "Are 50, 100, 200 and 500 mL the same formulation? Which base, drying or compatibility facts are approved for publication, if any?"
+      ],
+      "approvalStatus": "PROPOSED — OWNER REVIEW",
+      "familyEquivalenceConfirmed": false,
+      "previousValues": {
+        "shortDescription": null,
+        "description": null,
+        "intendedPurpose": null
+      },
+      "publicationAllowed": false
+    },
+    {
+      "id": "404d6506-1437-44ba-a1d3-7f09ae5434db",
+      "expectedRevision": "GXon7RN0Hm0wO29GQnsONe",
+      "name": "Claromount, 500 mL",
+      "catalogueNumbers": [
+        "CP00MT3"
+      ],
+      "packaging": [
+        "500 mL"
+      ],
+      "url": "https://claroprom.com/products/claromount-cp00mt3",
+      "proposedFamily": "claromount",
+      "proposedShortDescription": "Mounting medium for coverslipping prepared microscope slides and supporting subsequent microscopic examination.",
+      "proposedDetailedDescription": "A mounting medium for the finishing stage of microscope-slide preparation. Mounting places a prepared specimen beneath a coverslip for subsequent microscopic examination. The mounting-medium category forms part of the workflow after specimen preparation and staining; Claromount is offered in separately coded pack sizes.",
+      "existingIntendedPurpose": null,
+      "intendedPurposeStatus": "BLOCKED — SPECIFIC FACT MISSING: approved intended-purpose wording",
+      "sources": [
+        {
+          "title": "Bio-Optica — General catalogue, Coverglassing / Mounting media, pp. 78–79",
+          "url": "https://www.bio-optica.it/upl/cms/attach/20180530/104727143_4177.pdf",
+          "scope": "Mounting-medium category and coverslipping; competitor chemical bases and compatibility not transferred."
+        }
+      ],
+      "confidence": {
+        "confirmedProductFact": "Published catalogue identity, code, labelled concentration/name and pack-size fields only.",
+        "generalTechnicalKnowledge": "Reagent-category role from official technical references; draft-level context only.",
+        "manufacturerVerificationRequired": "Mounting-medium identity itself needs manufacturer confirmation; no base or stain compatibility claim."
+      },
+      "ownerInput": [
+        "Confirm that “mounting medium for coverslipping” correctly describes Claromount.",
+        "Are 50, 100, 200 and 500 mL the same formulation? Which base, drying or compatibility facts are approved for publication, if any?"
+      ],
+      "approvalStatus": "PROPOSED — OWNER REVIEW",
+      "familyEquivalenceConfirmed": false,
+      "previousValues": {
+        "shortDescription": null,
+        "description": null,
+        "intendedPurpose": null
+      },
+      "publicationAllowed": false
+    },
+    {
+      "id": "269d62d5-e498-463b-8af3-98de945e5923",
+      "expectedRevision": "aMxuB38zD5OHLKwsnSqZdH",
+      "name": "Ethanol 50% v/v, IVD Reagent, 1 L",
+      "catalogueNumbers": [
+        "CPE50I"
+      ],
+      "packaging": [
+        "1 L"
+      ],
+      "url": "https://claroprom.com/products/ethanol-50-v-v-cpe50i",
+      "proposedFamily": "ethanol-50",
+      "proposedShortDescription": "Ethanol solution at 50% v/v, for graded alcohol steps in laboratory specimen preparation.",
+      "proposedDetailedDescription": "An ethanol solution at 50% v/v for graded alcohol steps in laboratory specimen preparation. Alcohol solutions allow concentration changes between aqueous and higher-strength alcohol stages. Placement in the sequence depends on the specimen-preparation method. This concentration is catalogued separately from other strengths and supplied in separately coded pack sizes.",
+      "existingIntendedPurpose": null,
+      "intendedPurposeStatus": "BLOCKED — SPECIFIC FACT MISSING: approved intended-purpose wording",
+      "sources": [
+        {
+          "title": "Leica Biosystems — An Introduction to Specimen Processing",
+          "url": "https://www.leicabiosystems.com/knowledge-pathway/an-introduction-to-specimen-processing/",
+          "scope": "General fixation, graded ethanol dehydration and clearing terminology. No CLARO-PROM formulation evidence."
+        },
+        {
+          "title": "Leica Biosystems — The Science of Tissue Processing",
+          "url": "https://www.leicabiosystems.com/sites/default/files/media_document-file/2023-06/210356_Science_of_Tissue_Processing_PPT_for_Knowledge_Pathway.pdf",
+          "scope": "General tissue-processing sequence and solvent roles; no transfer of instrument validation or reagent specifications."
+        }
+      ],
+      "confidence": {
+        "confirmedProductFact": "Published catalogue identity, code, labelled concentration/name and pack-size fields only.",
+        "generalTechnicalKnowledge": "Reagent-category role from official technical references; draft-level context only.",
+        "manufacturerVerificationRequired": "Each concentration remains a separate proposed group; no interchangeability, disinfection claim or protocol is inferred."
+      },
+      "ownerInput": [
+        "Approve, modify or reject graded alcohol processing as the function of the 50% v/v formulation; which preparation stage is appropriate?",
+        "Are 1 L, 5 L and 10 L the same formulation? Confirm any denaturant or approved specification that can be mentioned."
+      ],
+      "approvalStatus": "PROPOSED — OWNER REVIEW",
+      "familyEquivalenceConfirmed": false,
+      "previousValues": {
+        "shortDescription": null,
+        "description": null,
+        "intendedPurpose": null
+      },
+      "publicationAllowed": false
+    },
+    {
+      "id": "292998ef-98b3-4b5a-a9a3-e90c50838655",
+      "expectedRevision": "MwWOMVq9aGfEEH7OTjtOdV",
+      "name": "Ethanol 50% v/v, IVD Reagent, 10 L",
+      "catalogueNumbers": [
+        "CPE50I10"
+      ],
+      "packaging": [
+        "10 L"
+      ],
+      "url": "https://claroprom.com/products/ethanol-50-v-v-cpe50i10",
+      "proposedFamily": "ethanol-50",
+      "proposedShortDescription": "Ethanol solution at 50% v/v, for graded alcohol steps in laboratory specimen preparation.",
+      "proposedDetailedDescription": "An ethanol solution at 50% v/v for graded alcohol steps in laboratory specimen preparation. Alcohol solutions allow concentration changes between aqueous and higher-strength alcohol stages. Placement in the sequence depends on the specimen-preparation method. This concentration is catalogued separately from other strengths and supplied in separately coded pack sizes.",
+      "existingIntendedPurpose": null,
+      "intendedPurposeStatus": "BLOCKED — SPECIFIC FACT MISSING: approved intended-purpose wording",
+      "sources": [
+        {
+          "title": "Leica Biosystems — An Introduction to Specimen Processing",
+          "url": "https://www.leicabiosystems.com/knowledge-pathway/an-introduction-to-specimen-processing/",
+          "scope": "General fixation, graded ethanol dehydration and clearing terminology. No CLARO-PROM formulation evidence."
+        },
+        {
+          "title": "Leica Biosystems — The Science of Tissue Processing",
+          "url": "https://www.leicabiosystems.com/sites/default/files/media_document-file/2023-06/210356_Science_of_Tissue_Processing_PPT_for_Knowledge_Pathway.pdf",
+          "scope": "General tissue-processing sequence and solvent roles; no transfer of instrument validation or reagent specifications."
+        }
+      ],
+      "confidence": {
+        "confirmedProductFact": "Published catalogue identity, code, labelled concentration/name and pack-size fields only.",
+        "generalTechnicalKnowledge": "Reagent-category role from official technical references; draft-level context only.",
+        "manufacturerVerificationRequired": "Each concentration remains a separate proposed group; no interchangeability, disinfection claim or protocol is inferred."
+      },
+      "ownerInput": [
+        "Approve, modify or reject graded alcohol processing as the function of the 50% v/v formulation; which preparation stage is appropriate?",
+        "Are 1 L, 5 L and 10 L the same formulation? Confirm any denaturant or approved specification that can be mentioned."
+      ],
+      "approvalStatus": "PROPOSED — OWNER REVIEW",
+      "familyEquivalenceConfirmed": false,
+      "previousValues": {
+        "shortDescription": null,
+        "description": null,
+        "intendedPurpose": null
+      },
+      "publicationAllowed": false
+    },
+    {
+      "id": "0506238b-2fdd-4ea9-a470-2e7606be1acf",
+      "expectedRevision": "aMxuB38zD5OHLKwsnSqaui",
+      "name": "Ethanol 50% v/v, IVD Reagent, 5 L",
+      "catalogueNumbers": [
+        "CPE50I5"
+      ],
+      "packaging": [
+        "5 L"
+      ],
+      "url": "https://claroprom.com/products/ethanol-50-v-v-cpe50i5",
+      "proposedFamily": "ethanol-50",
+      "proposedShortDescription": "Ethanol solution at 50% v/v, for graded alcohol steps in laboratory specimen preparation.",
+      "proposedDetailedDescription": "An ethanol solution at 50% v/v for graded alcohol steps in laboratory specimen preparation. Alcohol solutions allow concentration changes between aqueous and higher-strength alcohol stages. Placement in the sequence depends on the specimen-preparation method. This concentration is catalogued separately from other strengths and supplied in separately coded pack sizes.",
+      "existingIntendedPurpose": null,
+      "intendedPurposeStatus": "BLOCKED — SPECIFIC FACT MISSING: approved intended-purpose wording",
+      "sources": [
+        {
+          "title": "Leica Biosystems — An Introduction to Specimen Processing",
+          "url": "https://www.leicabiosystems.com/knowledge-pathway/an-introduction-to-specimen-processing/",
+          "scope": "General fixation, graded ethanol dehydration and clearing terminology. No CLARO-PROM formulation evidence."
+        },
+        {
+          "title": "Leica Biosystems — The Science of Tissue Processing",
+          "url": "https://www.leicabiosystems.com/sites/default/files/media_document-file/2023-06/210356_Science_of_Tissue_Processing_PPT_for_Knowledge_Pathway.pdf",
+          "scope": "General tissue-processing sequence and solvent roles; no transfer of instrument validation or reagent specifications."
+        }
+      ],
+      "confidence": {
+        "confirmedProductFact": "Published catalogue identity, code, labelled concentration/name and pack-size fields only.",
+        "generalTechnicalKnowledge": "Reagent-category role from official technical references; draft-level context only.",
+        "manufacturerVerificationRequired": "Each concentration remains a separate proposed group; no interchangeability, disinfection claim or protocol is inferred."
+      },
+      "ownerInput": [
+        "Approve, modify or reject graded alcohol processing as the function of the 50% v/v formulation; which preparation stage is appropriate?",
+        "Are 1 L, 5 L and 10 L the same formulation? Confirm any denaturant or approved specification that can be mentioned."
+      ],
+      "approvalStatus": "PROPOSED — OWNER REVIEW",
+      "familyEquivalenceConfirmed": false,
+      "previousValues": {
+        "shortDescription": null,
+        "description": null,
+        "intendedPurpose": null
+      },
+      "publicationAllowed": false
+    },
+    {
+      "id": "448a3c23-ab10-4646-8e8f-6b55a448400f",
+      "expectedRevision": "MwWOMVq9aGfEEH7OTjtJzB",
+      "name": "Ethanol 70% v/v, IVD Reagent, 1 L",
+      "catalogueNumbers": [
+        "CPE70I"
+      ],
+      "packaging": [
+        "1 L"
+      ],
+      "url": "https://claroprom.com/products/ethanol-70-v-v-cpe70i",
+      "proposedFamily": "ethanol-70",
+      "proposedShortDescription": "Ethanol solution at 70% v/v, for graded alcohol steps in laboratory specimen preparation.",
+      "proposedDetailedDescription": "An ethanol solution at 70% v/v for graded alcohol steps in laboratory specimen preparation. Alcohol solutions allow concentration changes between aqueous and higher-strength alcohol stages. Placement in the sequence depends on the specimen-preparation method. This concentration is catalogued separately from other strengths and supplied in separately coded pack sizes.",
+      "existingIntendedPurpose": null,
+      "intendedPurposeStatus": "BLOCKED — SPECIFIC FACT MISSING: approved intended-purpose wording",
+      "sources": [
+        {
+          "title": "Leica Biosystems — An Introduction to Specimen Processing",
+          "url": "https://www.leicabiosystems.com/knowledge-pathway/an-introduction-to-specimen-processing/",
+          "scope": "General fixation, graded ethanol dehydration and clearing terminology. No CLARO-PROM formulation evidence."
+        },
+        {
+          "title": "Leica Biosystems — The Science of Tissue Processing",
+          "url": "https://www.leicabiosystems.com/sites/default/files/media_document-file/2023-06/210356_Science_of_Tissue_Processing_PPT_for_Knowledge_Pathway.pdf",
+          "scope": "General tissue-processing sequence and solvent roles; no transfer of instrument validation or reagent specifications."
+        }
+      ],
+      "confidence": {
+        "confirmedProductFact": "Published catalogue identity, code, labelled concentration/name and pack-size fields only.",
+        "generalTechnicalKnowledge": "Reagent-category role from official technical references; draft-level context only.",
+        "manufacturerVerificationRequired": "Each concentration remains a separate proposed group; no interchangeability, disinfection claim or protocol is inferred."
+      },
+      "ownerInput": [
+        "Approve, modify or reject graded alcohol processing as the function of the 70% v/v formulation; which preparation stage is appropriate?",
+        "Are 1 L, 5 L and 10 L the same formulation? Confirm any denaturant or approved specification that can be mentioned."
+      ],
+      "approvalStatus": "PROPOSED — OWNER REVIEW",
+      "familyEquivalenceConfirmed": false,
+      "previousValues": {
+        "shortDescription": null,
+        "description": null,
+        "intendedPurpose": null
+      },
+      "publicationAllowed": false
+    },
+    {
+      "id": "f7b599ad-8190-4918-a52d-ec8e99253e94",
+      "expectedRevision": "MwWOMVq9aGfEEH7OTjtMlT",
+      "name": "Ethanol 70% v/v, IVD Reagent, 10 L",
+      "catalogueNumbers": [
+        "CPE70I10"
+      ],
+      "packaging": [
+        "10 L"
+      ],
+      "url": "https://claroprom.com/products/ethanol-70-v-v-cpe70i10",
+      "proposedFamily": "ethanol-70",
+      "proposedShortDescription": "Ethanol solution at 70% v/v, for graded alcohol steps in laboratory specimen preparation.",
+      "proposedDetailedDescription": "An ethanol solution at 70% v/v for graded alcohol steps in laboratory specimen preparation. Alcohol solutions allow concentration changes between aqueous and higher-strength alcohol stages. Placement in the sequence depends on the specimen-preparation method. This concentration is catalogued separately from other strengths and supplied in separately coded pack sizes.",
+      "existingIntendedPurpose": null,
+      "intendedPurposeStatus": "BLOCKED — SPECIFIC FACT MISSING: approved intended-purpose wording",
+      "sources": [
+        {
+          "title": "Leica Biosystems — An Introduction to Specimen Processing",
+          "url": "https://www.leicabiosystems.com/knowledge-pathway/an-introduction-to-specimen-processing/",
+          "scope": "General fixation, graded ethanol dehydration and clearing terminology. No CLARO-PROM formulation evidence."
+        },
+        {
+          "title": "Leica Biosystems — The Science of Tissue Processing",
+          "url": "https://www.leicabiosystems.com/sites/default/files/media_document-file/2023-06/210356_Science_of_Tissue_Processing_PPT_for_Knowledge_Pathway.pdf",
+          "scope": "General tissue-processing sequence and solvent roles; no transfer of instrument validation or reagent specifications."
+        }
+      ],
+      "confidence": {
+        "confirmedProductFact": "Published catalogue identity, code, labelled concentration/name and pack-size fields only.",
+        "generalTechnicalKnowledge": "Reagent-category role from official technical references; draft-level context only.",
+        "manufacturerVerificationRequired": "Each concentration remains a separate proposed group; no interchangeability, disinfection claim or protocol is inferred."
+      },
+      "ownerInput": [
+        "Approve, modify or reject graded alcohol processing as the function of the 70% v/v formulation; which preparation stage is appropriate?",
+        "Are 1 L, 5 L and 10 L the same formulation? Confirm any denaturant or approved specification that can be mentioned."
+      ],
+      "approvalStatus": "PROPOSED — OWNER REVIEW",
+      "familyEquivalenceConfirmed": false,
+      "previousValues": {
+        "shortDescription": null,
+        "description": null,
+        "intendedPurpose": null
+      },
+      "publicationAllowed": false
+    },
+    {
+      "id": "db62555e-3473-4456-8e9e-e5bb9416c209",
+      "expectedRevision": "aMxuB38zD5OHLKwsnSqXtF",
+      "name": "Ethanol 70% v/v, IVD Reagent, 5 L",
+      "catalogueNumbers": [
+        "CPE70I5"
+      ],
+      "packaging": [
+        "5 L"
+      ],
+      "url": "https://claroprom.com/products/ethanol-70-v-v-cpe70i5",
+      "proposedFamily": "ethanol-70",
+      "proposedShortDescription": "Ethanol solution at 70% v/v, for graded alcohol steps in laboratory specimen preparation.",
+      "proposedDetailedDescription": "An ethanol solution at 70% v/v for graded alcohol steps in laboratory specimen preparation. Alcohol solutions allow concentration changes between aqueous and higher-strength alcohol stages. Placement in the sequence depends on the specimen-preparation method. This concentration is catalogued separately from other strengths and supplied in separately coded pack sizes.",
+      "existingIntendedPurpose": null,
+      "intendedPurposeStatus": "BLOCKED — SPECIFIC FACT MISSING: approved intended-purpose wording",
+      "sources": [
+        {
+          "title": "Leica Biosystems — An Introduction to Specimen Processing",
+          "url": "https://www.leicabiosystems.com/knowledge-pathway/an-introduction-to-specimen-processing/",
+          "scope": "General fixation, graded ethanol dehydration and clearing terminology. No CLARO-PROM formulation evidence."
+        },
+        {
+          "title": "Leica Biosystems — The Science of Tissue Processing",
+          "url": "https://www.leicabiosystems.com/sites/default/files/media_document-file/2023-06/210356_Science_of_Tissue_Processing_PPT_for_Knowledge_Pathway.pdf",
+          "scope": "General tissue-processing sequence and solvent roles; no transfer of instrument validation or reagent specifications."
+        }
+      ],
+      "confidence": {
+        "confirmedProductFact": "Published catalogue identity, code, labelled concentration/name and pack-size fields only.",
+        "generalTechnicalKnowledge": "Reagent-category role from official technical references; draft-level context only.",
+        "manufacturerVerificationRequired": "Each concentration remains a separate proposed group; no interchangeability, disinfection claim or protocol is inferred."
+      },
+      "ownerInput": [
+        "Approve, modify or reject graded alcohol processing as the function of the 70% v/v formulation; which preparation stage is appropriate?",
+        "Are 1 L, 5 L and 10 L the same formulation? Confirm any denaturant or approved specification that can be mentioned."
+      ],
+      "approvalStatus": "PROPOSED — OWNER REVIEW",
+      "familyEquivalenceConfirmed": false,
+      "previousValues": {
+        "shortDescription": null,
+        "description": null,
+        "intendedPurpose": null
+      },
+      "publicationAllowed": false
+    },
+    {
+      "id": "0e84304c-abf1-44b2-92be-567605232b83",
+      "expectedRevision": "aMxuB38zD5OHLKwsnSqQla",
+      "name": "Ethanol 80% v/v, IVD Reagent, 1 L",
+      "catalogueNumbers": [
+        "CPE80I"
+      ],
+      "packaging": [
+        "1 L"
+      ],
+      "url": "https://claroprom.com/products/ethanol-80-v-v-cpe80i",
+      "proposedFamily": "ethanol-80",
+      "proposedShortDescription": "Ethanol solution at 80% v/v, for graded alcohol steps in laboratory specimen preparation.",
+      "proposedDetailedDescription": "An ethanol solution at 80% v/v for graded alcohol steps in laboratory specimen preparation. Alcohol solutions allow concentration changes between aqueous and higher-strength alcohol stages. Placement in the sequence depends on the specimen-preparation method. This concentration is catalogued separately from other strengths and supplied in separately coded pack sizes.",
+      "existingIntendedPurpose": null,
+      "intendedPurposeStatus": "BLOCKED — SPECIFIC FACT MISSING: approved intended-purpose wording",
+      "sources": [
+        {
+          "title": "Leica Biosystems — An Introduction to Specimen Processing",
+          "url": "https://www.leicabiosystems.com/knowledge-pathway/an-introduction-to-specimen-processing/",
+          "scope": "General fixation, graded ethanol dehydration and clearing terminology. No CLARO-PROM formulation evidence."
+        },
+        {
+          "title": "Leica Biosystems — The Science of Tissue Processing",
+          "url": "https://www.leicabiosystems.com/sites/default/files/media_document-file/2023-06/210356_Science_of_Tissue_Processing_PPT_for_Knowledge_Pathway.pdf",
+          "scope": "General tissue-processing sequence and solvent roles; no transfer of instrument validation or reagent specifications."
+        }
+      ],
+      "confidence": {
+        "confirmedProductFact": "Published catalogue identity, code, labelled concentration/name and pack-size fields only.",
+        "generalTechnicalKnowledge": "Reagent-category role from official technical references; draft-level context only.",
+        "manufacturerVerificationRequired": "Each concentration remains a separate proposed group; no interchangeability, disinfection claim or protocol is inferred."
+      },
+      "ownerInput": [
+        "Approve, modify or reject graded alcohol processing as the function of the 80% v/v formulation; which preparation stage is appropriate?",
+        "Are 1 L, 5 L and 10 L the same formulation? Confirm any denaturant or approved specification that can be mentioned."
+      ],
+      "approvalStatus": "PROPOSED — OWNER REVIEW",
+      "familyEquivalenceConfirmed": false,
+      "previousValues": {
+        "shortDescription": null,
+        "description": null,
+        "intendedPurpose": null
+      },
+      "publicationAllowed": false
+    },
+    {
+      "id": "e3694ac0-031e-4fc1-8189-6ce4ae1d9e5e",
+      "expectedRevision": "M3OQuuH4IiA2wtqZQKbrYy",
+      "name": "Ethanol 80% v/v, IVD Reagent, 10 L",
+      "catalogueNumbers": [
+        "CPE80I10"
+      ],
+      "packaging": [
+        "10 L"
+      ],
+      "url": "https://claroprom.com/products/ethanol-80-v-v-cpe80i10",
+      "proposedFamily": "ethanol-80",
+      "proposedShortDescription": "Ethanol solution at 80% v/v, for graded alcohol steps in laboratory specimen preparation.",
+      "proposedDetailedDescription": "An ethanol solution at 80% v/v for graded alcohol steps in laboratory specimen preparation. Alcohol solutions allow concentration changes between aqueous and higher-strength alcohol stages. Placement in the sequence depends on the specimen-preparation method. This concentration is catalogued separately from other strengths and supplied in separately coded pack sizes.",
+      "existingIntendedPurpose": null,
+      "intendedPurposeStatus": "BLOCKED — SPECIFIC FACT MISSING: approved intended-purpose wording",
+      "sources": [
+        {
+          "title": "Leica Biosystems — An Introduction to Specimen Processing",
+          "url": "https://www.leicabiosystems.com/knowledge-pathway/an-introduction-to-specimen-processing/",
+          "scope": "General fixation, graded ethanol dehydration and clearing terminology. No CLARO-PROM formulation evidence."
+        },
+        {
+          "title": "Leica Biosystems — The Science of Tissue Processing",
+          "url": "https://www.leicabiosystems.com/sites/default/files/media_document-file/2023-06/210356_Science_of_Tissue_Processing_PPT_for_Knowledge_Pathway.pdf",
+          "scope": "General tissue-processing sequence and solvent roles; no transfer of instrument validation or reagent specifications."
+        }
+      ],
+      "confidence": {
+        "confirmedProductFact": "Published catalogue identity, code, labelled concentration/name and pack-size fields only.",
+        "generalTechnicalKnowledge": "Reagent-category role from official technical references; draft-level context only.",
+        "manufacturerVerificationRequired": "Each concentration remains a separate proposed group; no interchangeability, disinfection claim or protocol is inferred."
+      },
+      "ownerInput": [
+        "Approve, modify or reject graded alcohol processing as the function of the 80% v/v formulation; which preparation stage is appropriate?",
+        "Are 1 L, 5 L and 10 L the same formulation? Confirm any denaturant or approved specification that can be mentioned."
+      ],
+      "approvalStatus": "PROPOSED — OWNER REVIEW",
+      "familyEquivalenceConfirmed": false,
+      "previousValues": {
+        "shortDescription": null,
+        "description": null,
+        "intendedPurpose": null
+      },
+      "publicationAllowed": false
+    },
+    {
+      "id": "77b22f6d-1b3e-4eb3-addb-bfbbba20493e",
+      "expectedRevision": "aMxuB38zD5OHLKwsnSqUlQ",
+      "name": "Ethanol 80% v/v, IVD Reagent, 5 L",
+      "catalogueNumbers": [
+        "CPE80I5"
+      ],
+      "packaging": [
+        "5 L"
+      ],
+      "url": "https://claroprom.com/products/ethanol-80-v-v-cpe80i5",
+      "proposedFamily": "ethanol-80",
+      "proposedShortDescription": "Ethanol solution at 80% v/v, for graded alcohol steps in laboratory specimen preparation.",
+      "proposedDetailedDescription": "An ethanol solution at 80% v/v for graded alcohol steps in laboratory specimen preparation. Alcohol solutions allow concentration changes between aqueous and higher-strength alcohol stages. Placement in the sequence depends on the specimen-preparation method. This concentration is catalogued separately from other strengths and supplied in separately coded pack sizes.",
+      "existingIntendedPurpose": null,
+      "intendedPurposeStatus": "BLOCKED — SPECIFIC FACT MISSING: approved intended-purpose wording",
+      "sources": [
+        {
+          "title": "Leica Biosystems — An Introduction to Specimen Processing",
+          "url": "https://www.leicabiosystems.com/knowledge-pathway/an-introduction-to-specimen-processing/",
+          "scope": "General fixation, graded ethanol dehydration and clearing terminology. No CLARO-PROM formulation evidence."
+        },
+        {
+          "title": "Leica Biosystems — The Science of Tissue Processing",
+          "url": "https://www.leicabiosystems.com/sites/default/files/media_document-file/2023-06/210356_Science_of_Tissue_Processing_PPT_for_Knowledge_Pathway.pdf",
+          "scope": "General tissue-processing sequence and solvent roles; no transfer of instrument validation or reagent specifications."
+        }
+      ],
+      "confidence": {
+        "confirmedProductFact": "Published catalogue identity, code, labelled concentration/name and pack-size fields only.",
+        "generalTechnicalKnowledge": "Reagent-category role from official technical references; draft-level context only.",
+        "manufacturerVerificationRequired": "Each concentration remains a separate proposed group; no interchangeability, disinfection claim or protocol is inferred."
+      },
+      "ownerInput": [
+        "Approve, modify or reject graded alcohol processing as the function of the 80% v/v formulation; which preparation stage is appropriate?",
+        "Are 1 L, 5 L and 10 L the same formulation? Confirm any denaturant or approved specification that can be mentioned."
+      ],
+      "approvalStatus": "PROPOSED — OWNER REVIEW",
+      "familyEquivalenceConfirmed": false,
+      "previousValues": {
+        "shortDescription": null,
+        "description": null,
+        "intendedPurpose": null
+      },
+      "publicationAllowed": false
+    },
+    {
+      "id": "6626f39d-59cf-4fc3-8901-9db98b4018f9",
+      "expectedRevision": "aMxuB38zD5OHLKwsnSqKsB",
+      "name": "Ethanol 95% v/v, IVD Reagent, 1 L",
+      "catalogueNumbers": [
+        "CPE95I"
+      ],
+      "packaging": [
+        "1 L"
+      ],
+      "url": "https://claroprom.com/products/ethanol-95-v-v-cpe95i",
+      "proposedFamily": "ethanol-95",
+      "proposedShortDescription": "Ethanol solution at 95% v/v, for graded alcohol steps in laboratory specimen preparation.",
+      "proposedDetailedDescription": "An ethanol solution at 95% v/v for graded alcohol steps in laboratory specimen preparation. Alcohol solutions allow concentration changes between aqueous and higher-strength alcohol stages. Placement in the sequence depends on the specimen-preparation method. This concentration is catalogued separately from other strengths and supplied in separately coded pack sizes.",
+      "existingIntendedPurpose": null,
+      "intendedPurposeStatus": "BLOCKED — SPECIFIC FACT MISSING: approved intended-purpose wording",
+      "sources": [
+        {
+          "title": "Leica Biosystems — An Introduction to Specimen Processing",
+          "url": "https://www.leicabiosystems.com/knowledge-pathway/an-introduction-to-specimen-processing/",
+          "scope": "General fixation, graded ethanol dehydration and clearing terminology. No CLARO-PROM formulation evidence."
+        },
+        {
+          "title": "Leica Biosystems — The Science of Tissue Processing",
+          "url": "https://www.leicabiosystems.com/sites/default/files/media_document-file/2023-06/210356_Science_of_Tissue_Processing_PPT_for_Knowledge_Pathway.pdf",
+          "scope": "General tissue-processing sequence and solvent roles; no transfer of instrument validation or reagent specifications."
+        }
+      ],
+      "confidence": {
+        "confirmedProductFact": "Published catalogue identity, code, labelled concentration/name and pack-size fields only.",
+        "generalTechnicalKnowledge": "Reagent-category role from official technical references; draft-level context only.",
+        "manufacturerVerificationRequired": "Each concentration remains a separate proposed group; no interchangeability, disinfection claim or protocol is inferred."
+      },
+      "ownerInput": [
+        "Approve, modify or reject graded alcohol processing as the function of the 95% v/v formulation; which preparation stage is appropriate?",
+        "Are 1 L, 5 L and 10 L the same formulation? Confirm any denaturant or approved specification that can be mentioned."
+      ],
+      "approvalStatus": "PROPOSED — OWNER REVIEW",
+      "familyEquivalenceConfirmed": false,
+      "previousValues": {
+        "shortDescription": null,
+        "description": null,
+        "intendedPurpose": null
+      },
+      "publicationAllowed": false
+    },
+    {
+      "id": "efb3ecc2-ce49-4438-94ce-31f0e1c0a1f6",
+      "expectedRevision": "MwWOMVq9aGfEEH7OTjtC2v",
+      "name": "Ethanol 95% v/v, IVD Reagent, 10 L",
+      "catalogueNumbers": [
+        "CPE95I10"
+      ],
+      "packaging": [
+        "10 L"
+      ],
+      "url": "https://claroprom.com/products/ethanol-95-v-v-cpe95i10",
+      "proposedFamily": "ethanol-95",
+      "proposedShortDescription": "Ethanol solution at 95% v/v, for graded alcohol steps in laboratory specimen preparation.",
+      "proposedDetailedDescription": "An ethanol solution at 95% v/v for graded alcohol steps in laboratory specimen preparation. Alcohol solutions allow concentration changes between aqueous and higher-strength alcohol stages. Placement in the sequence depends on the specimen-preparation method. This concentration is catalogued separately from other strengths and supplied in separately coded pack sizes.",
+      "existingIntendedPurpose": null,
+      "intendedPurposeStatus": "BLOCKED — SPECIFIC FACT MISSING: approved intended-purpose wording",
+      "sources": [
+        {
+          "title": "Leica Biosystems — An Introduction to Specimen Processing",
+          "url": "https://www.leicabiosystems.com/knowledge-pathway/an-introduction-to-specimen-processing/",
+          "scope": "General fixation, graded ethanol dehydration and clearing terminology. No CLARO-PROM formulation evidence."
+        },
+        {
+          "title": "Leica Biosystems — The Science of Tissue Processing",
+          "url": "https://www.leicabiosystems.com/sites/default/files/media_document-file/2023-06/210356_Science_of_Tissue_Processing_PPT_for_Knowledge_Pathway.pdf",
+          "scope": "General tissue-processing sequence and solvent roles; no transfer of instrument validation or reagent specifications."
+        }
+      ],
+      "confidence": {
+        "confirmedProductFact": "Published catalogue identity, code, labelled concentration/name and pack-size fields only.",
+        "generalTechnicalKnowledge": "Reagent-category role from official technical references; draft-level context only.",
+        "manufacturerVerificationRequired": "Each concentration remains a separate proposed group; no interchangeability, disinfection claim or protocol is inferred."
+      },
+      "ownerInput": [
+        "Approve, modify or reject graded alcohol processing as the function of the 95% v/v formulation; which preparation stage is appropriate?",
+        "Are 1 L, 5 L and 10 L the same formulation? Confirm any denaturant or approved specification that can be mentioned."
+      ],
+      "approvalStatus": "PROPOSED — OWNER REVIEW",
+      "familyEquivalenceConfirmed": false,
+      "previousValues": {
+        "shortDescription": null,
+        "description": null,
+        "intendedPurpose": null
+      },
+      "publicationAllowed": false
+    },
+    {
+      "id": "32a7bb9c-170d-4009-aa27-cf5d5b6c823d",
+      "expectedRevision": "M3OQuuH4IiA2wtqZQKbkfQ",
+      "name": "Ethanol 95% v/v, IVD Reagent, 5 L",
+      "catalogueNumbers": [
+        "CPE95I5"
+      ],
+      "packaging": [
+        "5 L"
+      ],
+      "url": "https://claroprom.com/products/ethanol-95-v-v-cpe95i5",
+      "proposedFamily": "ethanol-95",
+      "proposedShortDescription": "Ethanol solution at 95% v/v, for graded alcohol steps in laboratory specimen preparation.",
+      "proposedDetailedDescription": "An ethanol solution at 95% v/v for graded alcohol steps in laboratory specimen preparation. Alcohol solutions allow concentration changes between aqueous and higher-strength alcohol stages. Placement in the sequence depends on the specimen-preparation method. This concentration is catalogued separately from other strengths and supplied in separately coded pack sizes.",
+      "existingIntendedPurpose": null,
+      "intendedPurposeStatus": "BLOCKED — SPECIFIC FACT MISSING: approved intended-purpose wording",
+      "sources": [
+        {
+          "title": "Leica Biosystems — An Introduction to Specimen Processing",
+          "url": "https://www.leicabiosystems.com/knowledge-pathway/an-introduction-to-specimen-processing/",
+          "scope": "General fixation, graded ethanol dehydration and clearing terminology. No CLARO-PROM formulation evidence."
+        },
+        {
+          "title": "Leica Biosystems — The Science of Tissue Processing",
+          "url": "https://www.leicabiosystems.com/sites/default/files/media_document-file/2023-06/210356_Science_of_Tissue_Processing_PPT_for_Knowledge_Pathway.pdf",
+          "scope": "General tissue-processing sequence and solvent roles; no transfer of instrument validation or reagent specifications."
+        }
+      ],
+      "confidence": {
+        "confirmedProductFact": "Published catalogue identity, code, labelled concentration/name and pack-size fields only.",
+        "generalTechnicalKnowledge": "Reagent-category role from official technical references; draft-level context only.",
+        "manufacturerVerificationRequired": "Each concentration remains a separate proposed group; no interchangeability, disinfection claim or protocol is inferred."
+      },
+      "ownerInput": [
+        "Approve, modify or reject graded alcohol processing as the function of the 95% v/v formulation; which preparation stage is appropriate?",
+        "Are 1 L, 5 L and 10 L the same formulation? Confirm any denaturant or approved specification that can be mentioned."
+      ],
+      "approvalStatus": "PROPOSED — OWNER REVIEW",
+      "familyEquivalenceConfirmed": false,
+      "previousValues": {
+        "shortDescription": null,
+        "description": null,
+        "intendedPurpose": null
+      },
+      "publicationAllowed": false
+    },
+    {
+      "id": "1fdab584-544b-47cc-a522-5cddaa1d4ce8",
+      "expectedRevision": "MwWOMVq9aGfEEH7OTjt12n",
+      "name": "Ethanol 96% v/v, IVD Reagent, 1 L",
+      "catalogueNumbers": [
+        "CPE96I"
+      ],
+      "packaging": [
+        "1 L"
+      ],
+      "url": "https://claroprom.com/products/ethanol-96-v-v-cpe96i",
+      "proposedFamily": "ethanol-96",
+      "proposedShortDescription": "Ethanol solution at 96% v/v, for graded alcohol steps in laboratory specimen preparation.",
+      "proposedDetailedDescription": "An ethanol solution at 96% v/v for graded alcohol steps in laboratory specimen preparation. Alcohol solutions allow concentration changes between aqueous and higher-strength alcohol stages. Placement in the sequence depends on the specimen-preparation method. This concentration is catalogued separately from other strengths and supplied in separately coded pack sizes.",
+      "existingIntendedPurpose": null,
+      "intendedPurposeStatus": "BLOCKED — SPECIFIC FACT MISSING: approved intended-purpose wording",
+      "sources": [
+        {
+          "title": "Leica Biosystems — An Introduction to Specimen Processing",
+          "url": "https://www.leicabiosystems.com/knowledge-pathway/an-introduction-to-specimen-processing/",
+          "scope": "General fixation, graded ethanol dehydration and clearing terminology. No CLARO-PROM formulation evidence."
+        },
+        {
+          "title": "Leica Biosystems — The Science of Tissue Processing",
+          "url": "https://www.leicabiosystems.com/sites/default/files/media_document-file/2023-06/210356_Science_of_Tissue_Processing_PPT_for_Knowledge_Pathway.pdf",
+          "scope": "General tissue-processing sequence and solvent roles; no transfer of instrument validation or reagent specifications."
+        }
+      ],
+      "confidence": {
+        "confirmedProductFact": "Published catalogue identity, code, labelled concentration/name and pack-size fields only.",
+        "generalTechnicalKnowledge": "Reagent-category role from official technical references; draft-level context only.",
+        "manufacturerVerificationRequired": "Each concentration remains a separate proposed group; no interchangeability, disinfection claim or protocol is inferred."
+      },
+      "ownerInput": [
+        "Approve, modify or reject graded alcohol processing as the function of the 96% v/v formulation; which preparation stage is appropriate?",
+        "Are 1 L, 5 L and 10 L the same formulation? Confirm any denaturant or approved specification that can be mentioned."
+      ],
+      "approvalStatus": "PROPOSED — OWNER REVIEW",
+      "familyEquivalenceConfirmed": false,
+      "previousValues": {
+        "shortDescription": null,
+        "description": null,
+        "intendedPurpose": null
+      },
+      "publicationAllowed": false
+    },
+    {
+      "id": "50482a66-d710-4aa8-ba75-8f56deaee35c",
+      "expectedRevision": "aMxuB38zD5OHLKwsnSqGcS",
+      "name": "Ethanol 96% v/v, IVD Reagent, 10 L",
+      "catalogueNumbers": [
+        "CPE96I10"
+      ],
+      "packaging": [
+        "10 L"
+      ],
+      "url": "https://claroprom.com/products/ethanol-96-v-v-cpe96i10",
+      "proposedFamily": "ethanol-96",
+      "proposedShortDescription": "Ethanol solution at 96% v/v, for graded alcohol steps in laboratory specimen preparation.",
+      "proposedDetailedDescription": "An ethanol solution at 96% v/v for graded alcohol steps in laboratory specimen preparation. Alcohol solutions allow concentration changes between aqueous and higher-strength alcohol stages. Placement in the sequence depends on the specimen-preparation method. This concentration is catalogued separately from other strengths and supplied in separately coded pack sizes.",
+      "existingIntendedPurpose": null,
+      "intendedPurposeStatus": "BLOCKED — SPECIFIC FACT MISSING: approved intended-purpose wording",
+      "sources": [
+        {
+          "title": "Leica Biosystems — An Introduction to Specimen Processing",
+          "url": "https://www.leicabiosystems.com/knowledge-pathway/an-introduction-to-specimen-processing/",
+          "scope": "General fixation, graded ethanol dehydration and clearing terminology. No CLARO-PROM formulation evidence."
+        },
+        {
+          "title": "Leica Biosystems — The Science of Tissue Processing",
+          "url": "https://www.leicabiosystems.com/sites/default/files/media_document-file/2023-06/210356_Science_of_Tissue_Processing_PPT_for_Knowledge_Pathway.pdf",
+          "scope": "General tissue-processing sequence and solvent roles; no transfer of instrument validation or reagent specifications."
+        }
+      ],
+      "confidence": {
+        "confirmedProductFact": "Published catalogue identity, code, labelled concentration/name and pack-size fields only.",
+        "generalTechnicalKnowledge": "Reagent-category role from official technical references; draft-level context only.",
+        "manufacturerVerificationRequired": "Each concentration remains a separate proposed group; no interchangeability, disinfection claim or protocol is inferred."
+      },
+      "ownerInput": [
+        "Approve, modify or reject graded alcohol processing as the function of the 96% v/v formulation; which preparation stage is appropriate?",
+        "Are 1 L, 5 L and 10 L the same formulation? Confirm any denaturant or approved specification that can be mentioned."
+      ],
+      "approvalStatus": "PROPOSED — OWNER REVIEW",
+      "familyEquivalenceConfirmed": false,
+      "previousValues": {
+        "shortDescription": null,
+        "description": null,
+        "intendedPurpose": null
+      },
+      "publicationAllowed": false
+    },
+    {
+      "id": "9079fe0e-d658-4e48-ac48-23f7aadb31b2",
+      "expectedRevision": "GXon7RN0Hm0wO29GQnsY1Q",
+      "name": "Ethanol 96% v/v, IVD Reagent, 5 L",
+      "catalogueNumbers": [
+        "CPE96I5"
+      ],
+      "packaging": [
+        "5 L"
+      ],
+      "url": "https://claroprom.com/products/ethanol-96-v-v-cpe96i5",
+      "proposedFamily": "ethanol-96",
+      "proposedShortDescription": "Ethanol solution at 96% v/v, for graded alcohol steps in laboratory specimen preparation.",
+      "proposedDetailedDescription": "An ethanol solution at 96% v/v for graded alcohol steps in laboratory specimen preparation. Alcohol solutions allow concentration changes between aqueous and higher-strength alcohol stages. Placement in the sequence depends on the specimen-preparation method. This concentration is catalogued separately from other strengths and supplied in separately coded pack sizes.",
+      "existingIntendedPurpose": null,
+      "intendedPurposeStatus": "BLOCKED — SPECIFIC FACT MISSING: approved intended-purpose wording",
+      "sources": [
+        {
+          "title": "Leica Biosystems — An Introduction to Specimen Processing",
+          "url": "https://www.leicabiosystems.com/knowledge-pathway/an-introduction-to-specimen-processing/",
+          "scope": "General fixation, graded ethanol dehydration and clearing terminology. No CLARO-PROM formulation evidence."
+        },
+        {
+          "title": "Leica Biosystems — The Science of Tissue Processing",
+          "url": "https://www.leicabiosystems.com/sites/default/files/media_document-file/2023-06/210356_Science_of_Tissue_Processing_PPT_for_Knowledge_Pathway.pdf",
+          "scope": "General tissue-processing sequence and solvent roles; no transfer of instrument validation or reagent specifications."
+        }
+      ],
+      "confidence": {
+        "confirmedProductFact": "Published catalogue identity, code, labelled concentration/name and pack-size fields only.",
+        "generalTechnicalKnowledge": "Reagent-category role from official technical references; draft-level context only.",
+        "manufacturerVerificationRequired": "Each concentration remains a separate proposed group; no interchangeability, disinfection claim or protocol is inferred."
+      },
+      "ownerInput": [
+        "Approve, modify or reject graded alcohol processing as the function of the 96% v/v formulation; which preparation stage is appropriate?",
+        "Are 1 L, 5 L and 10 L the same formulation? Confirm any denaturant or approved specification that can be mentioned."
+      ],
+      "approvalStatus": "PROPOSED — OWNER REVIEW",
+      "familyEquivalenceConfirmed": false,
+      "previousValues": {
+        "shortDescription": null,
+        "description": null,
+        "intendedPurpose": null
+      },
+      "publicationAllowed": false
+    },
+    {
+      "id": "e579bd5f-8f76-4405-91f4-e5fa04068167",
+      "expectedRevision": "MwWOMVq9aGfEEH7OTjsgLP",
+      "name": "Giemsa Solution, 1 L",
+      "catalogueNumbers": [
+        "CP00G3"
+      ],
+      "packaging": [
+        "1 L"
+      ],
+      "url": "https://claroprom.com/products/giemsa-solution-cp00g3",
+      "proposedFamily": "giemsa",
+      "proposedShortDescription": "Giemsa staining solution for visual differentiation of cellular structures in microscopic preparations.",
+      "proposedDetailedDescription": "A Giemsa staining solution for microscopic preparations requiring visual differentiation of cellular structures. Staining adds contrast to structures that can otherwise be difficult to distinguish under light microscopy. The solution belongs to the Giemsa reagent category and is supplied in the listed catalogue pack sizes.",
+      "existingIntendedPurpose": null,
+      "intendedPurposeStatus": "BLOCKED — SPECIFIC FACT MISSING: approved intended-purpose wording",
+      "sources": [
+        {
+          "title": "Merck / Sigma-Aldrich — Hematology Stains",
+          "url": "https://www.sigmaaldrich.com/IN/en/products/clinical-diagnostics/tissue-diagnostics/hematology-stains",
+          "scope": "General Giemsa and May–Grünwald staining categories; no specimen/protocol/performance approval for CLARO-PROM."
+        }
+      ],
+      "confidence": {
+        "confirmedProductFact": "Published catalogue identity, code, labelled concentration/name and pack-size fields only.",
+        "generalTechnicalKnowledge": "Reagent-category role from official technical references; draft-level context only.",
+        "manufacturerVerificationRequired": "No parasite indication, staining time, buffer pH or guaranteed colour/performance claim."
+      },
+      "ownerInput": [
+        "Approve the general cellular-staining description and identify the approved specimen scope.",
+        "Are 100 mL, 500 mL and 1 L the same formulation? Is a specific combination with May–Grünwald approved?"
+      ],
+      "approvalStatus": "PROPOSED — OWNER REVIEW",
+      "familyEquivalenceConfirmed": false,
+      "previousValues": {
+        "shortDescription": null,
+        "description": null,
+        "intendedPurpose": null
+      },
+      "publicationAllowed": false
+    },
+    {
+      "id": "f5ee9e66-cdf6-49f3-bb91-4f2e9a87e652",
+      "expectedRevision": "aMxuB38zD5OHLKwsnSpgBJ",
+      "name": "Giemsa Solution, 100 mL",
+      "catalogueNumbers": [
+        "CP00G1"
+      ],
+      "packaging": [
+        "100 mL"
+      ],
+      "url": "https://claroprom.com/products/giemsa-solution-cp00g1",
+      "proposedFamily": "giemsa",
+      "proposedShortDescription": "Giemsa staining solution for visual differentiation of cellular structures in microscopic preparations.",
+      "proposedDetailedDescription": "A Giemsa staining solution for microscopic preparations requiring visual differentiation of cellular structures. Staining adds contrast to structures that can otherwise be difficult to distinguish under light microscopy. The solution belongs to the Giemsa reagent category and is supplied in the listed catalogue pack sizes.",
+      "existingIntendedPurpose": null,
+      "intendedPurposeStatus": "BLOCKED — SPECIFIC FACT MISSING: approved intended-purpose wording",
+      "sources": [
+        {
+          "title": "Merck / Sigma-Aldrich — Hematology Stains",
+          "url": "https://www.sigmaaldrich.com/IN/en/products/clinical-diagnostics/tissue-diagnostics/hematology-stains",
+          "scope": "General Giemsa and May–Grünwald staining categories; no specimen/protocol/performance approval for CLARO-PROM."
+        }
+      ],
+      "confidence": {
+        "confirmedProductFact": "Published catalogue identity, code, labelled concentration/name and pack-size fields only.",
+        "generalTechnicalKnowledge": "Reagent-category role from official technical references; draft-level context only.",
+        "manufacturerVerificationRequired": "No parasite indication, staining time, buffer pH or guaranteed colour/performance claim."
+      },
+      "ownerInput": [
+        "Approve the general cellular-staining description and identify the approved specimen scope.",
+        "Are 100 mL, 500 mL and 1 L the same formulation? Is a specific combination with May–Grünwald approved?"
+      ],
+      "approvalStatus": "PROPOSED — OWNER REVIEW",
+      "familyEquivalenceConfirmed": false,
+      "previousValues": {
+        "shortDescription": null,
+        "description": null,
+        "intendedPurpose": null
+      },
+      "publicationAllowed": false
+    },
+    {
+      "id": "36a7691c-7768-434d-a6d9-f1d7a41142c9",
+      "expectedRevision": "GXon7RN0Hm0wO29GQns5Mw",
+      "name": "Giemsa Solution, 500 mL",
+      "catalogueNumbers": [
+        "CP00G2"
+      ],
+      "packaging": [
+        "500 mL"
+      ],
+      "url": "https://claroprom.com/products/giemsa-solution-cp00g2",
+      "proposedFamily": "giemsa",
+      "proposedShortDescription": "Giemsa staining solution for visual differentiation of cellular structures in microscopic preparations.",
+      "proposedDetailedDescription": "A Giemsa staining solution for microscopic preparations requiring visual differentiation of cellular structures. Staining adds contrast to structures that can otherwise be difficult to distinguish under light microscopy. The solution belongs to the Giemsa reagent category and is supplied in the listed catalogue pack sizes.",
+      "existingIntendedPurpose": null,
+      "intendedPurposeStatus": "BLOCKED — SPECIFIC FACT MISSING: approved intended-purpose wording",
+      "sources": [
+        {
+          "title": "Merck / Sigma-Aldrich — Hematology Stains",
+          "url": "https://www.sigmaaldrich.com/IN/en/products/clinical-diagnostics/tissue-diagnostics/hematology-stains",
+          "scope": "General Giemsa and May–Grünwald staining categories; no specimen/protocol/performance approval for CLARO-PROM."
+        }
+      ],
+      "confidence": {
+        "confirmedProductFact": "Published catalogue identity, code, labelled concentration/name and pack-size fields only.",
+        "generalTechnicalKnowledge": "Reagent-category role from official technical references; draft-level context only.",
+        "manufacturerVerificationRequired": "No parasite indication, staining time, buffer pH or guaranteed colour/performance claim."
+      },
+      "ownerInput": [
+        "Approve the general cellular-staining description and identify the approved specimen scope.",
+        "Are 100 mL, 500 mL and 1 L the same formulation? Is a specific combination with May–Grünwald approved?"
+      ],
+      "approvalStatus": "PROPOSED — OWNER REVIEW",
+      "familyEquivalenceConfirmed": false,
+      "previousValues": {
+        "shortDescription": null,
+        "description": null,
+        "intendedPurpose": null
+      },
+      "publicationAllowed": false
+    },
+    {
+      "id": "600b2643-25e4-46b9-8032-b1e01971a745",
+      "expectedRevision": "MwWOMVq9aGfEEH7OTjsnXx",
+      "name": "Immersion Oil, 100 mL",
+      "catalogueNumbers": [
+        "CP00CD"
+      ],
+      "packaging": [
+        "100 mL"
+      ],
+      "url": "https://claroprom.com/products/immersion-oil-cp00cd",
+      "proposedFamily": "immersion-oil",
+      "proposedShortDescription": "Microscopy immersion oil for use between the prepared slide and an oil-immersion objective.",
+      "proposedDetailedDescription": "An immersion oil for microscopy using oil-immersion objectives. The oil provides a medium between the prepared slide and the objective, supporting the optical interface used in oil-immersion examination. This product group is supplied in separately coded volumes for selection according to laboratory requirements.",
+      "existingIntendedPurpose": null,
+      "intendedPurposeStatus": "BLOCKED — SPECIFIC FACT MISSING: approved intended-purpose wording",
+      "sources": [
+        {
+          "title": "Merck — Immersion oil for microscopy, principle section",
+          "url": "https://www.sigmaaldrich.com/deepweb/assets/sigmaaldrich/product/documents/417/210/104699ug-mk.pdf",
+          "scope": "General role of oil between specimen and oil-immersion objective. No refractive index, optical grade or compatibility transferred."
+        }
+      ],
+      "confidence": {
+        "confirmedProductFact": "Published catalogue identity, code, labelled concentration/name and pack-size fields only.",
+        "generalTechnicalKnowledge": "Reagent-category role from official technical references; draft-level context only.",
+        "manufacturerVerificationRequired": "No refractive index, oil type, objective brand compatibility or optical performance specification."
+      },
+      "ownerInput": [
+        "Confirm the proposed microscopy function and the approved objective/specimen scope.",
+        "Are 100, 200 and 500 mL the same formulation? Which optical specifications, if any, are approved for publication?"
+      ],
+      "approvalStatus": "PROPOSED — OWNER REVIEW",
+      "familyEquivalenceConfirmed": false,
+      "previousValues": {
+        "shortDescription": null,
+        "description": null,
+        "intendedPurpose": null
+      },
+      "publicationAllowed": false
+    },
+    {
+      "id": "6bfa18d2-e064-49c7-80d8-a12fb303d05b",
+      "expectedRevision": "aMxuB38zD5OHLKwsnSq0ND",
+      "name": "Immersion Oil, 200 mL",
+      "catalogueNumbers": [
+        "CP00CD1"
+      ],
+      "packaging": [
+        "200 mL"
+      ],
+      "url": "https://claroprom.com/products/immersion-oil-cp00cd1",
+      "proposedFamily": "immersion-oil",
+      "proposedShortDescription": "Microscopy immersion oil for use between the prepared slide and an oil-immersion objective.",
+      "proposedDetailedDescription": "An immersion oil for microscopy using oil-immersion objectives. The oil provides a medium between the prepared slide and the objective, supporting the optical interface used in oil-immersion examination. This product group is supplied in separately coded volumes for selection according to laboratory requirements.",
+      "existingIntendedPurpose": null,
+      "intendedPurposeStatus": "BLOCKED — SPECIFIC FACT MISSING: approved intended-purpose wording",
+      "sources": [
+        {
+          "title": "Merck — Immersion oil for microscopy, principle section",
+          "url": "https://www.sigmaaldrich.com/deepweb/assets/sigmaaldrich/product/documents/417/210/104699ug-mk.pdf",
+          "scope": "General role of oil between specimen and oil-immersion objective. No refractive index, optical grade or compatibility transferred."
+        }
+      ],
+      "confidence": {
+        "confirmedProductFact": "Published catalogue identity, code, labelled concentration/name and pack-size fields only.",
+        "generalTechnicalKnowledge": "Reagent-category role from official technical references; draft-level context only.",
+        "manufacturerVerificationRequired": "No refractive index, oil type, objective brand compatibility or optical performance specification."
+      },
+      "ownerInput": [
+        "Confirm the proposed microscopy function and the approved objective/specimen scope.",
+        "Are 100, 200 and 500 mL the same formulation? Which optical specifications, if any, are approved for publication?"
+      ],
+      "approvalStatus": "PROPOSED — OWNER REVIEW",
+      "familyEquivalenceConfirmed": false,
+      "previousValues": {
+        "shortDescription": null,
+        "description": null,
+        "intendedPurpose": null
+      },
+      "publicationAllowed": false
+    },
+    {
+      "id": "5fb8b759-431e-4535-9ac5-23c513e33a95",
+      "expectedRevision": "aMxuB38zD5OHLKwsnSq18s",
+      "name": "Immersion Oil, 500 mL",
+      "catalogueNumbers": [
+        "CP00CD2"
+      ],
+      "packaging": [
+        "500 mL"
+      ],
+      "url": "https://claroprom.com/products/immersion-oil-cp00cd2",
+      "proposedFamily": "immersion-oil",
+      "proposedShortDescription": "Microscopy immersion oil for use between the prepared slide and an oil-immersion objective.",
+      "proposedDetailedDescription": "An immersion oil for microscopy using oil-immersion objectives. The oil provides a medium between the prepared slide and the objective, supporting the optical interface used in oil-immersion examination. This product group is supplied in separately coded volumes for selection according to laboratory requirements.",
+      "existingIntendedPurpose": null,
+      "intendedPurposeStatus": "BLOCKED — SPECIFIC FACT MISSING: approved intended-purpose wording",
+      "sources": [
+        {
+          "title": "Merck — Immersion oil for microscopy, principle section",
+          "url": "https://www.sigmaaldrich.com/deepweb/assets/sigmaaldrich/product/documents/417/210/104699ug-mk.pdf",
+          "scope": "General role of oil between specimen and oil-immersion objective. No refractive index, optical grade or compatibility transferred."
+        }
+      ],
+      "confidence": {
+        "confirmedProductFact": "Published catalogue identity, code, labelled concentration/name and pack-size fields only.",
+        "generalTechnicalKnowledge": "Reagent-category role from official technical references; draft-level context only.",
+        "manufacturerVerificationRequired": "No refractive index, oil type, objective brand compatibility or optical performance specification."
+      },
+      "ownerInput": [
+        "Confirm the proposed microscopy function and the approved objective/specimen scope.",
+        "Are 100, 200 and 500 mL the same formulation? Which optical specifications, if any, are approved for publication?"
+      ],
+      "approvalStatus": "PROPOSED — OWNER REVIEW",
+      "familyEquivalenceConfirmed": false,
+      "previousValues": {
+        "shortDescription": null,
+        "description": null,
+        "intendedPurpose": null
+      },
+      "publicationAllowed": false
+    },
+    {
+      "id": "5c4274fa-b658-4aa1-b436-b37ab3ddf6b5",
+      "expectedRevision": "aMxuB38zD5OHLKwsnSpu7Z",
+      "name": "May Gruenwald Solution, 1 L",
+      "catalogueNumbers": [
+        "CP00MY2"
+      ],
+      "packaging": [
+        "1 L"
+      ],
+      "url": "https://claroprom.com/products/may-gruenwald-solution-cp00my2",
+      "proposedFamily": "may-grunwald",
+      "proposedShortDescription": "May–Grünwald staining solution for visual differentiation of cells in laboratory microscopic preparations.",
+      "proposedDetailedDescription": "A May–Grünwald staining solution for microscopic preparations requiring cellular differentiation. May–Grünwald belongs to the Romanowsky-type staining category, which includes established combined staining methods. This reagent is catalogued separately from Giemsa and supplied in distinct pack sizes, allowing laboratories to select the appropriate presentation for their workflow.",
+      "existingIntendedPurpose": null,
+      "intendedPurposeStatus": "BLOCKED — SPECIFIC FACT MISSING: approved intended-purpose wording",
+      "sources": [
+        {
+          "title": "Merck / Sigma-Aldrich — Hematology Stains",
+          "url": "https://www.sigmaaldrich.com/IN/en/products/clinical-diagnostics/tissue-diagnostics/hematology-stains",
+          "scope": "General Giemsa and May–Grünwald staining categories; no specimen/protocol/performance approval for CLARO-PROM."
+        }
+      ],
+      "confidence": {
+        "confirmedProductFact": "Published catalogue identity, code, labelled concentration/name and pack-size fields only.",
+        "generalTechnicalKnowledge": "Reagent-category role from official technical references; draft-level context only.",
+        "manufacturerVerificationRequired": "No protocol, specimen indication or specific performance result is assigned."
+      },
+      "ownerInput": [
+        "Approve the general cellular-staining function; is a May–Grünwald–Giemsa combination approved for this formulation?",
+        "Are 100 mL, 500 mL and 1 L the same formulation? Confirm the official commercial spelling without changing public names now."
+      ],
+      "approvalStatus": "PROPOSED — OWNER REVIEW",
+      "familyEquivalenceConfirmed": false,
+      "previousValues": {
+        "shortDescription": null,
+        "description": null,
+        "intendedPurpose": null
+      },
+      "publicationAllowed": false
+    },
+    {
+      "id": "ef01d122-f2c1-4de0-b4fe-a65e2fbf4012",
+      "expectedRevision": "MwWOMVq9aGfEEH7OTjsiGx",
+      "name": "May Gruenwald Solution, 100 mL",
+      "catalogueNumbers": [
+        "CP00MY"
+      ],
+      "packaging": [
+        "100 mL"
+      ],
+      "url": "https://claroprom.com/products/may-gruenwald-solution-cp00my",
+      "proposedFamily": "may-grunwald",
+      "proposedShortDescription": "May–Grünwald staining solution for visual differentiation of cells in laboratory microscopic preparations.",
+      "proposedDetailedDescription": "A May–Grünwald staining solution for microscopic preparations requiring cellular differentiation. May–Grünwald belongs to the Romanowsky-type staining category, which includes established combined staining methods. This reagent is catalogued separately from Giemsa and supplied in distinct pack sizes, allowing laboratories to select the appropriate presentation for their workflow.",
+      "existingIntendedPurpose": null,
+      "intendedPurposeStatus": "BLOCKED — SPECIFIC FACT MISSING: approved intended-purpose wording",
+      "sources": [
+        {
+          "title": "Merck / Sigma-Aldrich — Hematology Stains",
+          "url": "https://www.sigmaaldrich.com/IN/en/products/clinical-diagnostics/tissue-diagnostics/hematology-stains",
+          "scope": "General Giemsa and May–Grünwald staining categories; no specimen/protocol/performance approval for CLARO-PROM."
+        }
+      ],
+      "confidence": {
+        "confirmedProductFact": "Published catalogue identity, code, labelled concentration/name and pack-size fields only.",
+        "generalTechnicalKnowledge": "Reagent-category role from official technical references; draft-level context only.",
+        "manufacturerVerificationRequired": "No protocol, specimen indication or specific performance result is assigned."
+      },
+      "ownerInput": [
+        "Approve the general cellular-staining function; is a May–Grünwald–Giemsa combination approved for this formulation?",
+        "Are 100 mL, 500 mL and 1 L the same formulation? Confirm the official commercial spelling without changing public names now."
+      ],
+      "approvalStatus": "PROPOSED — OWNER REVIEW",
+      "familyEquivalenceConfirmed": false,
+      "previousValues": {
+        "shortDescription": null,
+        "description": null,
+        "intendedPurpose": null
+      },
+      "publicationAllowed": false
+    },
+    {
+      "id": "86bf8c16-1ad7-42f2-8695-5d6f62970293",
+      "expectedRevision": "aMxuB38zD5OHLKwsnSpsmx",
+      "name": "May Gruenwald Solution, 500 mL",
+      "catalogueNumbers": [
+        "CP00MY1"
+      ],
+      "packaging": [
+        "500 mL"
+      ],
+      "url": "https://claroprom.com/products/may-gruenwald-solution-cp00my1",
+      "proposedFamily": "may-grunwald",
+      "proposedShortDescription": "May–Grünwald staining solution for visual differentiation of cells in laboratory microscopic preparations.",
+      "proposedDetailedDescription": "A May–Grünwald staining solution for microscopic preparations requiring cellular differentiation. May–Grünwald belongs to the Romanowsky-type staining category, which includes established combined staining methods. This reagent is catalogued separately from Giemsa and supplied in distinct pack sizes, allowing laboratories to select the appropriate presentation for their workflow.",
+      "existingIntendedPurpose": null,
+      "intendedPurposeStatus": "BLOCKED — SPECIFIC FACT MISSING: approved intended-purpose wording",
+      "sources": [
+        {
+          "title": "Merck / Sigma-Aldrich — Hematology Stains",
+          "url": "https://www.sigmaaldrich.com/IN/en/products/clinical-diagnostics/tissue-diagnostics/hematology-stains",
+          "scope": "General Giemsa and May–Grünwald staining categories; no specimen/protocol/performance approval for CLARO-PROM."
+        }
+      ],
+      "confidence": {
+        "confirmedProductFact": "Published catalogue identity, code, labelled concentration/name and pack-size fields only.",
+        "generalTechnicalKnowledge": "Reagent-category role from official technical references; draft-level context only.",
+        "manufacturerVerificationRequired": "No protocol, specimen indication or specific performance result is assigned."
+      },
+      "ownerInput": [
+        "Approve the general cellular-staining function; is a May–Grünwald–Giemsa combination approved for this formulation?",
+        "Are 100 mL, 500 mL and 1 L the same formulation? Confirm the official commercial spelling without changing public names now."
+      ],
+      "approvalStatus": "PROPOSED — OWNER REVIEW",
+      "familyEquivalenceConfirmed": false,
+      "previousValues": {
+        "shortDescription": null,
+        "description": null,
+        "intendedPurpose": null
+      },
+      "publicationAllowed": false
+    }
+  ],
+  "counts": {
+    "workingGroups": 15,
+    "shortDrafts": 15,
+    "detailedDrafts": 15,
+    "skus": 44,
+    "groupsWithoutDraft": 0,
+    "groupsRequiringManufacturerVerification": 15,
+    "missingApprovedIntendedPurpose": 44
+  }
+}

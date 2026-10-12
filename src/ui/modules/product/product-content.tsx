@@ -14,7 +14,8 @@ import { cn } from '@/lib/utils'
 import { sanityFetchLive } from '@/sanity/lib/live'
 import type { PRODUCT_QUERY_RESULT, ProductContent } from '@/sanity/types'
 import { Module } from '@/ui/modules'
-import ProductPhoto from './product-photo'
+import { ClaroplastPackagingAdvantage } from './claroplast-outreach'
+import ProductPhoto, { safeProductPhoto } from './product-photo'
 import ProductPreview from './product-preview'
 import { getProductTranslations } from './translations'
 
@@ -114,6 +115,10 @@ export default async function ({
 	const productName = stegaClean(product.title ?? '')
 	const pack = claroplastPack(product.metadata?.slug?.current)
 	const showFormat = hasPackSize(product.table)
+	const hasPhoto = !!safeProductPhoto(product.image)
+	const gallery = (product.gallery ?? []).filter((image) =>
+		safeProductPhoto(image),
+	)
 
 	const candidates =
 		showRelated && category?._id
@@ -170,15 +175,12 @@ export default async function ({
 			<div
 				className={cn(
 					'section grid items-start gap-10 py-12 md:gap-14',
-					(product.image?.asset ||
-						product.gallery?.some((image) => image.asset)) &&
-						'md:grid-cols-2',
+					(hasPhoto || gallery.length > 0) && 'md:grid-cols-2',
 				)}
 			>
-				{(product.image?.asset ||
-					product.gallery?.some((image) => image.asset)) && (
+				{(hasPhoto || gallery.length > 0) && (
 					<div className="space-y-5">
-						{product.image?.asset && (
+						{hasPhoto && (
 							<figure className="space-y-2">
 								<div className="flex aspect-square w-full items-center justify-center rounded-lg bg-neutral-50 p-5">
 									<ProductPhoto
@@ -188,34 +190,32 @@ export default async function ({
 										sizes="(max-width: 767px) 90vw, 45vw"
 									/>
 								</div>
-								{product.image.caption && (
+								{product.image?.caption && (
 									<figcaption className="text-sm text-neutral-600">
-										{product.image.caption}
+										{product.image?.caption}
 									</figcaption>
 								)}
 							</figure>
 						)}
-						{!!product.gallery?.length && (
+						{gallery.length > 0 && (
 							<div className="grid grid-cols-2 gap-4">
-								{product.gallery
-									.filter((image) => image.asset)
-									.map((image) => (
-										<figure key={image._key} className="space-y-2">
-											<div className="flex aspect-square items-center justify-center rounded-md bg-neutral-50 p-3">
-												<ProductPhoto
-													image={image}
-													title={product.title}
-													width={800}
-													sizes="(max-width: 767px) 42vw, 22vw"
-												/>
-											</div>
-											{image.caption && (
-												<figcaption className="text-xs text-neutral-600">
-													{image.caption}
-												</figcaption>
-											)}
-										</figure>
-									))}
+								{gallery.map((image) => (
+									<figure key={image._key} className="space-y-2">
+										<div className="flex aspect-square items-center justify-center rounded-md bg-neutral-50 p-3">
+											<ProductPhoto
+												image={image}
+												title={product.title}
+												width={800}
+												sizes="(max-width: 767px) 42vw, 22vw"
+											/>
+										</div>
+										{image.caption && (
+											<figcaption className="text-xs text-neutral-600">
+												{image.caption}
+											</figcaption>
+										)}
+									</figure>
+								))}
 							</div>
 						)}
 					</div>
@@ -258,6 +258,24 @@ export default async function ({
 							</div>
 						</dl>
 					)}
+					{pack &&
+						(pack.packaging === '2 kg' ? (
+							<ClaroplastPackagingAdvantage transportOnly />
+						) : (
+							<section
+								aria-label="Claroplast packaging advantage"
+								className="space-y-2 rounded-lg bg-neutral-50 p-5"
+							>
+								<h2 className="text-lg font-semibold">
+									Lightweight, easy-to-handle packaging
+								</h2>
+								<p className="text-sm">
+									The 10 kg pack features a lightweight cardboard carton with a
+									durable inner bag for practical handling by laboratory
+									personnel.
+								</p>
+							</section>
+						))}
 					{!!product.description?.length && (
 						<div className="prose max-w-none">
 							<PortableText value={product.description} />
