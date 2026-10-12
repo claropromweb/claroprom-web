@@ -18,7 +18,9 @@ const PRODUCT_SEARCH_QUERY = groq`
 		_type == 'product' && hidden != true
 		&& coalesce(language, $defaultLang) == $lang
 		&& defined(metadata.slug.current)
-		&& title match $queryMatch
+		&& (title match $queryMatch || table[].code match $queryMatch ||
+			(metadata.slug.current == "claroplast-a-2-kg" && "CP00CL2" match $queryMatch) ||
+			(metadata.slug.current == "claroplast-a-10-kg" && "CP00CLP" match $queryMatch))
 	]|order(title asc)[0...8]{
 		_id,
 		title,
@@ -43,6 +45,7 @@ export async function searchProducts(
 ): Promise<ProductSearchResult[]> {
 	const q = query.trim()
 	if (!q) return []
+	if (q.length > 200) return []
 
 	// Match each token as a prefix so "eos" finds "Eosin".
 	const queryMatch = q

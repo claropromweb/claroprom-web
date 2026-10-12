@@ -80,6 +80,12 @@ export function preparedMedicaPost(environment = process.env.VERCEL_ENV) {
 				'/products/histology-paraffin-wax-claroplast',
 			),
 			block('Official MEDICA exhibitor profile', 'source', MEDICA.source),
+			block(
+				'Discuss a distribution partnership',
+				'distributors',
+				'/distributors',
+			),
+			block('Browse our product catalogue', 'catalogue', '/products'),
 		],
 		contentPlainText: paragraphs.join('\n\n'),
 		readTime: 1,

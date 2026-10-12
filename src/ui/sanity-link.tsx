@@ -35,12 +35,11 @@ export default function ({
 			stegaClean(external),
 	}
 
-	// Repair the published distributor CTA's homepage target using the existing
-	// contact form's supported product parameter; keep its label and styling.
-	if (stegaClean(label || props['aria-label'])?.trim() === 'Become a distributor') {
-		return (
-			<NextLink href="/kontakt?product=Distributor%20inquiry" {...linkProps} />
-		)
+	// Existing CMS distributor CTA labels route to the dedicated partnership page.
+	if (
+		stegaClean(label || props['aria-label'])?.trim() === 'Become a distributor'
+	) {
+		return <NextLink href="/distributors" {...linkProps} />
 	}
 
 	if (type === 'internal' && internal) {

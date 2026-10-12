@@ -1,6 +1,13 @@
 import { NextResponse } from 'next/server'
 import { Resend } from 'resend'
+import {
+	inquiryEmailLines,
+	resolveInquiryItems,
+	validateRequestedItems,
+	type InquiryItem,
+} from '@/lib/inquiry-items'
 import { INQUIRY_TYPES, type InquiryType } from '@/lib/outreach'
+import { client } from '@/sanity/lib/client'
 
 type ContactPayload = {
 	inquiry?: string
@@ -14,6 +21,10 @@ type ContactPayload = {
 	request?: string
 	formId?: string
 	lang?: string
+	company?: string
+	country?: string
+	markets?: string
+	items?: unknown
 }
 
 function escapeHtml(value: string) {
@@ -26,6 +37,17 @@ function escapeHtml(value: string) {
 }
 
 export async function POST(request: Request) {
+	const origin = request.headers.get('origin')
+	if (origin && origin !== new URL(request.url).origin)
+		return NextResponse.json(
+			{ error: 'Invalid request origin.' },
+			{ status: 403 },
+		)
+	if (!request.headers.get('content-type')?.includes('application/json'))
+		return NextResponse.json(
+			{ error: 'JSON content is required.' },
+			{ status: 415 },
+		)
 	const apiKey = process.env.RESEND_API_KEY
 	const to = process.env.CONTACT_FORM_TO
 	const from = process.env.CONTACT_FORM_FROM
@@ -42,7 +64,30 @@ export async function POST(request: Request) {
 
 	let body: ContactPayload
 	try {
-		body = await request.json()
+		const reader = request.body?.getReader()
+		if (!reader) throw new Error('Missing body')
+		const chunks: Uint8Array[] = []
+		let size = 0
+		while (true) {
+			const { value, done } = await reader.read()
+			if (done) break
+			size += value.length
+			if (size > 40000) {
+				await reader.cancel()
+				return NextResponse.json(
+					{ error: 'Request is too long.' },
+					{ status: 413 },
+				)
+			}
+			chunks.push(value)
+		}
+		const bytes = new Uint8Array(size)
+		let offset = 0
+		for (const chunk of chunks) {
+			bytes.set(chunk, offset)
+			offset += chunk.length
+		}
+		body = JSON.parse(new TextDecoder().decode(bytes))
 	} catch {
 		return NextResponse.json(
 			{ error: 'Invalid request body.' },
@@ -62,6 +107,11 @@ export async function POST(request: Request) {
 			'request',
 			'inquiry',
 			'website',
+			'company',
+			'country',
+			'markets',
+			'formId',
+			'lang',
 		].some(
 			(key) =>
 				body[key as keyof ContactPayload] != null &&
@@ -88,8 +138,63 @@ export async function POST(request: Request) {
 	const email = body.email?.trim()
 	const phone = body.phone?.trim()
 	const lab = body.lab?.trim()
-	const product = body.product?.trim()
+	let product = body.product?.trim()
 	const message = body.request?.trim()
+	if (
+		!name ||
+		!email ||
+		!message ||
+		(inquiry === 'quote' && !product && body.items === undefined)
+	)
+		return NextResponse.json(
+			{ error: 'Missing required fields.' },
+			{ status: 422 },
+		)
+	if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
+		return NextResponse.json(
+			{ error: 'Invalid email address.' },
+			{ status: 422 },
+		)
+	let selectedItems: InquiryItem[] = []
+	if (body.items !== undefined) {
+		if (inquiry !== 'quote')
+			return NextResponse.json(
+				{ error: 'Product selections require a quote inquiry.' },
+				{ status: 422 },
+			)
+		try {
+			const requested = validateRequestedItems(body.items)
+			const products = await client
+				.withConfig({ useCdn: false, perspective: 'published' })
+				.fetch(
+					`*[_type == "product" && !(_id in path("drafts.**")) && _id in $ids && hidden != true && language == "en"]{_id,title,hidden,language,metadata,table}`,
+					{ ids: requested.map((item) => item.productId) },
+				)
+			selectedItems = resolveInquiryItems(requested, products)
+			product =
+				'Multi-product RFQ (' +
+				selectedItems.length +
+				' SKU' +
+				(selectedItems.length === 1 ? '' : 's') +
+				')'
+		} catch {
+			return NextResponse.json(
+				{
+					error:
+						'Invalid or unavailable product selection. Please check the catalogue and try again.',
+				},
+				{ status: 422 },
+			)
+		}
+	}
+	if (
+		body.formId === 'distributor-inquiry' &&
+		(!body.company?.trim() || !body.country?.trim() || !body.markets?.trim())
+	)
+		return NextResponse.json(
+			{ error: 'Company, country and distribution markets are required.' },
+			{ status: 422 },
+		)
 
 	// Name, email, message and privacy are required; phone is optional.
 	if (!name || !email || !message || (inquiry === 'quote' && !product)) {
@@ -117,6 +222,14 @@ export async function POST(request: Request) {
 		['Product name / code', product || '—'],
 		['Request', message],
 	]
+	if (body.company) rows.splice(3, 0, ['Company', body.company.trim()])
+	if (body.country) rows.splice(4, 0, ['Country', body.country.trim()])
+	if (body.markets) rows.push(['Distribution markets', body.markets.trim()])
+	if (selectedItems.length)
+		rows.push([
+			'Selected products (quantities in individual packs)',
+			inquiryEmailLines(selectedItems),
+		])
 
 	const html = `
 		<h2>New contact request${body.formId ? ` (${escapeHtml(body.formId)})` : ''}</h2>
@@ -142,7 +255,10 @@ export async function POST(request: Request) {
 			from,
 			to: to.split(',').map((address) => address.trim()),
 			replyTo: email,
-			subject: `Contact form: ${INQUIRY_TYPES[inquiry]}${product ? ' — ' + product : ''}`,
+			subject:
+				`Contact form: ${INQUIRY_TYPES[inquiry]}${product ? ' — ' + product : ''}`
+					.replace(/[\r\n]+/g, ' ')
+					.slice(0, 300),
 			html,
 			text,
 		})

@@ -47,8 +47,8 @@ export default async function Page({ params }: Props) {
 			{page.metadata?.slug?.current === 'proizvodi' && (
 				<h1 className="sr-only">Histology Products and Laboratory Reagents</h1>
 			)}
-			<ModulesResolver page={page} />
 			{page.metadata?.slug?.current === 'index' && <MedicaPromotion />}
+			<ModulesResolver page={page} />
 			{page.metadata?.slug?.current === 'vijesti' &&
 				!page.modules?.some((module) => module?._type === 'blog-index') && (
 					<BlogIndex _type="blog-index" _key="news-listing" />

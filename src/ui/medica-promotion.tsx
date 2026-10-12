@@ -25,6 +25,12 @@ export default function MedicaPromotion() {
 					<Link href={MEDICA_PATH} className="underline">
 						Read more
 					</Link>
+					<Link href="/distributors" className="underline">
+						Distribution partnerships
+					</Link>
+					<Link href="/products" className="underline">
+						Explore the catalogue
+					</Link>
 				</div>
 			</div>
 		</aside>

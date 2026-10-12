@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { ROUTES } from '@/lib/env'
 import getLangServer from '@/lib/get-lang-server'
 import { DEFAULT_LANG } from '@/lib/i18n'
+import { inquiryRows } from '@/lib/inquiry-items'
 import {
 	claroplastPack,
 	hasPackSize,
@@ -13,6 +14,7 @@ import { categoryUrl } from '@/lib/product-category-url'
 import { cn } from '@/lib/utils'
 import { sanityFetchLive } from '@/sanity/lib/live'
 import type { PRODUCT_QUERY_RESULT, ProductContent } from '@/sanity/types'
+import { AddToInquiry } from '@/ui/inquiry/controls'
 import { Module } from '@/ui/modules'
 import { ClaroplastPackagingAdvantage } from './claroplast-outreach'
 import ProductPhoto, { safeProductPhoto } from './product-photo'
@@ -119,6 +121,7 @@ export default async function ({
 	const gallery = (product.gallery ?? []).filter((image) =>
 		safeProductPhoto(image),
 	)
+	const inquiryItems = inquiryRows(product)
 
 	const candidates =
 		showRelated && category?._id
@@ -327,6 +330,19 @@ export default async function ({
 								{categoryTitle}
 							</Link>
 						</p>
+					)}
+					{inquiryItems.length > 0 && (
+						<section
+							aria-label="Add product packs to inquiry"
+							className="flex flex-wrap gap-3"
+						>
+							{inquiryItems.map((item) => (
+								<AddToInquiry key={item.rowKey} item={item} />
+							))}
+							<Link href="/inquiry" className="self-center text-sm underline">
+								Review your inquiry
+							</Link>
+						</section>
 					)}
 
 					{!!product.table?.some(

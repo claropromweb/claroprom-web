@@ -33,7 +33,9 @@ export default function ProductSearch({ className }: { className?: string }) {
 	}, [])
 
 	function runSearch(value: string) {
+		const requestId = ++requestRef.current
 		setQuery(value)
+		setResults([])
 		if (debounceRef.current) clearTimeout(debounceRef.current)
 
 		const trimmed = value.trim()
@@ -48,12 +50,14 @@ export default function ProductSearch({ className }: { className?: string }) {
 		setOpen(true)
 
 		debounceRef.current = setTimeout(async () => {
-			const requestId = ++requestRef.current
-			const res = await searchProducts(trimmed, lang)
-			// Ignore responses that arrived out of order.
-			if (requestId !== requestRef.current) return
-			setResults(res)
-			setLoading(false)
+			try {
+				const res = await searchProducts(trimmed, lang)
+				if (requestId === requestRef.current) setResults(res)
+			} catch {
+				if (requestId === requestRef.current) setResults([])
+			} finally {
+				if (requestId === requestRef.current) setLoading(false)
+			}
 		}, 300)
 	}
 
@@ -71,16 +75,17 @@ export default function ProductSearch({ className }: { className?: string }) {
 					<VscSearch className="text-foreground/50 shrink-0" />
 
 					<input
-						className="grow bg-transparent py-1.5 outline-none"
+						className="min-w-0 grow bg-transparent py-1.5 outline-none"
 						type="search"
+						aria-label="Search products by name or catalogue number"
+						maxLength={200}
 						placeholder={t.search}
 						value={query}
 						onChange={(e) => runSearch(e.target.value)}
 						onFocus={() => query.trim() && setOpen(true)}
 						onKeyDown={(e) => {
 							if (e.key === 'Escape') setOpen(false)
-							if (e.key === 'Enter' && results[0])
-								goTo(results[0].slug)
+							if (e.key === 'Enter' && results[0]) goTo(results[0].slug)
 						}}
 					/>
 
@@ -100,9 +105,7 @@ export default function ProductSearch({ className }: { className?: string }) {
 				{showDropdown && (
 					<div className="anim-fade border-stroke bg-background absolute inset-x-0 top-full z-50 mt-2 max-h-[60vh] origin-top overflow-hidden overflow-y-auto rounded-2xl border shadow-xl starting:-translate-y-1">
 						{loading ? (
-							<p className="text-foreground/50 p-4 text-sm">
-								{t.search}…
-							</p>
+							<p className="text-foreground/50 p-4 text-sm">{t.search}…</p>
 						) : results.length ? (
 							<ul>
 								{results.map((product) => (
@@ -119,11 +122,7 @@ export default function ProductSearch({ className }: { className?: string }) {
 														image={product.image}
 														width={96}
 														height={96}
-														alt={
-															product.image?.alt ??
-															product.title ??
-															''
-														}
+														alt={product.image?.alt ?? product.title ?? ''}
 													/>
 												)}
 											</span>
@@ -143,9 +142,7 @@ export default function ProductSearch({ className }: { className?: string }) {
 								))}
 							</ul>
 						) : (
-							<p className="text-foreground/50 p-4 text-sm">
-								{t.noResults}
-							</p>
+							<p className="text-foreground/50 p-4 text-sm">{t.noResults}</p>
 						)}
 					</div>
 				)}

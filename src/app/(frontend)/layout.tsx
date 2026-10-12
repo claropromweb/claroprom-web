@@ -11,6 +11,7 @@ import CookieBannerWrapper from '@/ui/cookies/cookie-banner'
 import CookieConsentProviderWrapper from '@/ui/cookies/cookie-consent-provider'
 import Footer from '@/ui/footer'
 import Header from '@/ui/header'
+import { InquiryNavigation } from '@/ui/inquiry/controls'
 import VisualEditing from '@/ui/modules/visual-editing'
 import StructuredData from '@/ui/structured-data'
 import '@/app.css'
@@ -37,6 +38,7 @@ export default async function RootLayout({
 				<body className="bg-background text-foreground antialiased">
 					<CookieConsentProviderWrapper>
 						<Header lang={lang} />
+						<InquiryNavigation />
 						<StructuredData
 							data={{
 								'@context': 'https://schema.org',
