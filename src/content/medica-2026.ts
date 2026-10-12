@@ -88,3 +88,22 @@ export function preparedMedicaPost(environment = process.env.VERCEL_ENV) {
 		modules: [{ _type: 'blog-post-content', _key: 'medica-article' }],
 	}
 }
+
+/** Only an explicitly published article enters the public sitemap; CMS URLs win. */
+export function medicaSitemapEntries(
+	existing: Array<{ url: string }>,
+	siteUrl: string,
+) {
+	if (
+		!MEDICA.publishDate ||
+		existing.some((entry) => entry.url === siteUrl + MEDICA_PATH)
+	)
+		return []
+	return [
+		{
+			url: siteUrl + MEDICA_PATH,
+			lastModified: MEDICA.publishDate,
+			priority: 0.4,
+		},
+	]
+}

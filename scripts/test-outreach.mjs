@@ -78,9 +78,12 @@ const source = readFileSync('src/content/medica-2026.ts', 'utf8').replace(
 	"'@/lib/outreach'",
 	JSON.stringify(outreachUri),
 )
-const { MEDICA, preparedMedicaPost, showMedicaPromotion } = await import(
-	uri(source)
-)
+const {
+	MEDICA,
+	preparedMedicaPost,
+	showMedicaPromotion,
+	medicaSitemapEntries,
+} = await import(uri(source))
 assert.equal(preparedMedicaPost('production'), null)
 assert.equal(preparedMedicaPost('preview').publishDate, undefined)
 assert.equal(MEDICA.stand, 'Hall 1 / A03')
@@ -213,6 +216,21 @@ assert.match(sent.at(-1).html, /&lt;script&gt;/)
 assert.equal(sent.at(-1).html.includes('<script>'), false)
 sendError = { message: 'Mock delivery failure' }
 assert.equal((await post(base)).status, 502)
+assert.deepEqual(medicaSitemapEntries([], 'https://claroprom.com'), [])
+MEDICA.publishDate = '2026-10-12'
+assert.equal(
+	medicaSitemapEntries([], 'https://claroprom.com')[0].url,
+	'https://claroprom.com/blog/en/' + MEDICA.slug,
+)
+assert.deepEqual(
+	medicaSitemapEntries(
+		[{ url: 'https://claroprom.com/blog/en/' + MEDICA.slug }],
+		'https://claroprom.com',
+	),
+	[],
+)
+assert.equal(preparedMedicaPost('production').publishDate, '2026-10-12')
+MEDICA.publishDate = null
 console.log(
 	'PASS: confirmed packs, all inquiry contexts, empty format, relevant families, MEDICA draft/dates/expiry, optional phone, privacy/email/spam validation and mocked email success/failure. No real email sent.',
 )
