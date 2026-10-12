@@ -5,28 +5,38 @@ import { useSearchParams } from 'next/navigation'
 import { useRef, useState } from 'react'
 import { VscCheck, VscLoading } from 'react-icons/vsc'
 import type { Lang } from '@/lib/i18n'
-import { contactContext, INQUIRY_TYPES } from '@/lib/outreach'
+import {
+	changeInquiryContext,
+	contactContext,
+	INQUIRY_TYPES,
+	type InquiryType,
+} from '@/lib/outreach'
 import { cn } from '@/lib/utils'
 import { getFormTranslations } from './translations'
 
 type Status = 'idle' | 'submitting' | 'success' | 'error'
 
-export default function ContactForm({
+type ContactFormProps = { lang: Lang; formId?: string; privacyHref?: string }
+
+export default function ContactForm(props: ContactFormProps) {
+	const searchParams = useSearchParams()
+	return (
+		<ContactFields
+			key={searchParams.toString()}
+			{...props}
+			context={contactContext(searchParams)}
+		/>
+	)
+}
+function ContactFields({
 	lang,
 	formId,
 	privacyHref,
-}: {
-	lang: Lang
-	formId?: string
-	privacyHref?: string
-}) {
+	context,
+}: ContactFormProps & { context: ReturnType<typeof contactContext> }) {
 	const t = getFormTranslations(lang)
-	const searchParams = useSearchParams()
 	const [status, setStatus] = useState<Status>('idle')
-
-	// Pre-fill the product field when arriving from a product "ask for a quote" link.
-	const context = contactContext(searchParams)
-	const productParam = context.topic
+	const [inquiry, setInquiry] = useState(context)
 	const submitting = useRef(false)
 
 	async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -82,7 +92,6 @@ export default function ContactForm({
 
 	return (
 		<form
-			key={searchParams.toString()}
 			onSubmit={handleSubmit}
 			className="grid gap-6"
 			aria-busy={status === 'submitting'}
@@ -91,7 +100,13 @@ export default function ContactForm({
 				<span className="font-semibold">Inquiry type</span>
 				<select
 					name="inquiry"
-					defaultValue={context.type}
+					aria-describedby="inquiry-guidance"
+					value={inquiry.type}
+					onChange={(event) =>
+						setInquiry((current) =>
+							changeInquiryContext(current, event.target.value as InquiryType),
+						)
+					}
 					className="w-full rounded-md border border-neutral-300 px-3 py-3"
 				>
 					{Object.entries(INQUIRY_TYPES).map(([value, label]) => (
@@ -100,6 +115,10 @@ export default function ContactForm({
 						</option>
 					))}
 				</select>
+				<span id="inquiry-guidance" className="text-sm text-neutral-500">
+					Select the purpose of your request. Your product details and message
+					are preserved.
+				</span>
 			</label>
 			<div aria-hidden="true" className="hidden">
 				<label>
@@ -118,9 +137,14 @@ export default function ContactForm({
 
 			<Field
 				name="product"
-				label={context.type === 'meeting' ? 'Meeting / topic' : t.product}
-				defaultValue={productParam}
-				required={context.type === 'quote'}
+				label={
+					inquiry.type === 'meeting' ? 'Meeting / product or topic' : t.product
+				}
+				value={inquiry.topic}
+				onChange={(event) =>
+					setInquiry((current) => ({ ...current, topic: event.target.value }))
+				}
+				required={inquiry.type === 'quote'}
 			/>
 
 			<label className="grid gap-2">
@@ -129,7 +153,13 @@ export default function ContactForm({
 				</span>
 				<textarea
 					name="request"
-					defaultValue={context.request}
+					value={inquiry.request}
+					onChange={(event) =>
+						setInquiry((current) => ({
+							...current,
+							request: event.target.value,
+						}))
+					}
 					required
 					rows={8}
 					className="bg-foreground/5 border-foreground/15 focus:border-foreground/40 w-full resize-y rounded-md border px-3 py-2 leading-normal outline-none"
@@ -182,6 +212,8 @@ function Field({
 	type = 'text',
 	required,
 	defaultValue,
+	value,
+	onChange,
 	className,
 }: {
 	name: string
@@ -189,6 +221,8 @@ function Field({
 	type?: string
 	required?: boolean
 	defaultValue?: string
+	value?: string
+	onChange?: React.ChangeEventHandler<HTMLInputElement>
 	className?: string
 }) {
 	return (
@@ -201,6 +235,8 @@ function Field({
 				name={name}
 				required={required}
 				defaultValue={defaultValue}
+				value={value}
+				onChange={onChange}
 				className="bg-foreground/5 border-foreground/15 focus:border-foreground/40 w-full rounded-md border px-3 py-3 leading-normal outline-none"
 			/>
 		</label>

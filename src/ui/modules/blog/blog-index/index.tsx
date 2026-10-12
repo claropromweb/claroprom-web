@@ -1,6 +1,6 @@
 import { groq, PortableText } from 'next-sanity'
 import { Suspense } from 'react'
-import { preparedMedicaPost } from '@/content/medica-2026'
+import { includeMedicaPost } from '@/content/medica-2026'
 import { ROUTES } from '@/lib/env'
 import { cn } from '@/lib/utils'
 import { sanityFetchLive } from '@/sanity/lib/live'
@@ -22,15 +22,7 @@ export default async function ({
 		params: { blogDir: `/${ROUTES.blog}/` },
 	})
 
-	const prepared = preparedMedicaPost()
-	const posts =
-		prepared &&
-		!cmsPosts?.some(
-			(post: any) =>
-				post.metadata?.slug?.current === prepared.metadata.slug.current,
-		)
-			? [prepared, ...(cmsPosts ?? [])]
-			: (cmsPosts ?? [])
+	const posts = includeMedicaPost<any>(cmsPosts)
 	return (
 		<Module className={cn('section space-y-lh', intro && 'pt-4')} {...props}>
 			{intro && (

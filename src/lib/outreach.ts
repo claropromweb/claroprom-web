@@ -45,20 +45,52 @@ export function contactContext(params: Pick<URLSearchParams, 'get'>) {
 					: 'general'
 	const code = (params.get('code') || '').slice(0, 200)
 	const product = (params.get('product') || '').slice(0, 300)
+
+	const productTopic = [
+		product === 'Distributor inquiry' ? '' : product,
+		code ? '(' + code + ')' : '',
+	]
+		.filter(Boolean)
+		.join(' ')
+	return { type, productTopic, ...inquiryPrefill(type, productTopic) }
+}
+export function inquiryPrefill(type: InquiryType, productTopic: string) {
 	const topic =
-		type === 'meeting'
-			? 'MEDICA 2026 — Düsseldorf, 16–19 November'
-			: [product, code ? '(' + code + ')' : ''].filter(Boolean).join(' ')
+		productTopic ||
+		(type === 'meeting' ? 'MEDICA 2026 — Düsseldorf, 16–19 November' : '')
 	const request =
 		type === 'general'
 			? ''
 			: type === 'meeting'
-				? 'I would like to arrange a meeting at MEDICA 2026.\nCompany / distribution market:\nPreferred date and time:\nTopics to discuss:'
+				? 'I would like to arrange a meeting at MEDICA 2026.\nCompany / distribution market:\nPreferred date and time:\nTopics to discuss:' +
+					(productTopic ? ' ' + productTopic : '')
 				: INQUIRY_TYPES[type] +
 					(topic ? ' — ' + topic : '') +
 					'\nPlease tell us about your requirements:'
-	return { type, topic, request }
+	return { topic, request }
 }
+export function changeInquiryContext(
+	state: ReturnType<typeof contactContext>,
+	type: InquiryType,
+) {
+	const previous = inquiryPrefill(state.type, state.productTopic)
+	const productTopic =
+		state.topic === previous.topic ? state.productTopic : state.topic
+	const next = inquiryPrefill(type, productTopic)
+	return {
+		...state,
+		type,
+		productTopic,
+		topic: state.topic === previous.topic ? next.topic : state.topic,
+		request:
+			state.request === previous.request
+				? next.request
+				: previous.request && state.request.startsWith(previous.request)
+					? next.request + state.request.slice(previous.request.length)
+					: state.request,
+	}
+}
+
 export function claroplastPack(slug?: string | null) {
 	return CLAROPLAST_PACKS.find(
 		(pack) => slug?.split('/').filter(Boolean).at(-1) === pack.slug,

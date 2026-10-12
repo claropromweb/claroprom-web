@@ -1,7 +1,7 @@
 import { inquiryHref } from '@/lib/outreach'
 
-// Deployment-versioned draft: never written to the shared production CMS.
-// Set publishDate to the actual publication date only after owner approval.
+// Release candidate for owner-planned publication on 12 October 2026; no CMS writes.
+// If release is delayed, update this date and reverify the new SHA before approval.
 export const MEDICA = {
 	slug: 'meet-claro-prom-medica-dusseldorf-2026',
 	title: 'Meet CLARO-PROM at MEDICA Düsseldorf 2026',
@@ -11,7 +11,7 @@ export const MEDICA = {
 	source:
 		'https://www.medica-tradefair.com/vis/v1/en/exhprofiles/MEMg3gnCTEmzoN6PImP2dg',
 	sourceVerifiedOn: '2026-10-12',
-	publishDate: null as string | null,
+	publishDate: '2026-10-12' as string | null,
 	end: '2026-11-20T00:00:00+01:00',
 } as const
 export const MEDICA_PATH = '/blog/en/' + MEDICA.slug
@@ -106,4 +106,16 @@ export function medicaSitemapEntries(
 			priority: 0.4,
 		},
 	]
+}
+
+/** Preserve the existing CMS record instead of adding a second fallback card. */
+export function includeMedicaPost<
+	T extends { metadata?: { slug?: { current?: string } | null } | null },
+>(cmsPosts: T[] | null | undefined, environment = process.env.VERCEL_ENV) {
+	const posts = cmsPosts ?? []
+	const prepared = preparedMedicaPost(environment)
+	return prepared &&
+		!posts.some((post) => post.metadata?.slug?.current === MEDICA.slug)
+		? [prepared, ...posts]
+		: posts
 }

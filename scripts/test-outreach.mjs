@@ -18,6 +18,7 @@ const {
 	CLAROPLAST_PACKS,
 	inquiryHref,
 	contactContext,
+	changeInquiryContext,
 	claroplastPack,
 	hasPackSize,
 	relevantProducts,
@@ -83,8 +84,14 @@ const {
 	preparedMedicaPost,
 	showMedicaPromotion,
 	medicaSitemapEntries,
+	includeMedicaPost,
 } = await import(uri(source))
+const releaseDate = MEDICA.publishDate
+assert.equal(releaseDate, '2026-10-12')
+MEDICA.publishDate = null
 assert.equal(preparedMedicaPost('production'), null)
+assert.equal(includeMedicaPost([], 'production').length, 0)
+assert.equal(includeMedicaPost([], 'preview').length, 1)
 assert.equal(preparedMedicaPost('preview').publishDate, undefined)
 assert.equal(MEDICA.stand, 'Hall 1 / A03')
 assert.equal(MEDICA.dates, '16–19 November 2026')
@@ -230,7 +237,91 @@ assert.deepEqual(
 	[],
 )
 assert.equal(preparedMedicaPost('production').publishDate, '2026-10-12')
-MEDICA.publishDate = null
+
+MEDICA.publishDate = releaseDate
+for (const env of ['preview', 'production']) {
+	assert.equal(preparedMedicaPost(env).publishDate, releaseDate)
+	assert.equal(includeMedicaPost([], env).length, 1)
+	assert.equal(medicaSitemapEntries([], 'https://claroprom.com').length, 1)
+	assert.equal(showMedicaPromotion(new Date('2026-11-19T22:59:59Z'), env), true)
+	assert.equal(
+		showMedicaPromotion(new Date('2026-11-19T23:00:00Z'), env),
+		false,
+	)
+	assert.ok(preparedMedicaPost(env))
+	const cms = {
+		_id: 'existing-cms-post',
+		title: MEDICA.title,
+		metadata: { slug: { current: MEDICA.slug } },
+	}
+	assert.deepEqual(includeMedicaPost([cms], env), [cms])
+}
+for (const [from, to, product] of [
+	['general', 'quote', ''],
+	['quote', 'general', 'Claroplast 2 kg (CP00CL2)'],
+	['distributor', 'meeting', 'Claroplast 10 kg (CP00CLP)'],
+	['meeting', 'quote', ''],
+]) {
+	const original = contactContext(
+		new URLSearchParams({ inquiry: from, ...(product ? { product } : {}) }),
+	)
+	const changed = changeInquiryContext(original, to)
+	assert.equal(changed.type, to)
+	if (product) assert.equal(changed.topic, original.topic)
+	if (to === 'quote' && !product) assert.equal(changed.topic, '')
+	if (to === 'meeting') assert.match(changed.request, /MEDICA/)
+	if (to === 'quote') assert.match(changed.request, /Product quote/)
+	if (to === 'general') assert.equal(changed.request, '')
+	const edited = {
+		...original,
+		topic: 'User product CP00CL2',
+		request: 'User message: preserve this.',
+	}
+	const preserved = changeInquiryContext(edited, to)
+	assert.equal(preserved.topic, edited.topic)
+	assert.equal(preserved.request, edited.request)
+}
+
+const legacyDistributor = contactContext(
+	new URLSearchParams('product=Distributor+inquiry'),
+)
+assert.equal(legacyDistributor.type, 'distributor')
+assert.equal(legacyDistributor.topic, '')
+const automatic = contactContext(
+	new URLSearchParams('inquiry=quote&product=Claroplast&code=CP00CL2'),
+)
+const extended = {
+	...automatic,
+	request: automatic.request + '\nMy actual requirements.',
+}
+const switched = changeInquiryContext(extended, 'sample')
+assert.match(switched.request, /^Sample request/)
+assert.match(switched.request, /My actual requirements\.$/)
+const editedProduct = changeInquiryContext(
+	{ ...automatic, topic: 'User product CP00CLP' },
+	'documentation',
+)
+assert.match(editedProduct.request, /User product CP00CLP/)
+assert.equal(editedProduct.request.includes('CP00CL2'), false)
+sendError = null
+const general = await post({
+	...base,
+	inquiry: 'general',
+	product: '',
+	phone: '',
+})
+assert.equal(general.status, 200)
+assert.equal(sent.at(-1).replyTo, base.email)
+assert.match(sent.at(-1).text, /Inquiry type: General inquiry/)
+for (const type of ['quote', 'general', 'meeting', 'distributor']) {
+	await post({ ...base, inquiry: type, product: 'Claroplast CP00CL2' })
+	assert.ok(
+		sent
+			.at(-1)
+			.text.includes('Inquiry type: ' + awaitOutreach.INQUIRY_TYPES[type]),
+	)
+	assert.match(sent.at(-1).text, /CP00CL2/)
+}
 console.log(
 	'PASS: confirmed packs, all inquiry contexts, empty format, relevant families, MEDICA draft/dates/expiry, optional phone, privacy/email/spam validation and mocked email success/failure. No real email sent.',
 )
