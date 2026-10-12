@@ -19,7 +19,9 @@ import {
 } from '@/sanity/lib/queries'
 import { token } from '@/sanity/lib/token'
 import type { PAGE_QUERY_RESULT } from '@/sanity/types'
+import MedicaPromotion from '@/ui/medica-promotion'
 import ModulesResolver from '@/ui/modules'
+import BlogIndex from '@/ui/modules/blog/blog-index'
 import StructuredData from '@/ui/structured-data'
 
 export const dynamic = 'force-dynamic'
@@ -46,6 +48,11 @@ export default async function Page({ params }: Props) {
 				<h1 className="sr-only">Histology Products and Laboratory Reagents</h1>
 			)}
 			<ModulesResolver page={page} />
+			{page.metadata?.slug?.current === 'index' && <MedicaPromotion />}
+			{page.metadata?.slug?.current === 'vijesti' &&
+				!page.modules?.some((module) => module?._type === 'blog-index') && (
+					<BlogIndex _type="blog-index" _key="news-listing" />
+				)}
 		</>
 	)
 }

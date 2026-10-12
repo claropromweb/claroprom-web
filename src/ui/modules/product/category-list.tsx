@@ -39,15 +39,20 @@ export default async function CategoryList({
 									alt={category.image.alt ?? category.title ?? ''}
 									width={600}
 									height={400}
-									className="mb-5 aspect-[3/2] w-full object-cover"
+									className="mb-5 aspect-[3/2] w-full object-contain"
 								/>
 							)}
 							<h2 className="text-xl font-semibold">{category.title}</h2>
 							{category.description && (
 								<p className="mt-3 whitespace-pre-line">
-									{category.description}
+									{category.slug === 'claroplast'
+										? category.description.split('. ')[0] + '.'
+										: category.description.split('\n\n')[0]}
 								</p>
 							)}
+							<span className="mt-5 inline-block font-semibold text-red-700">
+								Explore products →
+							</span>
 						</Link>
 					</li>
 				))}

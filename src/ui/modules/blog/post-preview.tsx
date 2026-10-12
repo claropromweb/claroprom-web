@@ -15,7 +15,13 @@ export default function ({
 	return (
 		<li className={cn('relative grid gap-2', className)}>
 			<figure className="bg-foreground/5 aspect-video">
-				{post.metadata?.image ? (
+				{post._id === 'prepared-medica-2026' ? (
+					<div className="flex h-full flex-col justify-center p-6 text-red-700">
+						<strong className="text-3xl">MEDICA 2026</strong>
+						<span className="mt-2">16–19 November · Düsseldorf</span>
+						<span>Hall 1 / A03</span>
+					</div>
+				) : post.metadata?.image ? (
 					<Img
 						className="aspect-video w-full object-cover"
 						image={post.metadata?.image}

@@ -19,7 +19,13 @@ export default function ({
 			className={cn('relative grid gap-x-8 gap-y-4 md:grid-cols-2', className)}
 		>
 			<figure className="bg-foreground/5 max-md:full-bleed aspect-video self-start">
-				{post.metadata?.image ? (
+				{post._id === 'prepared-medica-2026' ? (
+					<div className="flex h-full flex-col justify-center p-6 text-red-700">
+						<strong className="text-3xl">MEDICA 2026</strong>
+						<span className="mt-2">16–19 November · Düsseldorf</span>
+						<span>Hall 1 / A03</span>
+					</div>
+				) : post.metadata?.image ? (
 					<Img
 						className="aspect-video w-full object-cover"
 						image={post.metadata?.image}
@@ -53,6 +59,9 @@ export default function ({
 
 				<div className="flex flex-wrap items-center justify-between gap-x-4">
 					<Date date={post.publishDate} />
+					{post._id === 'prepared-medica-2026' && !post.publishDate && (
+						<span className="text-sm text-neutral-500">Draft preview</span>
+					)}
 					<Categories
 						categories={post.categories as unknown as BlogCategory[]}
 					/>

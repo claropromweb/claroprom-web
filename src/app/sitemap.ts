@@ -1,5 +1,6 @@
 import type { MetadataRoute } from 'next'
 import { groq } from 'next-sanity'
+import { medicaSitemapEntries } from '@/content/medica-2026'
 import { ROUTES } from '@/lib/env'
 import { DEFAULT_LANG } from '@/lib/i18n'
 import { publicProductUrl } from '@/lib/public-product-url'
@@ -70,15 +71,14 @@ export default async function (): Promise<MetadataRoute.Sitemap> {
 		},
 	})
 
+	const entries = Object.values(data).flat()
 	return Array.from(
 		new Map(
-			Object.values(data)
-				.flat()
-				.map((entry) => {
-					const url = new URL(entry.url)
-					url.pathname = publicProductUrl(url.pathname)
-					return [url.href, { ...entry, url: url.href }] as const
-				}),
+			entries.concat(medicaSitemapEntries(entries, SITE_URL)).map((entry) => {
+				const url = new URL(entry.url)
+				url.pathname = publicProductUrl(url.pathname)
+				return [url.href, { ...entry, url: url.href }] as const
+			}),
 		).values(),
 	)
 }
