@@ -1,0 +1,2612 @@
+{
+  "date": "2026-10-12",
+  "baseCommit": "040ff1280f789e1055ff2254acf73bea39dd4178",
+  "counts": {
+    "publishedDocuments": 48,
+    "englishPublicProducts": 47,
+    "ivd": 44,
+    "extraHrRecord": 1,
+    "sourceDescriptions": 2,
+    "approvedPublicDescriptions": 3,
+    "intendedPurposeTexts": 1,
+    "intendedPurposeWithSupportingDocument": 0,
+    "mainPhotos": 3,
+    "galleries": 0,
+    "sourcePackSizes": 44,
+    "publicConfirmedPackSizes": 46,
+    "documents": 0,
+    "ivdFunctionalDescriptionsSupported": 0,
+    "reviewRows": 48,
+    "ivdReviewRows": 44,
+    "existingSummaryReuseCandidates": 3,
+    "newFunctionalDrafts": 15,
+    "photoLabelConfirmedPackSizes": 1,
+    "ivdDraftGroups": 15
+  },
+  "products": [
+    {
+      "id": "26c83323-8554-429f-b524-ef1b700283a7",
+      "language": "en",
+      "name": "10% NB Formaldehyde Solution, 1 L",
+      "reviewTopic": "10% NB Formaldehyde Solution",
+      "groupingStatus": "Working review topic only — no confirmed CMS family relation; no records merged",
+      "category": "IVD Reagents – Histology & Cytology",
+      "productType": "ivd",
+      "manufacturerRole": "manufacturer",
+      "sourceCodes": [
+        "CP00F10"
+      ],
+      "publicCodes": [
+        "CP00F10"
+      ],
+      "sourcePackaging": [
+        "1 L"
+      ],
+      "publicPackaging": [
+        "1 L"
+      ],
+      "existingDescription": null,
+      "publicDescription": null,
+      "shortDescriptionProposedEN": null,
+      "detailedDescriptionProposedEN": null,
+      "intendedPurposeVerbatim": null,
+      "intendedPurposeAuthority": "OWNER INPUT REQUIRED",
+      "mainImage": null,
+      "mainImageAssetId": null,
+      "mainImageAlt": null,
+      "gallery": [],
+      "documents": {
+        "instructionsForUse": null,
+        "declarationOfConformity": null,
+        "technicalDataSheet": null,
+        "safetyDataSheet": null
+      },
+      "url": "https://claroprom.com/products/10-nb-formaldehyde-solution-cp00f10",
+      "legacyRouteCandidate": null,
+      "urlNote": "Public EN catalogue",
+      "source": "Published Sanity product record, revision GXon7RN0Hm0wO29GQnrj6A",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
+      "ownerInputRequired": "Approved intended use, exact formulation identity and whether these pack variants share the same approved description. Keep 4%, 10% and 37% separate; verify glass/plastic correspondence.",
+      "missing": [
+        "Detailed description",
+        "Approved short description",
+        "Intended purpose",
+        "SKU-specific photo",
+        "Optional additional photographs",
+        "Approved documents (if available)"
+      ],
+      "currentRevision": "GXon7RN0Hm0wO29GQnrj6A",
+      "mainImageCaption": null
+    },
+    {
+      "id": "e18a6436-171b-48be-a05f-6fa7e9231724",
+      "language": "en",
+      "name": "10% NB Formaldehyde Solution, 10 L",
+      "reviewTopic": "10% NB Formaldehyde Solution",
+      "groupingStatus": "Working review topic only — no confirmed CMS family relation; no records merged",
+      "category": "IVD Reagents – Histology & Cytology",
+      "productType": "ivd",
+      "manufacturerRole": "manufacturer",
+      "sourceCodes": [
+        "CP00F10C"
+      ],
+      "publicCodes": [
+        "CP00F10C"
+      ],
+      "sourcePackaging": [
+        "10 L"
+      ],
+      "publicPackaging": [
+        "10 L"
+      ],
+      "existingDescription": null,
+      "publicDescription": null,
+      "shortDescriptionProposedEN": null,
+      "detailedDescriptionProposedEN": null,
+      "intendedPurposeVerbatim": null,
+      "intendedPurposeAuthority": "OWNER INPUT REQUIRED",
+      "mainImage": null,
+      "mainImageAssetId": null,
+      "mainImageAlt": null,
+      "gallery": [],
+      "documents": {
+        "instructionsForUse": null,
+        "declarationOfConformity": null,
+        "technicalDataSheet": null,
+        "safetyDataSheet": null
+      },
+      "url": "https://claroprom.com/products/10-nb-formaldehyde-solution-cp00f10c",
+      "legacyRouteCandidate": null,
+      "urlNote": "Public EN catalogue",
+      "source": "Published Sanity product record, revision GXon7RN0Hm0wO29GQnroWw",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
+      "ownerInputRequired": "Approved intended use, exact formulation identity and whether these pack variants share the same approved description. Keep 4%, 10% and 37% separate; verify glass/plastic correspondence.",
+      "missing": [
+        "Detailed description",
+        "Approved short description",
+        "Intended purpose",
+        "SKU-specific photo",
+        "Optional additional photographs",
+        "Approved documents (if available)"
+      ],
+      "currentRevision": "GXon7RN0Hm0wO29GQnroWw",
+      "mainImageCaption": null
+    },
+    {
+      "id": "6b047954-1a63-4901-8be3-851d967bfc32",
+      "language": "en",
+      "name": "10% NB Formaldehyde Solution, 5 L",
+      "reviewTopic": "10% NB Formaldehyde Solution",
+      "groupingStatus": "Working review topic only — no confirmed CMS family relation; no records merged",
+      "category": "IVD Reagents – Histology & Cytology",
+      "productType": "ivd",
+      "manufacturerRole": "manufacturer",
+      "sourceCodes": [
+        "CP00F10A"
+      ],
+      "publicCodes": [
+        "CP00F10A"
+      ],
+      "sourcePackaging": [
+        "5 L"
+      ],
+      "publicPackaging": [
+        "5 L"
+      ],
+      "existingDescription": null,
+      "publicDescription": null,
+      "shortDescriptionProposedEN": null,
+      "detailedDescriptionProposedEN": null,
+      "intendedPurposeVerbatim": null,
+      "intendedPurposeAuthority": "OWNER INPUT REQUIRED",
+      "mainImage": null,
+      "mainImageAssetId": null,
+      "mainImageAlt": null,
+      "gallery": [],
+      "documents": {
+        "instructionsForUse": null,
+        "declarationOfConformity": null,
+        "technicalDataSheet": null,
+        "safetyDataSheet": null
+      },
+      "url": "https://claroprom.com/products/10-nb-formaldehyde-solution-cp00f10a",
+      "legacyRouteCandidate": null,
+      "urlNote": "Public EN catalogue",
+      "source": "Published Sanity product record, revision MwWOMVq9aGfEEH7OTjsLBt",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
+      "ownerInputRequired": "Approved intended use, exact formulation identity and whether these pack variants share the same approved description. Keep 4%, 10% and 37% separate; verify glass/plastic correspondence.",
+      "missing": [
+        "Detailed description",
+        "Approved short description",
+        "Intended purpose",
+        "SKU-specific photo",
+        "Optional additional photographs",
+        "Approved documents (if available)"
+      ],
+      "currentRevision": "MwWOMVq9aGfEEH7OTjsLBt",
+      "mainImageCaption": null
+    },
+    {
+      "id": "67f5dfb0-57c5-484c-b9ec-ceee8e416db2",
+      "language": "en",
+      "name": "37% Formaldehyde Solution, 1 L (Glass)",
+      "reviewTopic": "37% Formaldehyde Solution",
+      "groupingStatus": "Working review topic only — no confirmed CMS family relation; no records merged",
+      "category": "IVD Reagents – Histology & Cytology",
+      "productType": "ivd",
+      "manufacturerRole": "manufacturer",
+      "sourceCodes": [
+        "CP00FOS"
+      ],
+      "publicCodes": [
+        "CP00FOS"
+      ],
+      "sourcePackaging": [
+        "1 L glass"
+      ],
+      "publicPackaging": [
+        "1 L glass"
+      ],
+      "existingDescription": null,
+      "publicDescription": null,
+      "shortDescriptionProposedEN": null,
+      "detailedDescriptionProposedEN": null,
+      "intendedPurposeVerbatim": null,
+      "intendedPurposeAuthority": "OWNER INPUT REQUIRED",
+      "mainImage": null,
+      "mainImageAssetId": null,
+      "mainImageAlt": null,
+      "gallery": [],
+      "documents": {
+        "instructionsForUse": null,
+        "declarationOfConformity": null,
+        "technicalDataSheet": null,
+        "safetyDataSheet": null
+      },
+      "url": "https://claroprom.com/products/37-formaldehyde-solution-cp00fos",
+      "legacyRouteCandidate": null,
+      "urlNote": "Public EN catalogue",
+      "source": "Published Sanity product record, revision GXon7RN0Hm0wO29GQnrt9C",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
+      "ownerInputRequired": "Approved intended use, exact formulation identity and whether these pack variants share the same approved description. Keep 4%, 10% and 37% separate; verify glass/plastic correspondence.",
+      "missing": [
+        "Detailed description",
+        "Approved short description",
+        "Intended purpose",
+        "SKU-specific photo",
+        "Optional additional photographs",
+        "Approved documents (if available)"
+      ],
+      "currentRevision": "GXon7RN0Hm0wO29GQnrt9C",
+      "mainImageCaption": null
+    },
+    {
+      "id": "60a19412-3a63-4a27-aabf-e015621fe66e",
+      "language": "en",
+      "name": "37% Formaldehyde Solution, 1 L (Plastic)",
+      "reviewTopic": "37% Formaldehyde Solution",
+      "groupingStatus": "Working review topic only — no confirmed CMS family relation; no records merged",
+      "category": "IVD Reagents – Histology & Cytology",
+      "productType": "ivd",
+      "manufacturerRole": "manufacturer",
+      "sourceCodes": [
+        "CP00FO"
+      ],
+      "publicCodes": [
+        "CP00FO"
+      ],
+      "sourcePackaging": [
+        "1 L plastic"
+      ],
+      "publicPackaging": [
+        "1 L plastic"
+      ],
+      "existingDescription": null,
+      "publicDescription": null,
+      "shortDescriptionProposedEN": null,
+      "detailedDescriptionProposedEN": null,
+      "intendedPurposeVerbatim": null,
+      "intendedPurposeAuthority": "OWNER INPUT REQUIRED",
+      "mainImage": null,
+      "mainImageAssetId": null,
+      "mainImageAlt": null,
+      "gallery": [],
+      "documents": {
+        "instructionsForUse": null,
+        "declarationOfConformity": null,
+        "technicalDataSheet": null,
+        "safetyDataSheet": null
+      },
+      "url": "https://claroprom.com/products/37-formaldehyde-solution-cp00fo",
+      "legacyRouteCandidate": null,
+      "urlNote": "Public EN catalogue",
+      "source": "Published Sanity product record, revision MwWOMVq9aGfEEH7OTjsO1h",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
+      "ownerInputRequired": "Approved intended use, exact formulation identity and whether these pack variants share the same approved description. Keep 4%, 10% and 37% separate; verify glass/plastic correspondence.",
+      "missing": [
+        "Detailed description",
+        "Approved short description",
+        "Intended purpose",
+        "SKU-specific photo",
+        "Optional additional photographs",
+        "Approved documents (if available)"
+      ],
+      "currentRevision": "MwWOMVq9aGfEEH7OTjsO1h",
+      "mainImageCaption": null
+    },
+    {
+      "id": "2310249d-dd2a-4143-a16b-74a158134b29",
+      "language": "en",
+      "name": "4% NB Formaldehyde Solution, 1 L",
+      "reviewTopic": "4% NB Formaldehyde Solution",
+      "groupingStatus": "Working review topic only — no confirmed CMS family relation; no records merged",
+      "category": "IVD Reagents – Histology & Cytology",
+      "productType": "ivd",
+      "manufacturerRole": "manufacturer",
+      "sourceCodes": [
+        "CP00F4"
+      ],
+      "publicCodes": [
+        "CP00F4"
+      ],
+      "sourcePackaging": [
+        "1 L"
+      ],
+      "publicPackaging": [
+        "1 L"
+      ],
+      "existingDescription": null,
+      "publicDescription": null,
+      "shortDescriptionProposedEN": null,
+      "detailedDescriptionProposedEN": null,
+      "intendedPurposeVerbatim": null,
+      "intendedPurposeAuthority": "OWNER INPUT REQUIRED",
+      "mainImage": null,
+      "mainImageAssetId": null,
+      "mainImageAlt": null,
+      "gallery": [],
+      "documents": {
+        "instructionsForUse": null,
+        "declarationOfConformity": null,
+        "technicalDataSheet": null,
+        "safetyDataSheet": null
+      },
+      "url": "https://claroprom.com/products/4-nb-formaldehyde-solution-cp00f4",
+      "legacyRouteCandidate": null,
+      "urlNote": "Public EN catalogue",
+      "source": "Published Sanity product record, revision 8ht4z1wR2A8VHxtw1eV7SB",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
+      "ownerInputRequired": "Approved intended use, exact formulation identity and whether these pack variants share the same approved description. Keep 4%, 10% and 37% separate; verify glass/plastic correspondence.",
+      "missing": [
+        "Detailed description",
+        "Approved short description",
+        "Intended purpose",
+        "SKU-specific photo",
+        "Optional additional photographs",
+        "Approved documents (if available)"
+      ],
+      "currentRevision": "8ht4z1wR2A8VHxtw1eV7SB",
+      "mainImageCaption": null
+    },
+    {
+      "id": "89cf8290-0639-4b04-b6b2-05b25dde7957",
+      "language": "en",
+      "name": "4% NB Formaldehyde Solution, 10 L",
+      "reviewTopic": "4% NB Formaldehyde Solution",
+      "groupingStatus": "Working review topic only — no confirmed CMS family relation; no records merged",
+      "category": "IVD Reagents – Histology & Cytology",
+      "productType": "ivd",
+      "manufacturerRole": "manufacturer",
+      "sourceCodes": [
+        "CP00F410"
+      ],
+      "publicCodes": [
+        "CP00F410"
+      ],
+      "sourcePackaging": [
+        "10 L"
+      ],
+      "publicPackaging": [
+        "10 L"
+      ],
+      "existingDescription": null,
+      "publicDescription": null,
+      "shortDescriptionProposedEN": null,
+      "detailedDescriptionProposedEN": null,
+      "intendedPurposeVerbatim": null,
+      "intendedPurposeAuthority": "OWNER INPUT REQUIRED",
+      "mainImage": null,
+      "mainImageAssetId": null,
+      "mainImageAlt": null,
+      "gallery": [],
+      "documents": {
+        "instructionsForUse": null,
+        "declarationOfConformity": null,
+        "technicalDataSheet": null,
+        "safetyDataSheet": null
+      },
+      "url": "https://claroprom.com/products/4-nb-formaldehyde-solution-cp00f410",
+      "legacyRouteCandidate": null,
+      "urlNote": "Public EN catalogue",
+      "source": "Published Sanity product record, revision 8ht4z1wR2A8VHxtw1eVDIV",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
+      "ownerInputRequired": "Approved intended use, exact formulation identity and whether these pack variants share the same approved description. Keep 4%, 10% and 37% separate; verify glass/plastic correspondence.",
+      "missing": [
+        "Detailed description",
+        "Approved short description",
+        "Intended purpose",
+        "SKU-specific photo",
+        "Optional additional photographs",
+        "Approved documents (if available)"
+      ],
+      "currentRevision": "8ht4z1wR2A8VHxtw1eVDIV",
+      "mainImageCaption": null
+    },
+    {
+      "id": "fcc7b3d6-1df3-4c0b-9abe-b902ce50cf9f",
+      "language": "en",
+      "name": "4% NB Formaldehyde Solution, 5 L",
+      "reviewTopic": "4% NB Formaldehyde Solution",
+      "groupingStatus": "Working review topic only — no confirmed CMS family relation; no records merged",
+      "category": "IVD Reagents – Histology & Cytology",
+      "productType": "ivd",
+      "manufacturerRole": "manufacturer",
+      "sourceCodes": [
+        "CP00F45"
+      ],
+      "publicCodes": [
+        "CP00F45"
+      ],
+      "sourcePackaging": [
+        "5 L"
+      ],
+      "publicPackaging": [
+        "5 L"
+      ],
+      "existingDescription": null,
+      "publicDescription": null,
+      "shortDescriptionProposedEN": null,
+      "detailedDescriptionProposedEN": null,
+      "intendedPurposeVerbatim": null,
+      "intendedPurposeAuthority": "OWNER INPUT REQUIRED",
+      "mainImage": null,
+      "mainImageAssetId": null,
+      "mainImageAlt": null,
+      "gallery": [],
+      "documents": {
+        "instructionsForUse": null,
+        "declarationOfConformity": null,
+        "technicalDataSheet": null,
+        "safetyDataSheet": null
+      },
+      "url": "https://claroprom.com/products/4-nb-formaldehyde-solution-cp00f45",
+      "legacyRouteCandidate": null,
+      "urlNote": "Public EN catalogue",
+      "source": "Published Sanity product record, revision MwWOMVq9aGfEEH7OTjsF49",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
+      "ownerInputRequired": "Approved intended use, exact formulation identity and whether these pack variants share the same approved description. Keep 4%, 10% and 37% separate; verify glass/plastic correspondence.",
+      "missing": [
+        "Detailed description",
+        "Approved short description",
+        "Intended purpose",
+        "SKU-specific photo",
+        "Optional additional photographs",
+        "Approved documents (if available)"
+      ],
+      "currentRevision": "MwWOMVq9aGfEEH7OTjsF49",
+      "mainImageCaption": null
+    },
+    {
+      "id": "65082ed4-a129-4c7b-ae4b-ef0a4cdacfc8",
+      "language": "en",
+      "name": "Absolute Ethanol, IVD Reagent, 1 L",
+      "reviewTopic": "Absolute Ethanol, IVD Reagent",
+      "groupingStatus": "Working review topic only — no confirmed CMS family relation; no records merged",
+      "category": "IVD Reagents – Histology & Cytology",
+      "productType": "ivd",
+      "manufacturerRole": "manufacturer",
+      "sourceCodes": [
+        "CPEAI"
+      ],
+      "publicCodes": [
+        "CPEAI"
+      ],
+      "sourcePackaging": [
+        "1 L"
+      ],
+      "publicPackaging": [
+        "1 L"
+      ],
+      "existingDescription": null,
+      "publicDescription": null,
+      "shortDescriptionProposedEN": null,
+      "detailedDescriptionProposedEN": null,
+      "intendedPurposeVerbatim": null,
+      "intendedPurposeAuthority": "OWNER INPUT REQUIRED",
+      "mainImage": null,
+      "mainImageAssetId": null,
+      "mainImageAlt": null,
+      "gallery": [],
+      "documents": {
+        "instructionsForUse": null,
+        "declarationOfConformity": null,
+        "technicalDataSheet": null,
+        "safetyDataSheet": null
+      },
+      "url": "https://claroprom.com/products/absolute-ethanol-ivd-reagent-cpeai",
+      "legacyRouteCandidate": null,
+      "urlNote": "Public EN catalogue",
+      "source": "Published Sanity product record, revision GXon7RN0Hm0wO29GQnsPo3",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
+      "ownerInputRequired": "Approved product-specific application and intended use; no purity, process or chemistry specification inferred from the name.",
+      "missing": [
+        "Detailed description",
+        "Approved short description",
+        "Intended purpose",
+        "SKU-specific photo",
+        "Optional additional photographs",
+        "Approved documents (if available)"
+      ],
+      "currentRevision": "GXon7RN0Hm0wO29GQnsPo3",
+      "mainImageCaption": null
+    },
+    {
+      "id": "83bdbf73-d7f8-42d3-bd0c-4a055170d022",
+      "language": "en",
+      "name": "Absolute Ethanol, IVD Reagent, 10 L",
+      "reviewTopic": "Absolute Ethanol, IVD Reagent",
+      "groupingStatus": "Working review topic only — no confirmed CMS family relation; no records merged",
+      "category": "IVD Reagents – Histology & Cytology",
+      "productType": "ivd",
+      "manufacturerRole": "manufacturer",
+      "sourceCodes": [
+        "CPEAI10"
+      ],
+      "publicCodes": [
+        "CPEAI10"
+      ],
+      "sourcePackaging": [
+        "10 L"
+      ],
+      "publicPackaging": [
+        "10 L"
+      ],
+      "existingDescription": null,
+      "publicDescription": null,
+      "shortDescriptionProposedEN": null,
+      "detailedDescriptionProposedEN": null,
+      "intendedPurposeVerbatim": null,
+      "intendedPurposeAuthority": "OWNER INPUT REQUIRED",
+      "mainImage": null,
+      "mainImageAssetId": null,
+      "mainImageAlt": null,
+      "gallery": [],
+      "documents": {
+        "instructionsForUse": null,
+        "declarationOfConformity": null,
+        "technicalDataSheet": null,
+        "safetyDataSheet": null
+      },
+      "url": "https://claroprom.com/products/absolute-ethanol-cpeai10",
+      "legacyRouteCandidate": null,
+      "urlNote": "Public EN catalogue",
+      "source": "Published Sanity product record, revision aMxuB38zD5OHLKwsnSqDUd",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
+      "ownerInputRequired": "Approved product-specific application and intended use; no purity, process or chemistry specification inferred from the name.",
+      "missing": [
+        "Detailed description",
+        "Approved short description",
+        "Intended purpose",
+        "SKU-specific photo",
+        "Optional additional photographs",
+        "Approved documents (if available)"
+      ],
+      "currentRevision": "aMxuB38zD5OHLKwsnSqDUd",
+      "mainImageCaption": null
+    },
+    {
+      "id": "de7f9e03-8e51-43bb-a8c4-f997f9a3b103",
+      "language": "en",
+      "name": "Absolute Ethanol, IVD Reagent, 5 L",
+      "reviewTopic": "Absolute Ethanol, IVD Reagent",
+      "groupingStatus": "Working review topic only — no confirmed CMS family relation; no records merged",
+      "category": "IVD Reagents – Histology & Cytology",
+      "productType": "ivd",
+      "manufacturerRole": "manufacturer",
+      "sourceCodes": [
+        "CPEAI5"
+      ],
+      "publicCodes": [
+        "CPEAI5"
+      ],
+      "sourcePackaging": [
+        "5 L"
+      ],
+      "publicPackaging": [
+        "5 L"
+      ],
+      "existingDescription": null,
+      "publicDescription": null,
+      "shortDescriptionProposedEN": null,
+      "detailedDescriptionProposedEN": null,
+      "intendedPurposeVerbatim": null,
+      "intendedPurposeAuthority": "OWNER INPUT REQUIRED",
+      "mainImage": null,
+      "mainImageAssetId": null,
+      "mainImageAlt": null,
+      "gallery": [],
+      "documents": {
+        "instructionsForUse": null,
+        "declarationOfConformity": null,
+        "technicalDataSheet": null,
+        "safetyDataSheet": null
+      },
+      "url": "https://claroprom.com/products/absolute-ethanol-cpeai5",
+      "legacyRouteCandidate": null,
+      "urlNote": "Public EN catalogue",
+      "source": "Published Sanity product record, revision MwWOMVq9aGfEEH7OTjsy9T",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
+      "ownerInputRequired": "Approved product-specific application and intended use; no purity, process or chemistry specification inferred from the name.",
+      "missing": [
+        "Detailed description",
+        "Approved short description",
+        "Intended purpose",
+        "SKU-specific photo",
+        "Optional additional photographs",
+        "Approved documents (if available)"
+      ],
+      "currentRevision": "MwWOMVq9aGfEEH7OTjsy9T",
+      "mainImageCaption": null
+    },
+    {
+      "id": "caf938a1-fdbe-40d7-a296-14177067103f",
+      "language": "en",
+      "name": "Claroclear Xylene Substitute, 1 L",
+      "reviewTopic": "Claroclear Xylene Substitute",
+      "groupingStatus": "Working review topic only — no confirmed CMS family relation; no records merged",
+      "category": "IVD Reagents – Histology & Cytology",
+      "productType": "ivd",
+      "manufacturerRole": "manufacturer",
+      "sourceCodes": [
+        "CP00XLS"
+      ],
+      "publicCodes": [
+        "CP00XLS"
+      ],
+      "sourcePackaging": [
+        "1 L"
+      ],
+      "publicPackaging": [
+        "1 L"
+      ],
+      "existingDescription": null,
+      "publicDescription": null,
+      "shortDescriptionProposedEN": null,
+      "detailedDescriptionProposedEN": null,
+      "intendedPurposeVerbatim": null,
+      "intendedPurposeAuthority": "OWNER INPUT REQUIRED",
+      "mainImage": null,
+      "mainImageAssetId": null,
+      "mainImageAlt": null,
+      "gallery": [],
+      "documents": {
+        "instructionsForUse": null,
+        "declarationOfConformity": null,
+        "technicalDataSheet": null,
+        "safetyDataSheet": null
+      },
+      "url": "https://claroprom.com/products/claroclear-xylene-substitute-cp00xls",
+      "legacyRouteCandidate": null,
+      "urlNote": "Public EN catalogue",
+      "source": "Published Sanity product record, revision aMxuB38zD5OHLKwsnSpcRM",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
+      "ownerInputRequired": "Approved product-specific use. Confirm Xylene Substitute separately from Xylene; no toxicity or equipment compatibility claim without evidence.",
+      "missing": [
+        "Detailed description",
+        "Approved short description",
+        "Intended purpose",
+        "SKU-specific photo",
+        "Optional additional photographs",
+        "Approved documents (if available)"
+      ],
+      "currentRevision": "aMxuB38zD5OHLKwsnSpcRM",
+      "mainImageCaption": null
+    },
+    {
+      "id": "4a18a104-ff8b-4d6f-b224-653aad74fb92",
+      "language": "en",
+      "name": "Claroclear Xylene Substitute, 10 L",
+      "reviewTopic": "Claroclear Xylene Substitute",
+      "groupingStatus": "Working review topic only — no confirmed CMS family relation; no records merged",
+      "category": "IVD Reagents – Histology & Cytology",
+      "productType": "ivd",
+      "manufacturerRole": "manufacturer",
+      "sourceCodes": [
+        "CP00XLS1"
+      ],
+      "publicCodes": [
+        "CP00XLS1"
+      ],
+      "sourcePackaging": [
+        "10 L"
+      ],
+      "publicPackaging": [
+        "10 L"
+      ],
+      "existingDescription": null,
+      "publicDescription": null,
+      "shortDescriptionProposedEN": null,
+      "detailedDescriptionProposedEN": null,
+      "intendedPurposeVerbatim": null,
+      "intendedPurposeAuthority": "OWNER INPUT REQUIRED",
+      "mainImage": null,
+      "mainImageAssetId": null,
+      "mainImageAlt": null,
+      "gallery": [],
+      "documents": {
+        "instructionsForUse": null,
+        "declarationOfConformity": null,
+        "technicalDataSheet": null,
+        "safetyDataSheet": null
+      },
+      "url": "https://claroprom.com/products/claroclear-xylene-substitute-cp00xls1",
+      "legacyRouteCandidate": null,
+      "urlNote": "Public EN catalogue",
+      "source": "Published Sanity product record, revision aMxuB38zD5OHLKwsnSpf3P",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
+      "ownerInputRequired": "Approved product-specific use. Confirm Xylene Substitute separately from Xylene; no toxicity or equipment compatibility claim without evidence.",
+      "missing": [
+        "Detailed description",
+        "Approved short description",
+        "Intended purpose",
+        "SKU-specific photo",
+        "Optional additional photographs",
+        "Approved documents (if available)"
+      ],
+      "currentRevision": "aMxuB38zD5OHLKwsnSpf3P",
+      "mainImageCaption": null
+    },
+    {
+      "id": "3c32cf79-39c3-4bf8-bf48-5f201e67b608",
+      "language": "en",
+      "name": "Claroclear Xylene, 1 L (Glass)",
+      "reviewTopic": "Claroclear Xylene",
+      "groupingStatus": "Working review topic only — no confirmed CMS family relation; no records merged",
+      "category": "IVD Reagents – Histology & Cytology",
+      "productType": "ivd",
+      "manufacturerRole": "manufacturer",
+      "sourceCodes": [
+        "CP00XL"
+      ],
+      "publicCodes": [
+        "CP00XL"
+      ],
+      "sourcePackaging": [
+        "1 L glass"
+      ],
+      "publicPackaging": [
+        "1 L glass"
+      ],
+      "existingDescription": null,
+      "publicDescription": null,
+      "shortDescriptionProposedEN": null,
+      "detailedDescriptionProposedEN": null,
+      "intendedPurposeVerbatim": null,
+      "intendedPurposeAuthority": "OWNER INPUT REQUIRED",
+      "mainImage": null,
+      "mainImageAssetId": null,
+      "mainImageAlt": null,
+      "gallery": [],
+      "documents": {
+        "instructionsForUse": null,
+        "declarationOfConformity": null,
+        "technicalDataSheet": null,
+        "safetyDataSheet": null
+      },
+      "url": "https://claroprom.com/products/claroclear-xylene-cp00xl",
+      "legacyRouteCandidate": null,
+      "urlNote": "Public EN catalogue",
+      "source": "Published Sanity product record, revision MwWOMVq9aGfEEH7OTjsTyt",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
+      "ownerInputRequired": "Approved product-specific use. Confirm Xylene Substitute separately from Xylene; no toxicity or equipment compatibility claim without evidence.",
+      "missing": [
+        "Detailed description",
+        "Approved short description",
+        "Intended purpose",
+        "SKU-specific photo",
+        "Optional additional photographs",
+        "Approved documents (if available)"
+      ],
+      "currentRevision": "MwWOMVq9aGfEEH7OTjsTyt",
+      "mainImageCaption": null
+    },
+    {
+      "id": "e79f3f00-8023-49d2-8cdb-b95534c9962f",
+      "language": "en",
+      "name": "Claroclear Xylene, 1 L (Plastic)",
+      "reviewTopic": "Claroclear Xylene",
+      "groupingStatus": "Working review topic only — no confirmed CMS family relation; no records merged",
+      "category": "IVD Reagents – Histology & Cytology",
+      "productType": "ivd",
+      "manufacturerRole": "manufacturer",
+      "sourceCodes": [
+        "CP00XL1"
+      ],
+      "publicCodes": [
+        "CP00XL1"
+      ],
+      "sourcePackaging": [
+        "1 L"
+      ],
+      "publicPackaging": [
+        "1 L"
+      ],
+      "existingDescription": null,
+      "publicDescription": null,
+      "shortDescriptionProposedEN": null,
+      "detailedDescriptionProposedEN": null,
+      "intendedPurposeVerbatim": null,
+      "intendedPurposeAuthority": "OWNER INPUT REQUIRED",
+      "mainImage": null,
+      "mainImageAssetId": null,
+      "mainImageAlt": null,
+      "gallery": [],
+      "documents": {
+        "instructionsForUse": null,
+        "declarationOfConformity": null,
+        "technicalDataSheet": null,
+        "safetyDataSheet": null
+      },
+      "url": "https://claroprom.com/products/claroclear-xylene",
+      "legacyRouteCandidate": null,
+      "urlNote": "Public EN catalogue",
+      "source": "Published Sanity product record, revision M3OQuuH4IiA2wtqZQKbxyx",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
+      "ownerInputRequired": "Approved product-specific use. Confirm Xylene Substitute separately from Xylene; no toxicity or equipment compatibility claim without evidence.",
+      "missing": [
+        "Detailed description",
+        "Approved short description",
+        "Intended purpose",
+        "SKU-specific photo",
+        "Optional additional photographs",
+        "Approved documents (if available)"
+      ],
+      "currentRevision": "M3OQuuH4IiA2wtqZQKbxyx",
+      "mainImageCaption": null
+    },
+    {
+      "id": "96c3b4db-c11a-49fd-a087-6b96f62ea7fc",
+      "language": "en",
+      "name": "Claroclear Xylene, 10 L",
+      "reviewTopic": "Claroclear Xylene",
+      "groupingStatus": "Working review topic only — no confirmed CMS family relation; no records merged",
+      "category": "IVD Reagents – Histology & Cytology",
+      "productType": "ivd",
+      "manufacturerRole": "manufacturer",
+      "sourceCodes": [
+        "CP00XL2"
+      ],
+      "publicCodes": [
+        "CP00XL2"
+      ],
+      "sourcePackaging": [
+        "10 L"
+      ],
+      "publicPackaging": [
+        "10 L"
+      ],
+      "existingDescription": null,
+      "publicDescription": null,
+      "shortDescriptionProposedEN": null,
+      "detailedDescriptionProposedEN": null,
+      "intendedPurposeVerbatim": null,
+      "intendedPurposeAuthority": "OWNER INPUT REQUIRED",
+      "mainImage": null,
+      "mainImageAssetId": null,
+      "mainImageAlt": null,
+      "gallery": [],
+      "documents": {
+        "instructionsForUse": null,
+        "declarationOfConformity": null,
+        "technicalDataSheet": null,
+        "safetyDataSheet": null
+      },
+      "url": "https://claroprom.com/products/claroclear-xylene-cp00xl2",
+      "legacyRouteCandidate": null,
+      "urlNote": "Public EN catalogue",
+      "source": "Published Sanity product record, revision MwWOMVq9aGfEEH7OTjsWad",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
+      "ownerInputRequired": "Approved product-specific use. Confirm Xylene Substitute separately from Xylene; no toxicity or equipment compatibility claim without evidence.",
+      "missing": [
+        "Detailed description",
+        "Approved short description",
+        "Intended purpose",
+        "SKU-specific photo",
+        "Optional additional photographs",
+        "Approved documents (if available)"
+      ],
+      "currentRevision": "MwWOMVq9aGfEEH7OTjsWad",
+      "mainImageCaption": null
+    },
+    {
+      "id": "8198c46c-6d27-49a8-a024-00f1a2c07a89",
+      "language": "en",
+      "name": "Claromount, 100 mL",
+      "reviewTopic": "Claromount",
+      "groupingStatus": "Working review topic only — no confirmed CMS family relation; no records merged",
+      "category": "IVD Reagents – Histology & Cytology",
+      "productType": "ivd",
+      "manufacturerRole": "manufacturer",
+      "sourceCodes": [
+        "CP00MT1"
+      ],
+      "publicCodes": [
+        "CP00MT1"
+      ],
+      "sourcePackaging": [
+        "100 mL"
+      ],
+      "publicPackaging": [
+        "100 mL"
+      ],
+      "existingDescription": null,
+      "publicDescription": null,
+      "shortDescriptionProposedEN": null,
+      "detailedDescriptionProposedEN": null,
+      "intendedPurposeVerbatim": null,
+      "intendedPurposeAuthority": "OWNER INPUT REQUIRED",
+      "mainImage": null,
+      "mainImageAssetId": null,
+      "mainImageAlt": null,
+      "gallery": [],
+      "documents": {
+        "instructionsForUse": null,
+        "declarationOfConformity": null,
+        "technicalDataSheet": null,
+        "safetyDataSheet": null
+      },
+      "url": "https://claroprom.com/products/claromount-cp00mt1",
+      "legacyRouteCandidate": null,
+      "urlNote": "Public EN catalogue",
+      "source": "Published Sanity product record, revision GXon7RN0Hm0wO29GQnsKNH",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
+      "ownerInputRequired": "Approved product function and intended use; formulation/base and compatibility only from controlled documents.",
+      "missing": [
+        "Detailed description",
+        "Approved short description",
+        "Intended purpose",
+        "SKU-specific photo",
+        "Optional additional photographs",
+        "Approved documents (if available)"
+      ],
+      "currentRevision": "GXon7RN0Hm0wO29GQnsKNH",
+      "mainImageCaption": null
+    },
+    {
+      "id": "7ae74101-f3c6-43dd-81c0-703c54ad3f2e",
+      "language": "en",
+      "name": "Claromount, 200 mL",
+      "reviewTopic": "Claromount",
+      "groupingStatus": "Working review topic only — no confirmed CMS family relation; no records merged",
+      "category": "IVD Reagents – Histology & Cytology",
+      "productType": "ivd",
+      "manufacturerRole": "manufacturer",
+      "sourceCodes": [
+        "CP00MT2"
+      ],
+      "publicCodes": [
+        "CP00MT2"
+      ],
+      "sourcePackaging": [
+        "200 mL"
+      ],
+      "publicPackaging": [
+        "200 mL"
+      ],
+      "existingDescription": null,
+      "publicDescription": null,
+      "shortDescriptionProposedEN": null,
+      "detailedDescriptionProposedEN": null,
+      "intendedPurposeVerbatim": null,
+      "intendedPurposeAuthority": "OWNER INPUT REQUIRED",
+      "mainImage": null,
+      "mainImageAssetId": null,
+      "mainImageAlt": null,
+      "gallery": [],
+      "documents": {
+        "instructionsForUse": null,
+        "declarationOfConformity": null,
+        "technicalDataSheet": null,
+        "safetyDataSheet": null
+      },
+      "url": "https://claroprom.com/products/claromount-cp00mt2",
+      "legacyRouteCandidate": null,
+      "urlNote": "Public EN catalogue",
+      "source": "Published Sanity product record, revision aMxuB38zD5OHLKwsnSq7OW",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
+      "ownerInputRequired": "Approved product function and intended use; formulation/base and compatibility only from controlled documents.",
+      "missing": [
+        "Detailed description",
+        "Approved short description",
+        "Intended purpose",
+        "SKU-specific photo",
+        "Optional additional photographs",
+        "Approved documents (if available)"
+      ],
+      "currentRevision": "aMxuB38zD5OHLKwsnSq7OW",
+      "mainImageCaption": null
+    },
+    {
+      "id": "44c067f6-3c0b-462d-ad1c-f51a9c44d078",
+      "language": "en",
+      "name": "Claromount, 50 mL",
+      "reviewTopic": "Claromount",
+      "groupingStatus": "Working review topic only — no confirmed CMS family relation; no records merged",
+      "category": "IVD Reagents – Histology & Cytology",
+      "productType": "ivd",
+      "manufacturerRole": "manufacturer",
+      "sourceCodes": [
+        "CP00MT"
+      ],
+      "publicCodes": [
+        "CP00MT"
+      ],
+      "sourcePackaging": [
+        "50 mL"
+      ],
+      "publicPackaging": [
+        "50 mL"
+      ],
+      "existingDescription": null,
+      "publicDescription": null,
+      "shortDescriptionProposedEN": null,
+      "detailedDescriptionProposedEN": null,
+      "intendedPurposeVerbatim": null,
+      "intendedPurposeAuthority": "OWNER INPUT REQUIRED",
+      "mainImage": null,
+      "mainImageAssetId": null,
+      "mainImageAlt": null,
+      "gallery": [],
+      "documents": {
+        "instructionsForUse": null,
+        "declarationOfConformity": null,
+        "technicalDataSheet": null,
+        "safetyDataSheet": null
+      },
+      "url": "https://claroprom.com/products/claromount-cp00mt",
+      "legacyRouteCandidate": null,
+      "urlNote": "Public EN catalogue",
+      "source": "Published Sanity product record, revision GXon7RN0Hm0wO29GQnsIKz",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
+      "ownerInputRequired": "Approved product function and intended use; formulation/base and compatibility only from controlled documents.",
+      "missing": [
+        "Detailed description",
+        "Approved short description",
+        "Intended purpose",
+        "SKU-specific photo",
+        "Optional additional photographs",
+        "Approved documents (if available)"
+      ],
+      "currentRevision": "GXon7RN0Hm0wO29GQnsIKz",
+      "mainImageCaption": null
+    },
+    {
+      "id": "404d6506-1437-44ba-a1d3-7f09ae5434db",
+      "language": "en",
+      "name": "Claromount, 500 mL",
+      "reviewTopic": "Claromount",
+      "groupingStatus": "Working review topic only — no confirmed CMS family relation; no records merged",
+      "category": "IVD Reagents – Histology & Cytology",
+      "productType": "ivd",
+      "manufacturerRole": "manufacturer",
+      "sourceCodes": [
+        "CP00MT3"
+      ],
+      "publicCodes": [
+        "CP00MT3"
+      ],
+      "sourcePackaging": [
+        "500 mL"
+      ],
+      "publicPackaging": [
+        "500 mL"
+      ],
+      "existingDescription": null,
+      "publicDescription": null,
+      "shortDescriptionProposedEN": null,
+      "detailedDescriptionProposedEN": null,
+      "intendedPurposeVerbatim": null,
+      "intendedPurposeAuthority": "OWNER INPUT REQUIRED",
+      "mainImage": null,
+      "mainImageAssetId": null,
+      "mainImageAlt": null,
+      "gallery": [],
+      "documents": {
+        "instructionsForUse": null,
+        "declarationOfConformity": null,
+        "technicalDataSheet": null,
+        "safetyDataSheet": null
+      },
+      "url": "https://claroprom.com/products/claromount-cp00mt3",
+      "legacyRouteCandidate": null,
+      "urlNote": "Public EN catalogue",
+      "source": "Published Sanity product record, revision GXon7RN0Hm0wO29GQnsONe",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
+      "ownerInputRequired": "Approved product function and intended use; formulation/base and compatibility only from controlled documents.",
+      "missing": [
+        "Detailed description",
+        "Approved short description",
+        "Intended purpose",
+        "SKU-specific photo",
+        "Optional additional photographs",
+        "Approved documents (if available)"
+      ],
+      "currentRevision": "GXon7RN0Hm0wO29GQnsONe",
+      "mainImageCaption": null
+    },
+    {
+      "id": "4b2e15ae-8d71-4778-9bb5-bc586ea8397c",
+      "language": "en",
+      "name": "Claroplast a 10 kg",
+      "reviewTopic": "Claroplast a 10 kg",
+      "groupingStatus": "Working review topic only — no confirmed CMS family relation; no records merged",
+      "category": "Claroplast – Histology Wax",
+      "productType": "consumable",
+      "manufacturerRole": "manufacturer",
+      "sourceCodes": [
+        "6666"
+      ],
+      "publicCodes": [
+        "CP00CLP"
+      ],
+      "sourcePackaging": [
+        null
+      ],
+      "publicPackaging": [
+        "10 kg"
+      ],
+      "existingDescription": null,
+      "publicDescription": "Claroplast is a polymer-modified histology paraffin wax intended for routine tissue infiltration and embedding. It is manufactured by CLARO-PROM d.o.o. in Croatia, European Union, and supplied in a 10 kg pack.",
+      "shortDescriptionProposedEN": "Claroplast is a polymer-modified histology paraffin wax intended for routine tissue infiltration and embedding.",
+      "detailedDescriptionProposedEN": "Claroplast is a polymer-modified histology paraffin wax intended for routine tissue infiltration and embedding. It is manufactured by CLARO-PROM d.o.o. in Croatia, European Union, and supplied in a 10 kg pack.",
+      "intendedPurposeVerbatim": null,
+      "intendedPurposeAuthority": "OWNER INPUT REQUIRED",
+      "mainImage": "https://cdn.sanity.io/images/ddtwki7e/production/a32df7b692ad48267bb8af315bdb11110a7fd603-1024x768.jpg",
+      "mainImageAssetId": "image-a32df7b692ad48267bb8af315bdb11110a7fd603-1024x768-jpg",
+      "mainImageAlt": null,
+      "gallery": [],
+      "documents": {
+        "instructionsForUse": null,
+        "declarationOfConformity": null,
+        "technicalDataSheet": null,
+        "safetyDataSheet": null
+      },
+      "url": "https://claroprom.com/products/claroplast-a-10-kg",
+      "legacyRouteCandidate": null,
+      "urlNote": "Public EN catalogue",
+      "source": "Published Sanity record + approved versioned read model src/lib/product-seo.ts at main 040ff128",
+      "status": "CONFIRMED EXISTING CONTENT",
+      "ownerInputRequired": "Approve using the exact existing first sentence as a short summary. Confirm photo/pack correspondence and any missing packaging.",
+      "missing": [
+        "Intended purpose",
+        "Optional additional photographs",
+        "Confirmed packaging",
+        "Approved documents (if available)"
+      ],
+      "currentRevision": "ngxkL2J28yWAiW7JQCRXVw",
+      "mainImageCaption": null
+    },
+    {
+      "id": "5e3f0063-c019-4aed-9fc6-fa4bdf63e2a7",
+      "language": "hr",
+      "name": "Claroplast a 2 kg",
+      "reviewTopic": "Claroplast a 2 kg",
+      "groupingStatus": "Working review topic only — no confirmed CMS family relation; no records merged",
+      "category": "Claroplast – Histology Wax",
+      "productType": "consumable",
+      "manufacturerRole": "manufacturer",
+      "sourceCodes": [],
+      "publicCodes": [],
+      "sourcePackaging": [],
+      "publicPackaging": [],
+      "existingDescription": null,
+      "publicDescription": null,
+      "shortDescriptionProposedEN": null,
+      "detailedDescriptionProposedEN": null,
+      "intendedPurposeVerbatim": null,
+      "intendedPurposeAuthority": "OWNER INPUT REQUIRED",
+      "mainImage": null,
+      "mainImageAssetId": null,
+      "mainImageAlt": null,
+      "gallery": [],
+      "documents": {
+        "instructionsForUse": null,
+        "declarationOfConformity": null,
+        "technicalDataSheet": null,
+        "safetyDataSheet": null
+      },
+      "url": null,
+      "legacyRouteCandidate": "https://claroprom.com/products/claroplast-a-2-kg",
+      "urlNote": "HR record shares the EN slug; current clean URL resolves EN. Preserve record; no public HR detail route verified.",
+      "source": "Published Sanity product record, revision XnIpi0i6mdZHR0bJRGcIlF",
+      "status": "INSUFFICIENT SOURCE",
+      "ownerInputRequired": "Approve using the exact existing first sentence as a short summary. Confirm photo/pack correspondence and any missing packaging.",
+      "missing": [
+        "Detailed description",
+        "Approved short description",
+        "Intended purpose",
+        "SKU-specific photo",
+        "Optional additional photographs",
+        "Confirmed packaging",
+        "Approved documents (if available)"
+      ],
+      "currentRevision": "XnIpi0i6mdZHR0bJRGcIlF",
+      "mainImageCaption": null
+    },
+    {
+      "id": "7e1aabab-6bb0-4c0e-a5c8-fb7d6be49ddf",
+      "language": "en",
+      "name": "Claroplast a 2 kg",
+      "reviewTopic": "Claroplast a 2 kg",
+      "groupingStatus": "Working review topic only — no confirmed CMS family relation; no records merged",
+      "category": "Claroplast – Histology Wax",
+      "productType": "consumable",
+      "manufacturerRole": "manufacturer",
+      "sourceCodes": [
+        "345"
+      ],
+      "publicCodes": [
+        "CP00CL2"
+      ],
+      "sourcePackaging": [
+        null
+      ],
+      "publicPackaging": [
+        "2 kg"
+      ],
+      "existingDescription": "Claroplast Histology Wax is a high-quality paraffin embedding medium modified with polymers to provide consistent performance in routine histology. Its controlled properties support efficient processing, stable embedding and smooth sectioning of tissue specimens. Manufactured by Claro-prom in Croatia, EU.",
+      "publicDescription": "Claroplast is a polymer-modified histology paraffin wax intended for routine tissue infiltration and embedding. It is manufactured by CLARO-PROM d.o.o. in Croatia, European Union, and supplied in a 2 kg pack.",
+      "shortDescriptionProposedEN": "Claroplast is a polymer-modified histology paraffin wax intended for routine tissue infiltration and embedding.",
+      "detailedDescriptionProposedEN": "Claroplast is a polymer-modified histology paraffin wax intended for routine tissue infiltration and embedding. It is manufactured by CLARO-PROM d.o.o. in Croatia, European Union, and supplied in a 2 kg pack.",
+      "intendedPurposeVerbatim": "Claroplast Histology Wax is intended for the infiltration and embedding of tissue specimens in paraffin as part of the preparation of specimens for histological examination.",
+      "intendedPurposeAuthority": "Existing published CMS text; no supporting approved document supplied",
+      "mainImage": "https://cdn.sanity.io/images/ddtwki7e/production/34e609d84fcd96a456977d7137f9c9d7649b2bdd-1074x1074.webp",
+      "mainImageAssetId": "image-34e609d84fcd96a456977d7137f9c9d7649b2bdd-1074x1074-webp",
+      "mainImageAlt": null,
+      "gallery": [],
+      "documents": {
+        "instructionsForUse": null,
+        "declarationOfConformity": null,
+        "technicalDataSheet": null,
+        "safetyDataSheet": null
+      },
+      "url": "https://claroprom.com/products/claroplast-a-2-kg",
+      "legacyRouteCandidate": null,
+      "urlNote": "Public EN catalogue",
+      "source": "Published Sanity record + approved versioned read model src/lib/product-seo.ts at main 040ff128",
+      "status": "CONFIRMED EXISTING CONTENT",
+      "ownerInputRequired": "Approve using the exact existing first sentence as a short summary. Confirm photo/pack correspondence and any missing packaging.",
+      "missing": [
+        "Optional additional photographs",
+        "Confirmed packaging",
+        "Approved documents (if available)"
+      ],
+      "currentRevision": "M3OQuuH4IiA2wtqZQKdEW0",
+      "mainImageCaption": null
+    },
+    {
+      "id": "269d62d5-e498-463b-8af3-98de945e5923",
+      "language": "en",
+      "name": "Ethanol 50% v/v, IVD Reagent, 1 L",
+      "reviewTopic": "Ethanol 50% v/v, IVD Reagent",
+      "groupingStatus": "Working review topic only — no confirmed CMS family relation; no records merged",
+      "category": "IVD Reagents – Histology & Cytology",
+      "productType": "ivd",
+      "manufacturerRole": "manufacturer",
+      "sourceCodes": [
+        "CPE50I"
+      ],
+      "publicCodes": [
+        "CPE50I"
+      ],
+      "sourcePackaging": [
+        "1 L"
+      ],
+      "publicPackaging": [
+        "1 L"
+      ],
+      "existingDescription": null,
+      "publicDescription": null,
+      "shortDescriptionProposedEN": null,
+      "detailedDescriptionProposedEN": null,
+      "intendedPurposeVerbatim": null,
+      "intendedPurposeAuthority": "OWNER INPUT REQUIRED",
+      "mainImage": null,
+      "mainImageAssetId": null,
+      "mainImageAlt": null,
+      "gallery": [],
+      "documents": {
+        "instructionsForUse": null,
+        "declarationOfConformity": null,
+        "technicalDataSheet": null,
+        "safetyDataSheet": null
+      },
+      "url": "https://claroprom.com/products/ethanol-50-v-v-cpe50i",
+      "legacyRouteCandidate": null,
+      "urlNote": "Public EN catalogue",
+      "source": "Published Sanity product record, revision aMxuB38zD5OHLKwsnSqZdH",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
+      "ownerInputRequired": "Approved product-specific application and intended use; no purity, process or chemistry specification inferred from the name.",
+      "missing": [
+        "Detailed description",
+        "Approved short description",
+        "Intended purpose",
+        "SKU-specific photo",
+        "Optional additional photographs",
+        "Approved documents (if available)"
+      ],
+      "currentRevision": "aMxuB38zD5OHLKwsnSqZdH",
+      "mainImageCaption": null
+    },
+    {
+      "id": "292998ef-98b3-4b5a-a9a3-e90c50838655",
+      "language": "en",
+      "name": "Ethanol 50% v/v, IVD Reagent, 10 L",
+      "reviewTopic": "Ethanol 50% v/v, IVD Reagent",
+      "groupingStatus": "Working review topic only — no confirmed CMS family relation; no records merged",
+      "category": "IVD Reagents – Histology & Cytology",
+      "productType": "ivd",
+      "manufacturerRole": "manufacturer",
+      "sourceCodes": [
+        "CPE50I10"
+      ],
+      "publicCodes": [
+        "CPE50I10"
+      ],
+      "sourcePackaging": [
+        "10 L"
+      ],
+      "publicPackaging": [
+        "10 L"
+      ],
+      "existingDescription": null,
+      "publicDescription": null,
+      "shortDescriptionProposedEN": null,
+      "detailedDescriptionProposedEN": null,
+      "intendedPurposeVerbatim": null,
+      "intendedPurposeAuthority": "OWNER INPUT REQUIRED",
+      "mainImage": null,
+      "mainImageAssetId": null,
+      "mainImageAlt": null,
+      "gallery": [],
+      "documents": {
+        "instructionsForUse": null,
+        "declarationOfConformity": null,
+        "technicalDataSheet": null,
+        "safetyDataSheet": null
+      },
+      "url": "https://claroprom.com/products/ethanol-50-v-v-cpe50i10",
+      "legacyRouteCandidate": null,
+      "urlNote": "Public EN catalogue",
+      "source": "Published Sanity product record, revision MwWOMVq9aGfEEH7OTjtOdV",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
+      "ownerInputRequired": "Approved product-specific application and intended use; no purity, process or chemistry specification inferred from the name.",
+      "missing": [
+        "Detailed description",
+        "Approved short description",
+        "Intended purpose",
+        "SKU-specific photo",
+        "Optional additional photographs",
+        "Approved documents (if available)"
+      ],
+      "currentRevision": "MwWOMVq9aGfEEH7OTjtOdV",
+      "mainImageCaption": null
+    },
+    {
+      "id": "0506238b-2fdd-4ea9-a470-2e7606be1acf",
+      "language": "en",
+      "name": "Ethanol 50% v/v, IVD Reagent, 5 L",
+      "reviewTopic": "Ethanol 50% v/v, IVD Reagent",
+      "groupingStatus": "Working review topic only — no confirmed CMS family relation; no records merged",
+      "category": "IVD Reagents – Histology & Cytology",
+      "productType": "ivd",
+      "manufacturerRole": "manufacturer",
+      "sourceCodes": [
+        "CPE50I5"
+      ],
+      "publicCodes": [
+        "CPE50I5"
+      ],
+      "sourcePackaging": [
+        "5 L"
+      ],
+      "publicPackaging": [
+        "5 L"
+      ],
+      "existingDescription": null,
+      "publicDescription": null,
+      "shortDescriptionProposedEN": null,
+      "detailedDescriptionProposedEN": null,
+      "intendedPurposeVerbatim": null,
+      "intendedPurposeAuthority": "OWNER INPUT REQUIRED",
+      "mainImage": null,
+      "mainImageAssetId": null,
+      "mainImageAlt": null,
+      "gallery": [],
+      "documents": {
+        "instructionsForUse": null,
+        "declarationOfConformity": null,
+        "technicalDataSheet": null,
+        "safetyDataSheet": null
+      },
+      "url": "https://claroprom.com/products/ethanol-50-v-v-cpe50i5",
+      "legacyRouteCandidate": null,
+      "urlNote": "Public EN catalogue",
+      "source": "Published Sanity product record, revision aMxuB38zD5OHLKwsnSqaui",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
+      "ownerInputRequired": "Approved product-specific application and intended use; no purity, process or chemistry specification inferred from the name.",
+      "missing": [
+        "Detailed description",
+        "Approved short description",
+        "Intended purpose",
+        "SKU-specific photo",
+        "Optional additional photographs",
+        "Approved documents (if available)"
+      ],
+      "currentRevision": "aMxuB38zD5OHLKwsnSqaui",
+      "mainImageCaption": null
+    },
+    {
+      "id": "448a3c23-ab10-4646-8e8f-6b55a448400f",
+      "language": "en",
+      "name": "Ethanol 70% v/v, IVD Reagent, 1 L",
+      "reviewTopic": "Ethanol 70% v/v, IVD Reagent",
+      "groupingStatus": "Working review topic only — no confirmed CMS family relation; no records merged",
+      "category": "IVD Reagents – Histology & Cytology",
+      "productType": "ivd",
+      "manufacturerRole": "manufacturer",
+      "sourceCodes": [
+        "CPE70I"
+      ],
+      "publicCodes": [
+        "CPE70I"
+      ],
+      "sourcePackaging": [
+        "1 L"
+      ],
+      "publicPackaging": [
+        "1 L"
+      ],
+      "existingDescription": null,
+      "publicDescription": null,
+      "shortDescriptionProposedEN": null,
+      "detailedDescriptionProposedEN": null,
+      "intendedPurposeVerbatim": null,
+      "intendedPurposeAuthority": "OWNER INPUT REQUIRED",
+      "mainImage": null,
+      "mainImageAssetId": null,
+      "mainImageAlt": null,
+      "gallery": [],
+      "documents": {
+        "instructionsForUse": null,
+        "declarationOfConformity": null,
+        "technicalDataSheet": null,
+        "safetyDataSheet": null
+      },
+      "url": "https://claroprom.com/products/ethanol-70-v-v-cpe70i",
+      "legacyRouteCandidate": null,
+      "urlNote": "Public EN catalogue",
+      "source": "Published Sanity product record, revision MwWOMVq9aGfEEH7OTjtJzB",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
+      "ownerInputRequired": "Approved product-specific application and intended use; no purity, process or chemistry specification inferred from the name.",
+      "missing": [
+        "Detailed description",
+        "Approved short description",
+        "Intended purpose",
+        "SKU-specific photo",
+        "Optional additional photographs",
+        "Approved documents (if available)"
+      ],
+      "currentRevision": "MwWOMVq9aGfEEH7OTjtJzB",
+      "mainImageCaption": null
+    },
+    {
+      "id": "f7b599ad-8190-4918-a52d-ec8e99253e94",
+      "language": "en",
+      "name": "Ethanol 70% v/v, IVD Reagent, 10 L",
+      "reviewTopic": "Ethanol 70% v/v, IVD Reagent",
+      "groupingStatus": "Working review topic only — no confirmed CMS family relation; no records merged",
+      "category": "IVD Reagents – Histology & Cytology",
+      "productType": "ivd",
+      "manufacturerRole": "manufacturer",
+      "sourceCodes": [
+        "CPE70I10"
+      ],
+      "publicCodes": [
+        "CPE70I10"
+      ],
+      "sourcePackaging": [
+        "10 L"
+      ],
+      "publicPackaging": [
+        "10 L"
+      ],
+      "existingDescription": null,
+      "publicDescription": null,
+      "shortDescriptionProposedEN": null,
+      "detailedDescriptionProposedEN": null,
+      "intendedPurposeVerbatim": null,
+      "intendedPurposeAuthority": "OWNER INPUT REQUIRED",
+      "mainImage": null,
+      "mainImageAssetId": null,
+      "mainImageAlt": null,
+      "gallery": [],
+      "documents": {
+        "instructionsForUse": null,
+        "declarationOfConformity": null,
+        "technicalDataSheet": null,
+        "safetyDataSheet": null
+      },
+      "url": "https://claroprom.com/products/ethanol-70-v-v-cpe70i10",
+      "legacyRouteCandidate": null,
+      "urlNote": "Public EN catalogue",
+      "source": "Published Sanity product record, revision MwWOMVq9aGfEEH7OTjtMlT",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
+      "ownerInputRequired": "Approved product-specific application and intended use; no purity, process or chemistry specification inferred from the name.",
+      "missing": [
+        "Detailed description",
+        "Approved short description",
+        "Intended purpose",
+        "SKU-specific photo",
+        "Optional additional photographs",
+        "Approved documents (if available)"
+      ],
+      "currentRevision": "MwWOMVq9aGfEEH7OTjtMlT",
+      "mainImageCaption": null
+    },
+    {
+      "id": "db62555e-3473-4456-8e9e-e5bb9416c209",
+      "language": "en",
+      "name": "Ethanol 70% v/v, IVD Reagent, 5 L",
+      "reviewTopic": "Ethanol 70% v/v, IVD Reagent",
+      "groupingStatus": "Working review topic only — no confirmed CMS family relation; no records merged",
+      "category": "IVD Reagents – Histology & Cytology",
+      "productType": "ivd",
+      "manufacturerRole": "manufacturer",
+      "sourceCodes": [
+        "CPE70I5"
+      ],
+      "publicCodes": [
+        "CPE70I5"
+      ],
+      "sourcePackaging": [
+        "5 L"
+      ],
+      "publicPackaging": [
+        "5 L"
+      ],
+      "existingDescription": null,
+      "publicDescription": null,
+      "shortDescriptionProposedEN": null,
+      "detailedDescriptionProposedEN": null,
+      "intendedPurposeVerbatim": null,
+      "intendedPurposeAuthority": "OWNER INPUT REQUIRED",
+      "mainImage": null,
+      "mainImageAssetId": null,
+      "mainImageAlt": null,
+      "gallery": [],
+      "documents": {
+        "instructionsForUse": null,
+        "declarationOfConformity": null,
+        "technicalDataSheet": null,
+        "safetyDataSheet": null
+      },
+      "url": "https://claroprom.com/products/ethanol-70-v-v-cpe70i5",
+      "legacyRouteCandidate": null,
+      "urlNote": "Public EN catalogue",
+      "source": "Published Sanity product record, revision aMxuB38zD5OHLKwsnSqXtF",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
+      "ownerInputRequired": "Approved product-specific application and intended use; no purity, process or chemistry specification inferred from the name.",
+      "missing": [
+        "Detailed description",
+        "Approved short description",
+        "Intended purpose",
+        "SKU-specific photo",
+        "Optional additional photographs",
+        "Approved documents (if available)"
+      ],
+      "currentRevision": "aMxuB38zD5OHLKwsnSqXtF",
+      "mainImageCaption": null
+    },
+    {
+      "id": "0e84304c-abf1-44b2-92be-567605232b83",
+      "language": "en",
+      "name": "Ethanol 80% v/v, IVD Reagent, 1 L",
+      "reviewTopic": "Ethanol 80% v/v, IVD Reagent",
+      "groupingStatus": "Working review topic only — no confirmed CMS family relation; no records merged",
+      "category": "IVD Reagents – Histology & Cytology",
+      "productType": "ivd",
+      "manufacturerRole": "manufacturer",
+      "sourceCodes": [
+        "CPE80I"
+      ],
+      "publicCodes": [
+        "CPE80I"
+      ],
+      "sourcePackaging": [
+        "1 L"
+      ],
+      "publicPackaging": [
+        "1 L"
+      ],
+      "existingDescription": null,
+      "publicDescription": null,
+      "shortDescriptionProposedEN": null,
+      "detailedDescriptionProposedEN": null,
+      "intendedPurposeVerbatim": null,
+      "intendedPurposeAuthority": "OWNER INPUT REQUIRED",
+      "mainImage": null,
+      "mainImageAssetId": null,
+      "mainImageAlt": null,
+      "gallery": [],
+      "documents": {
+        "instructionsForUse": null,
+        "declarationOfConformity": null,
+        "technicalDataSheet": null,
+        "safetyDataSheet": null
+      },
+      "url": "https://claroprom.com/products/ethanol-80-v-v-cpe80i",
+      "legacyRouteCandidate": null,
+      "urlNote": "Public EN catalogue",
+      "source": "Published Sanity product record, revision aMxuB38zD5OHLKwsnSqQla",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
+      "ownerInputRequired": "Approved product-specific application and intended use; no purity, process or chemistry specification inferred from the name.",
+      "missing": [
+        "Detailed description",
+        "Approved short description",
+        "Intended purpose",
+        "SKU-specific photo",
+        "Optional additional photographs",
+        "Approved documents (if available)"
+      ],
+      "currentRevision": "aMxuB38zD5OHLKwsnSqQla",
+      "mainImageCaption": null
+    },
+    {
+      "id": "e3694ac0-031e-4fc1-8189-6ce4ae1d9e5e",
+      "language": "en",
+      "name": "Ethanol 80% v/v, IVD Reagent, 10 L",
+      "reviewTopic": "Ethanol 80% v/v, IVD Reagent",
+      "groupingStatus": "Working review topic only — no confirmed CMS family relation; no records merged",
+      "category": "IVD Reagents – Histology & Cytology",
+      "productType": "ivd",
+      "manufacturerRole": "manufacturer",
+      "sourceCodes": [
+        "CPE80I10"
+      ],
+      "publicCodes": [
+        "CPE80I10"
+      ],
+      "sourcePackaging": [
+        "10 L"
+      ],
+      "publicPackaging": [
+        "10 L"
+      ],
+      "existingDescription": null,
+      "publicDescription": null,
+      "shortDescriptionProposedEN": null,
+      "detailedDescriptionProposedEN": null,
+      "intendedPurposeVerbatim": null,
+      "intendedPurposeAuthority": "OWNER INPUT REQUIRED",
+      "mainImage": null,
+      "mainImageAssetId": null,
+      "mainImageAlt": null,
+      "gallery": [],
+      "documents": {
+        "instructionsForUse": null,
+        "declarationOfConformity": null,
+        "technicalDataSheet": null,
+        "safetyDataSheet": null
+      },
+      "url": "https://claroprom.com/products/ethanol-80-v-v-cpe80i10",
+      "legacyRouteCandidate": null,
+      "urlNote": "Public EN catalogue",
+      "source": "Published Sanity product record, revision M3OQuuH4IiA2wtqZQKbrYy",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
+      "ownerInputRequired": "Approved product-specific application and intended use; no purity, process or chemistry specification inferred from the name.",
+      "missing": [
+        "Detailed description",
+        "Approved short description",
+        "Intended purpose",
+        "SKU-specific photo",
+        "Optional additional photographs",
+        "Approved documents (if available)"
+      ],
+      "currentRevision": "M3OQuuH4IiA2wtqZQKbrYy",
+      "mainImageCaption": null
+    },
+    {
+      "id": "77b22f6d-1b3e-4eb3-addb-bfbbba20493e",
+      "language": "en",
+      "name": "Ethanol 80% v/v, IVD Reagent, 5 L",
+      "reviewTopic": "Ethanol 80% v/v, IVD Reagent",
+      "groupingStatus": "Working review topic only — no confirmed CMS family relation; no records merged",
+      "category": "IVD Reagents – Histology & Cytology",
+      "productType": "ivd",
+      "manufacturerRole": "manufacturer",
+      "sourceCodes": [
+        "CPE80I5"
+      ],
+      "publicCodes": [
+        "CPE80I5"
+      ],
+      "sourcePackaging": [
+        "5 L"
+      ],
+      "publicPackaging": [
+        "5 L"
+      ],
+      "existingDescription": null,
+      "publicDescription": null,
+      "shortDescriptionProposedEN": null,
+      "detailedDescriptionProposedEN": null,
+      "intendedPurposeVerbatim": null,
+      "intendedPurposeAuthority": "OWNER INPUT REQUIRED",
+      "mainImage": null,
+      "mainImageAssetId": null,
+      "mainImageAlt": null,
+      "gallery": [],
+      "documents": {
+        "instructionsForUse": null,
+        "declarationOfConformity": null,
+        "technicalDataSheet": null,
+        "safetyDataSheet": null
+      },
+      "url": "https://claroprom.com/products/ethanol-80-v-v-cpe80i5",
+      "legacyRouteCandidate": null,
+      "urlNote": "Public EN catalogue",
+      "source": "Published Sanity product record, revision aMxuB38zD5OHLKwsnSqUlQ",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
+      "ownerInputRequired": "Approved product-specific application and intended use; no purity, process or chemistry specification inferred from the name.",
+      "missing": [
+        "Detailed description",
+        "Approved short description",
+        "Intended purpose",
+        "SKU-specific photo",
+        "Optional additional photographs",
+        "Approved documents (if available)"
+      ],
+      "currentRevision": "aMxuB38zD5OHLKwsnSqUlQ",
+      "mainImageCaption": null
+    },
+    {
+      "id": "6626f39d-59cf-4fc3-8901-9db98b4018f9",
+      "language": "en",
+      "name": "Ethanol 95% v/v, IVD Reagent, 1 L",
+      "reviewTopic": "Ethanol 95% v/v, IVD Reagent",
+      "groupingStatus": "Working review topic only — no confirmed CMS family relation; no records merged",
+      "category": "IVD Reagents – Histology & Cytology",
+      "productType": "ivd",
+      "manufacturerRole": "manufacturer",
+      "sourceCodes": [
+        "CPE95I"
+      ],
+      "publicCodes": [
+        "CPE95I"
+      ],
+      "sourcePackaging": [
+        "1 L"
+      ],
+      "publicPackaging": [
+        "1 L"
+      ],
+      "existingDescription": null,
+      "publicDescription": null,
+      "shortDescriptionProposedEN": null,
+      "detailedDescriptionProposedEN": null,
+      "intendedPurposeVerbatim": null,
+      "intendedPurposeAuthority": "OWNER INPUT REQUIRED",
+      "mainImage": null,
+      "mainImageAssetId": null,
+      "mainImageAlt": null,
+      "gallery": [],
+      "documents": {
+        "instructionsForUse": null,
+        "declarationOfConformity": null,
+        "technicalDataSheet": null,
+        "safetyDataSheet": null
+      },
+      "url": "https://claroprom.com/products/ethanol-95-v-v-cpe95i",
+      "legacyRouteCandidate": null,
+      "urlNote": "Public EN catalogue",
+      "source": "Published Sanity product record, revision aMxuB38zD5OHLKwsnSqKsB",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
+      "ownerInputRequired": "Approved product-specific application and intended use; no purity, process or chemistry specification inferred from the name.",
+      "missing": [
+        "Detailed description",
+        "Approved short description",
+        "Intended purpose",
+        "SKU-specific photo",
+        "Optional additional photographs",
+        "Approved documents (if available)"
+      ],
+      "currentRevision": "aMxuB38zD5OHLKwsnSqKsB",
+      "mainImageCaption": null
+    },
+    {
+      "id": "efb3ecc2-ce49-4438-94ce-31f0e1c0a1f6",
+      "language": "en",
+      "name": "Ethanol 95% v/v, IVD Reagent, 10 L",
+      "reviewTopic": "Ethanol 95% v/v, IVD Reagent",
+      "groupingStatus": "Working review topic only — no confirmed CMS family relation; no records merged",
+      "category": "IVD Reagents – Histology & Cytology",
+      "productType": "ivd",
+      "manufacturerRole": "manufacturer",
+      "sourceCodes": [
+        "CPE95I10"
+      ],
+      "publicCodes": [
+        "CPE95I10"
+      ],
+      "sourcePackaging": [
+        "10 L"
+      ],
+      "publicPackaging": [
+        "10 L"
+      ],
+      "existingDescription": null,
+      "publicDescription": null,
+      "shortDescriptionProposedEN": null,
+      "detailedDescriptionProposedEN": null,
+      "intendedPurposeVerbatim": null,
+      "intendedPurposeAuthority": "OWNER INPUT REQUIRED",
+      "mainImage": null,
+      "mainImageAssetId": null,
+      "mainImageAlt": null,
+      "gallery": [],
+      "documents": {
+        "instructionsForUse": null,
+        "declarationOfConformity": null,
+        "technicalDataSheet": null,
+        "safetyDataSheet": null
+      },
+      "url": "https://claroprom.com/products/ethanol-95-v-v-cpe95i10",
+      "legacyRouteCandidate": null,
+      "urlNote": "Public EN catalogue",
+      "source": "Published Sanity product record, revision MwWOMVq9aGfEEH7OTjtC2v",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
+      "ownerInputRequired": "Approved product-specific application and intended use; no purity, process or chemistry specification inferred from the name.",
+      "missing": [
+        "Detailed description",
+        "Approved short description",
+        "Intended purpose",
+        "SKU-specific photo",
+        "Optional additional photographs",
+        "Approved documents (if available)"
+      ],
+      "currentRevision": "MwWOMVq9aGfEEH7OTjtC2v",
+      "mainImageCaption": null
+    },
+    {
+      "id": "32a7bb9c-170d-4009-aa27-cf5d5b6c823d",
+      "language": "en",
+      "name": "Ethanol 95% v/v, IVD Reagent, 5 L",
+      "reviewTopic": "Ethanol 95% v/v, IVD Reagent",
+      "groupingStatus": "Working review topic only — no confirmed CMS family relation; no records merged",
+      "category": "IVD Reagents – Histology & Cytology",
+      "productType": "ivd",
+      "manufacturerRole": "manufacturer",
+      "sourceCodes": [
+        "CPE95I5"
+      ],
+      "publicCodes": [
+        "CPE95I5"
+      ],
+      "sourcePackaging": [
+        "5 L"
+      ],
+      "publicPackaging": [
+        "5 L"
+      ],
+      "existingDescription": null,
+      "publicDescription": null,
+      "shortDescriptionProposedEN": null,
+      "detailedDescriptionProposedEN": null,
+      "intendedPurposeVerbatim": null,
+      "intendedPurposeAuthority": "OWNER INPUT REQUIRED",
+      "mainImage": null,
+      "mainImageAssetId": null,
+      "mainImageAlt": null,
+      "gallery": [],
+      "documents": {
+        "instructionsForUse": null,
+        "declarationOfConformity": null,
+        "technicalDataSheet": null,
+        "safetyDataSheet": null
+      },
+      "url": "https://claroprom.com/products/ethanol-95-v-v-cpe95i5",
+      "legacyRouteCandidate": null,
+      "urlNote": "Public EN catalogue",
+      "source": "Published Sanity product record, revision M3OQuuH4IiA2wtqZQKbkfQ",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
+      "ownerInputRequired": "Approved product-specific application and intended use; no purity, process or chemistry specification inferred from the name.",
+      "missing": [
+        "Detailed description",
+        "Approved short description",
+        "Intended purpose",
+        "SKU-specific photo",
+        "Optional additional photographs",
+        "Approved documents (if available)"
+      ],
+      "currentRevision": "M3OQuuH4IiA2wtqZQKbkfQ",
+      "mainImageCaption": null
+    },
+    {
+      "id": "1fdab584-544b-47cc-a522-5cddaa1d4ce8",
+      "language": "en",
+      "name": "Ethanol 96% v/v, IVD Reagent, 1 L",
+      "reviewTopic": "Ethanol 96% v/v, IVD Reagent",
+      "groupingStatus": "Working review topic only — no confirmed CMS family relation; no records merged",
+      "category": "IVD Reagents – Histology & Cytology",
+      "productType": "ivd",
+      "manufacturerRole": "manufacturer",
+      "sourceCodes": [
+        "CPE96I"
+      ],
+      "publicCodes": [
+        "CPE96I"
+      ],
+      "sourcePackaging": [
+        "1 L"
+      ],
+      "publicPackaging": [
+        "1 L"
+      ],
+      "existingDescription": null,
+      "publicDescription": null,
+      "shortDescriptionProposedEN": null,
+      "detailedDescriptionProposedEN": null,
+      "intendedPurposeVerbatim": null,
+      "intendedPurposeAuthority": "OWNER INPUT REQUIRED",
+      "mainImage": null,
+      "mainImageAssetId": null,
+      "mainImageAlt": null,
+      "gallery": [],
+      "documents": {
+        "instructionsForUse": null,
+        "declarationOfConformity": null,
+        "technicalDataSheet": null,
+        "safetyDataSheet": null
+      },
+      "url": "https://claroprom.com/products/ethanol-96-v-v-cpe96i",
+      "legacyRouteCandidate": null,
+      "urlNote": "Public EN catalogue",
+      "source": "Published Sanity product record, revision MwWOMVq9aGfEEH7OTjt12n",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
+      "ownerInputRequired": "Approved product-specific application and intended use; no purity, process or chemistry specification inferred from the name.",
+      "missing": [
+        "Detailed description",
+        "Approved short description",
+        "Intended purpose",
+        "SKU-specific photo",
+        "Optional additional photographs",
+        "Approved documents (if available)"
+      ],
+      "currentRevision": "MwWOMVq9aGfEEH7OTjt12n",
+      "mainImageCaption": null
+    },
+    {
+      "id": "50482a66-d710-4aa8-ba75-8f56deaee35c",
+      "language": "en",
+      "name": "Ethanol 96% v/v, IVD Reagent, 10 L",
+      "reviewTopic": "Ethanol 96% v/v, IVD Reagent",
+      "groupingStatus": "Working review topic only — no confirmed CMS family relation; no records merged",
+      "category": "IVD Reagents – Histology & Cytology",
+      "productType": "ivd",
+      "manufacturerRole": "manufacturer",
+      "sourceCodes": [
+        "CPE96I10"
+      ],
+      "publicCodes": [
+        "CPE96I10"
+      ],
+      "sourcePackaging": [
+        "10 L"
+      ],
+      "publicPackaging": [
+        "10 L"
+      ],
+      "existingDescription": null,
+      "publicDescription": null,
+      "shortDescriptionProposedEN": null,
+      "detailedDescriptionProposedEN": null,
+      "intendedPurposeVerbatim": null,
+      "intendedPurposeAuthority": "OWNER INPUT REQUIRED",
+      "mainImage": null,
+      "mainImageAssetId": null,
+      "mainImageAlt": null,
+      "gallery": [],
+      "documents": {
+        "instructionsForUse": null,
+        "declarationOfConformity": null,
+        "technicalDataSheet": null,
+        "safetyDataSheet": null
+      },
+      "url": "https://claroprom.com/products/ethanol-96-v-v-cpe96i10",
+      "legacyRouteCandidate": null,
+      "urlNote": "Public EN catalogue",
+      "source": "Published Sanity product record, revision aMxuB38zD5OHLKwsnSqGcS",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
+      "ownerInputRequired": "Approved product-specific application and intended use; no purity, process or chemistry specification inferred from the name.",
+      "missing": [
+        "Detailed description",
+        "Approved short description",
+        "Intended purpose",
+        "SKU-specific photo",
+        "Optional additional photographs",
+        "Approved documents (if available)"
+      ],
+      "currentRevision": "aMxuB38zD5OHLKwsnSqGcS",
+      "mainImageCaption": null
+    },
+    {
+      "id": "9079fe0e-d658-4e48-ac48-23f7aadb31b2",
+      "language": "en",
+      "name": "Ethanol 96% v/v, IVD Reagent, 5 L",
+      "reviewTopic": "Ethanol 96% v/v, IVD Reagent",
+      "groupingStatus": "Working review topic only — no confirmed CMS family relation; no records merged",
+      "category": "IVD Reagents – Histology & Cytology",
+      "productType": "ivd",
+      "manufacturerRole": "manufacturer",
+      "sourceCodes": [
+        "CPE96I5"
+      ],
+      "publicCodes": [
+        "CPE96I5"
+      ],
+      "sourcePackaging": [
+        "5 L"
+      ],
+      "publicPackaging": [
+        "5 L"
+      ],
+      "existingDescription": null,
+      "publicDescription": null,
+      "shortDescriptionProposedEN": null,
+      "detailedDescriptionProposedEN": null,
+      "intendedPurposeVerbatim": null,
+      "intendedPurposeAuthority": "OWNER INPUT REQUIRED",
+      "mainImage": null,
+      "mainImageAssetId": null,
+      "mainImageAlt": null,
+      "gallery": [],
+      "documents": {
+        "instructionsForUse": null,
+        "declarationOfConformity": null,
+        "technicalDataSheet": null,
+        "safetyDataSheet": null
+      },
+      "url": "https://claroprom.com/products/ethanol-96-v-v-cpe96i5",
+      "legacyRouteCandidate": null,
+      "urlNote": "Public EN catalogue",
+      "source": "Published Sanity product record, revision GXon7RN0Hm0wO29GQnsY1Q",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
+      "ownerInputRequired": "Approved product-specific application and intended use; no purity, process or chemistry specification inferred from the name.",
+      "missing": [
+        "Detailed description",
+        "Approved short description",
+        "Intended purpose",
+        "SKU-specific photo",
+        "Optional additional photographs",
+        "Approved documents (if available)"
+      ],
+      "currentRevision": "GXon7RN0Hm0wO29GQnsY1Q",
+      "mainImageCaption": null
+    },
+    {
+      "id": "e579bd5f-8f76-4405-91f4-e5fa04068167",
+      "language": "en",
+      "name": "Giemsa Solution, 1 L",
+      "reviewTopic": "Giemsa Solution",
+      "groupingStatus": "Working review topic only — no confirmed CMS family relation; no records merged",
+      "category": "IVD Reagents – Histology & Cytology",
+      "productType": "ivd",
+      "manufacturerRole": "manufacturer",
+      "sourceCodes": [
+        "CP00G3"
+      ],
+      "publicCodes": [
+        "CP00G3"
+      ],
+      "sourcePackaging": [
+        "1 L"
+      ],
+      "publicPackaging": [
+        "1 L"
+      ],
+      "existingDescription": null,
+      "publicDescription": null,
+      "shortDescriptionProposedEN": null,
+      "detailedDescriptionProposedEN": null,
+      "intendedPurposeVerbatim": null,
+      "intendedPurposeAuthority": "OWNER INPUT REQUIRED",
+      "mainImage": null,
+      "mainImageAssetId": null,
+      "mainImageAlt": null,
+      "gallery": [],
+      "documents": {
+        "instructionsForUse": null,
+        "declarationOfConformity": null,
+        "technicalDataSheet": null,
+        "safetyDataSheet": null
+      },
+      "url": "https://claroprom.com/products/giemsa-solution-cp00g3",
+      "legacyRouteCandidate": null,
+      "urlNote": "Public EN catalogue",
+      "source": "Published Sanity product record, revision MwWOMVq9aGfEEH7OTjsgLP",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
+      "ownerInputRequired": "Approved staining purpose, relevant specimen types and protocol references, separately for each reagent.",
+      "missing": [
+        "Detailed description",
+        "Approved short description",
+        "Intended purpose",
+        "SKU-specific photo",
+        "Optional additional photographs",
+        "Approved documents (if available)"
+      ],
+      "currentRevision": "MwWOMVq9aGfEEH7OTjsgLP",
+      "mainImageCaption": null
+    },
+    {
+      "id": "f5ee9e66-cdf6-49f3-bb91-4f2e9a87e652",
+      "language": "en",
+      "name": "Giemsa Solution, 100 mL",
+      "reviewTopic": "Giemsa Solution",
+      "groupingStatus": "Working review topic only — no confirmed CMS family relation; no records merged",
+      "category": "IVD Reagents – Histology & Cytology",
+      "productType": "ivd",
+      "manufacturerRole": "manufacturer",
+      "sourceCodes": [
+        "CP00G1"
+      ],
+      "publicCodes": [
+        "CP00G1"
+      ],
+      "sourcePackaging": [
+        "100 mL"
+      ],
+      "publicPackaging": [
+        "100 mL"
+      ],
+      "existingDescription": null,
+      "publicDescription": null,
+      "shortDescriptionProposedEN": null,
+      "detailedDescriptionProposedEN": null,
+      "intendedPurposeVerbatim": null,
+      "intendedPurposeAuthority": "OWNER INPUT REQUIRED",
+      "mainImage": null,
+      "mainImageAssetId": null,
+      "mainImageAlt": null,
+      "gallery": [],
+      "documents": {
+        "instructionsForUse": null,
+        "declarationOfConformity": null,
+        "technicalDataSheet": null,
+        "safetyDataSheet": null
+      },
+      "url": "https://claroprom.com/products/giemsa-solution-cp00g1",
+      "legacyRouteCandidate": null,
+      "urlNote": "Public EN catalogue",
+      "source": "Published Sanity product record, revision aMxuB38zD5OHLKwsnSpgBJ",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
+      "ownerInputRequired": "Approved staining purpose, relevant specimen types and protocol references, separately for each reagent.",
+      "missing": [
+        "Detailed description",
+        "Approved short description",
+        "Intended purpose",
+        "SKU-specific photo",
+        "Optional additional photographs",
+        "Approved documents (if available)"
+      ],
+      "currentRevision": "aMxuB38zD5OHLKwsnSpgBJ",
+      "mainImageCaption": null
+    },
+    {
+      "id": "36a7691c-7768-434d-a6d9-f1d7a41142c9",
+      "language": "en",
+      "name": "Giemsa Solution, 500 mL",
+      "reviewTopic": "Giemsa Solution",
+      "groupingStatus": "Working review topic only — no confirmed CMS family relation; no records merged",
+      "category": "IVD Reagents – Histology & Cytology",
+      "productType": "ivd",
+      "manufacturerRole": "manufacturer",
+      "sourceCodes": [
+        "CP00G2"
+      ],
+      "publicCodes": [
+        "CP00G2"
+      ],
+      "sourcePackaging": [
+        "500 mL"
+      ],
+      "publicPackaging": [
+        "500 mL"
+      ],
+      "existingDescription": null,
+      "publicDescription": null,
+      "shortDescriptionProposedEN": null,
+      "detailedDescriptionProposedEN": null,
+      "intendedPurposeVerbatim": null,
+      "intendedPurposeAuthority": "OWNER INPUT REQUIRED",
+      "mainImage": null,
+      "mainImageAssetId": null,
+      "mainImageAlt": null,
+      "gallery": [],
+      "documents": {
+        "instructionsForUse": null,
+        "declarationOfConformity": null,
+        "technicalDataSheet": null,
+        "safetyDataSheet": null
+      },
+      "url": "https://claroprom.com/products/giemsa-solution-cp00g2",
+      "legacyRouteCandidate": null,
+      "urlNote": "Public EN catalogue",
+      "source": "Published Sanity product record, revision GXon7RN0Hm0wO29GQns5Mw",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
+      "ownerInputRequired": "Approved staining purpose, relevant specimen types and protocol references, separately for each reagent.",
+      "missing": [
+        "Detailed description",
+        "Approved short description",
+        "Intended purpose",
+        "SKU-specific photo",
+        "Optional additional photographs",
+        "Approved documents (if available)"
+      ],
+      "currentRevision": "GXon7RN0Hm0wO29GQns5Mw",
+      "mainImageCaption": null
+    },
+    {
+      "id": "600b2643-25e4-46b9-8032-b1e01971a745",
+      "language": "en",
+      "name": "Immersion Oil, 100 mL",
+      "reviewTopic": "Immersion Oil",
+      "groupingStatus": "Working review topic only — no confirmed CMS family relation; no records merged",
+      "category": "IVD Reagents – Histology & Cytology",
+      "productType": "ivd",
+      "manufacturerRole": "manufacturer",
+      "sourceCodes": [
+        "CP00CD"
+      ],
+      "publicCodes": [
+        "CP00CD"
+      ],
+      "sourcePackaging": [
+        "100 mL"
+      ],
+      "publicPackaging": [
+        "100 mL"
+      ],
+      "existingDescription": null,
+      "publicDescription": null,
+      "shortDescriptionProposedEN": null,
+      "detailedDescriptionProposedEN": null,
+      "intendedPurposeVerbatim": null,
+      "intendedPurposeAuthority": "OWNER INPUT REQUIRED",
+      "mainImage": null,
+      "mainImageAssetId": null,
+      "mainImageAlt": null,
+      "gallery": [],
+      "documents": {
+        "instructionsForUse": null,
+        "declarationOfConformity": null,
+        "technicalDataSheet": null,
+        "safetyDataSheet": null
+      },
+      "url": "https://claroprom.com/products/immersion-oil-cp00cd",
+      "legacyRouteCandidate": null,
+      "urlNote": "Public EN catalogue",
+      "source": "Published Sanity product record, revision MwWOMVq9aGfEEH7OTjsnXx",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
+      "ownerInputRequired": "Approved product-specific application and intended use; no purity, process or chemistry specification inferred from the name.",
+      "missing": [
+        "Detailed description",
+        "Approved short description",
+        "Intended purpose",
+        "SKU-specific photo",
+        "Optional additional photographs",
+        "Approved documents (if available)"
+      ],
+      "currentRevision": "MwWOMVq9aGfEEH7OTjsnXx",
+      "mainImageCaption": null
+    },
+    {
+      "id": "6bfa18d2-e064-49c7-80d8-a12fb303d05b",
+      "language": "en",
+      "name": "Immersion Oil, 200 mL",
+      "reviewTopic": "Immersion Oil",
+      "groupingStatus": "Working review topic only — no confirmed CMS family relation; no records merged",
+      "category": "IVD Reagents – Histology & Cytology",
+      "productType": "ivd",
+      "manufacturerRole": "manufacturer",
+      "sourceCodes": [
+        "CP00CD1"
+      ],
+      "publicCodes": [
+        "CP00CD1"
+      ],
+      "sourcePackaging": [
+        "200 mL"
+      ],
+      "publicPackaging": [
+        "200 mL"
+      ],
+      "existingDescription": null,
+      "publicDescription": null,
+      "shortDescriptionProposedEN": null,
+      "detailedDescriptionProposedEN": null,
+      "intendedPurposeVerbatim": null,
+      "intendedPurposeAuthority": "OWNER INPUT REQUIRED",
+      "mainImage": null,
+      "mainImageAssetId": null,
+      "mainImageAlt": null,
+      "gallery": [],
+      "documents": {
+        "instructionsForUse": null,
+        "declarationOfConformity": null,
+        "technicalDataSheet": null,
+        "safetyDataSheet": null
+      },
+      "url": "https://claroprom.com/products/immersion-oil-cp00cd1",
+      "legacyRouteCandidate": null,
+      "urlNote": "Public EN catalogue",
+      "source": "Published Sanity product record, revision aMxuB38zD5OHLKwsnSq0ND",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
+      "ownerInputRequired": "Approved product-specific application and intended use; no purity, process or chemistry specification inferred from the name.",
+      "missing": [
+        "Detailed description",
+        "Approved short description",
+        "Intended purpose",
+        "SKU-specific photo",
+        "Optional additional photographs",
+        "Approved documents (if available)"
+      ],
+      "currentRevision": "aMxuB38zD5OHLKwsnSq0ND",
+      "mainImageCaption": null
+    },
+    {
+      "id": "5fb8b759-431e-4535-9ac5-23c513e33a95",
+      "language": "en",
+      "name": "Immersion Oil, 500 mL",
+      "reviewTopic": "Immersion Oil",
+      "groupingStatus": "Working review topic only — no confirmed CMS family relation; no records merged",
+      "category": "IVD Reagents – Histology & Cytology",
+      "productType": "ivd",
+      "manufacturerRole": "manufacturer",
+      "sourceCodes": [
+        "CP00CD2"
+      ],
+      "publicCodes": [
+        "CP00CD2"
+      ],
+      "sourcePackaging": [
+        "500 mL"
+      ],
+      "publicPackaging": [
+        "500 mL"
+      ],
+      "existingDescription": null,
+      "publicDescription": null,
+      "shortDescriptionProposedEN": null,
+      "detailedDescriptionProposedEN": null,
+      "intendedPurposeVerbatim": null,
+      "intendedPurposeAuthority": "OWNER INPUT REQUIRED",
+      "mainImage": null,
+      "mainImageAssetId": null,
+      "mainImageAlt": null,
+      "gallery": [],
+      "documents": {
+        "instructionsForUse": null,
+        "declarationOfConformity": null,
+        "technicalDataSheet": null,
+        "safetyDataSheet": null
+      },
+      "url": "https://claroprom.com/products/immersion-oil-cp00cd2",
+      "legacyRouteCandidate": null,
+      "urlNote": "Public EN catalogue",
+      "source": "Published Sanity product record, revision aMxuB38zD5OHLKwsnSq18s",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
+      "ownerInputRequired": "Approved product-specific application and intended use; no purity, process or chemistry specification inferred from the name.",
+      "missing": [
+        "Detailed description",
+        "Approved short description",
+        "Intended purpose",
+        "SKU-specific photo",
+        "Optional additional photographs",
+        "Approved documents (if available)"
+      ],
+      "currentRevision": "aMxuB38zD5OHLKwsnSq18s",
+      "mainImageCaption": null
+    },
+    {
+      "id": "db93d3c8-35fb-4b1f-b1e9-8823d7baffb9",
+      "language": "en",
+      "name": "LABEX A a 1000 ml",
+      "reviewTopic": "LABEX A a 1000 ml",
+      "groupingStatus": "Working review topic only — no confirmed CMS family relation; no records merged",
+      "category": "LABEX – Laboratory Detergents",
+      "productType": "consumable",
+      "manufacturerRole": "manufacturer",
+      "sourceCodes": [
+        "CP00LA1"
+      ],
+      "publicCodes": [
+        "CP00LA1"
+      ],
+      "sourcePackaging": [
+        null
+      ],
+      "publicPackaging": [
+        null
+      ],
+      "existingDescription": "Alkaline laboratory cleaning concentrate for manual cleaning of laboratory glassware, equipment and surfaces. Suitable for the removal of heavy contamination.",
+      "publicDescription": "Alkaline laboratory cleaning concentrate for manual cleaning of laboratory glassware, equipment and surfaces. Suitable for the removal of heavy contamination.",
+      "shortDescriptionProposedEN": "Alkaline laboratory cleaning concentrate for manual cleaning of laboratory glassware, equipment and surfaces.",
+      "detailedDescriptionProposedEN": "Alkaline laboratory cleaning concentrate for manual cleaning of laboratory glassware, equipment and surfaces. Suitable for the removal of heavy contamination.",
+      "intendedPurposeVerbatim": null,
+      "intendedPurposeAuthority": "OWNER INPUT REQUIRED",
+      "mainImage": "https://cdn.sanity.io/images/ddtwki7e/production/f67403e73e3abecc3f6e02e69ae63a003a6bb067-1080x1072.jpg",
+      "mainImageAssetId": "image-f67403e73e3abecc3f6e02e69ae63a003a6bb067-1080x1072-jpg",
+      "mainImageAlt": null,
+      "gallery": [],
+      "documents": {
+        "instructionsForUse": null,
+        "declarationOfConformity": null,
+        "technicalDataSheet": null,
+        "safetyDataSheet": null
+      },
+      "url": "https://claroprom.com/products/labex-a-a-1000-ml",
+      "legacyRouteCandidate": null,
+      "urlNote": "Public EN catalogue",
+      "source": "Published Sanity product record, revision tZyvWU9ELO6Qw4c57OSOsO",
+      "status": "CONFIRMED EXISTING CONTENT",
+      "ownerInputRequired": "Approve using the exact existing first sentence as a short summary. Confirm photo/pack correspondence and any missing packaging.",
+      "missing": [
+        "Intended purpose",
+        "Optional additional photographs",
+        "Confirmed packaging",
+        "Approved documents (if available)"
+      ],
+      "currentRevision": "7oK4Gr8mQwy1DSz0yH2RqS",
+      "mainImageCaption": null,
+      "packagingLabelEvidence": {
+        "value": "1000 ml",
+        "source": "https://cdn.sanity.io/images/ddtwki7e/production/f67403e73e3abecc3f6e02e69ae63a003a6bb067-1080x1072.jpg",
+        "status": "VISUALLY VERIFIED — label read in hosted Preview; CMS pack-size field unchanged"
+      }
+    },
+    {
+      "id": "5c4274fa-b658-4aa1-b436-b37ab3ddf6b5",
+      "language": "en",
+      "name": "May Gruenwald Solution, 1 L",
+      "reviewTopic": "May Gruenwald Solution",
+      "groupingStatus": "Working review topic only — no confirmed CMS family relation; no records merged",
+      "category": "IVD Reagents – Histology & Cytology",
+      "productType": "ivd",
+      "manufacturerRole": "manufacturer",
+      "sourceCodes": [
+        "CP00MY2"
+      ],
+      "publicCodes": [
+        "CP00MY2"
+      ],
+      "sourcePackaging": [
+        "1 L"
+      ],
+      "publicPackaging": [
+        "1 L"
+      ],
+      "existingDescription": null,
+      "publicDescription": null,
+      "shortDescriptionProposedEN": null,
+      "detailedDescriptionProposedEN": null,
+      "intendedPurposeVerbatim": null,
+      "intendedPurposeAuthority": "OWNER INPUT REQUIRED",
+      "mainImage": null,
+      "mainImageAssetId": null,
+      "mainImageAlt": null,
+      "gallery": [],
+      "documents": {
+        "instructionsForUse": null,
+        "declarationOfConformity": null,
+        "technicalDataSheet": null,
+        "safetyDataSheet": null
+      },
+      "url": "https://claroprom.com/products/may-gruenwald-solution-cp00my2",
+      "legacyRouteCandidate": null,
+      "urlNote": "Public EN catalogue",
+      "source": "Published Sanity product record, revision aMxuB38zD5OHLKwsnSpu7Z",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
+      "ownerInputRequired": "Approved staining purpose, relevant specimen types and protocol references, separately for each reagent.",
+      "missing": [
+        "Detailed description",
+        "Approved short description",
+        "Intended purpose",
+        "SKU-specific photo",
+        "Optional additional photographs",
+        "Approved documents (if available)"
+      ],
+      "currentRevision": "aMxuB38zD5OHLKwsnSpu7Z",
+      "mainImageCaption": null
+    },
+    {
+      "id": "ef01d122-f2c1-4de0-b4fe-a65e2fbf4012",
+      "language": "en",
+      "name": "May Gruenwald Solution, 100 mL",
+      "reviewTopic": "May Gruenwald Solution",
+      "groupingStatus": "Working review topic only — no confirmed CMS family relation; no records merged",
+      "category": "IVD Reagents – Histology & Cytology",
+      "productType": "ivd",
+      "manufacturerRole": "manufacturer",
+      "sourceCodes": [
+        "CP00MY"
+      ],
+      "publicCodes": [
+        "CP00MY"
+      ],
+      "sourcePackaging": [
+        "100 mL"
+      ],
+      "publicPackaging": [
+        "100 mL"
+      ],
+      "existingDescription": null,
+      "publicDescription": null,
+      "shortDescriptionProposedEN": null,
+      "detailedDescriptionProposedEN": null,
+      "intendedPurposeVerbatim": null,
+      "intendedPurposeAuthority": "OWNER INPUT REQUIRED",
+      "mainImage": null,
+      "mainImageAssetId": null,
+      "mainImageAlt": null,
+      "gallery": [],
+      "documents": {
+        "instructionsForUse": null,
+        "declarationOfConformity": null,
+        "technicalDataSheet": null,
+        "safetyDataSheet": null
+      },
+      "url": "https://claroprom.com/products/may-gruenwald-solution-cp00my",
+      "legacyRouteCandidate": null,
+      "urlNote": "Public EN catalogue",
+      "source": "Published Sanity product record, revision MwWOMVq9aGfEEH7OTjsiGx",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
+      "ownerInputRequired": "Approved staining purpose, relevant specimen types and protocol references, separately for each reagent.",
+      "missing": [
+        "Detailed description",
+        "Approved short description",
+        "Intended purpose",
+        "SKU-specific photo",
+        "Optional additional photographs",
+        "Approved documents (if available)"
+      ],
+      "currentRevision": "MwWOMVq9aGfEEH7OTjsiGx",
+      "mainImageCaption": null
+    },
+    {
+      "id": "86bf8c16-1ad7-42f2-8695-5d6f62970293",
+      "language": "en",
+      "name": "May Gruenwald Solution, 500 mL",
+      "reviewTopic": "May Gruenwald Solution",
+      "groupingStatus": "Working review topic only — no confirmed CMS family relation; no records merged",
+      "category": "IVD Reagents – Histology & Cytology",
+      "productType": "ivd",
+      "manufacturerRole": "manufacturer",
+      "sourceCodes": [
+        "CP00MY1"
+      ],
+      "publicCodes": [
+        "CP00MY1"
+      ],
+      "sourcePackaging": [
+        "500 mL"
+      ],
+      "publicPackaging": [
+        "500 mL"
+      ],
+      "existingDescription": null,
+      "publicDescription": null,
+      "shortDescriptionProposedEN": null,
+      "detailedDescriptionProposedEN": null,
+      "intendedPurposeVerbatim": null,
+      "intendedPurposeAuthority": "OWNER INPUT REQUIRED",
+      "mainImage": null,
+      "mainImageAssetId": null,
+      "mainImageAlt": null,
+      "gallery": [],
+      "documents": {
+        "instructionsForUse": null,
+        "declarationOfConformity": null,
+        "technicalDataSheet": null,
+        "safetyDataSheet": null
+      },
+      "url": "https://claroprom.com/products/may-gruenwald-solution-cp00my1",
+      "legacyRouteCandidate": null,
+      "urlNote": "Public EN catalogue",
+      "source": "Published Sanity product record, revision aMxuB38zD5OHLKwsnSpsmx",
+      "status": "PROPOSED — OWNER REVIEW: see ivd-copy-drafts.json",
+      "ownerInputRequired": "Approved staining purpose, relevant specimen types and protocol references, separately for each reagent.",
+      "missing": [
+        "Detailed description",
+        "Approved short description",
+        "Intended purpose",
+        "SKU-specific photo",
+        "Optional additional photographs",
+        "Approved documents (if available)"
+      ],
+      "currentRevision": "aMxuB38zD5OHLKwsnSpsmx",
+      "mainImageCaption": null
+    }
+  ],
+  "readAt": "2026-10-12T11:28:56.727Z"
+}

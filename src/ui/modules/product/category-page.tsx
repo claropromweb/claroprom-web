@@ -17,6 +17,7 @@ import {
 	ClaroplastActions,
 	ClaroplastClosing,
 	ClaroplastOverview,
+	ClaroplastPackagingAdvantage,
 	ClaroplastVariants,
 } from './claroplast-outreach'
 
@@ -234,6 +235,7 @@ export default async function CategoryPage({ params, searchParams }: Props) {
 				<>
 					<ClaroplastOverview />
 					<ClaroplastVariants />
+					<ClaroplastPackagingAdvantage />
 					<section className="max-w-3xl space-y-5">
 						{paragraphs.slice(1).map((text, i) =>
 							text.trim() === 'OEM / Private Label Manufacturing' ? (
@@ -300,7 +302,7 @@ const CATALOG_CATEGORY_QUERY = groq`*[
 		_type == 'product' && hidden != true && language == 'en'
 		&& category._ref == ^._id && defined(metadata.slug.current)
 	]|order(title asc){
-		_id, title, table, image{..., asset->},
+		_id, title, table, shortDescription, language, image{..., asset->},
 		'slug': '/products/en/' + metadata.slug.current
 	}
 }`

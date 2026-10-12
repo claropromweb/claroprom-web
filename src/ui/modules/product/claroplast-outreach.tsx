@@ -127,3 +127,26 @@ export function ClaroplastClosing() {
 		</section>
 	)
 }
+
+/** Owner-confirmed construction applies only to the 10 kg pack and 5 × 2 kg transport configuration. */
+export function ClaroplastPackagingAdvantage({
+	transportOnly = false,
+}: {
+	transportOnly?: boolean
+}) {
+	return (
+		<section
+			aria-label="Claroplast packaging advantage"
+			className="space-y-3 rounded-lg border border-neutral-200 bg-neutral-50 p-5 md:p-6"
+		>
+			<h2 className="text-lg font-semibold">
+				Lightweight, easy-to-handle packaging
+			</h2>
+			<p className="max-w-3xl text-sm leading-relaxed">
+				{transportOnly
+					? 'The 5 × 2 kg transport configuration uses a lightweight cardboard carton with a durable inner bag for practical handling by laboratory personnel. This transport configuration is not a separate product or SKU.'
+					: 'The 10 kg pack and the 5 × 2 kg transport configuration feature lightweight cardboard cartons with a durable inner bag, designed for practical handling in laboratory environments.'}
+			</p>
+		</section>
+	)
+}

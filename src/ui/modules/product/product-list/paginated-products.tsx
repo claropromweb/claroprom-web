@@ -71,7 +71,7 @@ function ProductList({
 		)
 	return (
 		<>
-			<ul className="grid grid-cols-2 items-start gap-x-6 gap-y-10 sm:grid-cols-3 lg:grid-cols-5">
+			<ul className="grid auto-rows-fr grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
 				{products.map((product) => (
 					<ProductPreview
 						product={product}

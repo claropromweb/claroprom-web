@@ -13,8 +13,9 @@ import { categoryUrl } from '@/lib/product-category-url'
 import { cn } from '@/lib/utils'
 import { sanityFetchLive } from '@/sanity/lib/live'
 import type { PRODUCT_QUERY_RESULT, ProductContent } from '@/sanity/types'
-import Img from '@/ui/img'
 import { Module } from '@/ui/modules'
+import { ClaroplastPackagingAdvantage } from './claroplast-outreach'
+import ProductPhoto, { safeProductPhoto } from './product-photo'
 import ProductPreview from './product-preview'
 import { getProductTranslations } from './translations'
 
@@ -114,6 +115,10 @@ export default async function ({
 	const productName = stegaClean(product.title ?? '')
 	const pack = claroplastPack(product.metadata?.slug?.current)
 	const showFormat = hasPackSize(product.table)
+	const hasPhoto = !!safeProductPhoto(product.image)
+	const gallery = (product.gallery ?? []).filter((image) =>
+		safeProductPhoto(image),
+	)
 
 	const candidates =
 		showRelated && category?._id
@@ -167,42 +172,61 @@ export default async function ({
 				</div>
 			</header>
 
-			<div className="section grid items-start gap-10 py-12 md:grid-cols-2 md:gap-14">
-				<div className="space-y-4">
-					<figure className="flex aspect-square w-full items-center justify-center overflow-hidden">
-						{product.image?.asset ? (
-							<Img
-								className="h-full w-full object-contain"
-								image={product.image}
-								width={640}
-								height={640}
-								alt={product.image?.alt ?? product.title ?? ''}
-								loading="eager"
-							/>
-						) : (
-							<div className="bg-foreground/5 h-full w-full" />
+			<div
+				className={cn(
+					'section grid items-start gap-10 py-12 md:gap-14',
+					(hasPhoto || gallery.length > 0) && 'md:grid-cols-2',
+				)}
+			>
+				{(hasPhoto || gallery.length > 0) && (
+					<div className="space-y-5">
+						{hasPhoto && (
+							<figure className="space-y-2">
+								<div className="flex aspect-square w-full items-center justify-center rounded-lg bg-neutral-50 p-5">
+									<ProductPhoto
+										image={product.image}
+										title={product.title}
+										eager
+										sizes="(max-width: 767px) 90vw, 45vw"
+									/>
+								</div>
+								{product.image?.caption && (
+									<figcaption className="text-sm text-neutral-600">
+										{product.image?.caption}
+									</figcaption>
+								)}
+							</figure>
 						)}
-					</figure>
-					{!!product.gallery?.length && (
-						<div className="grid grid-cols-2 gap-4">
-							{product.gallery.map(
-								(image) =>
-									image.asset && (
-										<Img
-											key={image._key}
-											image={image}
-											width={400}
-											height={400}
-											alt={image.alt ?? product.title ?? ''}
-											className="aspect-square w-full object-contain"
-										/>
-									),
-							)}
-						</div>
-					)}
-				</div>
+						{gallery.length > 0 && (
+							<div className="grid grid-cols-2 gap-4">
+								{gallery.map((image) => (
+									<figure key={image._key} className="space-y-2">
+										<div className="flex aspect-square items-center justify-center rounded-md bg-neutral-50 p-3">
+											<ProductPhoto
+												image={image}
+												title={product.title}
+												width={800}
+												sizes="(max-width: 767px) 42vw, 22vw"
+											/>
+										</div>
+										{image.caption && (
+											<figcaption className="text-xs text-neutral-600">
+												{image.caption}
+											</figcaption>
+										)}
+									</figure>
+								))}
+							</div>
+						)}
+					</div>
+				)}
 
-				<div className="space-y-6">
+				<div className="min-w-0 space-y-6">
+					{product.shortDescription?.trim() && (
+						<p className="max-w-3xl text-lg leading-relaxed text-neutral-700">
+							{product.shortDescription}
+						</p>
+					)}
 					{(productTypeLabel || roleLabel) && (
 						<div className="flex flex-wrap gap-2">
 							{productTypeLabel && (
@@ -234,6 +258,24 @@ export default async function ({
 							</div>
 						</dl>
 					)}
+					{pack &&
+						(pack.packaging === '2 kg' ? (
+							<ClaroplastPackagingAdvantage transportOnly />
+						) : (
+							<section
+								aria-label="Claroplast packaging advantage"
+								className="space-y-2 rounded-lg bg-neutral-50 p-5"
+							>
+								<h2 className="text-lg font-semibold">
+									Lightweight, easy-to-handle packaging
+								</h2>
+								<p className="text-sm">
+									The 10 kg pack features a lightweight cardboard carton with a
+									durable inner bag for practical handling by laboratory
+									personnel.
+								</p>
+							</section>
+						))}
 					{!!product.description?.length && (
 						<div className="prose max-w-none">
 							<PortableText value={product.description} />
@@ -287,7 +329,9 @@ export default async function ({
 						</p>
 					)}
 
-					{!!product.table?.length && (
+					{!!product.table?.some(
+						(row) => row.code?.trim() || row.format?.trim(),
+					) && (
 						<div className="border-stroke overflow-x-auto border">
 							<table className="w-full border-collapse text-left text-sm">
 								<thead>
@@ -302,41 +346,43 @@ export default async function ({
 									</tr>
 								</thead>
 								<tbody>
-									{product.table.map((row) => {
-										const code = stegaClean(row.code ?? '')
-										return (
-											<tr key={row._key} className="border-stroke border-t">
-												<td className="px-4 py-2 align-middle">{row.code}</td>
-												{showFormat && (
-													<td className="text-foreground/70 px-4 py-2 align-middle">
-														{row.format}
-													</td>
-												)}
-												{quoteHref && (
-													<td className="px-4 py-2 text-right align-middle">
-														<Link
-															href={
-																withParam(
-																	productName
-																		? withParam(
-																				quoteHref,
-																				'product',
-																				productName,
-																			)
-																		: quoteHref,
-																	'code',
-																	code,
-																) + '&inquiry=quote'
-															}
-															className={QUOTE_BUTTON}
-														>
-															{t.askForQuote}
-														</Link>
-													</td>
-												)}
-											</tr>
-										)
-									})}
+									{product.table
+										.filter((row) => row.code?.trim() || row.format?.trim())
+										.map((row) => {
+											const code = stegaClean(row.code ?? '')
+											return (
+												<tr key={row._key} className="border-stroke border-t">
+													<td className="px-4 py-2 align-middle">{row.code}</td>
+													{showFormat && (
+														<td className="text-foreground/70 px-4 py-2 align-middle">
+															{row.format}
+														</td>
+													)}
+													{quoteHref && (
+														<td className="px-4 py-2 text-right align-middle">
+															<Link
+																href={
+																	withParam(
+																		productName
+																			? withParam(
+																					quoteHref,
+																					'product',
+																					productName,
+																				)
+																			: quoteHref,
+																		'code',
+																		code,
+																	) + '&inquiry=quote'
+																}
+																className={QUOTE_BUTTON}
+															>
+																{t.askForQuote}
+															</Link>
+														</td>
+													)}
+												</tr>
+											)
+										})}
 								</tbody>
 							</table>
 						</div>
@@ -431,7 +477,7 @@ export default async function ({
 				<section className={cn('section pb-16')}>
 					<h2 className="mb-8 text-2xl font-bold">{t.relatedProducts}</h2>
 
-					<ul className="grid grid-cols-2 items-start gap-x-6 gap-y-10 sm:grid-cols-3 lg:grid-cols-4">
+					<ul className="grid auto-rows-fr grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
 						{related.map((item: any) => (
 							<ProductPreview product={item} key={item._id} />
 						))}
@@ -469,7 +515,7 @@ const RELATED_PRODUCTS_QUERY = groq`
 		&& coalesce(language, $defaultLang) == $lang
 	]|order(title asc){
 		_id,
-		title, table,
+		title, table, shortDescription, language,
 		image{
 			...,
 			asset->
