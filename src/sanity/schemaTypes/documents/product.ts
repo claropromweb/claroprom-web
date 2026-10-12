@@ -10,9 +10,11 @@ export default defineType({
 	type: 'document',
 	icon: VscBeaker,
 	groups: [
-		{ name: 'content', default: true },
+		{ name: 'content', title: 'Basic product information', default: true },
+		{ name: 'photos', title: 'Photographs' },
+		{ name: 'catalogue', title: 'Packaging & catalogue' },
 		{ name: 'regulatory', title: 'Regulatory & use' },
-		{ name: 'docs', title: 'Documents' },
+		{ name: 'docs', title: 'Technical documents' },
 		{ name: 'metadata' },
 	],
 	fields: [
@@ -47,6 +49,9 @@ export default defineType({
 		}),
 		defineField({
 			name: 'image',
+			title: 'Main product photograph',
+			description:
+				'Upload the actual packaging for this catalogue record. Keep the entire pack and label visible. If a photograph represents another pack size, explain this in its caption or leave the photograph empty.',
 			type: 'image',
 			options: {
 				hotspot: true,
@@ -55,13 +60,39 @@ export default defineType({
 			fields: [
 				defineField({
 					name: 'alt',
+					title: 'Alternative text',
+					description:
+						'Describe the visible product and pack size. Do not add claims or keywords. The product name is used when this is empty.',
 					type: 'string',
 				}),
+				defineField({
+					name: 'caption',
+					title: 'Photograph caption (optional)',
+					type: 'string',
+					description:
+						'Explain a representative pack size or useful view. Use the language of this product record.',
+				}),
 			],
+			group: 'photos',
+		}),
+		defineField({
+			name: 'shortDescription',
+			title: 'Short product description',
+			type: 'text',
+			rows: 3,
 			group: 'content',
+			description:
+				'One approved factual sentence for catalogue cards (usually 80–160 characters). Write in this product document’s language. This is not the regulatory intended purpose. Leave empty until reviewed; it does not change SEO metadata.',
+			validation: (Rule) =>
+				Rule.max(240).warning(
+					'Keep the summary concise; about 80–160 characters is usually enough.',
+				),
 		}),
 		defineField({
 			name: 'description',
+			title: 'Detailed product description',
+			description:
+				'Approved product function and characteristics only. Do not rewrite intended purpose here or infer specifications from a product name.',
 			type: 'array',
 			of: [{ type: 'block' }],
 			group: 'content',
@@ -69,6 +100,8 @@ export default defineType({
 		defineField({
 			name: 'gallery',
 			title: 'Additional photographs',
+			description:
+				'Add actual views for this record, then drag to reorder. Each image has its own alternative text and optional caption. There is no required number of photographs.',
 			type: 'array',
 			of: [
 				defineArrayMember({
@@ -78,12 +111,21 @@ export default defineType({
 						defineField({
 							name: 'alt',
 							title: 'Alternative text',
+							description:
+								'Describe the visible view and packaging, in the language of this record.',
 							type: 'string',
+						}),
+						defineField({
+							name: 'caption',
+							title: 'Photograph caption (optional)',
+							type: 'string',
+							description:
+								'Identify the view or representative packaging when needed.',
 						}),
 					],
 				}),
 			],
-			group: 'content',
+			group: 'photos',
 		}),
 		defineField({
 			name: 'productType',
@@ -151,6 +193,8 @@ export default defineType({
 		}),
 		defineField({
 			name: 'table',
+			description:
+				'Use confirmed catalogue numbers and actual pack sizes only. Transport cartons are not additional SKUs. Claroplast public codes remain CP00CL2 (2 kg) and CP00CLP (10 kg); do not copy legacy source values.',
 			title: 'Product codes & available pack sizes',
 			type: 'array',
 			of: [
@@ -179,7 +223,7 @@ export default defineType({
 					},
 				}),
 			],
-			group: 'content',
+			group: 'catalogue',
 		}),
 		defineField({
 			name: 'instructionsForUse',

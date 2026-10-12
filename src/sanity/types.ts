@@ -50,6 +50,14 @@ export type CategoryImage = {
 	_type: 'image'
 }
 
+export type IsoQrImage = {
+	asset?: SanityImageAssetReference
+	media?: unknown // Unable to locate the referenced type "isoQrImage.media" in schema
+	hotspot?: SanityImageHotspot
+	crop?: SanityImageCrop
+	_type: 'image'
+}
+
 export type Mobile = {
 	asset?: SanityImageAssetReference
 	media?: unknown // Unable to locate the referenced type "mobile.media" in schema
@@ -1290,6 +1298,86 @@ export type Form = {
 	endpoint?: string
 }
 
+export type Page = {
+	_id: string
+	_type: 'page'
+	_createdAt: string
+	_updatedAt: string
+	_rev: string
+	catalogArchive?: boolean
+	language?: string
+	title?: string
+	modules?: Array<
+		| ({
+				_key: string
+		  } & AccordionList)
+		| ({
+				_key: string
+		  } & BlogIndex)
+		| ({
+				_key: string
+		  } & BlogPostList)
+		| ({
+				_key: string
+		  } & Banner)
+		| ({
+				_key: string
+		  } & Breadcrumbs)
+		| ({
+				_key: string
+		  } & Callout)
+		| ({
+				_key: string
+		  } & CardList)
+		| ({
+				_key: string
+		  } & CategoryGrid)
+		| ({
+				_key: string
+		  } & CustomHtml)
+		| ({
+				_key: string
+		  } & FeatureSplit)
+		| ({
+				_key: string
+		  } & FormModule)
+		| ({
+				_key: string
+		  } & HeroCover)
+		| ({
+				_key: string
+		  } & HeroSplit)
+		| ({
+				_key: string
+		  } & LogoList)
+		| ({
+				_key: string
+		  } & PersonList)
+		| ({
+				_key: string
+		  } & ProductList)
+		| ({
+				_key: string
+		  } & Prose)
+		| ({
+				_key: string
+		  } & QuoteList)
+		| ({
+				_key: string
+		  } & SearchModule)
+		| ({
+				_key: string
+		  } & SplitColumns)
+		| ({
+				_key: string
+		  } & StatList)
+		| ({
+				_key: string
+		  } & StepList)
+	>
+	metadata?: Metadata
+}
+
 export type NavigationReference = {
 	_ref: string
 	_type: 'reference'
@@ -1652,7 +1740,7 @@ export type InternationalizedArrayReference = Array<
 
 export type InternationalizedArrayReferenceValue = {
 	_type: 'internationalizedArrayReferenceValue'
-	value?: PageReference | BlogPostReference | ProductReference
+	value?: BlogPostReference | ProductReference
 	language?: string
 }
 
@@ -1686,8 +1774,10 @@ export type Product = {
 		hotspot?: SanityImageHotspot
 		crop?: SanityImageCrop
 		alt?: string
+		caption?: string
 		_type: 'image'
 	}
+	shortDescription?: string
 	description?: Array<{
 		children?: Array<{
 			marks?: Array<string>
@@ -1712,6 +1802,7 @@ export type Product = {
 		hotspot?: SanityImageHotspot
 		crop?: SanityImageCrop
 		alt?: string
+		caption?: string
 		_type: 'image'
 		_key: string
 	}>
@@ -1893,86 +1984,6 @@ export type Person = {
 	}
 }
 
-export type Page = {
-	_id: string
-	_type: 'page'
-	_createdAt: string
-	_updatedAt: string
-	_rev: string
-	catalogArchive?: boolean
-	language?: string
-	title?: string
-	modules?: Array<
-		| ({
-				_key: string
-		  } & AccordionList)
-		| ({
-				_key: string
-		  } & BlogIndex)
-		| ({
-				_key: string
-		  } & BlogPostList)
-		| ({
-				_key: string
-		  } & Banner)
-		| ({
-				_key: string
-		  } & Breadcrumbs)
-		| ({
-				_key: string
-		  } & Callout)
-		| ({
-				_key: string
-		  } & CardList)
-		| ({
-				_key: string
-		  } & CategoryGrid)
-		| ({
-				_key: string
-		  } & CustomHtml)
-		| ({
-				_key: string
-		  } & FeatureSplit)
-		| ({
-				_key: string
-		  } & FormModule)
-		| ({
-				_key: string
-		  } & HeroCover)
-		| ({
-				_key: string
-		  } & HeroSplit)
-		| ({
-				_key: string
-		  } & LogoList)
-		| ({
-				_key: string
-		  } & PersonList)
-		| ({
-				_key: string
-		  } & ProductList)
-		| ({
-				_key: string
-		  } & Prose)
-		| ({
-				_key: string
-		  } & QuoteList)
-		| ({
-				_key: string
-		  } & SearchModule)
-		| ({
-				_key: string
-		  } & SplitColumns)
-		| ({
-				_key: string
-		  } & StatList)
-		| ({
-				_key: string
-		  } & StepList)
-	>
-	metadata?: Metadata
-}
-
 export type SanityImagePaletteSwatch = {
 	_type: 'sanity.imagePaletteSwatch'
 	background?: string
@@ -2070,19 +2081,12 @@ export type Geopoint = {
 	alt?: number
 }
 
-export type IsoQrImage = {
-	asset?: SanityImageAssetReference
-	media?: unknown // Unable to locate the referenced type "isoQrImage.media" in schema
-	hotspot?: SanityImageHotspot
-	crop?: SanityImageCrop
-	_type: 'image'
-}
-
 export type AllSanitySchemaTypes =
 	| SanityImageAssetReference
 	| CardImage
 	| Icon
 	| CategoryImage
+	| IsoQrImage
 	| Mobile
 	| ColumnImage
 	| StepList
@@ -2132,6 +2136,7 @@ export type AllSanitySchemaTypes =
 	| Redirect
 	| GlobalModule
 	| Form
+	| Page
 	| NavigationReference
 	| Site
 	| Navigation
@@ -2160,7 +2165,6 @@ export type AllSanitySchemaTypes =
 	| BlogCategoryReference
 	| BlogPost
 	| Person
-	| Page
 	| SanityImagePaletteSwatch
 	| SanityImagePalette
 	| SanityImageDimensions
@@ -2169,7 +2173,6 @@ export type AllSanitySchemaTypes =
 	| SanityAssetSourceData
 	| SanityImageAsset
 	| Geopoint
-	| IsoQrImage
 
 // Source: src/app/(frontend)/[[...slug]]/page.tsx
 // Variable: PAGE_QUERY
@@ -4034,12 +4037,6 @@ export type PAGE_QUERY_RESULT = {
 			| {
 					_id: string
 					_type: 'blog.post'
-					language: string | null
-					slug: string | null
-			  }
-			| {
-					_id: string
-					_type: 'page'
 					language: string | null
 					slug: string | null
 			  }
@@ -6090,12 +6087,6 @@ export type BLOG_POST_QUERY_RESULT = {
 			  }
 			| {
 					_id: string
-					_type: 'page'
-					language: string | null
-					slug: string | null
-			  }
-			| {
-					_id: string
 					_type: 'product'
 					language: string | null
 					slug: string | null
@@ -7925,8 +7916,10 @@ export type PRODUCT_QUERY_RESULT = {
 		hotspot?: SanityImageHotspot
 		crop?: SanityImageCrop
 		alt?: string
+		caption?: string
 		_type: 'image'
 	} | null
+	shortDescription?: string
 	description?: Array<{
 		children?: Array<{
 			marks?: Array<string>
@@ -7972,6 +7965,7 @@ export type PRODUCT_QUERY_RESULT = {
 		hotspot?: SanityImageHotspot
 		crop?: SanityImageCrop
 		alt?: string
+		caption?: string
 		_type: 'image'
 		_key: string
 	}> | null
@@ -9883,12 +9877,6 @@ export type PRODUCT_QUERY_RESULT = {
 			| {
 					_id: string
 					_type: 'blog.post'
-					language: string | null
-					slug: string | null
-			  }
-			| {
-					_id: string
-					_type: 'page'
 					language: string | null
 					slug: string | null
 			  }
@@ -13139,6 +13127,7 @@ export type PRODUCT_SEARCH_QUERY_RESULT = Array<{
 		hotspot?: SanityImageHotspot
 		crop?: SanityImageCrop
 		alt?: string
+		caption?: string
 		_type: 'image'
 	} | null
 	categoryTitle: string | null
@@ -13500,7 +13489,7 @@ export type CATALOG_CATEGORIES_QUERY_RESULT = Array<{
 
 // Source: src/ui/modules/product/category-page.tsx
 // Variable: CATALOG_CATEGORY_QUERY
-// Query: *[	_type == 'product.category' && showInCatalog == true && slug_en.current == $slug][0]{	_id, 'title': title_en, 'description': description_en, 'slug': slug_en.current,	image{..., asset->},	'products': *[		_type == 'product' && hidden != true && language == 'en'		&& category._ref == ^._id && defined(metadata.slug.current)	]|order(title asc){		_id, title, table, image{..., asset->},		'slug': '/products/en/' + metadata.slug.current	}}
+// Query: *[	_type == 'product.category' && showInCatalog == true && slug_en.current == $slug][0]{	_id, 'title': title_en, 'description': description_en, 'slug': slug_en.current,	image{..., asset->},	'products': *[		_type == 'product' && hidden != true && language == 'en'		&& category._ref == ^._id && defined(metadata.slug.current)	]|order(title asc){		_id, title, table, shortDescription, language, image{..., asset->},		'slug': '/products/en/' + metadata.slug.current	}}
 export type CATALOG_CATEGORY_QUERY_RESULT = {
 	_id: string
 	title: string | null
@@ -13544,6 +13533,8 @@ export type CATALOG_CATEGORY_QUERY_RESULT = {
 			_type: 'row'
 			_key: string
 		}> | null
+		shortDescription: string | null
+		language: string | null
 		image: {
 			asset: {
 				_id: string
@@ -13571,6 +13562,7 @@ export type CATALOG_CATEGORY_QUERY_RESULT = {
 			hotspot?: SanityImageHotspot
 			crop?: SanityImageCrop
 			alt?: string
+			caption?: string
 			_type: 'image'
 		} | null
 		slug: string | null
@@ -13586,7 +13578,7 @@ export type CONTACT_PAGE_QUERY_RESULT = {
 
 // Source: src/ui/modules/product/product-content.tsx
 // Variable: RELATED_PRODUCTS_QUERY
-// Query: *[		_type == 'product' && hidden != true		&& _id != $id		&& category._ref == $categoryId		&& coalesce(language, $defaultLang) == $lang	]|order(title asc){		_id,		title, table,		image{			...,			asset->		},		'slug': select(			$lang == 'hr' => $productsDir + metadata.slug.current,			$productsDir + $lang + '/' + metadata.slug.current		),	}
+// Query: *[		_type == 'product' && hidden != true		&& _id != $id		&& category._ref == $categoryId		&& coalesce(language, $defaultLang) == $lang	]|order(title asc){		_id,		title, table, shortDescription, language,		image{			...,			asset->		},		'slug': select(			$lang == 'hr' => $productsDir + metadata.slug.current,			$productsDir + $lang + '/' + metadata.slug.current		),	}
 export type RELATED_PRODUCTS_QUERY_RESULT = Array<{
 	_id: string
 	title: string | null
@@ -13596,6 +13588,8 @@ export type RELATED_PRODUCTS_QUERY_RESULT = Array<{
 		_type: 'row'
 		_key: string
 	}> | null
+	shortDescription: string | null
+	language: string | null
 	image: {
 		asset: {
 			_id: string
@@ -13623,6 +13617,7 @@ export type RELATED_PRODUCTS_QUERY_RESULT = Array<{
 		hotspot?: SanityImageHotspot
 		crop?: SanityImageCrop
 		alt?: string
+		caption?: string
 		_type: 'image'
 	} | null
 	slug: unknown
@@ -13630,7 +13625,7 @@ export type RELATED_PRODUCTS_QUERY_RESULT = Array<{
 
 // Source: src/ui/modules/product/product-list/index.tsx
 // Variable: PRODUCT_LIST_QUERY
-// Query: *[_type == 'product' && hidden != true && coalesce(language, $defaultLang) == $lang]|order(title asc){		_id,		title, table,		image{			...,			asset->		},		'categorySlug': select(			$lang == 'en' => coalesce(category->slug_en.current, category->slug.current),			category->slug.current		),		'categoryTitle': select(			$lang == 'en' => coalesce(category->title_en, category->title),			category->title		),		'slug': select(			$lang == 'hr' => $productsDir + metadata.slug.current,			$productsDir + $lang + '/' + metadata.slug.current		),	}
+// Query: *[_type == 'product' && hidden != true && coalesce(language, $defaultLang) == $lang]|order(title asc){		_id,		title, table, shortDescription, language,		image{			...,			asset->		},		'categorySlug': select(			$lang == 'en' => coalesce(category->slug_en.current, category->slug.current),			category->slug.current		),		'categoryTitle': select(			$lang == 'en' => coalesce(category->title_en, category->title),			category->title		),		'slug': select(			$lang == 'hr' => $productsDir + metadata.slug.current,			$productsDir + $lang + '/' + metadata.slug.current		),	}
 export type PRODUCT_LIST_QUERY_RESULT = Array<{
 	_id: string
 	title: string | null
@@ -13640,6 +13635,8 @@ export type PRODUCT_LIST_QUERY_RESULT = Array<{
 		_type: 'row'
 		_key: string
 	}> | null
+	shortDescription: string | null
+	language: string | null
 	image: {
 		asset: {
 			_id: string
@@ -13667,6 +13664,7 @@ export type PRODUCT_LIST_QUERY_RESULT = Array<{
 		hotspot?: SanityImageHotspot
 		crop?: SanityImageCrop
 		alt?: string
+		caption?: string
 		_type: 'image'
 	} | null
 	categorySlug: string | null
@@ -13726,10 +13724,10 @@ declare module '@sanity/client' {
 		"\n\t*[_type == 'blog.post']|order(publishDate desc)[0...$limit]{\n\t\t...,\n\t\tcategories[]->{\n\t\t\ttitle,\n\t\t\tslug\n\t\t},\n\t\tauthor->{\n\t\t\tname,\n\t\t\timage{\n\t\t\t\t...,\n\t\t\t\tasset->\n\t\t\t}\n\t\t},\n\t\tmetadata{\n\t\t\t...,\n\t\t\timage{\n\t\t\t\t...,\n\t\t\t\tasset->\n\t\t\t}\n\t\t},\n\t\t'slug': $blogDir + metadata.slug.current,\n\t}\n": BLOG_POST_LIST_QUERY_RESULT
 		"\n\t*[\n\t\t_type == 'blog.category'\n\t\t&& count(*[_type == 'blog.post' && references(^._id)]) > 0\n\t]|order(title)\n": CATEGORIES_QUERY_RESULT
 		"*[\n\t_type == 'product.category' && showInCatalog == true && defined(slug_en.current)\n]|order(coalesce(sortOrder, 0) asc, title_en asc){\n\t_id, 'title': title_en, 'description': description_en, 'slug': slug_en.current,\n\timage{..., asset->}\n}": CATALOG_CATEGORIES_QUERY_RESULT
-		"*[\n\t_type == 'product.category' && showInCatalog == true && slug_en.current == $slug\n][0]{\n\t_id, 'title': title_en, 'description': description_en, 'slug': slug_en.current,\n\timage{..., asset->},\n\t'products': *[\n\t\t_type == 'product' && hidden != true && language == 'en'\n\t\t&& category._ref == ^._id && defined(metadata.slug.current)\n\t]|order(title asc){\n\t\t_id, title, table, image{..., asset->},\n\t\t'slug': '/products/en/' + metadata.slug.current\n\t}\n}": CATALOG_CATEGORY_QUERY_RESULT
+		"*[\n\t_type == 'product.category' && showInCatalog == true && slug_en.current == $slug\n][0]{\n\t_id, 'title': title_en, 'description': description_en, 'slug': slug_en.current,\n\timage{..., asset->},\n\t'products': *[\n\t\t_type == 'product' && hidden != true && language == 'en'\n\t\t&& category._ref == ^._id && defined(metadata.slug.current)\n\t]|order(title asc){\n\t\t_id, title, table, shortDescription, language, image{..., asset->},\n\t\t'slug': '/products/en/' + metadata.slug.current\n\t}\n}": CATALOG_CATEGORY_QUERY_RESULT
 		"\n\t*[\n\t\t_type == 'page'\n\t\t&& coalesce(language, $defaultLang) == $lang\n\t\t&& metadata.slug.current != 'index'\n\t\t&& count(modules[_type == 'form-module' && form->identifier == 'contact']) > 0\n\t]|order(\n\t\t!(metadata.slug.current match 'kontakt*' || metadata.slug.current match 'contact*'),\n\t\t_updatedAt desc\n\t)[0]{\n\t\t'url': select(\n\t\t\tmetadata.slug.current == 'index' && $lang == $defaultLang => '/',\n\t\t\tmetadata.slug.current == 'index' => '/' + $lang,\n\t\t\t$lang == $defaultLang => '/' + metadata.slug.current,\n\t\t\t'/' + $lang + '/' + metadata.slug.current\n\t\t)\n\t}\n": CONTACT_PAGE_QUERY_RESULT
-		"\n\t*[\n\t\t_type == 'product' && hidden != true\n\t\t&& _id != $id\n\t\t&& category._ref == $categoryId\n\t\t&& coalesce(language, $defaultLang) == $lang\n\t]|order(title asc){\n\t\t_id,\n\t\ttitle, table,\n\t\timage{\n\t\t\t...,\n\t\t\tasset->\n\t\t},\n\t\t'slug': select(\n\t\t\t$lang == 'hr' => $productsDir + metadata.slug.current,\n\t\t\t$productsDir + $lang + '/' + metadata.slug.current\n\t\t),\n\t}\n": RELATED_PRODUCTS_QUERY_RESULT
-		"\n\t*[_type == 'product' && hidden != true && coalesce(language, $defaultLang) == $lang]|order(title asc){\n\t\t_id,\n\t\ttitle, table,\n\t\timage{\n\t\t\t...,\n\t\t\tasset->\n\t\t},\n\t\t'categorySlug': select(\n\t\t\t$lang == 'en' => coalesce(category->slug_en.current, category->slug.current),\n\t\t\tcategory->slug.current\n\t\t),\n\t\t'categoryTitle': select(\n\t\t\t$lang == 'en' => coalesce(category->title_en, category->title),\n\t\t\tcategory->title\n\t\t),\n\t\t'slug': select(\n\t\t\t$lang == 'hr' => $productsDir + metadata.slug.current,\n\t\t\t$productsDir + $lang + '/' + metadata.slug.current\n\t\t),\n\t}\n": PRODUCT_LIST_QUERY_RESULT
+		"\n\t*[\n\t\t_type == 'product' && hidden != true\n\t\t&& _id != $id\n\t\t&& category._ref == $categoryId\n\t\t&& coalesce(language, $defaultLang) == $lang\n\t]|order(title asc){\n\t\t_id,\n\t\ttitle, table, shortDescription, language,\n\t\timage{\n\t\t\t...,\n\t\t\tasset->\n\t\t},\n\t\t'slug': select(\n\t\t\t$lang == 'hr' => $productsDir + metadata.slug.current,\n\t\t\t$productsDir + $lang + '/' + metadata.slug.current\n\t\t),\n\t}\n": RELATED_PRODUCTS_QUERY_RESULT
+		"\n\t*[_type == 'product' && hidden != true && coalesce(language, $defaultLang) == $lang]|order(title asc){\n\t\t_id,\n\t\ttitle, table, shortDescription, language,\n\t\timage{\n\t\t\t...,\n\t\t\tasset->\n\t\t},\n\t\t'categorySlug': select(\n\t\t\t$lang == 'en' => coalesce(category->slug_en.current, category->slug.current),\n\t\t\tcategory->slug.current\n\t\t),\n\t\t'categoryTitle': select(\n\t\t\t$lang == 'en' => coalesce(category->title_en, category->title),\n\t\t\tcategory->title\n\t\t),\n\t\t'slug': select(\n\t\t\t$lang == 'hr' => $productsDir + metadata.slug.current,\n\t\t\t$productsDir + $lang + '/' + metadata.slug.current\n\t\t),\n\t}\n": PRODUCT_LIST_QUERY_RESULT
 		"\n\t*[\n\t\t_type == 'product.category'\n\t\t&& count(*[_type == 'product' && hidden != true && references(^._id) && coalesce(language, $defaultLang) == $lang]) > 0\n\t]{\n\t\t_id,\n\t\t'title': select(\n\t\t\t$lang == 'en' => coalesce(title_en, title),\n\t\t\ttitle\n\t\t),\n\t\t'slug': select(\n\t\t\t$lang == 'en' => coalesce(slug_en.current, slug.current),\n\t\t\tslug.current\n\t\t),\n\t}|order(title asc)\n": PRODUCT_CATEGORIES_QUERY_RESULT
 		"*[\n\t_type in $scope\n\t&& defined(metadata.slug.current)\n\t&& metadata.noIndex != true\n\t&& !(metadata.slug.current in ['404'])\n\t&& @ match text::query($queryMatch)\n]{\n\t_id,\n\t_type,\n\ttitle,\n\t'slug': select(\n\t\t_type == 'blog.post' => $blogDir + metadata.slug.current,\n\t\tmetadata.slug.current == 'index' => '/',\n\t\t'/' + metadata.slug.current\n\t)\n}": SEARCH_QUERY_RESULT
 	}

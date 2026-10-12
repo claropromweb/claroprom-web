@@ -23,8 +23,8 @@ export default presentationTool({
 	resolve: {
 		mainDocuments: defineDocuments([
 			{
-				route: '/en/proizvodi/:slug',
-				filter: groq`_type == 'product.category' && slug_en.current == $slug && showInCatalog == true`,
+				route: '/products/:slug',
+				filter: groq`_type == 'product.category' && slug_en.current == select($slug == 'histology-paraffin-wax-claroplast' => 'claroplast', $slug) && showInCatalog == true`,
 			},
 			// Pages — English only, existing public paths
 			{
@@ -49,11 +49,11 @@ export default presentationTool({
 				filter: groq`_type == 'blog.post' && metadata.slug.current == $slug
 					&& language == $lang`,
 			},
-			// Products — default language
+			// Products — current clean English public URL (legacy localized route remains below)
 			{
 				route: `/${ROUTES.products}/:slug`,
 				filter: groq`_type == 'product' && metadata.slug.current == $slug
-					&& (!defined(language) || language == '${DEFAULT_LANG}')`,
+					&& language == 'en'`,
 			},
 			// Products — localized
 			{

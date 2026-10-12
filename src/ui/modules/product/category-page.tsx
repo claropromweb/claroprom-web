@@ -300,7 +300,7 @@ const CATALOG_CATEGORY_QUERY = groq`*[
 		_type == 'product' && hidden != true && language == 'en'
 		&& category._ref == ^._id && defined(metadata.slug.current)
 	]|order(title asc){
-		_id, title, table, image{..., asset->},
+		_id, title, table, shortDescription, language, image{..., asset->},
 		'slug': '/products/en/' + metadata.slug.current
 	}
 }`
