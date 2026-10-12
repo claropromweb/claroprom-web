@@ -45,7 +45,9 @@ export default async function CategoryList({
 							<h2 className="text-xl font-semibold">{category.title}</h2>
 							{category.description && (
 								<p className="mt-3 whitespace-pre-line">
-									{category.description.split('\n\n')[0]}
+									{category.slug === 'claroplast'
+										? category.description.split('. ')[0] + '.'
+										: category.description.split('\n\n')[0]}
 								</p>
 							)}
 							<span className="mt-5 inline-block font-semibold text-red-700">

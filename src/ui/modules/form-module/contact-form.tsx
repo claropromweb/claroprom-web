@@ -120,6 +120,7 @@ export default function ContactForm({
 				name="product"
 				label={context.type === 'meeting' ? 'Meeting / topic' : t.product}
 				defaultValue={productParam}
+				required={context.type === 'quote'}
 			/>
 
 			<label className="grid gap-2">

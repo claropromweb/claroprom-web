@@ -17,6 +17,9 @@ import {
 import type { BLOG_POST_QUERY_RESULT } from '@/sanity/types'
 import ModulesResolver from '@/ui/modules'
 
+// News reads draft-mode cookies; keep request-time rendering consistent with pages/products.
+export const dynamic = 'force-dynamic'
+
 type Props = {
 	params: Promise<{ slug: string[] }>
 }
