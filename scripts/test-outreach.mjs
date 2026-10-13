@@ -149,7 +149,7 @@ const sandbox = {
 			CONTACT_FORM_FROM: 'test@example.invalid',
 		},
 	},
-	console: { error: () => {} },
+	console: { error: () => {}, info: () => {} },
 	require: (name) =>
 		name === 'next/server'
 			? {
@@ -164,7 +164,10 @@ const sandbox = {
 							emails = {
 								send: async (payload) => {
 									sent.push(payload)
-									return { error: sendError }
+									return {
+										data: sendError ? null : { id: 'isolated-test-id' },
+										error: sendError,
+									}
 								},
 							}
 						},
