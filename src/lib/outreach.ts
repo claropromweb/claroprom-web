@@ -1,13 +1,13 @@
 export const CLAROPLAST_PACKS = [
 	{
 		slug: 'claroplast-a-2-kg',
-		name: 'Claroplast — Histology Wax with Polymer, 2 kg',
+		name: 'Claroplast — Polymer-Modified Histology Wax, 2 kg',
 		packaging: '2 kg',
 		code: 'CP00CL2',
 	},
 	{
 		slug: 'claroplast-a-10-kg',
-		name: 'Claroplast — Histology Wax with Polymer, 10 kg',
+		name: 'Claroplast — Polymer-Modified Histology Wax, 10 kg',
 		packaging: '10 kg',
 		code: 'CP00CLP',
 	},

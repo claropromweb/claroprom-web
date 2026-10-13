@@ -79,7 +79,7 @@ for (const [pack, code, catalogueNumber] of [
 	const result = withApprovedClaroplastCopy(original)
 	assert.equal(
 		result.title,
-		`Claroplast — Histology Paraffin Wax with Polymer, ${pack} kg`,
+		`Claroplast — Histology Paraffin Wax with Added Synthetic Polymers, ${pack} kg`,
 	)
 	assert.equal(
 		result.metadata.title,

@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useEffect } from 'react'
 import type { InquiryItem } from '@/lib/inquiry-items'
+import { claroplastPack } from '@/lib/outreach'
 import { itemKey, useInquiry } from './store'
 
 export function InquiryNavigation() {
@@ -76,7 +77,7 @@ export function InquiryBasket() {
 							href={item.url}
 							className="font-semibold break-words underline"
 						>
-							{item.name}
+							{claroplastPack(item.url)?.name ?? item.name}
 						</Link>
 						<p className="mt-2 text-sm">
 							Catalogue No.: {item.code} · Pack size: {item.packaging}

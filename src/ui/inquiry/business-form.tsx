@@ -139,7 +139,7 @@ export default function BusinessForm({
 							>
 								{productContext && <option>{productContext}</option>}
 								<option>Claroplast, IVD reagents and LABEX</option>
-								<option>Claroplast Histology Paraffin Wax</option>
+								<option>Claroplast — Polymer-Modified Histology Wax</option>
 								<option>IVD histology and cytology reagents</option>
 								<option>LABEX laboratory cleaning products</option>
 								<option>OEM / private-label discussion</option>

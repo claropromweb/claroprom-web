@@ -94,9 +94,7 @@ export default async function CategoryPage({ params, searchParams }: Props) {
 	if (!category) notFound()
 	const slug = stegaClean(category.slug!)
 	const isClaroplast = slug === 'claroplast'
-	const title = isClaroplast
-		? 'CLAROPLAST — Histology Paraffin Wax with Polymer'
-		: category.title
+	const title = isClaroplast ? CLAROPLAST.name : category.title
 	const path = categoryUrl(slug)
 	const perPage = slug === 'ivd-reagents' ? 24 : 12
 	const page = pageNumber(
