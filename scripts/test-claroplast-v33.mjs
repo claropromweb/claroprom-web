@@ -23,19 +23,31 @@ assert.equal(new Set(copies.map((p) => p.title)).size, 2)
 assert.equal(new Set(copies.map((p) => p.description)).size, 2)
 assert.equal(CLAROPLAST.benefits.length, 5)
 for (const copy of copies) {
-	assert.match(copy.name, /with Polymer/)
+	assert.match(copy.name, /with Added Synthetic Polymers/)
 	assert.match(copy.visibleDescription, /pellet \(granulated\) form/)
-	assert.equal((copy.name.match(/with Polymer/g) || []).length, 1)
+	assert.equal(
+		(copy.name.match(/with Added Synthetic Polymers/g) || []).length,
+		1,
+	)
 }
 const published = JSON.stringify(CLAROPLAST) + JSON.stringify(copies)
 assert.doesNotMatch(
 	published,
 	/zero shrinkage|guaranteed|increased tensile|enhanced tensile|DMSO|PHC 9009|Paraplast|universal tissue|54.?56/i,
 )
-for (const text of [JSON.stringify(CLAROPLAST), ...copies.map((p) => p.visibleDescription)]) {
+for (const text of [
+	JSON.stringify(CLAROPLAST),
+	...copies.map((p) => p.visibleDescription),
+]) {
 	assert.match(text, /[Ff]ormulated to help limit shrinkage during cooling/)
-	assert.match(text, /[Dd]esigned to help reduce section compression and distortion during microtome cutting/)
-	assert.match(text, /[Pp]olymer additives are selected to support elasticity and tensile integrity/)
+	assert.match(
+		text,
+		/[Dd]esigned to help reduce section compression and distortion during microtome cutting/,
+	)
+	assert.match(
+		text,
+		/[Aa]dded synthetic polymers are selected to support elasticity and tensile integrity/,
+	)
 	assert.match(text, /smooth/i)
 	assert.match(text, /continuous.*ribbon formation/i)
 	assert.match(text, /not measured laboratory performance/i)
@@ -51,6 +63,13 @@ for (const q of [
 	'Polymer-modified wax',
 	'Paraffin pellets',
 	'Paraffin granules',
+	'With polymer',
+	'Polymer-modified',
+	'Polymers',
+	'Synthetic polymers',
+	'Added synthetic polymers',
+	'Histology paraffin pellets',
+	'Histology paraffin granules',
 ])
 	assert.equal(predicate('en', q), true, q)
 for (const q of ['LABEX', 'formaldehyde', 'ethanol', 'wax ethanol'])

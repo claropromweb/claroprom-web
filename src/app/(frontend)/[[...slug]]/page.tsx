@@ -52,15 +52,21 @@ export default async function Page({ params }: Props) {
 			{page.metadata?.slug?.current === 'index' && <MedicaPromotion />}
 			{page.metadata?.slug?.current === 'index' && (
 				<section
-					aria-label="Claroplast with polymer"
+					aria-label="Claroplast product"
 					className="section space-y-4 py-8"
 				>
-					<p className="text-2xl font-semibold md:text-3xl">
+					<p className="text-xl md:text-2xl">
 						<Link
 							href="/products/histology-paraffin-wax-claroplast"
-							className="hover:underline"
+							className="flex flex-col gap-1 hover:underline lg:flex-row lg:items-baseline lg:gap-x-3"
 						>
-							{CLAROPLAST.name}
+							<span className="text-[1.3em] leading-tight font-bold">
+								{CLAROPLAST.brand}
+							</span>
+							<span className="sr-only"> — </span>
+							<span className="leading-snug font-medium">
+								{CLAROPLAST.marketingDescriptor}
+							</span>
 						</Link>
 					</p>
 					<p className="max-w-3xl">

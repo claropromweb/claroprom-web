@@ -66,7 +66,7 @@ export async function searchProducts(
 					.replace(/-/g, ' ')
 					.split(/\s+/)
 					.every((word) =>
-						/^(claroplast|histology|wax|polymer|modified|paraffin|pellets?|granules?|granulated|with|tissue|embedding)$/.test(
+						/^(claroplast|histology|wax|polymers?|synthetic|added|modified|paraffin|pellets?|granules?|granulated|with|tissue|embedding)$/.test(
 							word,
 						),
 					),
