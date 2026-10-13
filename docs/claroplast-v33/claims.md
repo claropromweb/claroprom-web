@@ -2,6 +2,12 @@
 
 ## Authority and boundaries
 
+### Manufacturer claims addendum — 13 October 2026
+
+The manufacturer explicitly confirms formulation intent to help limit cooling shrinkage, help reduce section compression/distortion, and support elasticity/tensile integrity. This supersedes the earlier withheld/confirmation-needed classifications below for qualitative formulation-intent wording only. The hub presents these three benefits together with smooth cutting and continuous ribbon formation in its existing five-card section. It explicitly distinguishes intent from measured or guaranteed results. Sanity, IFU/intendedPurpose, photographs, SKUs, packs, URLs and metadata remain unchanged. V3.4 email code/configuration is preserved.
+
+Laboratory evidence is still required for quantified shrinkage, compression/distortion reduction, tensile-strength or elasticity values, superiority over another wax or baseline, and guaranteed results across specimens/conditions. Appropriate studies must define the method, comparator where applicable, processing/cooling/cutting conditions and reproducibility. No such measurements or comparisons are published by this addendum.
+
 Owner-approved V3.3 FINAL, 13 October 2026, authorizes positioning and the physical-form descriptor. Existing first-party Sanity Claroplast category `description_en` explicitly describes highly purified paraffin, polymer additives, controlled elasticity, smooth microtome cutting and continuous ribbon formation. A fresh read was saved privately before implementation. Official Claroplast IFU version 1.0 (8 September 2025), pages 1–2, was read and its original file hash matched the earlier extraction. It describes infiltration, embedding and microtome use, not quantified performance. Its disputed fixation statement is not repeated; controlled intendedPurpose and IFU are untouched. No polymer identity, concentration, working temperatures or section thickness is added to marketing copy.
 
 Poth Hille PHC9009 and Leica standard Paraplast / Plus / Xtra official pages were read solely for presentation and terminology. Their properties are not Claroplast evidence. PHC9009 shrinkage and Leica variant-specific compression/DMSO/viscosity/infiltration claims are not transferred. Public copy is original and contains no competitor names.
