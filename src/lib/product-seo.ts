@@ -20,7 +20,7 @@ export function claroplastCopy(slug: string | undefined) {
 			pack === '2 kg'
 				? 'Claroplast 2 kg polymer-modified histology wax in pellet (granulated) form for tissue infiltration, embedding and sectioning. Manufactured by CLARO-PROM, Croatia.'
 				: 'Claroplast 10 kg histology paraffin wax with polymer for embedding and smooth microtome sectioning. Pellet (granulated) form from CLARO-PROM, Croatia.',
-		visibleDescription: `Claroplast is a highly purified histology paraffin wax with polymer additives for routine tissue infiltration, embedding and microtome sectioning. Its polymer-modified formulation supports controlled elasticity, smooth cutting and consistent histological ribbon formation. It is manufactured by CLARO-PROM d.o.o. in Croatia, European Union, and supplied in a ${pack} pack in pellet (granulated) form.`,
+		visibleDescription: `Claroplast is a highly purified histology paraffin wax with polymer additives for routine tissue infiltration, embedding and microtome sectioning. Its polymer-modified formulation supports smooth cutting and continuous histological ribbon formation. It is formulated to help limit shrinkage during cooling and designed to help reduce section compression and distortion during microtome cutting. Polymer additives are selected to support elasticity and tensile integrity. These qualitative benefits describe formulation intent, not measured laboratory performance; outcomes depend on specimen processing and sectioning conditions. It is manufactured by CLARO-PROM d.o.o. in Croatia, European Union, and supplied in a ${pack} pack in pellet (granulated) form.`,
 	}
 }
 

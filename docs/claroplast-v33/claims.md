@@ -8,11 +8,11 @@ Poth Hille PHC9009 and Leica standard Paraplast / Plus / Xtra official pages wer
 
 | Theme | Classification | Publication |
 |---|---|---|
-| Low shrinkage during cooling | REQUIRES CONFIRMATION | Withheld as a product benefit. Hub discusses dimensional stability as a laboratory evaluation criterion, without saying Claroplast reduces shrinkage. Need Claroplast-specific manufacturer statement or cooling study. |
-| Reduced distortion / compression | REQUIRES CONFIRMATION | Withheld as a product benefit. Hub discusses section integrity as an evaluation criterion. Need manufacturer evidence specifically covering compression/distortion. |
+| Low shrinkage during cooling | CONFIRMED formulation intent | “Formulated to help limit shrinkage during cooling.” Manufacturer confirmation supplied in the 13 October 2026 claims addendum; no measured shrinkage or comparison claim. |
+| Reduced distortion / compression | CONFIRMED formulation intent | “Designed to help reduce section compression and distortion during microtome cutting.” No quantified reduction or comparator. |
 | Smooth microtome cutting | QUALIFIED | “The polymer-modified formulation supports smooth, controlled microtome sectioning in routine histology workflows.” Existing manufacturer category copy and IFU microtome use; no quantified ease/cutting-force guarantee. |
-| Continuous ribbon formation | QUALIFIED | “Claroplast supports consistent ribbon formation and the cohesion of successive histological sections during routine microtome cutting.” Existing manufacturer copy; no universal uninterrupted-ribbon guarantee. |
-| Enhanced elasticity and tensile strength | QUALIFIED for controlled elasticity; REQUIRES CONFIRMATION for increased tensile strength | “Polymer modification supports controlled elasticity and the mechanical cohesion needed for sectioning.” Existing manufacturer copy supports elasticity. No increased/measured tensile-strength claim; need specific manufacturer data for that part. |
+| Continuous ribbon formation | QUALIFIED | “Claroplast supports continuous ribbon formation and the cohesion of successive histological sections during routine microtome cutting.” Existing manufacturer copy; no universal uninterrupted-ribbon guarantee. |
+| Elasticity and tensile integrity | CONFIRMED formulation intent | “Polymer additives are selected to support elasticity and tensile integrity.” No increased/measured tensile-strength claim. |
 | Highly purified paraffin with polymer additives | CONFIRMED | Existing manufacturer category copy; primary identity owner-approved. No synthetic/plasticising polymer identity disclosed. |
 | pellet (granulated) form | CONFIRMED by explicit owner V3.3 product-form instruction | Exact phrase on hub, both SKUs and approved catalogue summaries; no pellet dimensions, uniformity or melting-speed claim. |
 
@@ -38,3 +38,7 @@ Canonical identities and schema entity IDs remain unchanged. No prices, availabi
 V3.3 does not change contact API, distributor form, RFQ store/resolution, environment variables, Resend, DNS, VAT/OIB or MEDICA dates. V3.2 email delivery to the official recipient remains unresolved and must be reported separately. No real email test belongs to this content-only release.
 
 Rollback is the prior code deployment (same V3.2 commit with corrected recipient environment). No CMS rollback is needed because V3.3 performs no mutations. Never roll back to an older deployment whose email recipient was the test inbox.
+
+## Manufacturer claims addendum — 13 October 2026
+
+The manufacturer explicitly confirmed the three formulation intentions above. This is qualitative manufacturer confirmation, not quantitative laboratory data. All five functional benefits appear together on the hub and in both SKU descriptions. Laboratory evidence is still required for measured shrinkage, compression/distortion reductions, elasticity or tensile values, cutting-force or ribbon-continuity measurements, any comparison with another wax, and guaranteed outcomes. Sanity data, photos, SKUs, packaging, URLs and V3.4 email code/configuration remain unchanged. The historical V3.2 email note above is not the status of V3.4; this addendum builds on V3.4 commit 5b4e52b.

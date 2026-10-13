@@ -30,8 +30,16 @@ for (const copy of copies) {
 const published = JSON.stringify(CLAROPLAST) + JSON.stringify(copies)
 assert.doesNotMatch(
 	published,
-	/zero shrinkage|low shrinkage|reduced compression|reduced distortion|increased tensile|enhanced tensile|DMSO|PHC 9009|Paraplast|universal tissue|54.?56/i,
+	/zero shrinkage|guaranteed|increased tensile|enhanced tensile|DMSO|PHC 9009|Paraplast|universal tissue|54.?56/i,
 )
+for (const text of [JSON.stringify(CLAROPLAST), ...copies.map((p) => p.visibleDescription)]) {
+	assert.match(text, /[Ff]ormulated to help limit shrinkage during cooling/)
+	assert.match(text, /[Dd]esigned to help reduce section compression and distortion during microtome cutting/)
+	assert.match(text, /[Pp]olymer additives are selected to support elasticity and tensile integrity/)
+	assert.match(text, /smooth/i)
+	assert.match(text, /continuous.*ribbon formation/i)
+	assert.match(text, /not measured laboratory performance/i)
+}
 const search = readFileSync('src/ui/header/product-search/search.ts', 'utf8')
 const expression = search.match(/claroplastSearch:\s*([\s\S]*?),\s*lang,/)[1]
 const predicate = Function('lang', 'q', 'return ' + expression)
@@ -55,5 +63,5 @@ assert.match(query, /\$claroplastSearch/)
 assert.match(query, /claroplast-a-2-kg/)
 assert.match(query, /claroplast-a-10-kg/)
 console.log(
-	'PASS: distinct SKU metadata, approved form, five reviewed themes, withheld unsupported claims, search intent/language/identity scope.',
+	'PASS: distinct SKU metadata, approved form, five qualitative benefits, no measured or guaranteed claims, search intent/language/identity scope.',
 )
