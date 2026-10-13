@@ -2,9 +2,7 @@ import pkg from '@@/package.json'
 import type { Metadata } from 'next'
 import { groq } from 'next-sanity'
 import { draftMode } from 'next/headers'
-import Link from 'next/link'
 import { notFound, permanentRedirect } from 'next/navigation'
-import { CLAROPLAST } from '@/content/claroplast'
 import { ROUTES } from '@/lib/env'
 import { DEFAULT_LANG } from '@/lib/i18n'
 import resolveUrl from '@/lib/resolve-url'
@@ -50,33 +48,6 @@ export default async function Page({ params }: Props) {
 				<h1 className="sr-only">Histology Products and Laboratory Reagents</h1>
 			)}
 			{page.metadata?.slug?.current === 'index' && <MedicaPromotion />}
-			{page.metadata?.slug?.current === 'index' && (
-				<section
-					aria-label="Claroplast product"
-					className="section space-y-4 py-8"
-				>
-					<p className="text-xl md:text-2xl">
-						<Link
-							href="/products/histology-paraffin-wax-claroplast"
-							className="flex flex-col gap-1 hover:underline lg:flex-row lg:items-baseline lg:gap-x-3"
-						>
-							<span className="text-[1.3em] leading-tight font-bold">
-								{CLAROPLAST.brand}
-							</span>
-							<span className="sr-only"> — </span>
-							<span className="leading-snug font-medium">
-								{CLAROPLAST.marketingDescriptor}
-							</span>
-						</Link>
-					</p>
-					<p className="max-w-3xl">
-						Polymer-modified histology embedding wax supporting controlled
-						elasticity, smooth microtome sectioning and consistent ribbon
-						formation. Discover Claroplast alongside our IVD reagents and LABEX
-						laboratory products.
-					</p>
-				</section>
-			)}
 			<ModulesResolver page={page} />
 			{page.metadata?.slug?.current === 'vijesti' &&
 				!page.modules?.some((module) => module?._type === 'blog-index') && (

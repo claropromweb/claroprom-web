@@ -35,6 +35,11 @@ export default function ({
 				)?._key
 			: undefined
 	const textAlign = stegaClean(ta)
+	const homepageParagraphs = isHomepageHero
+		? content
+				?.filter((block) => block._type === 'block' && block.style === 'h4')
+				.slice(0, 2)
+		: []
 	const verticalAlign = stegaClean(va)
 	const cleanMaxHeight = stegaClean(maxHeight)
 	const overlay = stegaClean(backgroundOverlay)
@@ -102,7 +107,12 @@ export default function ({
 						(overlay || opacity > 0.5) && 'text-background',
 					)}
 				>
-					<header className="prose max-w-3xl [&_h1]:text-4xl [&_h1]:leading-[1.1] [&_h1]:md:text-5xl [&_h1]:lg:text-6xl [&_p]:text-lg [&_p]:md:text-xl">
+					<header
+						className={cn(
+							'prose max-w-3xl [&_h1]:text-4xl [&_h1]:leading-[1.1] [&_h1]:md:text-5xl [&_h1]:lg:text-6xl [&_p]:text-lg [&_p]:md:text-xl',
+							isHomepageHero && 'text-white [&_h1]:text-white [&_p]:text-white',
+						)}
+					>
 						<Eyebrow value={eyebrow} />
 						<PortableText
 							value={content}
@@ -118,15 +128,47 @@ export default function ({
 													value: { _key?: string }
 												}) =>
 													value._key === primaryHeadingKey ? (
-														<h1 className="text-2xl! leading-8!">{children}</h1>
+														<h1 className="text-2xl! leading-8!">
+															European manufacturer of CLAROPLAST histology wax
+															and IVD laboratory products
+														</h1>
 													) : (
 														<h2>{children}</h2>
 													),
-												h4: ({ children }: { children?: React.ReactNode }) => (
-													<p className="text-lg! leading-7! font-bold">
-														{children}
-													</p>
-												),
+												h4: ({
+													children,
+													value,
+												}: {
+													children?: React.ReactNode
+													value: { _key?: string }
+												}) =>
+													value._key === homepageParagraphs?.[0]?._key ? (
+														<p className="text-lg! leading-7!">
+															<span className="text-[1.15em] font-semibold">
+																CLAROPLAST
+															</span>{' '}
+															— Histology Paraffin Wax with Added Synthetic
+															Polymers.
+															<br />
+															Our highly purified, polymer-modified histology
+															embedding wax is formulated to support controlled
+															elasticity, smooth microtome sectioning and
+															consistent ribbon formation. Supplied in pellet
+															(granulated) form.
+														</p>
+													) : value._key === homepageParagraphs?.[1]?._key ? (
+														<p className="text-lg! leading-7!">
+															CLARO-PROM manufactures histology and microscopy
+															products, IVD laboratory reagents and LABEX
+															laboratory cleaning products in Croatia, supplying
+															laboratories and distributors across Europe and
+															worldwide.
+														</p>
+													) : (
+														<p className="text-lg! leading-7! font-bold">
+															{children}
+														</p>
+													),
 											},
 										}
 									: {}),
