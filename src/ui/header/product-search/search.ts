@@ -3,6 +3,7 @@
 import { groq } from 'next-sanity'
 import { ROUTES } from '@/lib/env'
 import { DEFAULT_LANG } from '@/lib/i18n'
+import { claroplastPack } from '@/lib/outreach'
 import { sanityFetchLive } from '@/sanity/lib/live'
 
 export type ProductSearchResult = {
@@ -19,6 +20,7 @@ const PRODUCT_SEARCH_QUERY = groq`
 		&& coalesce(language, $defaultLang) == $lang
 		&& defined(metadata.slug.current)
 		&& (title match $queryMatch || table[].code match $queryMatch ||
+			($claroplastSearch && metadata.slug.current in ["claroplast-a-2-kg", "claroplast-a-10-kg"]) ||
 			(metadata.slug.current == "claroplast-a-2-kg" && "CP00CL2" match $queryMatch) ||
 			(metadata.slug.current == "claroplast-a-10-kg" && "CP00CLP" match $queryMatch))
 	]|order(title asc)[0...8]{
@@ -57,11 +59,25 @@ export async function searchProducts(
 		query: PRODUCT_SEARCH_QUERY,
 		params: {
 			queryMatch,
+			claroplastSearch:
+				lang === 'en' &&
+				q
+					.toLowerCase()
+					.replace(/-/g, ' ')
+					.split(/\s+/)
+					.every((word) =>
+						/^(claroplast|histology|wax|polymer|modified|paraffin|pellets?|granules?|granulated|with|tissue|embedding)$/.test(
+							word,
+						),
+					),
 			lang,
 			defaultLang: DEFAULT_LANG,
 			productsDir: `/${ROUTES.products}/`,
 		},
 	})
 
-	return results ?? []
+	return (results ?? []).map((product) => {
+		const pack = claroplastPack(product.slug?.split('/').filter(Boolean).at(-1))
+		return pack ? { ...product, title: pack.name } : product
+	})
 }

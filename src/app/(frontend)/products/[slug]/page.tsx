@@ -82,6 +82,17 @@ export default async function ({ params, searchParams }: Props) {
 								'@id': `${SITE_URL}${path}#product`,
 								brand: { '@type': 'Brand', name: 'Claroplast' },
 								countryOfOrigin: { '@type': 'Country', name: 'Croatia' },
+								...(product.table?.[0]?.format
+									? {
+											additionalProperty: [
+												{
+													'@type': 'PropertyValue',
+													name: 'Pack size',
+													value: product.table[0].format,
+												},
+											],
+										}
+									: {}),
 							}
 						: {}),
 					url: SITE_URL + path,

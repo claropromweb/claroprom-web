@@ -33,7 +33,7 @@ export function showMedicaPromotion(
 }
 const paragraphs = [
 	'CLARO-PROM will be exhibiting at MEDICA 2026, taking place from 16 to 19 November in Düsseldorf, Germany.',
-	'We invite distributors, laboratory suppliers, existing partners and prospective business partners to meet our team and learn more about Claroplast Histology Paraffin Wax and our broader portfolio of IVD and laboratory products.',
+	'We invite distributors, laboratory suppliers, existing partners and prospective business partners to meet our team and learn more about Claroplast Histology Paraffin Wax with Polymer and our broader portfolio of IVD and laboratory products.',
 	'As a manufacturer based in Croatia, European Union, CLARO-PROM welcomes discussions about product supply, distribution partnerships and OEM/private-label opportunities.',
 	'Visit us at MEDICA 2026 — Hall 1 / A03.',
 	'Interested in arranging a meeting during the exhibition? Contact our team in advance.',
@@ -75,7 +75,7 @@ export function preparedMedicaPost(environment = process.env.VERCEL_ENV) {
 				inquiryHref('meeting'),
 			),
 			block(
-				'Explore Claroplast Histology Paraffin Wax',
+				'Explore Claroplast Histology Paraffin Wax with Polymer',
 				'claroplast',
 				'/products/histology-paraffin-wax-claroplast',
 			),

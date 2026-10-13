@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { CLAROPLAST } from '@/content/claroplast'
 import { CLAROPLAST_PACKS, inquiryHref } from '@/lib/outreach'
 
 export const outreachButton =
@@ -11,13 +12,13 @@ export function ClaroplastActions() {
 		<div className="space-y-4">
 			<div className="flex flex-wrap gap-3">
 				<Link
-					href={inquiryHref('quote', 'Claroplast Histology Paraffin Wax')}
+					href={inquiryHref('quote', CLAROPLAST.shortName)}
 					className={outreachButton}
 				>
 					Ask for a quote
 				</Link>
 				<Link
-					href={inquiryHref('distributor', 'Claroplast Histology Paraffin Wax')}
+					href={inquiryHref('distributor', CLAROPLAST.shortName)}
 					className={outreachSecondary}
 				>
 					Distributor inquiry
@@ -25,16 +26,13 @@ export function ClaroplastActions() {
 			</div>
 			<div className="flex flex-wrap gap-x-5 gap-y-2 text-sm">
 				<Link
-					href={inquiryHref(
-						'documentation',
-						'Claroplast Histology Paraffin Wax',
-					)}
+					href={inquiryHref('documentation', CLAROPLAST.shortName)}
 					className="underline"
 				>
 					Request technical documentation
 				</Link>
 				<Link
-					href={inquiryHref('sample', 'Claroplast Histology Paraffin Wax')}
+					href={inquiryHref('sample', CLAROPLAST.shortName)}
 					className="underline"
 				>
 					Request a sample
@@ -46,7 +44,8 @@ export function ClaroplastActions() {
 
 export function ClaroplastOverview() {
 	const facts = [
-		['Product', 'Claroplast Histology Paraffin Wax'],
+		['Product', CLAROPLAST.shortName],
+		['Physical form', 'pellet (granulated) form'],
 		['Manufacturer', 'CLARO-PROM d.o.o.'],
 		['Origin', 'Croatia, European Union'],
 		['Application', 'Routine tissue infiltration and embedding'],

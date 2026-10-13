@@ -3,6 +3,8 @@ import { groq, stegaClean } from 'next-sanity'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { Suspense } from 'react'
+import { CLAROPLAST } from '@/content/claroplast'
+import { claroplastPack } from '@/lib/outreach'
 import { categoryUrl } from '@/lib/product-category-url'
 import { publicProductUrl } from '@/lib/public-product-url'
 import { breadcrumbs, categorySeo } from '@/lib/seo'
@@ -20,6 +22,7 @@ import {
 	ClaroplastPackagingAdvantage,
 	ClaroplastVariants,
 } from './claroplast-outreach'
+import ClaroplastPerformance from './claroplast-performance'
 
 type Props = {
 	params: Promise<{ category: string }>
@@ -92,7 +95,7 @@ export default async function CategoryPage({ params, searchParams }: Props) {
 	const slug = stegaClean(category.slug!)
 	const isClaroplast = slug === 'claroplast'
 	const title = isClaroplast
-		? 'Claroplast – Histology Paraffin Wax'
+		? 'CLAROPLAST — Histology Paraffin Wax with Polymer'
 		: category.title
 	const path = categoryUrl(slug)
 	const perPage = slug === 'ivd-reagents' ? 24 : 12
@@ -103,13 +106,9 @@ export default async function CategoryPage({ params, searchParams }: Props) {
 	)
 	const totalPages = Math.max(1, Math.ceil(category.products.length / perPage))
 	const products = category.products.slice((page - 1) * perPage, page * perPage)
-	const description = isClaroplast
-		? category.description?.replace(
-				'Claroplast is a universal histology-grade paraffin for routine tissue infiltration and embedding. Manufactured by Claro-prom in Croatia, European Union, it is formulated',
-				'Claroplast is a universal histology paraffin wax for routine tissue infiltration and embedding, manufactured by Claro-prom in Croatia, European Union. It is formulated',
-			)
-		: category.description
-	const paragraphs = description?.split('\n\n') ?? []
+	const paragraphs = isClaroplast
+		? [CLAROPLAST.intro, 'OEM / Private Label Manufacturing', CLAROPLAST.oem]
+		: (category.description?.split('\n\n') ?? [])
 	const pagination =
 		totalPages > 1 ? (
 			<nav
@@ -185,7 +184,7 @@ export default async function CategoryPage({ params, searchParams }: Props) {
 								item: {
 									'@id': `${SITE_URL}${publicProductUrl(product.slug!)}#product`,
 									url: SITE_URL + publicProductUrl(product.slug!),
-									name: product.title,
+									name: claroplastPack(product.slug)?.name ?? product.title,
 								},
 							})),
 						},
@@ -197,10 +196,15 @@ export default async function CategoryPage({ params, searchParams }: Props) {
 					Products
 				</Link>
 				<span aria-hidden="true"> / </span>
-				<span aria-current="page">{category.title}</span>
+				<span aria-current="page">{title}</span>
 			</nav>
 			<header className="space-y-5">
 				<h1 className="text-3xl font-semibold md:text-4xl">{title}</h1>
+				{isClaroplast && (
+					<p className="font-medium text-neutral-600">
+						{CLAROPLAST.descriptor}
+					</p>
+				)}
 				{isClaroplast && <ClaroplastActions />}
 				{isClaroplast ? (
 					<div className="max-w-3xl space-y-5">
@@ -234,6 +238,7 @@ export default async function CategoryPage({ params, searchParams }: Props) {
 			{isClaroplast && (
 				<>
 					<ClaroplastOverview />
+					<ClaroplastPerformance />
 					<ClaroplastVariants />
 					<ClaroplastPackagingAdvantage />
 					<section className="max-w-3xl space-y-5">

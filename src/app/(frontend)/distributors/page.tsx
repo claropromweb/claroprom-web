@@ -52,7 +52,7 @@ export default async function Distributors({
 				{[
 					[
 						'Claroplast',
-						'Histology paraffin wax for tissue infiltration and embedding. Available in 2 kg and 10 kg product packs.',
+						'Histology paraffin wax with polymer for tissue infiltration and embedding, supporting smooth sectioning and ribbon formation in histology and pathology laboratories. Available in 2 kg and 10 kg packs.',
 						'/products/histology-paraffin-wax-claroplast',
 					],
 					[

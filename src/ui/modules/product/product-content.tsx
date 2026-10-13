@@ -285,6 +285,17 @@ export default async function ({
 						</div>
 					)}
 
+					{pack && (
+						<p>
+							<Link
+								href="/products/histology-paraffin-wax-claroplast"
+								className="underline"
+							>
+								Explore polymer modification, sectioning characteristics and
+								physical form
+							</Link>
+						</p>
+					)}
 					{!!product.intendedPurpose?.length && (
 						<section className="border-stroke border-t pt-5">
 							<h2 className="mb-2 text-lg font-semibold">

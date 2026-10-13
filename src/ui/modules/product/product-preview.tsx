@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { CLAROPLAST } from '@/content/claroplast'
 import { inquiryRows } from '@/lib/inquiry-items'
 import { claroplastPack } from '@/lib/outreach'
 import { publicProductUrl } from '@/lib/public-product-url'
@@ -42,7 +43,7 @@ export default function ProductPreview({
 				),
 			]
 	// No automatic description/intended-purpose fallback: summaries require editorial review.
-	const summary = product.shortDescription?.trim()
+	const summary = pack ? CLAROPLAST.summary : product.shortDescription?.trim()
 	const hasPhoto = !!safeProductPhoto(product.image)
 	const inquiryItems = inquiryRows({
 		...product,
