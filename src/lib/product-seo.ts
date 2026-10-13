@@ -14,10 +14,13 @@ export function claroplastCopy(slug: string | undefined) {
 	return {
 		// Owner-confirmed catalogue numbers; transport cartons are not separate SKUs.
 		catalogueNumber: pack === '2 kg' ? 'CP00CL2' : 'CP00CLP',
-		title: `Claroplast Histology Embedding Wax, ${pack} | CLARO-PROM`,
-		name: `Claroplast Histology Embedding Wax – ${pack}`,
-		description: `Claroplast polymer-modified histology paraffin wax for tissue infiltration and embedding, manufactured by CLARO-PROM d.o.o. in Croatia, EU. ${pack} pack.`,
-		visibleDescription: `Claroplast is a polymer-modified histology paraffin wax intended for routine tissue infiltration and embedding. It is manufactured by CLARO-PROM d.o.o. in Croatia, European Union, and supplied in a ${pack} pack.`,
+		title: `Claroplast ${pack} | Polymer-Modified Histology Wax`,
+		name: `Claroplast — Histology Paraffin Wax with Polymer, ${pack}`,
+		description:
+			pack === '2 kg'
+				? 'Claroplast 2 kg polymer-modified histology wax in pellet (granulated) form for tissue infiltration, embedding and sectioning. Manufactured by CLARO-PROM, Croatia.'
+				: 'Claroplast 10 kg histology paraffin wax with polymer for embedding and smooth microtome sectioning. Pellet (granulated) form from CLARO-PROM, Croatia.',
+		visibleDescription: `Claroplast is a highly purified histology paraffin wax with polymer additives for routine tissue infiltration, embedding and microtome sectioning. Its polymer-modified formulation supports controlled elasticity, smooth cutting and consistent histological ribbon formation. It is manufactured by CLARO-PROM d.o.o. in Croatia, European Union, and supplied in a ${pack} pack in pellet (granulated) form.`,
 	}
 }
 
@@ -30,7 +33,10 @@ export function withApprovedClaroplastCopy(product: Product): Product {
 	return {
 		...product,
 		// Correct the public read model only; preserve the source CMS rows and fields.
-		table: product.table?.map((row) => ({ ...row, code: copy.catalogueNumber })),
+		table: product.table?.map((row) => ({
+			...row,
+			code: copy.catalogueNumber,
+		})),
 		title: copy.name,
 		metadata: {
 			...product.metadata,

@@ -1,4 +1,5 @@
 import { stegaClean } from 'next-sanity'
+import { CLAROPLAST } from '@/content/claroplast'
 import type { CategoryGrid } from '@/sanity/types'
 import Img from '@/ui/img'
 import SanityLink, { type SanityLinkType } from '@/ui/sanity-link'
@@ -6,12 +7,14 @@ import { Module } from '.'
 
 type Category = NonNullable<CategoryGrid['categories']>[number]
 
-function CategoryColumn({
-	title,
-	description,
-	image,
-	link,
-}: Category) {
+function CategoryColumn({ title, description, image, link }: Category) {
+	const isClaroplast = /^claroplast\s*[-–—]\s*histology wax$/i.test(
+		stegaClean(title ?? ''),
+	)
+	const displayTitle = isClaroplast ? CLAROPLAST.shortName : stegaClean(title)
+	const displayDescription = isClaroplast
+		? CLAROPLAST.summary
+		: stegaClean(description)
 	const hasLink =
 		link?.type === 'internal'
 			? !!link.internal
@@ -41,12 +44,10 @@ function CategoryColumn({
 			/>
 
 			<div className="relative z-10 max-w-xs space-y-3">
-				{title && (
-					<h3 className="text-2xl font-bold">{stegaClean(title)}</h3>
-				)}
-				{description && (
+				{title && <h3 className="text-2xl font-bold">{displayTitle}</h3>}
+				{displayDescription && (
 					<p className="text-sm leading-relaxed text-white/90 md:text-base">
-						{stegaClean(description)}
+						{displayDescription}
 					</p>
 				)}
 			</div>
@@ -58,7 +59,7 @@ function CategoryColumn({
 			<SanityLink
 				link={link as SanityLinkType}
 				className={className}
-				aria-label={title ? stegaClean(title) : undefined}
+				aria-label={displayTitle ?? undefined}
 			>
 				{content}
 			</SanityLink>
@@ -79,7 +80,7 @@ export default function ({
 			{(pretitle || heading) && (
 				<header className="bg-red-600 px-6 py-6 text-center text-white md:py-8">
 					{pretitle && (
-						<p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/80">
+						<p className="text-xs font-semibold tracking-[0.2em] text-white/80 uppercase">
 							{stegaClean(pretitle)}
 						</p>
 					)}

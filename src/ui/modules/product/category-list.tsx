@@ -1,5 +1,6 @@
 import { groq, PortableText, stegaClean } from 'next-sanity'
 import Link from 'next/link'
+import { CLAROPLAST } from '@/content/claroplast'
 import { categoryUrl } from '@/lib/product-category-url'
 import { sanityFetchLive } from '@/sanity/lib/live'
 import type {
@@ -42,11 +43,15 @@ export default async function CategoryList({
 									className="mb-5 aspect-[3/2] w-full object-contain"
 								/>
 							)}
-							<h2 className="text-xl font-semibold">{category.title}</h2>
+							<h2 className="text-xl font-semibold">
+								{category.slug === 'claroplast'
+									? CLAROPLAST.shortName
+									: category.title}
+							</h2>
 							{category.description && (
 								<p className="mt-3 whitespace-pre-line">
 									{category.slug === 'claroplast'
-										? category.description.split('. ')[0] + '.'
+										? CLAROPLAST.summary
 										: category.description.split('\n\n')[0]}
 								</p>
 							)}

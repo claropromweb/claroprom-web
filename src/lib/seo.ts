@@ -5,9 +5,9 @@ export const categorySeo: Record<
 	{ title: string; description: string }
 > = {
 	claroplast: {
-		title: 'Claroplast Histology Paraffin Wax | CLARO-PROM',
+		title: 'Claroplast | Histology Paraffin Wax with Polymer',
 		description:
-			'Universal histology paraffin wax for tissue infiltration and embedding, manufactured by Claro-prom in Croatia, EU. OEM and private-label options available.',
+			'Claroplast polymer-modified histology paraffin for embedding, smooth sectioning and ribbon formation. Pellet (granulated) form, 2 kg and 10 kg. CLARO-PROM, Croatia.',
 	},
 	'ivd-reagents': {
 		title: 'Histology & IVD Laboratory Reagents | CLARO-PROM',
@@ -24,7 +24,7 @@ export const pageSeo: Record<string, { title: string; description: string }> = {
 	index: {
 		title: 'CLARO-PROM | European IVD & Histology Manufacturer',
 		description:
-			'CLARO-PROM d.o.o. manufactures Claroplast histology paraffin wax, IVD laboratory reagents and LABEX cleaning products in Croatia, European Union.',
+			'CLARO-PROM manufactures Claroplast histology wax with polymer, IVD reagents and LABEX cleaning products in Croatia, EU. Explore our laboratory product portfolio.',
 	},
 	'o-nama': {
 		title: 'About CLARO-PROM | Croatian Histology Products Manufacturer',
