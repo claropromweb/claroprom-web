@@ -36,6 +36,13 @@ function escapeHtml(value: string) {
 		.replace(/'/g, '&#039;')
 }
 
+function validEmail(value: string) {
+	return (
+		value.length <= 254 &&
+		/^[^\s@<>(),;:"\\]+@[^\s@<>(),;:"\\]+\.[^\s@<>(),;:"\\]+$/.test(value)
+	)
+}
+
 export async function POST(request: Request) {
 	const origin = request.headers.get('origin')
 	if (origin && origin !== new URL(request.url).origin)
@@ -49,8 +56,8 @@ export async function POST(request: Request) {
 			{ status: 415 },
 		)
 	const apiKey = process.env.RESEND_API_KEY
-	const to = process.env.CONTACT_FORM_TO
-	const from = process.env.CONTACT_FORM_FROM
+	const to = process.env.CONTACT_FORM_TO?.trim()
+	const from = process.env.CONTACT_FORM_FROM?.trim()
 
 	if (!apiKey || !to || !from) {
 		console.error(
@@ -59,6 +66,23 @@ export async function POST(request: Request) {
 		return NextResponse.json(
 			{ error: 'Email service is not configured.' },
 			{ status: 500 },
+		)
+	}
+	const senderAddress = from.match(/<([^<>]+)>$/)?.[1]?.trim() ?? from
+	if (
+		process.env.VERCEL_ENV === 'production' &&
+		(to.toLowerCase() !== 'claroprom@gmail.com' ||
+			!validEmail(senderAddress) ||
+			/[\r\n]/.test(from) ||
+			/@(?:.*\.)?resend\.dev$/i.test(senderAddress))
+	) {
+		console.error('Contact form: invalid production email configuration')
+		return NextResponse.json(
+			{
+				error:
+					'Email delivery is temporarily unavailable. Please contact claroprom@gmail.com.',
+			},
+			{ status: 503 },
 		)
 	}
 
@@ -150,7 +174,7 @@ export async function POST(request: Request) {
 			{ error: 'Missing required fields.' },
 			{ status: 422 },
 		)
-	if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
+	if (!validEmail(email))
 		return NextResponse.json(
 			{ error: 'Invalid email address.' },
 			{ status: 422 },
@@ -204,7 +228,7 @@ export async function POST(request: Request) {
 		)
 	}
 
-	if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+	if (!validEmail(email)) {
 		return NextResponse.json(
 			{ error: 'Invalid email address.' },
 			{ status: 422 },
@@ -251,7 +275,7 @@ export async function POST(request: Request) {
 		.join('\n')
 
 	try {
-		const { error } = await resend.emails.send({
+		const { data, error } = await resend.emails.send({
 			from,
 			to: to.split(',').map((address) => address.trim()),
 			replyTo: email,
@@ -263,17 +287,25 @@ export async function POST(request: Request) {
 			text,
 		})
 
-		if (error) {
-			console.error('Resend error:', error)
+		if (error || !data?.id) {
+			console.error('Contact provider rejected submission:', {
+				code: error?.name ?? 'missing_message_id',
+			})
 			return NextResponse.json(
 				{ error: 'Failed to send email.' },
 				{ status: 502 },
 			)
 		}
 
-		return NextResponse.json({ ok: true })
+		console.info('Contact provider accepted submission:', {
+			messageId: data.id,
+			inquiry,
+		})
+		return NextResponse.json({ ok: true, messageId: data.id })
 	} catch (err) {
-		console.error('Contact form send error:', err)
+		console.error('Contact form send error:', {
+			code: 'provider_request_failed',
+		})
 		return NextResponse.json(
 			{ error: 'Failed to send email.' },
 			{ status: 500 },
