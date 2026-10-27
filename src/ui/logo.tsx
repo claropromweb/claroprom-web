@@ -1,11 +1,9 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import { DEFAULT_LANG } from '@/lib/i18n'
 import { cn } from '@/lib/utils'
-import { getSite } from '@/sanity/lib/queries'
-import Img from './img'
 
 export default async function ({
-	variant: style = 'default',
 	className,
 	lang,
 	children,
@@ -15,8 +13,6 @@ export default async function ({
 	lang?: string
 	children?: React.ReactNode
 }) {
-	const site = await getSite(lang)
-	const logo = site?.logo?.image?.[style]
 	const homeHref = lang && lang !== DEFAULT_LANG ? `/${lang}` : '/'
 
 	return (
@@ -25,16 +21,14 @@ export default async function ({
 			aria-label="CLARO-PROM home"
 			className={cn('logo text-foreground inline-block font-bold', className)}
 		>
-			{logo ? (
-				<Img
-					image={logo}
-					width={100}
-					className="inline-block h-full w-auto object-contain"
-					alt="CLARO-PROM"
-				/>
-			) : (
-				site?.title
-			)}
+			<Image
+				src="/brand/claroprom-logo-p185c.svg"
+				width={37}
+				height={42}
+				className="inline-block h-full w-auto object-contain"
+				alt="CLARO-PROM"
+				unoptimized
+			/>
 			{children}
 		</Link>
 	)
