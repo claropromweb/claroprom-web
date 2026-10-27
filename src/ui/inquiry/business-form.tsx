@@ -175,8 +175,7 @@ export default function BusinessForm({
 					</span>
 				</label>
 				<p className="text-sm text-neutral-600">
-					Your inquiry will be sent to claroprom@gmail.com. No order or payment
-					is placed.
+					You can also email info@claroprom.com. No order or payment is placed.
 				</p>
 				{status === 'error' && (
 					<p role="alert" className="text-red-700">
