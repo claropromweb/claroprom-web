@@ -80,7 +80,7 @@ export async function POST(request: Request) {
 		return NextResponse.json(
 			{
 				error:
-					'Email delivery is temporarily unavailable. Please contact claroprom@gmail.com.',
+					'Email delivery is temporarily unavailable. Please contact info@claroprom.com.',
 			},
 			{ status: 503 },
 		)

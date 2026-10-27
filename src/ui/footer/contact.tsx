@@ -43,8 +43,8 @@ export default function FooterContact({ logo }: { logo: React.ReactNode }) {
 					</div>
 					<p>
 						Mail:{' '}
-						<a href="mailto:claroprom@gmail.com" className={linkClassName}>
-							claroprom@gmail.com
+						<a href="mailto:info@claroprom.com" className={linkClassName}>
+							info@claroprom.com
 						</a>
 					</p>
 				</address>

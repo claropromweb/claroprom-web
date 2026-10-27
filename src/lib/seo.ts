@@ -47,7 +47,7 @@ export const organization = {
 	description:
 		'Family-owned Croatian manufacturer of histology products, laboratory reagents and laboratory cleaning products with more than 30 years of experience.',
 	telephone: '+38598818891',
-	email: 'claroprom@gmail.com',
+	email: 'info@claroprom.com',
 	vatID: 'HR56024653521',
 	identifier: {
 		'@type': 'PropertyValue',
