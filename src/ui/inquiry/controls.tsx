@@ -7,25 +7,10 @@ import { claroplastPack } from '@/lib/outreach'
 import { itemKey, useInquiry } from './store'
 
 export function InquiryNavigation() {
-	const count = useInquiry((s) => s.items.length)
 	useEffect(() => {
 		void useInquiry.persist.rehydrate()
 	}, [])
-	return (
-		<nav
-			aria-label="Business inquiries"
-			className="border-b border-neutral-200 bg-neutral-50"
-		>
-			<div className="section flex flex-wrap items-center justify-end gap-5 py-3 text-sm">
-				<Link href="/distributors" className="font-semibold hover:underline">
-					Distribution partnerships
-				</Link>
-				<Link href="/inquiry" className="font-semibold text-red-700 underline">
-					Your inquiry ({count})
-				</Link>
-			</div>
-		</nav>
-	)
+	return null
 }
 
 export function AddToInquiry({ item }: { item: InquiryItem }) {
