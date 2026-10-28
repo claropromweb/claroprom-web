@@ -1,4 +1,6 @@
 import { PortableText } from 'next-sanity'
+import Image from 'next/image'
+import Link from 'next/link'
 import { getSite } from '@/sanity/lib/queries'
 import Logo from '@/ui/logo'
 import LegalNavigation from './legal-navigation'
@@ -22,6 +24,21 @@ export default async function ({ lang }: { lang?: string }) {
 						<FooterContact
 							logo={<Logo lang={lang} className="shrink-0 -translate-y-1.5 leading-none [&_img]:h-8 [&_img]:w-auto" />}
 						/>
+					</div>
+					<div className="mx-auto mt-8 w-full max-w-4xl">
+						<Link
+							href="/eu-projekt-iso-13485"
+							className="inline-block max-w-full rounded focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-800"
+						>
+							<Image
+								src="/brand/eu-cofunded-hr.png"
+								alt="Sufinancira Europska unija — informacije o projektu ISO 13485"
+								width={1024}
+								height={271}
+								className="h-auto w-80 max-w-full"
+								unoptimized
+							/>
+						</Link>
 					</div>
 				</div>
 			</div>
