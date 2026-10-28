@@ -32,30 +32,15 @@ export default function EUProject() {
 				<strong>Referentna oznaka projekta:</strong> PK.1.3.04.0758
 			</p>
 			<p>
-				Projekt je usmjeren na uvođenje i certifikaciju sustava upravljanja
-				kvalitetom prema normi ISO 13485:2016 radi unaprjeđenja kvalitete
-				poslovnih procesa, pouzdanosti proizvodnje IVD reagensa i konkurentnosti
-				poduzeća na domaćem i međunarodnom tržištu.
-			</p>
-			<p>
-				Provedbom projekta implementiran je sustav upravljanja kvalitetom,
-				ishođen certifikat ISO 13485:2016 te unaprijeđene kompetencije
-				zaposlenika i sustav upravljanja kvalitetom.
-			</p>
-			<p>
-				<strong>Ukupna vrijednost projekta:</strong> 23.100,00 EUR
-			</p>
-			<p>
-				<strong>Iznos EU sufinanciranja:</strong> 14.043,75 EUR
-			</p>
-			<p>
-				<strong>Razdoblje provedbe:</strong> 1. veljače 2026. – 1. listopada
-				2026.
+				Cilj projekta bio je unaprijediti sustav upravljanja kvalitetom u
+				proizvodnji IVD reagensa. Provedbom projekta implementiran je i
+				certificiran sustav upravljanja kvalitetom prema normi ISO 13485:2016,
+				čime su unaprijeđeni poslovni procesi i kompetencije zaposlenika.
 			</p>
 			<p>
 				<strong>
-					Projekt je sufinancirala Europska unija iz Programa Konkurentnost i
-					kohezija, Europskog fonda za regionalni razvoj, za razdoblje
+					Projekt je sufinancirala Europska unija iz Europskog fonda za
+					regionalni razvoj, u okviru Programa Konkurentnost i kohezija
 					2021.–2027.
 				</strong>
 			</p>
