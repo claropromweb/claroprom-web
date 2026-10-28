@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import Image from 'next/image'
 
 export const metadata: Metadata = {
 	title: 'EU projekt ISO 13485 | CLARO-PROM',
@@ -17,14 +16,6 @@ export default function EUProject() {
 			<h1 className="text-3xl font-semibold md:text-4xl">
 				Uvođenje ISO 13485 sustava kvalitete za proizvodnju IVD reagensa
 			</h1>
-			<Image
-				src="/brand/eu-cofunded-hr.png"
-				alt="Sufinancira Europska unija"
-				width={1024}
-				height={271}
-				className="h-auto w-96 max-w-full"
-				unoptimized
-			/>
 			<p>
 				<strong>Korisnik:</strong> CLARO-PROM d.o.o.
 			</p>
