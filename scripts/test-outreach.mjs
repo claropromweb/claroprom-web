@@ -128,6 +128,7 @@ assert.equal(
 )
 
 // Execute the real backend with a fake mail adapter: no credentials or external sends.
+const rateLimit = await import(uri(readFileSync('src/lib/contact-rate-limit.ts', 'utf8')))
 let sent = [],
 	sendError = null
 const code = ts.transpileModule(
@@ -174,7 +175,9 @@ const sandbox = {
 					}
 				: name === '@/lib/outreach'
 					? awaitOutreach
-					: null,
+					: name === '@/lib/contact-rate-limit'
+						? rateLimit
+						: null,
 }
 const awaitOutreach = await import(outreachUri)
 vm.runInNewContext(code, sandbox)

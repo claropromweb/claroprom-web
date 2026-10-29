@@ -17,7 +17,7 @@ export default function (
 				</Badge>
 			) : (
 				props.uid && (
-					<Badge size={0} marginRight={2}>
+					<Badge marginRight={2}>
 						#{props.uid}
 					</Badge>
 				)

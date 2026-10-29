@@ -13,6 +13,7 @@ const uri = (source) =>
 		}).outputText,
 	).toString('base64')
 const outreachUri = uri(readFileSync('src/lib/outreach.ts', 'utf8'))
+const rateLimitUri = uri(readFileSync('src/lib/contact-rate-limit.ts', 'utf8'))
 const itemUri = uri(
 	readFileSync('src/lib/inquiry-items.ts', 'utf8').replace(
 		"'./outreach'",
@@ -99,6 +100,7 @@ const clientUri = uri(
 const route = readFileSync('src/app/(frontend)/api/contact/route.ts', 'utf8')
 	.replace("'next/server'", JSON.stringify(responseUri))
 	.replace("'resend'", JSON.stringify(resendUri))
+	.replace("'@/lib/contact-rate-limit'", JSON.stringify(rateLimitUri))
 	.replace("'@/lib/outreach'", JSON.stringify(outreachUri))
 	.replace("'@/lib/inquiry-items'", JSON.stringify(itemUri))
 	.replace("'@/sanity/lib/client'", JSON.stringify(clientUri))

@@ -9,6 +9,19 @@ import { client } from './src/sanity/lib/client'
 
 const nextConfig: NextConfig = {
 	reactCompiler: true,
+	poweredByHeader: false,
+	async headers() {
+		return [{
+			source: '/:path*',
+			headers: [
+				{ key: 'X-Content-Type-Options', value: 'nosniff' },
+				{ key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+				{ key: 'Permissions-Policy', value: 'geolocation=(), microphone=(), payment=(), usb=()' },
+				// Keep Sanity Presentation's same-origin preview frames working.
+				{ key: 'Content-Security-Policy', value: "base-uri 'self'; object-src 'none'; frame-ancestors 'self'" },
+			],
+		}]
+	},
 
 	images: {
 		localPatterns: [{ pathname: '/api/og' }],
