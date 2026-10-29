@@ -17,8 +17,8 @@ const nextConfig: NextConfig = {
 				{ key: 'X-Content-Type-Options', value: 'nosniff' },
 				{ key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
 				{ key: 'Permissions-Policy', value: 'geolocation=(), microphone=(), payment=(), usb=()' },
-				// Keep Sanity Presentation's same-origin preview frames working.
-				{ key: 'Content-Security-Policy', value: "base-uri 'self'; object-src 'none'; frame-ancestors 'self'" },
+				// Preserve both embedded and Sanity-hosted Presentation previews.
+				{ key: 'Content-Security-Policy', value: "base-uri 'self'; object-src 'none'; frame-ancestors 'self' https://*.sanity.studio https://www.sanity.io" },
 			],
 		}]
 	},
