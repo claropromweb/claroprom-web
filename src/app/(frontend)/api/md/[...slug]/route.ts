@@ -4,6 +4,8 @@ import { NextResponse, type NextRequest } from 'next/server'
 import { NodeHtmlMarkdown } from 'node-html-markdown'
 import { parse, type HTMLElement } from 'node-html-parser'
 import { ROUTES } from '@/lib/env'
+import { fetchPublicPage } from '@/lib/public-page-fetch'
+import { SITE_URL } from '@/lib/site-url'
 import { client } from '@/sanity/lib/client'
 import type { BLOG_POSTS_MD_QUERY_RESULT } from '@/sanity/types'
 
@@ -13,15 +15,12 @@ export async function GET(
 ) {
 	const slug = '/' + (await params).slug.join('/')
 
-	const host =
-		request.headers.get('x-forwarded-host') || request.headers.get('host')
-	const proto =
-		request.headers.get('x-forwarded-proto') ||
-		(process.env.NODE_ENV === 'development' ? 'http' : 'https')
-
-	const htmlResponse = await fetch(`${proto}://${host}${slug}`, {
-		headers: { Accept: 'text/html' },
-	})
+	let htmlResponse: Response
+	try {
+		htmlResponse = await fetchPublicPage(slug)
+	} catch {
+		notFound()
+	}
 
 	if (!htmlResponse.ok) notFound()
 
@@ -70,7 +69,7 @@ export async function GET(
 			.join('')
 	}
 
-	const base = `${proto}://${host}`
+	const base = SITE_URL
 
 	// Unwrap next/image optimizer URLs to canonical src for markdown export
 	main.querySelectorAll('img[src]').forEach((img) => {

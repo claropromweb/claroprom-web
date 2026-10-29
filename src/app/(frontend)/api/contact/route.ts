@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { Resend } from 'resend'
+import { contactRetryAfter } from '@/lib/contact-rate-limit'
 import {
 	inquiryEmailLines,
 	resolveInquiryItems,
@@ -54,6 +55,12 @@ export async function POST(request: Request) {
 		return NextResponse.json(
 			{ error: 'JSON content is required.' },
 			{ status: 415 },
+		)
+	const retryAfter = contactRetryAfter(request.headers)
+	if (retryAfter)
+		return NextResponse.json(
+			{ error: 'Too many inquiries. Please wait a few minutes and try again, or email info@claroprom.com.' },
+			{ status: 429, headers: { 'Retry-After': String(retryAfter) } },
 		)
 	const apiKey = process.env.RESEND_API_KEY
 	const to = process.env.CONTACT_FORM_TO?.trim()

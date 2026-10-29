@@ -13,6 +13,7 @@ const uri = (s) =>
 		}).outputText,
 	).toString('base64')
 const outreach = uri(readFileSync('src/lib/outreach.ts', 'utf8'))
+const rateLimit = uri(readFileSync('src/lib/contact-rate-limit.ts', 'utf8'))
 const items = uri(
 	readFileSync('src/lib/inquiry-items.ts', 'utf8').replace(
 		"'./outreach'",
@@ -20,7 +21,7 @@ const items = uri(
 	),
 )
 const response = uri(
-	`export const NextResponse={json:(body,options)=>new Response(JSON.stringify(body),{status:options?.status||200})}`,
+	`export const NextResponse={json:(body,options)=>new Response(JSON.stringify(body),{status:options?.status||200,headers:options?.headers})}`,
 )
 const provider = uri(
 	`export class Resend {constructor(){this.emails={send:async message=>{globalThis.__v34Sends.push(message);if(globalThis.__v34Mode==='throw')throw Error('sensitive fixture content');if(globalThis.__v34Mode==='reject')return {data:null,error:{name:'validation_error',message:'sensitive fixture content'}};if(globalThis.__v34Mode==='missing')return {data:null,error:null};return {data:{id:'mock-message-'+globalThis.__v34Sends.length},error:null}}}}}`,
@@ -65,6 +66,7 @@ globalThis.__v34Products = [
 let source = readFileSync('src/app/(frontend)/api/contact/route.ts', 'utf8')
 	.replace("'next/server'", JSON.stringify(response))
 	.replace("'resend'", JSON.stringify(provider))
+	.replace("'@/lib/contact-rate-limit'", JSON.stringify(rateLimit))
 	.replace("'@/lib/outreach'", JSON.stringify(outreach))
 	.replace("'@/lib/inquiry-items'", JSON.stringify(items))
 	.replace("'@/sanity/lib/client'", JSON.stringify(sanity))
@@ -85,13 +87,14 @@ const base = {
 	country: 'Croatia',
 	markets: 'EU',
 }
-const post = (body) =>
+const post = (body, headers = {}) =>
 	POST(
 		new Request('https://claroprom.com/api/contact', {
 			method: 'POST',
 			headers: {
 				Origin: 'https://claroprom.com',
 				'Content-Type': 'application/json',
+				...headers,
 			},
 			body: JSON.stringify(body),
 		}),
@@ -194,3 +197,21 @@ for (const file of [
 console.log(
 	'PASS: five inquiry paths, canonical four-SKU payload, sole production recipient, From/Reply-To, fail-closed configuration, malformed headers, missing provider ID/rejection/network failure, safe logs and existing duplicate-send locks. Zero real emails.',
 )
+
+const previousVercel = process.env.VERCEL
+try {
+	process.env.VERCEL = '1'
+	globalThis.__v34Mode = 'ok'
+	const headers = { 'x-vercel-forwarded-for': '203.0.113.99' }
+	for (let i = 0; i < 30; i++) assert.equal((await post(base, headers)).status, 200)
+	const count = globalThis.__v34Sends.length
+	const limited = await post(base, headers)
+	assert.equal(limited.status, 429)
+	assert.ok(Number(limited.headers.get('Retry-After')) > 0)
+	assert.equal(globalThis.__v34Sends.length, count)
+	assert.equal((await post(base, { 'x-vercel-forwarded-for': '203.0.113.100' })).status, 200)
+} finally {
+	if (previousVercel === undefined) delete process.env.VERCEL
+	else process.env.VERCEL = previousVercel
+}
+console.log('PASS: excess contact submissions return 429/Retry-After before provider call; another customer still sends. Mocked provider only.')
