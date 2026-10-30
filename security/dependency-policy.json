@@ -1,0 +1,35 @@
+{
+  "reviewed": "2026-10-30",
+  "reason": "Existing unresolved media-plugin/Zod 3 findings disclosed in PR #40. Preserve photo editing until authenticated compatibility verification.",
+  "knownFindings": {
+    "sanity-plugin-media": {
+      "severity": "high",
+      "via": [
+        "zod"
+      ],
+      "nodes": [
+        {
+          "node": "node_modules/sanity-plugin-media",
+          "version": "5.0.13"
+        }
+      ]
+    },
+    "zod": {
+      "severity": "high",
+      "via": [
+        {
+          "name": "zod",
+          "url": "https://github.com/advisories/GHSA-mrhx-c7xc-m3w5",
+          "severity": "high",
+          "range": "<4.6.6"
+        }
+      ],
+      "nodes": [
+        {
+          "node": "node_modules/sanity-plugin-media/node_modules/zod",
+          "version": "3.25.76"
+        }
+      ]
+    }
+  }
+}

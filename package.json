@@ -55,10 +55,12 @@
 	},
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "npm run security:check && next build",
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
+    "security:check": "node scripts/check-dependencies.mjs",
+    "security:test": "node --test scripts/test-dependency-gate.mjs",
     "typegen": "sanity schema extract --path=./src/sanity && sanity typegen generate",
     "format": "prettier --write '**/*.{ts,tsx,js,jsx}'"
   }
